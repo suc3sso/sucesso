@@ -2178,3 +2178,89 @@ transition: color 0.3s ease;
     z-index: 2;
   }
 }
+
+
+@media (max-width: 768px) {
+  /* Ocultar productos */
+  .collection-grid,
+  .collection-container,
+  .collections,
+  .tees-container,
+  .tees-title {
+    display: none !important;
+  }
+
+  /* Hacer el hero mucho más grande y que se corte para cubrir pantalla como Nude Project */
+  .hero-image {
+    width: 200% !important;   /* Aumenta el ancho al doble */
+    height: auto !important;
+    object-fit: cover !important;
+  }
+
+  .hero {
+    height: 60vh;  /* O ajusta a 70vh si quieres más grande aún */
+    overflow: hidden;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  /* Ocultar productos */
+  .collection-grid,
+  .collection-container,
+  .collections,
+  .tees-container,
+  .tees-title {
+    display: none !important;
+  }
+
+  /* Ajustar hero image */
+  .hero-image {
+    width: 220% !important;         /* Amplía aún más */
+    height: auto !important;
+    object-fit: cover !important;
+    transform: translateX(-23%) !important; /* Mueve la imagen hacia la izquierda */
+  }
+
+  .hero {
+    height: 65vh;                  /* Ajusta el alto del hero */
+    overflow: hidden;
+    margin-bottom: 0 !important;   /* Quita márgenes abajo */
+    padding-bottom: 0 !important;
+  }
+
+  /* Footer pegado al hero */
+  footer {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .mobile-footer {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .hero {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .hero-image {
+    margin-bottom: 0 !important;
+    display: block;
+  }
+
+  footer {
+    margin-top: 0 !important;
+  }
+}
+
