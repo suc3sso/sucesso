@@ -2126,3 +2126,29 @@ transition: color 0.3s ease;
       display: none;
     }
   }
+
+  @media (max-width: 768px) {
+  /* Reducir el logo */
+  .logo {
+    width: 90px !important;  /* O ajusta a tu gusto: 80px, 100px... */
+    height: auto !important;
+  }
+
+  /* Reducir iconos de la derecha */
+  .account-icon,
+  .cart-icon,
+  .search-toggle svg {
+    width: 18px !important;  /* Más pequeños que los 22-24px actuales */
+    height: 18px !important;
+  }
+
+  /* Agrupa y reduce el espacio entre íconos */
+  .navbar-right {
+    gap: 10px !important;  /* O incluso 8px si quieres más compacto */
+  }
+
+  /* Reduce el espacio en navbar-left si aplica */
+  .navbar-left {
+    gap: 10px !important;
+  }
+}
