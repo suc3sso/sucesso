@@ -2264,3 +2264,55 @@ transition: color 0.3s ease;
   }
 }
 
+
+@media (max-width: 991px) {
+  .mobile-footer p {
+    font-family: 'Poppins', sans-serif; /* O cambia a otra que prefieras */
+    font-size: 12px; /* Más pequeño que el actual */
+    text-align: center;
+    color: #999; /* Color más suave, puedes cambiarlo */
+    margin: 10px 0 0 0; /* Quita margen excesivo arriba/abajo */
+    padding: 0;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  .hero {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .hero-image {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    display: block;
+  }
+
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  footer {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .mobile-footer {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
