@@ -2144,7 +2144,7 @@ transition: color 0.3s ease;
 
   /* Agrupa y reduce el espacio entre íconos */
   .navbar-right {
-    gap: 10px !important;  /* O incluso 8px si quieres más compacto */
+    gap: 20px !important;  /* O incluso 8px si quieres más compacto */
   }
 
   /* Reduce el espacio en navbar-left si aplica */
