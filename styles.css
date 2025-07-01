@@ -2152,3 +2152,29 @@ transition: color 0.3s ease;
     gap: 10px !important;
   }
 }
+
+@media (max-width: 768px) {
+  .logo {
+    position: absolute;
+    top: 60%;
+    left: 61%;
+    transform: translate(-50%, -50%);
+    width: 90px; /* o el tamaño que prefieras */
+    height: auto;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+  }
+
+  .menu-toggle,
+  .navbar-right {
+    position: relative;
+    z-index: 2;
+  }
+}
