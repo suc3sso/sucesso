@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recuperar Contraseña - Sucesso</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+.loader {
+      position: fixed;
+      inset: 0;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .loader img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      animation: zoomInClean 2s ease forwards;
+    }
+
+    @keyframes zoomInClean {
+      0% { transform: scale(0.1); opacity: 0; }
+      70% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .account-icon, .cart-icon {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+  
+.cart-icon:hover,
+.search-toggle:hover,
+.account-icon:hover {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+
+    .collection-item .tallas {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      font-size: 0.85rem;
+      text-align: center;
+      color: #233f32;
+      margin-top: 6px;
+      pointer-events: none;
+    }
+
+    .collection-item:hover .tallas {
+      opacity: 1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Syne', sans-serif; background-color: #fff; }
+    header.navbar {
+      position: fixed; top: 0; width: 100%; height: 70px; background-color: white;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 20px; z-index: 1001; border-bottom: 1px solid #e5e5e5;
+    }
+    .navbar-left, .navbar-right {
+      display: flex; align-items: center; gap: 30px;
+    }
+    .navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+    .logo { height: 35px; }
+    .nav-link {
+      text-decoration: none; color: #000; font-weight: 600; font-size: 14px;
+      transition: opacity 0.3s ease;
+    }
+    .nav-link:hover { opacity: 1; }
+    .nav-icon, .search-toggle {
+      background: none; border: none; font-size: 18px; cursor: pointer;
+      color: #000; transition: opacity 0.3s ease;
+    }
+    .nav-icon:hover, .search-toggle:hover { opacity: 0.5; }
+    .overlay {
+      position: fixed; top: 70px; left: 0; width: 100%; height: calc(100% - 70px);
+      background-color: rgba(0, 0, 0, 0.3); z-index: 1000; display: none;
+    }
+    .search-bar {
+      position: fixed; top: 70px; left: 0; width: 100%; height: 42px;
+      background-color: white; display: flex; align-items: center; gap: 10px;
+      padding: 0 20px; border-bottom: 1px solid #e5e5e5;
+      transform: translateY(-100%); opacity: 0; pointer-events: none;
+      transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+      z-index: 1002; will-change: transform, opacity;
+    }
+    .search-bar.active {
+      transform: translateY(0); opacity: 1; pointer-events: auto;
+    }
+    .search-bar.hiding { z-index: 999; }
+    .search-bar input {
+      width: 100%; padding: 8px 0 8px 60px; font-size: 15px;
+      border: none; outline: none; background-color: transparent; color: #000;
+    }
+    .search-icon {
+      margin-right: 0; color: #000; flex-shrink: 0; position: absolute; left: 30px;
+    }
+    .close-search {
+      margin-left: 16px; background: none; border: none; cursor: pointer;
+      color: #000; padding: 4px; display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.3s ease;
+    }
+    .close-search:hover { opacity: 0.5; }
+.search-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: #000;
+  transition: opacity 0.3s ease;
+  margin-top: 2px; /* 👈 Ajustá este valor si querés más o menos bajado */
+}
+
+.search-toggle svg {
+  display: block;
+  stroke: #000;
+}
+
+
+    .search-results {
+  position: fixed;
+  top: 112px;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1001;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  padding: 0;
+  box-sizing: border-box;
+  max-height: calc(100vh - 112px);
+  overflow-y: auto;
+  gap: 1px; /* visualmente simula 0.3px ajustando ancho abajo */
+}
+
+
+.search-result-item {
+  width: 100%;
+  max-width: 375px; /* Más grande, similar a Nude Project */
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-decoration: none;
+  color: #000;
+  padding: 0 10px 32px;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease;
+}
+
+.product-image-wrapper {
+  width: 100%;
+  padding-top: 125%; /* Proporción 4:5 sin usar aspect-ratio */
+  position: relative;
+  background-color: #f8f8f8;
+  margin-bottom: 12px;
+}
+
+.product-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* MUY IMPORTANTE para que no se corte */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.4s ease;
+}
+
+
+.product-image-wrapper .back {
+  opacity: 0;
+}
+
+.search-result-item:hover .back {
+  opacity: 1;
+}
+
+.search-result-item:hover .front {
+  opacity: 0;
+}
+
+.result-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding-left: 4px;
+  width: 100%;
+}
+
+.result-info .name {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.result-info .price {
+  font-size: 17px;
+  font-weight: 400;
+  color: #000;
+  text-align: left;
+}
+ 
+         .nav-desktop ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-desktop ul li {
+            margin: 0 15px;
+        }
+        
+        .nav-desktop ul li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-desktop ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #000; /* Color de subrayado */
+            transition: width 0.3s ease;
+        }
+        
+        .nav-desktop ul li a:hover:after {
+            width: 100%;
+        }
+
+    .container {
+  max-width: 420px;
+  margin: 6rem auto;
+  padding: 3rem;
+  border-radius: 10px;
+}
+
+    h2 { text-align: center; margin-bottom: 2rem; }
+    label {
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .forgot { text-align: right; font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .forgot a {
+      color: #233f32;
+      text-decoration: underline;
+    }
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      background-color: #233f32;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+   button[type="submit"] {
+  width: 106%;
+}
+
+input[type="email"] {
+  width: 120%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+}
+
+input[type="email"]:focus {
+  border-color: #233f32;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(35, 63, 50, 0.1);
+}
+
+   button[type="submit"] {
+  width: 120%;
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-icon line {
+  stroke: #000;
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition: all 0.3s ease;
+}
+
+.menu-icon .top,
+.menu-icon .middle,
+.menu-icon .bottom {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center;
+}
+
+/* ANIMACIÓN AL ESTADO "OPEN" */
+.menu-icon.open .top {
+  transform: rotate(45deg) translate(0, 6px);
+}
+
+.menu-icon.open .middle {
+  opacity: 0;
+}
+
+.menu-icon.open .bottom {
+  transform: rotate(-45deg) translate(0, -6px);
+}
+
+
+
+
+/* SIDEBAR ESTILO NUDE PROJECT */
+.sidebar {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  z-index: 1500; /* Asegúrate de que sea menor que el popup */
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 2rem;
+}
+
+/* Mostrar el sidebar al activar */
+.sidebar.active {
+  transform: translateX(0);
+}
+
+
+.sidebar a {
+  text-decoration: none;
+  color: #233f32;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  position: relative;
+  margin-bottom: 1.5rem;
+  transition: color 0.3s ease;
+  display: inline-flex;       /* CAMBIO CLAVE */
+  align-self: flex-start;     /* EVITA ESTIRAMIENTO */
+}
+
+.sidebar a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: currentColor;
+  transition: width 0.3s ease;
+}
+
+.sidebar a:hover::after {
+  width: 100%;
+}
+
+        
+
+.close-sidebar {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  align-self: flex-end;
+  cursor: pointer;
+  margin-bottom: 2rem;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 20px;
+    padding-bottom: 50px;
+  border-top: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: white;
+}
+
+
+.sidebar-link a {
+  text-decoration: none;
+  color: black;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 25px;
+}
+
+.sidebar-link,
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #233f32;
+  font-size: 18px;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 2px;
+    margin-top: 0.5px;
+  cursor: pointer;
+font-weight: 550;
+position: relative;
+transition: color 0.3s ease;
+}
+
+.sidebar-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+
+.lang-btn:hover {
+  opacity: 1;
+  
+}
+
+.lang-btn:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #000; /* Color de subrayado */
+            transition: width 0.3s ease;
+        }
+        
+        .lang-btn:hover:after {
+            width: 5%;
+        }
+
+
+/* Mostrar nav links en pantallas grandes */
+.nav-desktop {
+  display: block;
+}
+
+/* Ocultar botón hamburguesa en pantallas grandes */
+.menu-toggle {
+  display: none;
+}
+
+/* En pantallas pequeñas: ocultar nav links y mostrar hamburguesa */
+@media (max-width: 1400px) {
+  .nav-desktop {
+    display: none !important;
+  }
+
+  .menu-toggle {
+    display: block !important;
+  }
+}
+
+
+
+.languages-toggle {
+  text-decoration: none;
+  color: black;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-right: 100px;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background: none;
+  line-height: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative; /* 🔑 para que el ::after se posicione bien */
+  user-select: none;
+  transition: color 0.3s ease;
+  transform: translateY(1px); /* Ajustá a 1px o 3px si querés más fino */
+}
+
+.languages-toggle::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #000;
+  transition: width 0.3s ease;
+}
+
+.languages-toggle:hover::after {
+  width: 100%;
+}
+
+.language-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 30px;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  width: 460px; /* antes era 300px */
+  font-family: 'Poppins', sans-serif;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  border-radius: 4px;
+}
+
+
+  .language-popup.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .language-popup button.close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+.language-toggle {
+  text-decoration: none;
+  color: #000;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-right: 8px;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background: none;
+  line-height: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative; /* 🔑 para que el ::after se posicione bien */
+  user-select: none;
+  transition: color 0.3s ease;
+  transform: translateY(1px); /* Ajustá a 1px o 3px si querés más fino */
+}
+
+.language-toggle::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #000;
+  transition: width 0.3s ease;
+}
+
+.language-toggle:hover::after {
+  width: 100%;
+}
+
+.cart-item img {
+  width: 145px;          /* Aumenta el tamaño de la imagen */
+  height: auto;
+  object-fit: contain;
+  margin-right: 1.2rem;  /* Espacio entre imagen y texto */
+  flex-shrink: 0;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;   /* Centra verticalmente imagen y contenido */
+  gap: 1rem;             /* Espacio entre imagen y detalles */
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+
+.cart-item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cart-item-details h4 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.cart-item-details p {
+  font-size: 0.85rem;
+  color: #333;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.cart-item-price {
+  font-weight: bold;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  width: fit-content;
+  padding: 2px 4px;
+  height: 36px;
+  font-size: 16px;
+}
+
+.quantity-selector button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #555;
+  padding: 0 10px;
+}
+
+.quantity-selector input {
+  border: none;
+  text-align: center;
+  width: 24px;
+  font-size: 16px;
+  outline: none;
+  pointer-events: none;
+  background: transparent;
+  color: #000;
+}
+
+.cart-item {
+  position: relative;
+}
+
+.cart-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cart-item.loading .cart-loading-overlay {
+  opacity: 1;
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #333;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cart-item-price {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+  </style>
+</head>
+<body>
+  <div id="loader" class="loader">
+    <img src="images/logo cherry png.png" alt="Sucesso Logo">
+  </div>
+
+<header class="navbar">
+<div class="navbar-left">
+    <button class="menu-toggle" id="menu-toggle">
+      <svg class="menu-icon" width="24" height="24" viewBox="0 0 24 24">
+        <line class="top" x1="3" y1="6" x2="21" y2="6" />
+        <line class="middle" x1="3" y1="12" x2="21" y2="12" />
+        <line class="bottom" x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+  </div>
+
+
+
+
+  <div class="nav-desktop">
+    <ul>
+      <li><a href="index.html" class="nav-link" data-i18n="nav_new_in">New In</a></li>
+      <li><a href="tees.html" class="nav-link" data-i18n="nav_tees">Tees</a></li>
+      <li><a href="about.html" class="nav-link" data-i18n="nav_about">About</a></li>
+    </ul>
+  </div>
+  
+   <div class="navbar-center">
+    <img src="images/logo sucesso png.png" alt="Nude Logo" class="logo" style="width: 130px; height: auto;"/>
+  </div>
+
+  <div class="navbar-right">
+    <div class="language-toggle" id="languageToggle">EN | ES</div>
+
+    <button class="search-toggle" onclick="toggleSearchBar()" aria-label="Abrir búsqueda">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </button>
+
+    <a id="account-link" href="login.html" class="account-button">
+      <img src="images/icon account.png" margin-right="1.5rem"; alt="Cuenta" class="account-icon" />
+    </a>
+    
+  </div>
+</header>
+
+  <div class="search-bar" id="searchBar">
+    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input type="text" placeholder="Buscar...">
+    <button class="close-search" onclick="toggleSearchBar()" aria-label="Cerrar búsqueda">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="search-results" id="searchResults"></div>
+  <div class="overlay" id="overlay" onclick="toggleSearchBar()"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD3u2GKMSAKC_1Cd88KA-rxTOf_Jnt3fuM",
+    authDomain: "sucesso-74f7c.firebaseapp.com",
+    projectId: "sucesso-74f7c",
+    storageBucket: "sucesso-74f7c.appspot.com",
+    messagingSenderId: "878844661636",
+    appId: "1:878844661636:web:6382f86f18201aecfdd7d1"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  const accountLink = document.getElementById("account-link");
+  if (accountLink) {
+    accountLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          window.location.href = "mi-cuenta.html";
+        } else {
+          window.location.href = "login.html";
+        }
+      });
+    });
+  }
+
+  // 🔄 Actualizar botón del sidebar según el estado de sesión
+  const sidebarLink = document.getElementById("sidebar-account-link");
+  const sidebarText = document.getElementById("sidebar-account-text");
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      sidebarText.textContent = "My Account";
+      sidebarLink.href = "mi-cuenta.html";
+    } else {
+      sidebarText.textContent = "Log In";
+      sidebarLink.href = "login.html";
+    }
+  });
+
+  // 🔍 Búsqueda
+  const input = document.querySelector('.search-bar input');
+  const resultsContainer = document.getElementById('searchResults');
+  let allProducts = [];
+
+  async function loadProducts() {
+    try {
+      const querySnapshot = await getDocs(collection(db, "productos"));
+      allProducts = [];
+      querySnapshot.forEach(doc => {
+        const data = doc.data();
+        if (data.titulo && data.precio !== undefined && data.imagen_frontal && data.imagen_trasera) {
+          allProducts.push({
+            titulo: data.titulo,
+            nombre: data.nombre,
+            precio: Number(data.precio),
+            imagen_frontal: data.imagen_frontal.replace(/\\/g, '/'),
+            imagen_trasera: data.imagen_trasera.replace(/\\/g, '/'),
+            keywords: Array.isArray(data.keywords) ? data.keywords : []
+          });
+        }
+      });
+      console.log("Productos cargados:", allProducts);
+    } catch (error) {
+      console.error("Error al cargar productos:", error);
+    }
+  }
+
+  function renderResults(filtered) {
+    resultsContainer.innerHTML = '';
+    if (filtered.length === 0) {
+      resultsContainer.innerHTML = `<div style="padding: 20px; font-size: 14px;">No se encontraron resultados</div>`;
+    } else {
+      filtered.forEach(product => {
+        const item = document.createElement('a');
+        item.className = 'search-result-item';
+        item.href = `product-page.html?nombre=${product.nombre}`;
+        item.innerHTML = `
+          <div class="product-image-wrapper">
+            <img src="${product.imagen_frontal}" class="front" alt="${product.titulo}">
+            <img src="${product.imagen_trasera}" class="back" alt="${product.titulo}">
+          </div>
+          <div class="result-info">
+            <span class="name">${product.titulo}</span>
+            <span class="price">$${product.precio.toFixed(2)}</span>
+          </div>
+        `;
+        resultsContainer.appendChild(item);
+      });
+    }
+    resultsContainer.style.display = 'grid';
+  }
+
+  let searchTimeout;
+
+  if (input) {
+    input.addEventListener('input', function () {
+      clearTimeout(searchTimeout);
+      const query = input.value.toLowerCase().trim();
+
+      searchTimeout = setTimeout(() => {
+        if (query.length === 0) {
+          resultsContainer.style.display = 'none';
+          return;
+        }
+
+        const filtered = allProducts.filter(product =>
+          product.titulo.toLowerCase().includes(query) ||
+          product.nombre.toLowerCase().includes(query) ||
+          product.keywords.some(k => k.toLowerCase().includes(query))
+        );
+
+        renderResults(filtered);
+      }, 1000);
+    });
+  }
+
+  window.toggleSearchBar = function () {
+    const searchBar = document.getElementById('searchBar');
+    const overlay = document.getElementById('overlay');
+    const results = document.getElementById('searchResults');
+    const isActive = searchBar.classList.contains('active');
+
+    if (isActive) {
+      searchBar.classList.add('hiding');
+      searchBar.classList.remove('active');
+      overlay.style.display = 'none';
+      results.style.display = 'none';
+      setTimeout(() => {
+        searchBar.classList.remove('hiding');
+      }, 200);
+    } else {
+      searchBar.classList.add('active');
+      overlay.style.display = 'block';
+      input.focus();
+    }
+  };
+
+  loadProducts();
+</script>
+
+
+<!-- Formulario -->
+  <div class="container">
+    <h2>Recuperar Contraseña</h2>
+    <form id="reset-form">
+    <label for="email">Correo electrónico</label>
+    <input type="email" id="email" placeholder="Correo electrónico" required />
+
+      <button type="submit">Enviar correo de recuperación</button>
+      <div class="success" id="success-message"></div>
+      <div class="error" id="error-message"></div>
+    </form>
+  </div>
+
+<div id="language-popup" class="language-popup">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <strong style="font-size: 12px; letter-spacing: 1px;">LANGUAGE SETTINGS</strong>
+    <button class="close-btn" onclick="closeLanguagePopup()">&times;</button>
+  </div>
+  <label for="language-select" style="font-size: 10px; display: block; margin-bottom: 8px;">SELECT LANGUAGE:</label>
+  <select id="language-select" style="width: 100%; padding: 10px; font-size: 12px; border: 1px solid #ccc;">
+    <option value="en">English</option>
+    <option value="es">Español</option>
+  </select>
+  <button onclick="saveLanguage()" style="width: 100%; margin-top: 20px; padding: 10px; background: #233f32; color: white; font-size: 12px; border: none; cursor: pointer; text-transform: uppercase;">Save</button>
+</div>
+
+<script>
+  const popup = document.getElementById("language-popup");
+  const trigger = document.getElementById("openLanguagePopup");
+  const select = document.getElementById("language-select");
+
+  trigger.addEventListener("click", (e) => {
+    e.preventDefault();
+    const savedLang = localStorage.getItem("preferredLang");
+    const currentLang = savedLang || document.documentElement.lang || "en";
+    select.value = currentLang; // Mostrar idioma actual
+    popup.classList.add("show");
+  });
+
+  function closeLanguagePopup() {
+    popup.classList.remove("show");
+  }
+
+function saveLanguage() {
+  const lang = select.value;
+  localStorage.setItem("preferredLang", lang); // Guardar idioma
+  setLanguage(lang);
+  closeLanguagePopup();
+
+  // 👇 Esto forzará que el carrito se re-renderice con las etiquetas traducidas
+  if (typeof updateCart === "function") {
+    updateCart();
+  }
+}
+
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(res => res.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        document.documentElement.lang = lang;
+      })
+      .catch(err => console.error("Error cargando idioma:", err));
+  }
+
+  // Al cargar la página, aplicar idioma guardado
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("preferredLang") || "en";
+    select.value = savedLang;
+    setLanguage(savedLang);
+  });
+</script>
+
+
+  <script>
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("loader");
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 2500);
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("abrir") === "carrito") {
+        const cartBtn = document.getElementById("cart-btn");
+        if (cartBtn) {
+          setTimeout(() => cartBtn.click(), 300); // espera a que todo cargue
+        }
+      }
+    });
+  </script>
+
+  <script src="script.js"></script>
+  <script src="cart.js"></script>
+  <script src="styles.css"></script>
+
+<script>
+  const langSwitcher = document.getElementById("languageSwitcher");
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(response => response.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        localStorage.setItem("preferredLang", lang);
+      })
+      .catch(error => console.error("Error cargando idioma:", error));
+  }
+
+  langSwitcher.addEventListener("change", (e) => {
+    setLanguage(e.target.value);
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("preferredLang") || "en";
+    langSwitcher.value = savedLang;
+    setLanguage(savedLang);
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const langToggleHeader = document.getElementById("languageToggle");
+  const langToggleSidebar = document.getElementById("languageToggleSidebar");
+  const popup = document.getElementById("language-popup");
+  const languageSelect = document.getElementById("language-select");
+  const sidebar = document.querySelector(".sidebar");
+  const overlay = document.getElementById("overlay");
+
+  const currentLang = localStorage.getItem("preferredLang") || "en";
+  languageSelect.value = currentLang;
+
+  function updateToggleText(lang) {
+    const text = lang === "es" ? "ES | EN" : "EN | ES";
+    if (langToggleHeader) langToggleHeader.textContent = text;
+    if (langToggleSidebar) langToggleSidebar.textContent = text;
+  }
+
+  function openLanguagePopup() {
+    popup.classList.add("show");
+    languageSelect.value = localStorage.getItem("preferredLang") || "en";
+  }
+
+  if (langToggleHeader) {
+    langToggleHeader.addEventListener("click", () => {
+      openLanguagePopup();
+    });
+  }
+
+  if (langToggleSidebar) {
+  langToggleSidebar.addEventListener("click", () => {
+    openLanguagePopup(); // ✅ Mantener el sidebar abierto
+  });
+}
+
+
+
+  window.saveLanguage = function () {
+    const selectedLang = languageSelect.value;
+    localStorage.setItem("preferredLang", selectedLang);
+    setLanguage(selectedLang);
+    updateToggleText(selectedLang);
+    popup.classList.remove("show");
+    if (typeof updateCart === "function") updateCart();
+  };
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(res => res.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        document.documentElement.lang = lang;
+      })
+      .catch(err => console.error("Error cargando idioma:", err));
+  }
+
+  updateToggleText(currentLang);
+  setLanguage(currentLang);
+});
+</script>
+
+
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <a href="index.html" data-i18n="nav_new_in">NEW IN</a>
+  <a href="tees.html" data-i18n="nav_tees">TEES</a>
+  <a href="about.html" data-i18n="nav_about">ABOUT</a>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-auth-lang">
+      <a id="sidebar-account-link" href="login.html" class="sidebar-link">
+        <img src="images/icon account.png" alt="Login" class="sidebar-icon" />
+        <span id="sidebar-account-text" data-i18n="sidebar_login">Log In</span>
+      </a>
+      <div class="lang-btn" id="languageToggleSidebar">EN | ES</div>
+    </div>
+  </div>
+</aside>
+
+  <!-- SCRIPT -->
+<script>
+  const toggleBtn = document.querySelector('.menu-toggle');
+  const sidebar = document.querySelector('.sidebar');
+  const closeBtn = document.querySelector('.close-sidebar');
+
+toggleBtn.addEventListener('click', () => {
+  const icon = toggleBtn.querySelector('.menu-icon');
+  sidebar.classList.toggle('active');
+  icon.classList.toggle('open');
+});
+
+closeBtn.addEventListener('click', () => {
+  const icon = toggleBtn.querySelector('.menu-icon');
+  sidebar.classList.remove('active');
+  icon.classList.remove('open');
+});
+
+
+</script>
+
+<script>
+function updateLanguageToggleVisibility() {
+  const navDesktop = document.querySelector('.nav-desktop');
+  const languageToggle = document.getElementById('languageToggle');
+
+  if (!navDesktop || !languageToggle) return;
+
+  const navVisible = window.getComputedStyle(navDesktop).display !== 'none';
+
+  // Mostrar solo si los nav links están visibles (pantalla grande)
+  languageToggle.style.display = navVisible ? 'flex' : 'none';
+}
+
+// Ejecutar al cargar
+document.addEventListener("DOMContentLoaded", updateLanguageToggleVisibility);
+
+// Ejecutar al redimensionar
+window.addEventListener("resize", updateLanguageToggleVisibility);
+</script>
+
+
+<script>
+const menuToggle = document.querySelector('.menu-toggle');
+const menuIcon = document.querySelector('.menu-icon');
+
+menuToggle.addEventListener('click', () => {
+  menuIcon.classList.toggle('open');
+});
+</script>
+  <script src="cart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

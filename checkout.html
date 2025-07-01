@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout - Sucesso</title>
+    <link rel="icon" href="images\logo cherry png.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1a1a1a;
+      --gray: #e5e5e5;
+      --accent: #233f32;
+      --right-bg: #f3f3f3;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    header.navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 70px;
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 1001;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .logo {
+      height: 35px;
+      margin-top: 20px;
+    }
+
+    .checkout-wrapper {
+      display: flex;
+      max-width: 100%;
+      margin-top: 70px;
+      height: calc(100vh - 70px);
+    }
+
+    .form-section {
+      flex: 1;
+      padding: 2rem 4rem;
+      overflow-y: scroll;
+      height: 100%;
+    }
+
+    .summary-section {
+      width: 50%;
+      background: var(--right-bg);
+      height: 100%;
+      padding: 3rem 2rem;
+      position: relative;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 500;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--gray);
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .cart-item img {
+  width: auto;
+  height: 150px;
+  object-fit: contain;
+  border-radius: 2px;
+  margin-right: 1rem;
+  background-color: #e5e5e5e5;
+}
+
+
+    .cart-info {
+      flex: 1;
+    }
+
+    .cart-info p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .price-section {
+      text-align: right;
+      margin-top: 1rem;
+    }
+
+    .price-section p {
+      margin: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .total-section {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    button[type="submit"] {
+  display: inline-block;
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #333;
+  padding: 0.75rem 1.5rem;
+  border-radius: 2px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+button[type="submit"]:hover {
+  background-color: #233f32;
+  color: #ffffff;
+}
+
+
+    .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  margin-bottom: 1rem;
+}
+
+.accordion {
+  border-radius: 6px;
+  border: 1px solid #e5e5e5;
+  overflow: hidden;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.accordion-header input[type="radio"] {
+  accent-color: var(--accent);
+  width: 20px;
+  height: 20px;
+}
+
+.accordion-panel {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+  background: #fafafa;
+  padding: 0 1rem;
+}
+
+.accordion-panel.open {
+  max-height: 400px;
+  opacity: 1;
+  padding: 1rem;
+}
+
+.file-wrapper {
+  margin-top: 0.75rem;
+}
+
+.file-wrapper label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.file-wrapper input[type="file"] {
+  border: 1px solid var(--gray);
+  padding: 0.5rem;
+  border-radius: 4px;
+  width: 100%;
+  background: white;
+}
+
+.file-upload {
+  margin-top: 1rem;
+}
+
+.file-upload label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.upload-btn {
+  display: inline-block;
+  background-color: transparent;
+      color: #333;
+      border: 1px solid #333;
+  padding: 0.4rem 1rem; /* más pequeño */
+  border-radius: 2px;
+  font-weight: 600;
+  font-size: 0.85rem;    /* más chico también */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+background-color: #233f32;
+      color: #ffffff;
+}
+
+
+
+.file-name {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+  display: block;
+}
+
+.label-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.envio-precio {
+  font-weight: 600;
+}
+
+.pais-region-wrapper {
+  position: relative;
+}
+
+/* Label flotante perfectamente dentro del borde */
+.pais-region-wrapper label {
+  position: absolute;
+  top: 7px;
+  left: 14px;
+  background-color: white;
+  padding: 0 4px;
+  font-size: 0.75rem;
+  color: #888;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Select con apariencia nativa y padding ajustado */
+.pais-region-wrapper select {
+  background-color: white;
+  color: #1a1a1a;
+  font-weight: 400;
+  width: 100%;
+  padding: 1.75rem 0.75rem 0.75rem 0.75rem;
+  border: 1px solid var(--gray);
+  border-radius: 4px;
+  font-size: 1rem;
+  z-index: 1;
+  appearance: auto; /* Esto mantiene la flecha del navegador */
+}
+
+/* Opciones internas iguales al select de Estado */
+.pais-region-wrapper select option {
+  background-color: white;
+  color: #1a1a1a;
+  font-weight: 400;
+}
+
+.custom-upload {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.preview-container {
+  position: relative;
+  margin-top: 1rem;
+  max-width: 300px;
+}
+
+.preview-img {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 6px;
+  display: none;
+  background: #f0f0f0;
+  padding: 4px;
+}
+
+.remove-preview {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 2;
+}
+
+
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <a href="index.html"><img src="images/logo sucesso png.png" alt="Sucesso Logo" class="logo" /></a>
+  </header>
+
+  <div class="checkout-wrapper">
+    <section class="form-section">
+      <form id="checkout-form">
+  <h2>Información de Contacto</h2>
+  <div class="form-row">
+    <div class="form-group">
+      <input type="email" id="email" placeholder="Correo Electrónico" required>
+    </div>
+    <div class="form-group">
+      <input type="tel" id="phone" placeholder="Teléfono" required>
+    </div>
+  </div>
+
+  <h2>Entrega</h2>
+<div class="form-group pais-region-wrapper">
+  <label for="pais">País/Región</label>
+  <select id="pais" required>
+    <option value="Venezuela" selected>Venezuela</option>
+  </select>
+</div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <input type="text" id="nombre" placeholder="Nombre" required>
+    </div>
+    <div class="form-group">
+      <input type="text" id="apellido" placeholder="Apellido" required>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <input type="text" id="documento" placeholder="Número de Documento" required>
+  </div>
+
+  <div class="form-group">
+    <input type="text" id="direccion" placeholder="Dirección" required>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <input type="text" id="ciudad" placeholder="Ciudad" required>
+    </div>
+    <div class="form-group">
+      <input type="text" id="municipio" placeholder="Municipio" required>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+  <select id="estado" required>
+    <option value="Capital" selected>Capital</option>
+    <option value="Amazonas">Amazonas</option>
+    <option value="Anzoátegui">Anzoátegui</option>
+    <option value="Apure">Apure</option>
+    <option value="Aragua">Aragua</option>
+    <option value="Barinas">Barinas</option>
+    <option value="Bolívar">Bolívar</option>
+    <option value="Carabobo">Carabobo</option>
+    <option value="Cojedes">Cojedes</option>
+    <option value="Delta Amacuro">Delta Amacuro</option>
+    <option value="Falcón">Falcón</option>
+    <option value="Guárico">Guárico</option>
+    <option value="Lara">Lara</option>
+    <option value="Mérida">Mérida</option>
+    <option value="Miranda">Miranda</option>
+    <option value="Monagas">Monagas</option>
+    <option value="Nueva Esparta">Nueva Esparta</option>
+    <option value="Portuguesa">Portuguesa</option>
+    <option value="Sucre">Sucre</option>
+    <option value="Táchira">Táchira</option>
+    <option value="Trujillo">Trujillo</option>
+    <option value="Vargas">Vargas</option>
+    <option value="Yaracuy">Yaracuy</option>
+    <option value="Zulia">Zulia</option>
+  </select>
+</div>
+
+    <div class="form-group">
+      <input type="text" id="postal" placeholder="Código Postal" required>
+    </div>
+  </div>
+
+<h2>Métodos de Envío</h2>
+<div class="accordion" id="envio-accordion">
+  <div class="accordion-item">
+    <label class="accordion-header">
+  <input type="radio" name="metodo-envio" value="capital" data-costo="3.00" checked>
+  <div class="label-content">
+    <span>CAPITAL</span>
+    <span class="envio-precio">$3.00</span>
+  </div>
+</label>
+    <div class="accordion-panel">
+      <p>Envío rápido dentro de la Capital. Tiempo estimado: 1-2 días hábiles.</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <label class="accordion-header">
+  <input type="radio" name="metodo-envio" value="resto" data-costo="0.00">
+  <div class="label-content">
+    <span>RESTO DE VENEZUELA</span>
+    <span class="envio-precio">GRATIS</span>
+  </div>
+</label>
+    <div class="accordion-panel">
+      <p>El cliente será quien asume el costo de envío una vez retire su pedido en el MRW especificado</p>
+    </div>
+  </div>
+</div>
+
+
+<h2>Métodos de Pago</h2>
+
+<div class="accordion">
+  <div class="accordion-item">
+    <label class="accordion-header">
+      <input type="radio" name="metodo-pago" value="pago-movil" checked>
+      <span>Pago Móvil</span>
+    </label>
+    <div class="accordion-panel">
+  <p>Banco: Banesco<br>Número: 0414-1234567<br>Cédula: V-12345678<br>Nombre: SUCESSO C.A.</p>
+  <div class="file-upload">
+  <label for="ref-pago-movil">Adjuntar referencia</label>
+  <div class="custom-upload">
+    <button type="button" class="upload-btn" onclick="document.getElementById('ref-pago-movil').click()">Seleccionar archivo</button>
+<input type="file" id="ref-pago-movil" name="comprobante-pago-movil" accept="image/*" style="display: none;">
+  </div>
+  <div class="preview-container" id="container-pago-movil" style="display: none;">
+    <span class="remove-preview" onclick="eliminarPreview('ref-pago-movil', 'preview-pago-movil', 'container-pago-movil')">x</span>
+    <img class="preview-img" id="preview-pago-movil" alt="Preview" />
+  </div>
+</div>
+  </div>
+</div>
+
+
+
+  <div class="accordion-item">
+    <label class="accordion-header">
+      <input type="radio" name="metodo-pago" value="transferencia">
+      <span>Transferencia Bancaria Nacional</span>
+    </label>
+    <div class="accordion-panel">
+  <p>
+    Banco: Mercantil<br>
+    Cuenta: 0105-1234-5678-9012-3456<br>
+    Nombre: SUCESSO C.A.<br>
+    RIF: J-12345678-9
+  </p>
+  <div class="file-upload">
+  <label for="ref-transferencia">Adjuntar referencia</label>
+  <div class="custom-upload">
+    <button type="button" class="upload-btn" onclick="document.getElementById('ref-transferencia').click()">Seleccionar archivo</button>
+    <input type="file" id="ref-transferencia" name="comprobante-transferencia" accept="image/*" style="display: none;">
+  </div>
+  <div class="preview-container" id="container-transferencia" style="display: none;">
+    <span class="remove-preview" onclick="eliminarPreview('ref-transferencia', 'preview-transferencia', 'container-transferencia')">x</span>
+    <img class="preview-img" id="preview-transferencia" alt="Preview" />
+  </div>
+</div>
+  </div>
+</div>
+
+
+
+  <div class="accordion-item">
+    <label class="accordion-header">
+      <input type="radio" name="metodo-pago" value="paypal">
+      <span>PayPal</span>
+    </label>
+    <div class="accordion-panel">
+      <p>Email: pagos@sucesso.com<br>Moneda: USD</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <label class="accordion-header">
+      <input type="radio" name="metodo-pago" value="zelle">
+      <span>Zelle</span>
+    </label>
+    <div class="accordion-panel">
+      <p>Email: zelle@sucesso.com<br>Nombre: SUCESSO C.A.</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <label class="accordion-header">
+      <input type="radio" name="metodo-pago" value="efectivo">
+      <span>Pago en Efectivo</span>
+    </label>
+    <div class="accordion-panel">
+      <p>El pago se realizará contra entrega.</p>
+    </div>
+  </div>
+</div>
+
+
+  <button type="submit">Confirmar Compra</button>
+</form>
+
+    </section>
+
+    <section class="summary-section">
+      <h2>Resumen del Pedido</h2>
+      <div id="cart-items"></div>
+      <div class="price-section">
+        <p><strong>Subtotal:</strong> <span id="subtotal-value">$0.00</span></p>
+        <p><strong>Envío:</strong> <span id="envio-cost">$0.00</span></p>
+      </div>
+      <div class="total-section">
+        Total: <span id="total-final">$0.00</span>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cartContainer = document.getElementById('cart-items');
+      const subtotalValue = document.getElementById('subtotal-value');
+      const totalFinal = document.getElementById('total-final');
+
+      const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      let subtotal = 0;
+
+      if (carrito.length === 0) {
+        cartContainer.innerHTML = '<p>No hay productos en el carrito.</p>';
+        return;
+      }
+
+      cartContainer.innerHTML = '';
+
+      carrito.forEach(producto => {
+        const nombre = producto.nombre || producto.name || 'Producto';
+        const cantidad = producto.cantidad || producto.quantity || 1;
+        const precioRaw = producto.precio || producto.price || "$0";
+        const precio = typeof precioRaw === 'string' ? parseFloat(precioRaw.replace(/[^0-9.-]+/g, '')) : precioRaw;
+        const imagen = producto.image || producto.imagen_frontal || 'images/default.jpg';
+
+        const item = document.createElement('div');
+        item.className = 'cart-item';
+        item.innerHTML = `
+          <img src="${imagen}" alt="${nombre}">
+          <div class="cart-info">
+            <p><strong>${nombre}</strong></p>
+              <p>Talla: ${producto.size || 'Única'}</p>
+            <p>Cantidad: ${cantidad}</p>
+          </div>
+          <div>
+            $${(precio * cantidad).toFixed(2)}
+          </div>
+        `;
+
+        cartContainer.appendChild(item);
+        subtotal += precio * cantidad;
+      });
+
+      subtotalValue.textContent = `$${subtotal.toFixed(2)}`;
+      totalFinal.textContent = `$${subtotal.toFixed(2)}`;
+    });
+  </script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const envioRadios = document.querySelectorAll('input[name="metodo-envio"]');
+
+    function toggleEnvioPanels() {
+      document.querySelectorAll('#envio-accordion .accordion-panel').forEach(panel => {
+        panel.classList.remove('open');
+      });
+
+      const selected = document.querySelector('#envio-accordion input[name="metodo-envio"]:checked');
+      if (selected) {
+        const panel = selected.closest('.accordion-item').querySelector('.accordion-panel');
+        panel.classList.add('open');
+      }
+    }
+
+    envioRadios.forEach(radio => {
+      radio.addEventListener('change', toggleEnvioPanels);
+    });
+
+    toggleEnvioPanels(); // Ejecutar al cargar
+  });
+</script>
+
+
+<script>
+  function mostrarPreview(inputFile, previewId, containerId) {
+    const preview = document.getElementById(previewId);
+    const container = document.getElementById(containerId);
+    if (inputFile.files && inputFile.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        preview.src = e.target.result;
+        preview.style.display = "block";
+        container.style.display = "block";
+      };
+      reader.readAsDataURL(inputFile.files[0]);
+    }
+  }
+
+  function eliminarPreview(inputId, previewId, containerId) {
+    document.getElementById(inputId).value = "";
+    document.getElementById(previewId).src = "";
+    document.getElementById(previewId).style.display = "none";
+    document.getElementById(containerId).style.display = "none";
+  }
+
+  document.getElementById("ref-pago-movil").addEventListener("change", function () {
+    mostrarPreview(this, "preview-pago-movil", "container-pago-movil");
+  });
+
+  document.getElementById("ref-transferencia").addEventListener("change", function () {
+    mostrarPreview(this, "preview-transferencia", "container-transferencia");
+  });
+</script>
+
+<script>
+  document.getElementById('estado').addEventListener('change', () => {
+    const estado = document.getElementById('estado').value;
+    if (estado === 'Capital') {
+      document.querySelector('input[name="metodo-envio"][value="capital"]').checked = true;
+    } else {
+      document.querySelector('input[name="metodo-envio"][value="resto"]').checked = true;
+    }
+
+    // Forzar reapertura de panel correcto
+    const evento = new Event('change');
+    document.querySelector('input[name="metodo-envio"]:checked').dispatchEvent(evento);
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const envioRadios = document.querySelectorAll('input[name="metodo-envio"]');
+    const subtotalElement = document.getElementById("subtotal-value");
+    const envioCostElement = document.getElementById("envio-cost");
+    const totalFinalElement = document.getElementById("total-final");
+
+    let subtotal = 0;
+
+    // Obtener subtotal inicial desde HTML
+    if (subtotalElement) {
+      subtotal = parseFloat(subtotalElement.textContent.replace('$', '')) || 0;
+    }
+
+    function actualizarTotal() {
+      const envioSeleccionado = document.querySelector('input[name="metodo-envio"]:checked');
+      const costoEnvio = parseFloat(envioSeleccionado.getAttribute('data-costo')) || 0;
+
+      envioCostElement.textContent = `$${costoEnvio.toFixed(2)}`;
+      totalFinalElement.textContent = `$${(subtotal + costoEnvio).toFixed(2)}`;
+    }
+
+    envioRadios.forEach(radio => {
+      radio.addEventListener('change', actualizarTotal);
+    });
+
+    actualizarTotal(); // Ejecutar al cargar
+  });
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD3u2GKMSAKC_1Cd88KA-rxTOf_Jnt3fuM",
+  authDomain: "sucesso-74f7c.firebaseapp.com",
+  projectId: "sucesso-74f7c",
+  storageBucket: "sucesso-74f7c.appspot.com",
+  messagingSenderId: "878844661636",
+  appId: "1:878844661636:web:6382f86f18201aecfdd7d1"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+let currentUser = null;
+
+// Verificar sesión activa al cargar
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    currentUser = user;
+  } else {
+    currentUser = null;
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById("checkout-form");
+
+  // MÉTODOS DE PAGO - abrir/cerrar paneles
+  const metodoPagoRadios = document.querySelectorAll('input[name="metodo-pago"]');
+  function togglePagoPanels() {
+    document.querySelectorAll('.accordion .accordion-panel').forEach(panel => {
+      panel.classList.remove('open');
+    });
+    const selected = document.querySelector('input[name="metodo-pago"]:checked');
+    if (selected) {
+      const panel = selected.closest('.accordion-item').querySelector('.accordion-panel');
+      panel.classList.add('open');
+    }
+  }
+  metodoPagoRadios.forEach(radio => {
+    radio.addEventListener('change', togglePagoPanels);
+  });
+  togglePagoPanels();
+
+  // SUBMIT DEL FORMULARIO
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    let valid = true;
+
+    // Validar campos obligatorios
+    form.querySelectorAll("[required]").forEach(input => {
+      if (!input.value.trim()) {
+        input.reportValidity();
+        valid = false;
+      }
+    });
+
+    // Validar documento
+    const docInput = document.getElementById("documento");
+    const docVal = docInput.value.trim().toUpperCase();
+    const docRegex = /^(V|E)-?\d{5,10}$/;
+    if (!docRegex.test(docVal)) {
+      docInput.setCustomValidity("El número de documento debe comenzar con V o E seguido de 5 a 10 números. Ej: V-12345678 o E12345678");
+      docInput.reportValidity();
+      valid = false;
+    } else {
+      docInput.setCustomValidity("");
+    }
+
+    // Validar comprobantes
+    const metodoPago = document.querySelector('input[name="metodo-pago"]:checked')?.value;
+    if (metodoPago === "pago-movil" && !document.getElementById("ref-pago-movil").files.length) {
+      alert("Debes subir el comprobante de Pago Móvil.");
+      valid = false;
+    }
+    if (metodoPago === "transferencia" && !document.getElementById("ref-transferencia").files.length) {
+      alert("Debes subir el comprobante de Transferencia.");
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    // Verificar carrito
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    if (!carrito.length) {
+      alert("Tu carrito está vacío.");
+      return;
+    }
+
+    // Verificar usuario
+    const user = auth.currentUser;
+if (!user) {
+  alert("Debes iniciar sesión para confirmar tu compra.");
+  window.location.href = "login.html";
+  return;
+}
+
+
+    // Preparar datos
+    const envio = document.querySelector('input[name="metodo-envio"]:checked');
+    const envioCosto = parseFloat(envio.getAttribute("data-costo")) || 0;
+    const subtotal = carrito.reduce((sum, p) => sum + (p.price * p.quantity), 0);
+    const total = subtotal + envioCosto;
+
+    const datosCompra = {
+  uid: user.uid,
+  email: document.getElementById("email").value,
+  telefono: document.getElementById("phone").value,
+  nombre: document.getElementById("nombre").value,
+  apellido: document.getElementById("apellido").value,
+  documento: docVal,
+  direccion: document.getElementById("direccion").value,
+  ciudad: document.getElementById("ciudad").value,
+  municipio: document.getElementById("municipio").value,
+  estado: document.getElementById("estado").value,
+  postal: document.getElementById("postal").value,
+  metodo_envio: envio.value,
+  metodo_pago: metodoPago,
+  items: carrito.map(p => ({
+    nombre: p.name || p.nombre || "Producto",
+    cantidad: p.quantity || p.cantidad || 1,
+    precio: p.price || p.precio || 0,
+    talla: p.size || p.talla || "Única"
+  })),
+  subtotal,
+  envio: envioCosto,
+  total,
+  fecha: serverTimestamp()
+};
+
+try {
+  await addDoc(collection(db, "compras"), datosCompra);
+
+  await emailjs.send("service_8yvqy7r", "template_id2awis", {
+  nombre: datosCompra.nombre || 'N/A',
+  apellido: datosCompra.apellido || 'N/A',
+  email: datosCompra.email || 'N/A',
+  telefono: datosCompra.telefono || 'N/A',
+  documento: datosCompra.documento || 'N/A',
+  direccion: datosCompra.direccion || 'N/A',
+  ciudad: datosCompra.ciudad || 'N/A',
+  municipio: datosCompra.municipio || 'N/A',
+  estado: datosCompra.estado || 'N/A',
+  postal: datosCompra.postal || 'N/A',
+  metodo_envio: datosCompra.metodo_envio || 'N/A',
+  metodo_pago: datosCompra.metodo_pago || 'N/A',
+  subtotal: datosCompra.subtotal?.toFixed(2) || '0.00',
+  envio: datosCompra.envio?.toFixed(2) || '0.00',
+  total: datosCompra.total?.toFixed(2) || '0.00',
+  fecha: new Date().toLocaleString(),
+  items: datosCompra.items.map(i => 
+    `- ${i.nombre} | Talla: ${i.talla} | Cantidad: ${i.cantidad} | Precio: $${i.precio}`
+  ).join('<br>')
+});
+
+
+  localStorage.removeItem("carrito");
+  window.location.href = "thank-you.html";
+
+} catch (err) {
+  console.error("Error al guardar compra:", err);
+  alert("Hubo un error al registrar la compra. Intenta de nuevo.");
+}
+
+  });
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  window.onload = function () {
+    emailjs.init("ZBp0ewAzqXPihpO94"); // Tu USER ID
+  };
+</script>
+
+</body>
+</html>
