@@ -376,19 +376,30 @@ html {
     box-sizing: border-box;
   }
 
- .tees-title {
+  .tees-title {
   color: #233f32;
   text-align: left;
   font-family: "Inter-SemiBold", sans-serif;
-  font-size: 38px;
   letter-spacing: -0.02em;
   font-weight: 600;
   position: relative;
-
   margin-top: 200px;      /* 👈 🔧 ESTE ES EL CAMBIO QUE NECESITÁS */
   margin-left: 6%;
   margin-bottom: 2rem;
   max-width: 90%;
+}
+
+h2[data-i18n="nav_tees"] {
+  font-size: 30px; /* o el tamaño que desees */
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 0.5px solid #ddd; /* línea de división gris claro */
+}
+
+@media (max-width: 768px) {
+  h2[data-i18n="nav_tees"] {
+    border-bottom: none;  /* Quita la línea original en móvil */
+  }
 }
 
 
