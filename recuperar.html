@@ -1218,5 +1218,59 @@ menuToggle.addEventListener('click', () => {
 </script>
   <script src="cart.js"></script>
   <script src="script.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.querySelector('.search-bar input');
+  const resultsContainer = document.getElementById('searchResults');
+  const searchBar = document.getElementById('searchBar');
+  const overlay = document.getElementById('overlay');
+  let allProducts = []; // Esto lo tienes cargado ya con loadProducts()
+  let searchTimeout;
+
+  function hideResults() {
+    resultsContainer.innerHTML = "";
+    resultsContainer.style.display = "none";
+  }
+
+  input.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    const query = input.value.toLowerCase().trim();
+
+    searchTimeout = setTimeout(() => {
+      if (query === "") {
+        hideResults();
+      } else {
+        const filtered = allProducts.filter(product =>
+          product.titulo.toLowerCase().includes(query) ||
+          product.nombre.toLowerCase().includes(query) ||
+          product.keywords.some(k => k.toLowerCase().includes(query))
+        );
+
+        renderResults(filtered); // Ya la tienes definida
+      }
+    }, 1000); // ✅ Mismo delay para mostrar u ocultar
+  });
+
+  window.toggleSearchBar = function () {
+    const isActive = searchBar.classList.contains('active');
+    if (isActive) {
+      searchBar.classList.add('hiding');
+      searchBar.classList.remove('active');
+      overlay.style.display = 'none';
+      hideResults();
+      input.value = "";
+      setTimeout(() => {
+        searchBar.classList.remove('hiding');
+      }, 200);
+    } else {
+      searchBar.classList.add('active');
+      overlay.style.display = 'block';
+      input.focus();
+    }
+  };
+});
+</script>
+
 </body>
 </html>
