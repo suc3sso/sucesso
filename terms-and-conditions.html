@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms & Conditions - Sucesso</title>
+    <link rel="icon" href="images\logo cherry png.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+
+    html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+    .loader {
+      position: fixed;
+      inset: 0;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .loader img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      animation: zoomInClean 2s ease forwards;
+    }
+
+    @keyframes zoomInClean {
+      0% { transform: scale(0.1); opacity: 0; }
+      70% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .account-icon, .cart-icon {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+  
+.cart-icon:hover,
+.search-toggle:hover,
+.account-icon:hover {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+
+    .collection-item .tallas {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      font-size: 0.85rem;
+      text-align: center;
+      color: #233f32;
+      margin-top: 6px;
+      pointer-events: none;
+    }
+
+    .collection-item:hover .tallas {
+      opacity: 1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Syne', sans-serif; background-color: #fff; }
+    header.navbar {
+      position: fixed; top: 0; width: 100%; height: 70px; background-color: white;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 20px; z-index: 1001; border-bottom: 1px solid #e5e5e5;
+    }
+    .navbar-left, .navbar-right {
+      display: flex; align-items: center; gap: 30px;
+    }
+    .navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+    .logo { height: 35px; }
+    .nav-link {
+      text-decoration: none; color: #000; font-weight: 600; font-size: 14px;
+      transition: opacity 0.3s ease;
+    }
+    .nav-link:hover { opacity: 1; }
+    .nav-icon, .search-toggle {
+      background: none; border: none; font-size: 18px; cursor: pointer;
+      color: #000; transition: opacity 0.3s ease;
+    }
+    .nav-icon:hover, .search-toggle:hover { opacity: 0.5; }
+    .overlay {
+      position: fixed; top: 70px; left: 0; width: 100%; height: calc(100% - 70px);
+      background-color: rgba(0, 0, 0, 0.3); z-index: 1000; display: none;
+    }
+    .search-bar {
+      position: fixed; top: 70px; left: 0; width: 100%; height: 42px;
+      background-color: white; display: flex; align-items: center; gap: 10px;
+      padding: 0 20px; border-bottom: 1px solid #e5e5e5;
+      transform: translateY(-100%); opacity: 0; pointer-events: none;
+      transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+      z-index: 1002; will-change: transform, opacity;
+    }
+    .search-bar.active {
+      transform: translateY(0); opacity: 1; pointer-events: auto;
+    }
+    .search-bar.hiding { z-index: 999; }
+    .search-bar input {
+      width: 100%; padding: 8px 0 8px 60px; font-size: 15px;
+      border: none; outline: none; background-color: transparent; color: #000;
+    }
+    .search-icon {
+      margin-right: 0; color: #000; flex-shrink: 0; position: absolute; left: 30px;
+    }
+    .close-search {
+      margin-left: 16px; background: none; border: none; cursor: pointer;
+      color: #000; padding: 4px; display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.3s ease;
+    }
+    .close-search:hover { opacity: 0.5; }
+.search-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: #000;
+  transition: opacity 0.3s ease;
+  margin-top: 2px; /* 👈 Ajustá este valor si querés más o menos bajado */
+}
+
+.search-toggle svg {
+  display: block;
+  stroke: #000;
+}
+
+
+    .search-results {
+  position: fixed;
+  top: 112px;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1001;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  padding: 0;
+  box-sizing: border-box;
+  max-height: calc(100vh - 112px);
+  overflow-y: auto;
+  gap: 1px; /* visualmente simula 0.3px ajustando ancho abajo */
+}
+
+
+.search-result-item {
+  width: 100%;
+  max-width: 375px; /* Más grande, similar a Nude Project */
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-decoration: none;
+  color: #000;
+  padding: 0 10px 32px;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease;
+}
+
+.product-image-wrapper {
+  width: 100%;
+  padding-top: 125%; /* Proporción 4:5 sin usar aspect-ratio */
+  position: relative;
+  background-color: #f8f8f8;
+  margin-bottom: 12px;
+}
+
+.product-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* MUY IMPORTANTE para que no se corte */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.4s ease;
+}
+
+
+.product-image-wrapper .back {
+  opacity: 0;
+}
+
+.search-result-item:hover .back {
+  opacity: 1;
+}
+
+.search-result-item:hover .front {
+  opacity: 0;
+}
+
+.result-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding-left: 4px;
+  width: 100%;
+}
+
+.result-info .name {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.result-info .price {
+  font-size: 17px;
+  font-weight: 400;
+  color: #000;
+  text-align: left;
+}
+ 
+         .nav-desktop ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-desktop ul li {
+            margin: 0 15px;
+        }
+        
+        .nav-desktop ul li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-desktop ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #000; /* Color de subrayado */
+            transition: width 0.3s ease;
+        }
+        
+        .nav-desktop ul li a:hover:after {
+            width: 100%;
+        }
+
+.language-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 30px;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  width: 460px; /* antes era 300px */
+  font-family: 'Poppins', sans-serif;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  border-radius: 4px;
+}
+
+
+  .language-popup.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .language-popup button.close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+ 
+.language-toggle {
+  text-decoration: none;
+  color: #000;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-right: 8px;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background: none;
+  line-height: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative; /* 🔑 para que el ::after se posicione bien */
+  user-select: none;
+  transition: color 0.3s ease;
+  transform: translateY(1px); /* Ajustá a 1px o 3px si querés más fino */
+}
+
+.language-toggle::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #000;
+  transition: width 0.3s ease;
+}
+
+.language-toggle:hover::after {
+  width: 100%;
+}
+
+.cart-item img {
+  width: 145px;          /* Aumenta el tamaño de la imagen */
+  height: auto;
+  object-fit: contain;
+  margin-right: 1.2rem;  /* Espacio entre imagen y texto */
+  flex-shrink: 0;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;   /* Centra verticalmente imagen y contenido */
+  gap: 1rem;             /* Espacio entre imagen y detalles */
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+
+.cart-item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cart-item-details h4 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.cart-item-details p {
+  font-size: 0.85rem;
+  color: #333;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.cart-item-price {
+  font-weight: bold;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  width: fit-content;
+  padding: 2px 4px;
+  height: 36px;
+  font-size: 16px;
+}
+
+.quantity-selector button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #555;
+  padding: 0 10px;
+}
+
+.quantity-selector input {
+  border: none;
+  text-align: center;
+  width: 24px;
+  font-size: 16px;
+  outline: none;
+  pointer-events: none;
+  background: transparent;
+  color: #000;
+}
+
+.cart-item {
+  position: relative;
+}
+
+.cart-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cart-item.loading .cart-loading-overlay {
+  opacity: 1;
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #333;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cart-item-price {
+  font-size: 16px;
+  font-weight: 600;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <img src="images/logo cherry png.png" alt="Sucesso Logo">
+  </div>
+
+  <header class="navbar">
+<button class="menu-toggle" aria-label="Menú">
+  <svg class="menu-icon" viewBox="0 0 32 32" width="28" height="28" stroke-linecap="round">
+    <g class="lines" stroke="currentColor" stroke-width="2" fill="none">
+      <line class="top" x1="6" y1="10" x2="26" y2="10" />
+      <line class="middle" x1="6" y1="16" x2="26" y2="16" />
+      <line class="bottom" x1="6" y1="22" x2="26" y2="22" />
+    </g>
+  </svg>
+</button>
+
+
+
+  <div class="nav-desktop">
+    <ul>
+      <li><a href="index.html" class="nav-link" data-i18n="nav_new_in">New In</a></li>
+      <li><a href="tees.html" class="nav-link" data-i18n="nav_tees">Tees</a></li>
+      <li><a href="about.html" class="nav-link" data-i18n="nav_about">About</a></li>
+    </ul>
+  </div>
+  
+  <div class="navbar-center">
+    <img src="images/logo sucesso png.png" alt="Nude Logo" class="logo" style="width: 130px; height: auto;"/>
+  </div>
+
+  <div class="navbar-right">
+    <div class="language-toggle" id="languageToggle">EN | ES</div>
+
+    <button class="search-toggle" onclick="toggleSearchBar()" aria-label="Abrir búsqueda">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </button>
+
+    <a id="account-link" href="login.html" class="account-button">
+      <img src="images/icon account.png" alt="Cuenta" class="account-icon" />
+    </a>
+    <div style="position: relative; display: flex; align-items: center; margin-left: 0px;">
+      <img src="images/shopping-bag.svg" alt="Carrito" class="cart-icon" id="cart-btn" style="width: 24px; height: 24px; pointer-events: auto;">
+      <span id="cart-count" style="position: absolute; top: -6px; right: -6px; background-color: black; color: white; font-size: 10px; padding: 2px 5px; border-radius: 50%; font-weight: bold;">0</span>
+    </div>
+  </div>
+</header>
+
+  <div class="search-bar" id="searchBar">
+    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input type="text" placeholder="Buscar...">
+    <button class="close-search" onclick="toggleSearchBar()" aria-label="Cerrar búsqueda">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="search-results" id="searchResults"></div>
+  <div class="overlay" id="overlay" onclick="toggleSearchBar()"></div>
+
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD3u2GKMSAKC_1Cd88KA-rxTOf_Jnt3fuM",
+    authDomain: "sucesso-74f7c.firebaseapp.com",
+    projectId: "sucesso-74f7c",
+    storageBucket: "sucesso-74f7c.appspot.com",
+    messagingSenderId: "878844661636",
+    appId: "1:878844661636:web:6382f86f18201aecfdd7d1"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  const accountLink = document.getElementById("account-link");
+  const sidebarAccountLink = document.querySelector(".sidebar-link");
+  const sidebarAccountText = sidebarAccountLink?.querySelector("span");
+
+  // 🔁 Detectar sesión activa y actualizar enlaces
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      if (accountLink) accountLink.href = "mi-cuenta.html";
+      if (sidebarAccountLink) sidebarAccountLink.href = "mi-cuenta.html";
+      if (sidebarAccountText) sidebarAccountText.textContent = "My Account";
+    } else {
+      if (accountLink) accountLink.href = "login.html";
+      if (sidebarAccountLink) sidebarAccountLink.href = "login.html";
+      if (sidebarAccountText) sidebarAccountText.textContent = "Log In";
+    }
+  });
+
+  // 🔁 Si haces clic en el ícono de cuenta, decide redirigir a login o cuenta
+  if (accountLink) {
+    accountLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          window.location.href = "mi-cuenta.html";
+        } else {
+          window.location.href = "login.html";
+        }
+      });
+    });
+  }
+
+  // 🔍 Búsqueda
+  const input = document.querySelector('.search-bar input');
+  const resultsContainer = document.getElementById('searchResults');
+  let allProducts = [];
+
+  async function loadProducts() {
+    try {
+      const querySnapshot = await getDocs(collection(db, "productos"));
+      allProducts = [];
+      querySnapshot.forEach(doc => {
+        const data = doc.data();
+        if (data.titulo && data.precio !== undefined && data.imagen_frontal && data.imagen_trasera) {
+          allProducts.push({
+            titulo: data.titulo,
+            nombre: data.nombre,
+            precio: Number(data.precio),
+            imagen_frontal: data.imagen_frontal.replace(/\\/g, '/'),
+            imagen_trasera: data.imagen_trasera.replace(/\\/g, '/'),
+            keywords: Array.isArray(data.keywords) ? data.keywords : []
+          });
+        }
+      });
+    } catch (error) {
+      console.error("Error al cargar productos:", error);
+    }
+  }
+
+  function renderResults(filtered) {
+    resultsContainer.innerHTML = '';
+    if (filtered.length === 0) {
+      resultsContainer.innerHTML = `<div style="padding: 20px; font-size: 14px;">No se encontraron resultados</div>`;
+    } else {
+      filtered.forEach(product => {
+        const item = document.createElement('a');
+        item.className = 'search-result-item';
+        item.href = `product-page.html?nombre=${product.nombre}`;
+        item.innerHTML = `
+          <div class="product-image-wrapper">
+            <img src="${product.imagen_frontal}" class="front" alt="${product.titulo}">
+            <img src="${product.imagen_trasera}" class="back" alt="${product.titulo}">
+          </div>
+          <div class="result-info">
+            <span class="name">${product.titulo}</span>
+            <span class="price">$${product.precio.toFixed(2)}</span>
+          </div>
+        `;
+        resultsContainer.appendChild(item);
+      });
+    }
+    resultsContainer.style.display = 'grid';
+  }
+
+  let searchTimeout;
+
+  if (input) {
+    input.addEventListener('input', function () {
+      clearTimeout(searchTimeout);
+      const query = input.value.toLowerCase().trim();
+
+      searchTimeout = setTimeout(() => {
+        if (query.length === 0) {
+          resultsContainer.style.display = 'none';
+          return;
+        }
+
+        const filtered = allProducts.filter(product =>
+          product.titulo.toLowerCase().includes(query) ||
+          product.nombre.toLowerCase().includes(query) ||
+          product.keywords.some(k => k.toLowerCase().includes(query))
+        );
+
+        renderResults(filtered);
+      }, 1000);
+    });
+  }
+
+  window.toggleSearchBar = function () {
+    const searchBar = document.getElementById('searchBar');
+    const overlay = document.getElementById('overlay');
+    const results = document.getElementById('searchResults');
+    const isActive = searchBar.classList.contains('active');
+
+    if (isActive) {
+      searchBar.classList.add('hiding');
+      searchBar.classList.remove('active');
+      overlay.style.display = 'none';
+      results.style.display = 'none';
+      setTimeout(() => {
+        searchBar.classList.remove('hiding');
+      }, 200);
+    } else {
+      searchBar.classList.add('active');
+      overlay.style.display = 'block';
+      input.focus();
+    }
+  };
+
+  loadProducts();
+</script>
+
+  <main style="max-width: 900px; margin: 100px auto 60px auto; padding: 0 20px; font-family: 'Poppins', sans-serif; color: #233f32; line-height: 1.7;">
+  <h1 style="font-size: 30px; font-weight: 700; text-align: center; margin-bottom: 40px; border-bottom: 2px solid #e5e5e5; padding-bottom: 10px; color: #233f32;" data-i18n="terms_title">
+    Terms and Conditions
+  </h1>
+
+  <ol style="font-size: 16px; margin-left: 20px; margin-bottom: 20px; text-align: justify;">
+    <li style="margin-bottom: 20px;"><strong data-i18n="info_site_title">Site Information</strong><br>
+      <span data-i18n="info_site_text">Sucesso is a registered brand of clothing and accessories based in Venezuela. This website aims to offer products to the general public for online purchase.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="acceptance_title">Acceptance of Terms</strong><br>
+      <span data-i18n="acceptance_text">By browsing or purchasing on this website, you agree to be bound by these terms and conditions, our privacy policies, and any applicable regulations.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="prices_title">Prices and Payments</strong><br>
+      <span data-i18n="prices_text">All prices are expressed in bolívares (Bs.) or US dollars (USD), as applicable. Payments can be made via mobile payment, bank transfer, credit/debit card, or authorized platforms. Prices may change without prior notice.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="availability_title">Product Availability</strong><br>
+      <span data-i18n="availability_text">The products offered are subject to availability. If the purchased product is not available, Sucesso will notify the customer to offer a replacement or a refund.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="shippings_title">Shipping</strong><br>
+      <span data-i18n="shipping_text">Shipments are made throughout the national territory through courier companies. Delivery times and costs are informed during the purchase process. Sucesso is not responsible for delays attributable to third parties.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="return_title">Exchanges and Returns</strong><br>
+      <span data-i18n="returns_text">Returns for size or color change are not accepted. Exchanges will only be accepted if the product has manufacturing defects. The customer must notify us within 48 hours of receiving the order.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="site_use_title">Site Use</strong><br>
+      <span data-i18n="site_use_text">The user agrees to make proper and legal use of the website and not to carry out actions that may damage, disable, or overload the site.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="ip_title">Intellectual Property</strong><br>
+      <span data-i18n="ip_text">All website content, including images, logos, text, and designs, is owned by Sucesso and protected by applicable laws. Use without authorization is not permitted.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="data_title">Data Protection</strong><br>
+      <span data-i18n="data_text">The personal information provided by the user will be treated confidentially and in accordance with our Privacy Policy. It will not be shared with third parties, except to fulfill the services offered.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="modifications_title">Modifications of Terms</strong><br>
+      <span data-i18n="modifications_text">Sucesso may modify these terms and conditions at any time. Modifications will be effective upon publication on the site.</span>
+    </li>
+  </ol>
+</main>
+
+
+
+  <!-- 🛒 Carrito lateral -->
+  <div id="cart-overlay" class="cart-overlay hidden">
+    <div class="cart-panel">
+      <div class="cart-header">
+<h2 data-i18n="your_cart">Your Cart</h2>
+        <button class="close-cart">&times;</button>
+      </div>
+      <div class="cart-items"></div>
+      <div class="cart-footer">
+<p class="cart-total"><span data-i18n="total">Total:</span> $0.00</p>
+<button class="checkout-btn" data-i18n="checkout">Checkout</button>
+<button id="clear-cart-btn" style="display:none;" data-i18n="empty_cart">Empty Cart</button>
+      </div>
+    </div>
+  </div>
+
+<!-- 📱 FOOTER PARA CELULARES (solo visible en pantallas pequeñas) -->
+<div class="mobile-footer">
+  <div class="info-section">
+    <button class="info-toggle">
+      <span data-i18n="brand">Brand</span>
+      <span class="plus-icon">+</span>
+    </button>
+    <ul class="info-content">
+      <li><a href="about.html" data-i18n="footer_about">Marca</a></li>
+    </ul>
+  </div>
+
+  <div class="info-section">
+    <button class="info-toggle">
+      <span data-i18n="legal">Legal</span>
+      <span class="plus-icon">+</span>
+    </button>
+    <ul class="info-content">
+      <li><a href="#"  data-i18n="footer_legal_advice">Legal Advice</a></li>
+<li><a href="politica-de-privacidad.html"  data-i18n="footer_privacy_policy">Privacy Policy</a></li>
+<li><a href="#"  data-i18n="footer_terms">Terms & Conditions</a></li>
+    </ul>
+  </div>
+
+  <div class="info-section">
+    <button class="info-toggle">
+      <span data-i18n="support">Support</span>
+      <span class="plus-icon">+</span>
+    </button>
+    <ul class="info-content">
+      <li><a href="#"  data-i18n="footer_returns">Returns</a></li>
+      <li><a href="#"  data-i18n="footer_order_tracking">Order Tracking</a></li>
+          <li><a href="#">FAQ</a></li>
+      <li><a href="contactanos.html" data-i18n="contact_us">Contact Us</a></li>
+    </ul>
+  </div>
+  <p>&copy; 2025 Sucesso. All rights reserved.</p>
+</div>
+
+  <footer>
+    <div class="footer-sections">
+      <div class="footer-column">
+<h3 data-i18n="brand">Brand</h3>
+        <ul>
+<li><a href="about.html"  data-i18n="footer_about">About</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+<h3 data-i18n="legal">Legal</h3>
+        <ul>
+<li><a href="#"  data-i18n="footer_legal_advice">Legal Advice</a></li>
+<li><a href="politica-de-privacidad.html"  data-i18n="footer_privacy_policy">Privacy Policy</a></li>
+<li><a href="#"  data-i18n="footer_terms">Terms & Conditions</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+<h3 data-i18n="support">Support</h3>
+        <ul>
+<li><a href="#"  data-i18n="footer_returns">Returns</a></li>
+<li><a href="#"  data-i18n="footer_order_tracking">Order Tracking</a></li>
+          <li><a href="#">FAQ</a></li>
+<li><a href="contactanos.html" data-i18n="contact_us">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <p>&copy; 2025 Sucesso. All rights reserved.</p>
+  </footer>
+
+<div id="language-popup" class="language-popup">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <strong style="font-size: 12px; letter-spacing: 1px;">LANGUAGE SETTINGS</strong>
+    <button class="close-btn" onclick="closeLanguagePopup()">&times;</button>
+  </div>
+  <label for="language-select" style="font-size: 10px; display: block; margin-bottom: 8px;">SELECT LANGUAGE:</label>
+  <select id="language-select" style="width: 100%; padding: 10px; font-size: 12px; border: 1px solid #ccc;">
+    <option value="en">English</option>
+    <option value="es">Español</option>
+  </select>
+  <button onclick="saveLanguage()" style="width: 100%; margin-top: 20px; padding: 10px; background: #233f32; color: white; font-size: 12px; border: none; cursor: pointer; text-transform: uppercase;">Save</button>
+</div>
+
+<script>
+  const popup = document.getElementById("language-popup");
+  const trigger = document.getElementById("openLanguagePopup");
+  const select = document.getElementById("language-select");
+
+  trigger.addEventListener("click", (e) => {
+    e.preventDefault();
+    const savedLang = localStorage.getItem("preferredLang");
+    const currentLang = savedLang || document.documentElement.lang || "en";
+    select.value = currentLang; // Mostrar idioma actual
+    popup.classList.add("show");
+  });
+
+  function closeLanguagePopup() {
+    popup.classList.remove("show");
+  }
+
+function saveLanguage() {
+  const lang = select.value;
+  localStorage.setItem("preferredLang", lang); // Guardar idioma
+  setLanguage(lang);
+  closeLanguagePopup();
+
+  // 👇 Esto forzará que el carrito se re-renderice con las etiquetas traducidas
+  if (typeof updateCart === "function") {
+    updateCart();
+  }
+}
+
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(res => res.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        document.documentElement.lang = lang;
+      })
+      .catch(err => console.error("Error cargando idioma:", err));
+  }
+
+  // Al cargar la página, aplicar idioma guardado
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("preferredLang") || "en";
+    select.value = savedLang;
+    setLanguage(savedLang);
+  });
+</script>
+
+
+  <script>
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("loader");
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 2500);
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("abrir") === "carrito") {
+        const cartBtn = document.getElementById("cart-btn");
+        if (cartBtn) {
+          setTimeout(() => cartBtn.click(), 300); // espera a que todo cargue
+        }
+      }
+    });
+  </script>
+
+  <script src="script.js"></script>
+  <script src="cart.js"></script>
+  <script src="styles.css"></script>
+
+<script>
+  const langSwitcher = document.getElementById("languageSwitcher");
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(response => response.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        localStorage.setItem("preferredLang", lang);
+      })
+      .catch(error => console.error("Error cargando idioma:", error));
+  }
+
+  langSwitcher.addEventListener("change", (e) => {
+    setLanguage(e.target.value);
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("preferredLang") || "en";
+    langSwitcher.value = savedLang;
+    setLanguage(savedLang);
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const langToggleHeader = document.getElementById("languageToggle");
+  const langToggleSidebar = document.getElementById("languageToggleSidebar");
+  const popup = document.getElementById("language-popup");
+  const languageSelect = document.getElementById("language-select");
+  const sidebar = document.querySelector(".sidebar");
+  const overlay = document.getElementById("overlay");
+
+  const currentLang = localStorage.getItem("preferredLang") || "en";
+  languageSelect.value = currentLang;
+
+  function updateToggleText(lang) {
+    const text = lang === "es" ? "ES | EN" : "EN | ES";
+    if (langToggleHeader) langToggleHeader.textContent = text;
+    if (langToggleSidebar) langToggleSidebar.textContent = text;
+  }
+
+  function openLanguagePopup() {
+    popup.classList.add("show");
+    languageSelect.value = localStorage.getItem("preferredLang") || "en";
+  }
+
+  if (langToggleHeader) {
+    langToggleHeader.addEventListener("click", () => {
+      openLanguagePopup();
+    });
+  }
+
+  if (langToggleSidebar) {
+  langToggleSidebar.addEventListener("click", () => {
+    openLanguagePopup(); // ✅ Mantener el sidebar abierto
+  });
+}
+
+
+
+  window.saveLanguage = function () {
+    const selectedLang = languageSelect.value;
+    localStorage.setItem("preferredLang", selectedLang);
+    setLanguage(selectedLang);
+    updateToggleText(selectedLang);
+    popup.classList.remove("show");
+    if (typeof updateCart === "function") updateCart();
+  };
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(res => res.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        document.documentElement.lang = lang;
+      })
+      .catch(err => console.error("Error cargando idioma:", err));
+  }
+
+  updateToggleText(currentLang);
+  setLanguage(currentLang);
+});
+</script>
+
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <a href="index.html" data-i18n="nav_new_in">NEW IN</a>
+  <a href="tees.html" data-i18n="nav_tees">TEES</a>
+  <a href="about.html" data-i18n="nav_about">ABOUT</a>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-auth-lang">
+      <a id="sidebar-account-link" href="login.html" class="sidebar-link">
+        <img src="images/icon account.png" alt="Login" class="sidebar-icon" />
+        <span id="sidebar-account-text" data-i18n="sidebar_login">Log In</span>
+      </a>
+      <div class="lang-btn" id="languageToggleSidebar">EN | ES</div>
+    </div>
+  </div>
+</aside>
+
+<!-- SCRIPT -->
+<script>
+  const toggleBtn = document.querySelector('.menu-toggle');
+  const sidebar = document.querySelector('.sidebar');
+  const closeBtn = document.querySelector('.close-sidebar');
+
+toggleBtn.addEventListener('click', () => {
+  const icon = toggleBtn.querySelector('.menu-icon');
+  sidebar.classList.toggle('active');
+  icon.classList.toggle('open');
+});
+
+closeBtn.addEventListener('click', () => {
+  const icon = toggleBtn.querySelector('.menu-icon');
+  sidebar.classList.remove('active');
+  icon.classList.remove('open');
+});
+
+
+</script>
+
+<script>
+function updateLanguageToggleVisibility() {
+  const navDesktop = document.querySelector('.nav-desktop');
+  const languageToggle = document.getElementById('languageToggle');
+
+  if (!navDesktop || !languageToggle) return;
+
+  const navVisible = window.getComputedStyle(navDesktop).display !== 'none';
+
+  // Mostrar solo si los nav links están visibles (pantalla grande)
+  languageToggle.style.display = navVisible ? 'flex' : 'none';
+}
+
+// Ejecutar al cargar
+document.addEventListener("DOMContentLoaded", updateLanguageToggleVisibility);
+
+// Ejecutar al redimensionar
+window.addEventListener("resize", updateLanguageToggleVisibility);
+</script>
+
+
+<script>
+const menuToggle = document.querySelector('.menu-toggle');
+const menuIcon = document.querySelector('.menu-icon');
+
+menuToggle.addEventListener('click', () => {
+  menuIcon.classList.toggle('open');
+});
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggles = document.querySelectorAll(".info-toggle");
+    toggles.forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        const section = toggle.closest(".info-section");
+        section.classList.toggle("active");
+      });
+    });
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.querySelector('.search-bar input');
+  const resultsContainer = document.getElementById('searchResults');
+  const searchBar = document.getElementById('searchBar');
+  const overlay = document.getElementById('overlay');
+  let allProducts = []; // Esto lo tienes cargado ya con loadProducts()
+  let searchTimeout;
+
+  function hideResults() {
+    resultsContainer.innerHTML = "";
+    resultsContainer.style.display = "none";
+  }
+
+  input.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    const query = input.value.toLowerCase().trim();
+
+    searchTimeout = setTimeout(() => {
+      if (query === "") {
+        hideResults();
+      } else {
+        const filtered = allProducts.filter(product =>
+          product.titulo.toLowerCase().includes(query) ||
+          product.nombre.toLowerCase().includes(query) ||
+          product.keywords.some(k => k.toLowerCase().includes(query))
+        );
+
+        renderResults(filtered); // Ya la tienes definida
+      }
+    }, 1000); // ✅ Mismo delay para mostrar u ocultar
+  });
+
+  window.toggleSearchBar = function () {
+    const isActive = searchBar.classList.contains('active');
+    if (isActive) {
+      searchBar.classList.add('hiding');
+      searchBar.classList.remove('active');
+      overlay.style.display = 'none';
+      hideResults();
+      input.value = "";
+      setTimeout(() => {
+        searchBar.classList.remove('hiding');
+      }, 200);
+    } else {
+      searchBar.classList.add('active');
+      overlay.style.display = 'block';
+      input.focus();
+    }
+  };
+});
+</script>
+</body>
+</html>
