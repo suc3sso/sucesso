@@ -813,7 +813,6 @@ html, body {
   <button onclick="saveLanguage()" style="width: 100%; margin-top: 20px; padding: 10px; background: #233f32; color: white; font-size: 12px; border: none; cursor: pointer; text-transform: uppercase;">Save</button>
 </div>
 
-
 <script>
   const popup = document.getElementById("language-popup");
   const trigger = document.getElementById("openLanguagePopup");
@@ -955,21 +954,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (langToggleSidebar) {
   langToggleSidebar.addEventListener("click", () => {
-    // ✅ Cierra correctamente el sidebar
-    if (sidebar) sidebar.classList.remove("active");
-
-    // ✅ Cierra el overlay si se está usando (aunque en tu diseño no parece haber overlay para sidebar)
-    if (overlay) {
-      overlay.classList.remove("show");
-      overlay.style.display = "none";
-    }
-
-    // ✅ Espera muy poquito y abre el popup
-    setTimeout(() => {
-      openLanguagePopup();
-    }, 150); // Pequeña espera para una mejor transición
+    openLanguagePopup(); // ✅ Mantener el sidebar abierto
   });
 }
+
 
 
   window.saveLanguage = function () {
