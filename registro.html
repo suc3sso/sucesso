@@ -611,6 +611,48 @@
     });
   }
 
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const form = document.getElementById("register-form");
+const errorDiv = document.getElementById("error-message");
+const successDiv = document.getElementById("success-message");
+
+if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = form.email.value.trim();
+    const password = form.password.value.trim();
+
+    // Limpiar mensajes
+    errorDiv.style.display = "none";
+    successDiv.style.display = "none";
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      successDiv.textContent = "Cuenta creada con éxito. Redirigiendo...";
+      successDiv.style.display = "block";
+
+      setTimeout(() => {
+        window.location.href = "mi-cuenta.html";
+      }, 1500);
+    } catch (error) {
+      console.error("Error al crear cuenta:", error);
+      let msg = "Error al crear la cuenta.";
+      if (error.code === "auth/email-already-in-use") {
+        msg = "El correo ya está registrado.";
+      } else if (error.code === "auth/invalid-email") {
+        msg = "El correo no es válido.";
+      } else if (error.code === "auth/weak-password") {
+        msg = "La contraseña debe tener al menos 6 caracteres.";
+      }
+      errorDiv.textContent = msg;
+      errorDiv.style.display = "block";
+    }
+  });
+}
+
+
   // 🔄 Actualizar botón del sidebar según el estado de sesión
   const sidebarLink = document.getElementById("sidebar-account-link");
   const sidebarText = document.getElementById("sidebar-account-text");
@@ -724,6 +766,9 @@
   };
 
   loadProducts();
+
+
+  
 </script>
 
 
