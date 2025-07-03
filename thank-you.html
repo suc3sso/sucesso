@@ -114,6 +114,41 @@
         opacity: 1;
       }
     }
+
+@media (max-width: 600px) {
+  .thank-you-container {
+    padding: 2rem 1.5rem;
+    transform: scale(0.9);
+    transform-origin: center center;
+  }
+
+  .thank-you-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .thank-you-container p {
+    font-size: 1rem;
+  }
+
+  .thank-you-container a {
+    width: auto;
+    min-width: 150px;
+    padding: 1rem 1.5rem;
+  }
+
+  .thank-you-container img {
+    width: 50px;
+    margin-bottom: 1rem;
+  }
+}
+
+.mobile-break { display: none; }
+@media screen and (max-width: 600px) {
+  .mobile-break { display: block; height: 0; }
+}
+
+
+    
   </style>
 </head>
 <body>
@@ -124,7 +159,8 @@
   <div class="thank-you-container">
     <img src="images/logo cherry png.png" alt="Logo Sucesso">
     <h1>¡Gracias por tu compra!</h1>
-    <p>Tu pedido fue procesado exitosamente. Te contactaremos pronto con los detalles del envío.</p>
+    <p>Tu pedido fue procesado exitosamente.<span class="mobile-break"></span>
+  Te contactaremos pronto con los detalles del envío.</p>
     <a href="index.html">Volver al inicio</a>
   </div>
 
