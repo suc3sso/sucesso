@@ -618,7 +618,54 @@ html, body {
   }
 }
 
+@media (min-width: 769px) {
+  #new-in .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    justify-content: center; /* Esto centra las columnas en el contenedor */
+    padding: 0 10px;
+  }
 
+  #new-in .collection-item {
+    text-align: left;
+    align-items: flex-start;
+    margin: 0;
+  }
+
+  #new-in .collection-item .image-hover {
+    background-color: rgba(244, 244, 244, 0.8);
+    padding: 10px;
+    display: block;
+  }
+
+  #new-in .collection-item .image-hover img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    background: transparent;
+  }
+
+  #new-in .collection-item h3 {
+    font-size: 0.9rem;
+    margin: 4px 0 2px 0;
+  }
+
+  #new-in .collection-item .price {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+}
+
+footer {
+  margin-top: 40px; /* Puedes ajustar este valor según lo que veas visualmente mejor */
+}
+
+.footer-divider {
+  margin-top: 20px; /* Esto separa la línea divisoria del contenido superior */
+}
+
+    
  </style>
   
 </head>
