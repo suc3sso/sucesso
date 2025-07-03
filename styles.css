@@ -20,6 +20,21 @@ header {
     padding-top: 100px;
   }
   
+.new-in-title {
+  font-family: "Inter-SemiBold", sans-serif;
+  font-weight: 600;
+  font-size: 30px; /* ajusta según el tamaño exacto del de "Camisetas" */
+  color: #233f32;  /* mismo color del título "Camisetas" */
+  margin-bottom: 8px;
+  max-width: 90%;
+}
+
+
+.new-in-divider {
+  border-bottom: 0.5px solid #ddd; /* línea de división gris claro */
+  margin-bottom: 20px;
+  font-size: 30px; /* o el tamaño que desees */
+}
 
 .collections {
     color: #233f32;
