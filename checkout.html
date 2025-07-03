@@ -899,6 +899,58 @@ document.getElementById("ref-pago-movil").addEventListener("change", function ()
   });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const subtotalEl = document.getElementById("subtotal-value");
+  const envioCostEl = document.getElementById("envio-cost");
+  const totalFinalEl = document.getElementById("total-final");
+  const summaryTotalEl = document.getElementById("summary-total");
+  
+  let subtotal = parseFloat(subtotalEl.textContent.replace("$", "")) || 0;
+
+  function actualizarResumen() {
+    const envioSeleccionado = document.querySelector('input[name="metodo-envio"]:checked');
+    const costoEnvio = parseFloat(envioSeleccionado?.getAttribute("data-costo")) || 0;
+
+    // Actualizar valores en desktop
+    envioCostEl.textContent = `$${costoEnvio.toFixed(2)}`;
+    totalFinalEl.textContent = `$${(subtotal + costoEnvio).toFixed(2)}`;
+
+    // Actualizar valores en mobile summary
+    const mobileSummary = document.getElementById("mobile-summary-content");
+    if (mobileSummary) {
+      const envioSpan = mobileSummary.querySelector("#envio-cost");
+      const totalSpan = mobileSummary.querySelector("#total-final");
+      if (envioSpan) envioSpan.textContent = `$${costoEnvio.toFixed(2)}`;
+      if (totalSpan) totalSpan.textContent = `$${(subtotal + costoEnvio).toFixed(2)}`;
+    }
+
+    // Actualizar el resumen header móvil
+    summaryTotalEl.textContent = `$${(subtotal + costoEnvio).toFixed(2)}`;
+  }
+
+  // Escuchar cambios de método de envío
+  document.querySelectorAll('input[name="metodo-envio"]').forEach(radio => {
+    radio.addEventListener("change", actualizarResumen);
+  });
+
+  // Escuchar cambio de estado
+  document.getElementById("estado").addEventListener("change", () => {
+    const estado = document.getElementById("estado").value;
+    if (estado === "Capital") {
+      document.querySelector('input[name="metodo-envio"][value="capital"]').checked = true;
+    } else {
+      document.querySelector('input[name="metodo-envio"][value="resto"]').checked = true;
+    }
+    actualizarResumen();
+  });
+
+  // Inicializar
+  actualizarResumen();
+});
+</script>
+
+  
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
