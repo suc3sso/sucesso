@@ -1081,21 +1081,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (langToggleSidebar) {
   langToggleSidebar.addEventListener("click", () => {
-    // ✅ Cierra correctamente el sidebar
-    if (sidebar) sidebar.classList.remove("active");
-
-    // ✅ Cierra el overlay si se está usando (aunque en tu diseño no parece haber overlay para sidebar)
-    if (overlay) {
-      overlay.classList.remove("show");
-      overlay.style.display = "none";
-    }
-
-    // ✅ Espera muy poquito y abre el popup
-    setTimeout(() => {
-      openLanguagePopup();
-    }, 150); // Pequeña espera para una mejor transición
+    openLanguagePopup(); // ✅ Mantener el sidebar abierto
   });
 }
+
 
 
   window.saveLanguage = function () {
