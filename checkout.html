@@ -671,26 +671,47 @@ background-color: #233f32;
 </div>
 
 
-
   <div class="accordion-item">
-    <label class="accordion-header">
-      <input type="radio" name="metodo-pago" value="paypal">
-      <span>PayPal</span>
-    </label>
-    <div class="accordion-panel">
-      <p>Email: pagos@sucesso.com<br>Moneda: USD</p>
+  <label class="accordion-header">
+    <input type="radio" name="metodo-pago" value="paypal">
+    <span>PayPal</span>
+  </label>
+  <div class="accordion-panel">
+    <p>Email: pagos@sucesso.com<br>Moneda: USD</p>
+    <div class="file-upload">
+      <label for="ref-paypal">Adjuntar referencia</label>
+      <div class="custom-upload">
+        <button type="button" class="upload-btn" onclick="document.getElementById('ref-paypal').click()">Seleccionar archivo</button>
+        <input type="file" id="ref-paypal" name="comprobante-paypal" accept="image/*" style="display: none;">
+      </div>
+      <div class="preview-container" id="container-paypal" style="display: none;">
+        <span class="remove-preview" onclick="eliminarPreview('ref-paypal', 'preview-paypal', 'container-paypal')">x</span>
+        <img class="preview-img" id="preview-paypal" alt="Preview" />
+      </div>
     </div>
   </div>
+</div>
 
-  <div class="accordion-item">
-    <label class="accordion-header">
-      <input type="radio" name="metodo-pago" value="zelle">
-      <span>Zelle</span>
-    </label>
-    <div class="accordion-panel">
-      <p>Email: zelle@sucesso.com<br>Nombre: SUCESSO C.A.</p>
+<div class="accordion-item">
+  <label class="accordion-header">
+    <input type="radio" name="metodo-pago" value="zelle">
+    <span>Zelle</span>
+  </label>
+  <div class="accordion-panel">
+    <p>Email: zelle@sucesso.com<br>Nombre: SUCESSO C.A.</p>
+    <div class="file-upload">
+      <label for="ref-zelle">Adjuntar referencia</label>
+      <div class="custom-upload">
+        <button type="button" class="upload-btn" onclick="document.getElementById('ref-zelle').click()">Seleccionar archivo</button>
+        <input type="file" id="ref-zelle" name="comprobante-zelle" accept="image/*" style="display: none;">
+      </div>
+      <div class="preview-container" id="container-zelle" style="display: none;">
+        <span class="remove-preview" onclick="eliminarPreview('ref-zelle', 'preview-zelle', 'container-zelle')">x</span>
+        <img class="preview-img" id="preview-zelle" alt="Preview" />
+      </div>
     </div>
   </div>
+</div>
 
   <div class="accordion-item">
     <label class="accordion-header">
@@ -816,12 +837,20 @@ background-color: #233f32;
     document.getElementById(containerId).style.display = "none";
   }
 
-  document.getElementById("ref-pago-movil").addEventListener("change", function () {
+document.getElementById("ref-pago-movil").addEventListener("change", function () {
     mostrarPreview(this, "preview-pago-movil", "container-pago-movil");
   });
 
   document.getElementById("ref-transferencia").addEventListener("change", function () {
     mostrarPreview(this, "preview-transferencia", "container-transferencia");
+  });
+
+  document.getElementById("ref-paypal").addEventListener("change", function () {
+    mostrarPreview(this, "preview-paypal", "container-paypal");
+  });
+
+  document.getElementById("ref-zelle").addEventListener("change", function () {
+    mostrarPreview(this, "preview-zelle", "container-zelle");
   });
 </script>
 
@@ -944,18 +973,26 @@ document.addEventListener('DOMContentLoaded', () => {
       docInput.setCustomValidity("");
     }
 
-    // Validar comprobantes
-    const metodoPago = document.querySelector('input[name="metodo-pago"]:checked')?.value;
-    if (metodoPago === "pago-movil" && !document.getElementById("ref-pago-movil").files.length) {
-      alert("Debes subir el comprobante de Pago Móvil.");
-      valid = false;
-    }
-    if (metodoPago === "transferencia" && !document.getElementById("ref-transferencia").files.length) {
-      alert("Debes subir el comprobante de Transferencia.");
-      valid = false;
-    }
+        // Validar comprobantes
+const metodoPago = document.querySelector('input[name="metodo-pago"]:checked')?.value;
 
-    if (!valid) return;
+if (metodoPago === "pago-movil" && !document.getElementById("ref-pago-movil").files.length) {
+  alert("Debes subir el comprobante de Pago Móvil.");
+  return;
+}
+if (metodoPago === "transferencia" && !document.getElementById("ref-transferencia").files.length) {
+  alert("Debes subir el comprobante de Transferencia.");
+  return;
+}
+if (metodoPago === "paypal" && !document.getElementById("ref-paypal").files.length) {
+  alert("Debes subir el comprobante de PayPal.");
+  return;
+}
+if (metodoPago === "zelle" && !document.getElementById("ref-zelle").files.length) {
+  alert("Debes subir el comprobante de Zelle.");
+  return;
+}
+
 
     // Verificar carrito
     const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
