@@ -512,7 +512,48 @@ html, body {
     left: 0;
   }
 }
-    
+
+@media (min-width: 769px) {
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px; /* Reducido para que los productos queden más juntos */
+    padding: 0 10px; /* Opcional: controla el margen lateral */
+    justify-items: start; /* Alinea productos a la izquierda */
+  }
+
+  .collection-item {
+    text-align: left;
+    align-items: flex-start;
+    margin: 0; /* Elimina márgenes que separen de más */
+  }
+
+  .collection-item .image-hover {
+    background-color: rgba(244, 244, 244, 0.8);
+    padding: 10px;
+    display: block;
+  }
+
+  .collection-item .image-hover img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    background: transparent;
+  }
+
+  .collection-item h3 {
+    font-size: 0.9rem;
+    margin: 4px 0 2px 0;
+  }
+
+  .collection-item .price {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+}
+
+
+
  </style>
   
 </head>
