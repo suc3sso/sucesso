@@ -2274,3 +2274,28 @@ transition: color 0.3s ease;
     margin: 2px 0 8px 0 !important;
   }
 }
+
+/* Estilos específicos para celular */
+@media (max-width: 768px) {
+  .language-popup {
+    width: 90%;
+    max-width: 320px; /* para que no ocupe todo el ancho */
+  }
+}
+
+.language-popup.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.language-popup button.close-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  color: #333;
+}
+
