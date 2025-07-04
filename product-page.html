@@ -950,6 +950,29 @@ main.product-page {
   }
 }
 
+@media (max-width: 768px) {
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .carousel-dots .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: transparent;
+   border: 1px solid #233f32;
+    transition: background 0.3s ease;
+  }
+
+  .carousel-dots .dot.active {
+    background: #233f32;
+  }
+}
+
+
   </style>
 </head>
 <body>
@@ -1181,6 +1204,7 @@ main.product-page {
     </div>
   </div>
 </div>
+<div class="carousel-dots"></div>
 
 <div id="zoom-overlay" style="
   position: fixed;
@@ -1680,6 +1704,33 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const scrollContainer = document.querySelector(".image-scroll-container");
+  const dotsContainer = document.querySelector(".carousel-dots");
+  const images = document.querySelectorAll(".image-box");
+  
+  // Crear dots según cantidad de imágenes
+  images.forEach((_, index) => {
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
+    if (index === 0) dot.classList.add("active");
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = dotsContainer.querySelectorAll(".dot");
+
+  // Escuchar scroll
+  scrollContainer.addEventListener("scroll", () => {
+    const scrollLeft = scrollContainer.scrollLeft;
+    const width = scrollContainer.offsetWidth;
+    const index = Math.round(scrollLeft / width);
+
+    dots.forEach(dot => dot.classList.remove("active"));
+    if (dots[index]) dots[index].classList.add("active");
+  });
+});
+</script>
 
 
   <script src="product-page.js"></script>
