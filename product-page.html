@@ -463,10 +463,6 @@ main.product-page {
   font-weight: 600;
 }
 
-.add-to-cart,
-.buy-now-btn {
-  border-radius: 2px; /* 🔁 igual a "SHOP NOW" */
-}
 
 [data-i18n="details_text"] {
   white-space: pre-line;
@@ -482,6 +478,477 @@ main.product-page {
   margin-top: 12px;
 }
 
+.product-container {
+  align-items: flex-start;
+}
+
+.image-scroll-container {
+  width: 800px;   /* antes 600px, ahora más ancho */
+  height: 900px; /* antes 800px, ahora más alto */
+  overflow-y: scroll;
+  scroll-snap-type: none;
+  scrollbar-width: none;
+  margin-left: -30px; /* mueve el scroll a la izquierda */
+}
+
+.image-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+
+.image-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espacio entre los recuadros de imagen */
+}
+
+.image-box {
+  background-color: #f5f5f5;
+  padding: 60px; /* antes 40px, margen interno mayor para resaltar */
+  border-radius: 2px; /* opcional: un poco más suave */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 900px; /* igual al scroll container */
+}
+
+.image-box img {
+  width: 105%;
+  height: 105%;
+  object-fit: contain;
+  cursor: zoom-in;
+}
+
+  
+.product-info {
+  position: sticky;
+  top: 100px; /* Ajusta según la altura de tu navbar */
+  width: 45%;
+}
+
+#product-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px; /* Reduce separación vertical */
+}
+
+#product-price {
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 0; /* Elimina espacio superior extra */
+}
+
+/* TALLAS SIN FONDO NI COLOR AL SELECCIONAR */
+.product-sizes span {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background: none;
+  color: #000; /* Asegura que siempre es negro */
+}
+
+.product-sizes span::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background-color: #000;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.product-sizes span.active::after {
+  width: 100%;
+  left: 0;
+}
+
+
+/* En móviles */
+@media (max-width: 768px) {
+  #product-name {
+    font-size: 16px;
+  }
+  #product-price {
+    font-size: 14px;
+  }
+  .product-sizes span {
+    font-size: 11px;
+  }
+}
+
+
+.info-button {
+  padding: 8px 0;
+}
+
+.product-info-sections {
+  gap: 2px;
+}
+
+
+.product-buttons {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.product-buttons button {
+  flex: 1;                     /* Ambos botones ocupan mismo ancho */
+  height: 50px;                /* Altura exacta */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 1px;
+  box-sizing: border-box;
+  line-height: 1;
+  padding: 0 16px;
+  transition: background 0.1s ease;
+}
+
+.add-to-cart {
+  background-color: #233f32;
+  color: #fff;
+  border: none;
+}
+
+.add-to-cart:hover {
+    background-color: transparent;
+    border: 1px solid #000;
+    color:#000;
+  }
+
+.buy-now-btn {
+  background-color: #f5f5f5;
+  color: #000;
+  border: 1px solid #000;
+}
+
+.buy-now-btn:hover {
+    background-color: #e5e5e5;
+    border: 1px solid #000;
+    color:#000;
+  }
+
+.product-info-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 0px; /* 🔹 Reduce el espacio entre botones y secciones */
+}
+
+.info-button {
+  padding: 0px 0; /* 🔹 Reduce el padding vertical */
+  font-size: 14px; /* 🔹 Opcional: texto un poco más compacto */
+}
+
+.info-content {
+  padding: 0px 0; /* 🔹 Reduce el padding interno de las secciones */
+  margin: 0; /* 🔹 Elimina márgenes extra */
+}
+
+.section-title {
+  margin: 4px 0; /* 🔹 Menos margen entre títulos */
+  font-size: 12px; 
+}
+
+.section-text {
+  margin: 2px 0; /* 🔹 Menos margen entre líneas de texto */
+  font-size: 12px; 
+}
+
+.product-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 2rem auto;
+    padding: 2rem;
+    max-width: 1200px;
+}
+
+.product-container {
+    display: flex; /* Usar flexbox para alinear los elementos */
+    gap: 15rem; /* Espaciado entre la imagen y los detalles */
+    align-items: flex-start; /* Asegura que todo esté alineado en la parte superior */
+    justify-content: space-between; /* Espaciado entre imagen y detalles */
+    max-width: 1200px; /* Ancho máximo de la sección */
+    margin: 10; /* Centrar en la página */
+    padding: 2rem; /* Espaciado interno */
+}
+
+
+.productos-image {
+    width: 400px; /* Ajusta el tamaño según prefieras */
+    height: auto; /* Mantén la proporción de la imagen */
+    margin: 0 auto; /* Centrar si es necesario */
+    display: block; /* Asegura que se comporten como bloques */
+}
+
+
+.productos-image img {
+    width: 300%; /* La imagen ocupará el ancho del contenedor */
+    max-width: 600px; /* Ajusta el tamaño máximo según tus preferencias */
+    object-fit: contain; /* Evita que la imagen se deforme */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+}
+
+
+.productos-info-sections {
+  margin-top: 20px;
+}
+
+/* Estilo de los botones */
+.product-info-sections {
+  margin-top: 10px;
+}
+
+
+
+
+/* Estilo de los botones */
+.info-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: 0px 0;
+  background-color: transparent; /* Fondo transparente */
+  border: none;
+  border-bottom: 1px solid #ddd; /* Línea separadora */
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease;
+  outline: none;
+}
+
+/* Efecto de subrayado exclusivo para el texto */
+.info-button span.text {
+  position: relative;
+  display: inline-block;
+  color: #000; /* Color del texto */
+}
+
+.info-button span.text::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;  /* 👉 Que se dibuje exactamente sobre la línea de división */
+  left: 0;
+  width: 0;
+  height: 1px;  /* 👉 Mucho más fino */
+  background-color: #000;
+  transition: width 0.3s ease;
+}
+
+
+.info-button:hover span.text::after {
+  width: 100%;
+}
+
+/* Símbolo "+" o "-" */
+.toggle-icon {
+  font-size: 18px;
+  color: #333; /* Color del símbolo */
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+/* Estilo de las secciones desplegables */
+.info-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  padding: 0 20px;
+  background-color: transparent; /* Fondo transparente */
+  font-size: 14px;
+  color: #233f32;
+}
+
+.info-content p {
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+/* Clase para contenido desplegado */
+.info-content.open {
+  max-height: 200px; /* Ajusta según el contenido */
+  padding: 10px 20px;
+}
+
+/* Cambia el "+" a "-" */
+.info-button.open .toggle-icon::before {
+  content: '-'; /* Muestra el "-" */
+}
+
+.info-button .toggle-icon::before {
+  content: '+'; /* Muestra el "+" por defecto */
+}
+  
+
+.product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.product-info h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #233f32;
+}
+
+.product-info p {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.size-guide-sucesso {
+  display: block; /* Se asegura de que sea un elemento en bloque */
+margin: 0.2rem auto 0.2rem auto;
+  width: 500px; /* Tamaño del logo ajustable */
+  height: auto; /* Mantiene la proporción */
+}
+
+@media (max-width: 768px) {
+  .product-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+main.product-page {
+    margin-top: 0 !important; /* Elimina el margen superior */
+    padding-top: 0 !important; /* Si hubiera padding, también lo quitamos */
+  }
+
+  .image-scroll-container {
+    margin-top: 0 !important; /* Por si hubiera un margen superior */
+    padding-top: 0 !important;
+  }
+
+  .image-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden; /* 🔹 Evita scroll vertical */
+    scroll-snap-type: x mandatory;
+    gap: 8px;
+    width: 100vw;
+    height: 70vh;
+  }
+
+  .image-wrapper {
+    display: flex;
+    flex-direction: row; /* 🔹 Cambia a fila para carrusel horizontal */
+  }
+
+  .image-box {
+    min-width: 100vw;
+    height: 70vh;
+    scroll-snap-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f5f5;
+  }
+
+  .image-box img {
+    width: 130%;
+    height: 130%;
+    object-fit: contain;
+  }
+
+
+  .product-info {
+    width: 100%;
+    padding: 0 1rem;
+    position: static;
+  }
+
+  #product-name,
+#product-price {
+  text-align: left;
+  padding-left: -30px; /* Un pequeño margen a la izquierda */
+}
+
+.product-sizes {
+  justify-content: flex-start;
+  padding-left: -30px;
+}
+
+.product-sizes span {
+    font-size: 13px;   /* Aumenta un poco el tamaño del texto */
+    padding: 6px 10px; /* Aumenta el área de clic */
+  }
+
+  .product-buttons {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .product-buttons button {
+    font-size: 12px;
+    padding: 12px;
+  }
+
+  .info-button {
+    font-size: 12px;
+  }
+
+  .size-guide-sucesso {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  /* Asegura que los info-content estén completamente colapsados por defecto */
+.info-content {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+}
+
+/* Cuando se abre, calcula un max-height suficiente para el contenido */
+.info-content.open {
+  max-height: 500px; /* Ajusta según lo necesario, o usa un valor grande */
+  padding: 10px 20px; /* Solo se aplica cuando está abierto */
+}
+
+}
+
+@media (max-width: 768px) {
+  #zoom-overlay {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    align-items: flex-start; /* Para que la imagen comience arriba */
+    padding: 50px 0; /* Espaciado arriba y abajo */
+  }
+
+  #zoom-image {
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    min-width: 150%;
+    min-height: auto;
+  }
+}
 
   </style>
 </head>
@@ -703,15 +1170,48 @@ main.product-page {
   <!-- Contenido del Producto -->
   <main class="product-page">
     <section id="product-details">
-      <div class="product-container">
-        <div class="productos-image">
-          <div class="productos-image-wrapper">
-            <div class="image-hover">
-              <img id="product-image-front" class="img-front" src="" alt="Frente del producto">
-              <img id="product-image-back" class="img-back" src="" alt="Espalda del producto">
-            </div>
-          </div>
-        </div>
+      <div class="product-container" style="display: flex; gap: 20px;">
+  <div class="image-scroll-container">
+  <div class="image-wrapper">
+    <div class="image-box">
+      <img id="product-image-front" src="" alt="Frente del producto">
+    </div>
+    <div class="image-box">
+      <img id="product-image-back" src="" alt="Espalda del producto">
+    </div>
+  </div>
+</div>
+
+<div id="zoom-overlay" style="
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: #f5f5f5;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow-y: scroll;
+">
+  <img id="zoom-image" src="" alt="Zoomed Image" style="
+    max-width: 90%;
+    max-height: none;
+    object-fit: contain;
+    margin: 50px 0;
+  ">
+  <button id="close-zoom" style="
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 40px;
+    font-weight: normal;
+    cursor: pointer;
+  ">&times;</button>
+</div>
+
+
         <div class="product-info">
           <h1 id="product-name"></h1>
           <p id="product-price"></p>
@@ -723,13 +1223,14 @@ main.product-page {
             <span>L</span>
             <span>XL</span>
           </div>
-          <button id="add-to-cart-btn" class="add-to-cart" data-i18n="add_to_cart"></button>
-<button class="buy-now-btn" data-i18n="buy_now"></button>
+          
+          <div class="product-info-sections">
 
-<div class="product-details">
-  <p id="product-description" data-i18n="product_description"></p>
-
-  <div class="product-info-sections">
+<div class="product-buttons">
+    <button id="add-to-cart-btn" class="add-to-cart" data-i18n="add_to_cart">Add to Bag</button>
+    <button class="buy-now-btn" data-i18n="buy_now">Checkout</button>
+  </div>
+</div>
     <!-- DETAILS -->
     <button class="info-button" data-target="details-section">
       <span class="text" data-i18n="details"></span>
@@ -766,10 +1267,15 @@ main.product-page {
     </div>
   </div>
 </div>
+</div>
 
 
-        </div>
-      </div>
+
+
+<div class="product-details">
+  <p id="product-description" data-i18n="product_description"></p>
+
+  
     </section>
   </main>
 
@@ -788,6 +1294,75 @@ main.product-page {
       </div>
     </div>
   </div>
+
+<!-- 📱 FOOTER PARA CELULARES (solo visible en pantallas pequeñas) -->
+<div class="mobile-footer">
+  <div class="info-section">
+    <button class="info-toggle">
+      <span data-i18n="brand">Brand</span>
+      <span class="plus-icon">+</span>
+    </button>
+    <ul class="info-content">
+      <li><a href="about.html" data-i18n="footer_about">Marca</a></li>
+    </ul>
+  </div>
+
+  <div class="info-section">
+    <button class="info-toggle">
+      <span data-i18n="legal">Legal</span>
+      <span class="plus-icon">+</span>
+    </button>
+    <ul class="info-content">
+      <li><a href="#"  data-i18n="footer_legal_advice">Legal Advice</a></li>
+<li><a href="politica-de-privacidad.html"  data-i18n="footer_privacy_policy">Privacy Policy</a></li>
+<li><a href="terms-and-conditions.html"  data-i18n="footer_terms">Terms & Conditions</a></li>
+    </ul>
+  </div>
+
+  <div class="info-section">
+    <button class="info-toggle">
+      <span data-i18n="support">Support</span>
+      <span class="plus-icon">+</span>
+    </button>
+    <ul class="info-content">
+      <li><a href="#"  data-i18n="footer_returns">Returns</a></li>
+      <li><a href="#"  data-i18n="footer_order_tracking">Order Tracking</a></li>
+          <li><a href="#">FAQ</a></li>
+      <li><a href="contactanos.html" data-i18n="contact_us">Contact Us</a></li>
+    </ul>
+  </div>
+  <p>&copy; 2025 Sucesso. All rights reserved.</p>
+</div>
+
+  <footer>
+    <div class="footer-sections">
+      <div class="footer-column">
+<h3 data-i18n="brand">Brand</h3>
+        <ul>
+<li><a href="about.html"  data-i18n="footer_about">About</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+<h3 data-i18n="legal">Legal</h3>
+        <ul>
+<li><a href="#"  data-i18n="footer_legal_advice">Legal Advice</a></li>
+<li><a href="politica-de-privacidad.html"  data-i18n="footer_privacy_policy">Privacy Policy</a></li>
+<li><a href="terms-and-conditions.html"  data-i18n="footer_terms">Terms & Conditions</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+<h3 data-i18n="support">Support</h3>
+        <ul>
+<li><a href="#"  data-i18n="footer_returns">Returns</a></li>
+<li><a href="#"  data-i18n="footer_order_tracking">Order Tracking</a></li>
+          <li><a href="#">FAQ</a></li>
+<li><a href="contactanos.html" data-i18n="contact_us">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <p>&copy; 2025 Sucesso. All rights reserved.</p>
+  </footer>
 
 <div id="language-popup" class="language-popup">
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
@@ -1049,63 +1624,68 @@ menuToggle.addEventListener('click', () => {
 });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const zoomOverlay = document.getElementById("zoom-overlay");
+  const zoomImage = document.getElementById("zoom-image");
+  const closeZoom = document.getElementById("close-zoom");
+
+  // Selecciona todas las imágenes dentro de image-box
+  document.querySelectorAll(".image-box img").forEach(img => {
+    img.addEventListener("click", () => {
+      zoomImage.src = img.src;
+      zoomOverlay.style.display = "flex";
+      zoomOverlay.scrollTop = 0;
+    });
+  });
+
+  closeZoom.addEventListener("click", () => {
+    zoomOverlay.style.display = "none";
+    zoomImage.src = "";
+  });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const sizeButtons = document.querySelectorAll(".product-sizes span");
+
+  // Marcar S por defecto
+  sizeButtons.forEach(btn => {
+    if (btn.textContent.trim() === "S") {
+      btn.classList.add("active");
+    }
+  });
+
+  // Al hacer clic cambiar selección
+  sizeButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      sizeButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+});
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggles = document.querySelectorAll(".info-toggle");
+    toggles.forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+  const section = toggle.closest(".info-section");
+  section.classList.toggle("active");
+});
+
+    });
+  });
+</script>
+
+
+
   <script src="product-page.js"></script>
 <script src="cart.js" type="module"></script>
   <script src="script.js"></script>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const input = document.querySelector('.search-bar input');
-  const resultsContainer = document.getElementById('searchResults');
-  const searchBar = document.getElementById('searchBar');
-  const overlay = document.getElementById('overlay');
-  let allProducts = []; // Esto lo tienes cargado ya con loadProducts()
-  let searchTimeout;
-
-  function hideResults() {
-    resultsContainer.innerHTML = "";
-    resultsContainer.style.display = "none";
-  }
-
-  input.addEventListener('input', () => {
-    clearTimeout(searchTimeout);
-    const query = input.value.toLowerCase().trim();
-
-    searchTimeout = setTimeout(() => {
-      if (query === "") {
-        hideResults();
-      } else {
-        const filtered = allProducts.filter(product =>
-          product.titulo.toLowerCase().includes(query) ||
-          product.nombre.toLowerCase().includes(query) ||
-          product.keywords.some(k => k.toLowerCase().includes(query))
-        );
-
-        renderResults(filtered); // Ya la tienes definida
-      }
-    }, 1000); // ✅ Mismo delay para mostrar u ocultar
-  });
-
-  window.toggleSearchBar = function () {
-    const isActive = searchBar.classList.contains('active');
-    if (isActive) {
-      searchBar.classList.add('hiding');
-      searchBar.classList.remove('active');
-      overlay.style.display = 'none';
-      hideResults();
-      input.value = "";
-      setTimeout(() => {
-        searchBar.classList.remove('hiding');
-      }, 200);
-    } else {
-      searchBar.classList.add('active');
-      overlay.style.display = 'block';
-      input.focus();
-    }
-  };
-});
-</script>
-  
 </body>
 </html>
 
