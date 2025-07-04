@@ -36,6 +36,8 @@ header {
   font-size: 30px; /* o el tamaño que desees */
 }
 
+
+
 .collections {
     color: #233f32;
     text-align: left;
@@ -391,7 +393,7 @@ html {
     box-sizing: border-box;
   }
 
-  .tees-title {
+ .tees-title {
   color: #233f32;
   text-align: left;
   font-family: "Inter-SemiBold", sans-serif;
@@ -793,259 +795,13 @@ form input, form textarea, form button {
 }
 
 
-.product-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-    margin: 2rem auto;
-    padding: 2rem;
-    max-width: 1200px;
-}
-
-.product-container {
-    display: flex; /* Usar flexbox para alinear los elementos */
-    gap: 15rem; /* Espaciado entre la imagen y los detalles */
-    align-items: flex-start; /* Asegura que todo esté alineado en la parte superior */
-    justify-content: space-between; /* Espaciado entre imagen y detalles */
-    max-width: 1200px; /* Ancho máximo de la sección */
-    margin: 10; /* Centrar en la página */
-    padding: 2rem; /* Espaciado interno */
-}
-
-
-.productos-image {
-    width: 400px; /* Ajusta el tamaño según prefieras */
-    height: auto; /* Mantén la proporción de la imagen */
-    margin: 0 auto; /* Centrar si es necesario */
-    display: block; /* Asegura que se comporten como bloques */
-}
-
-
-.productos-image img {
-    width: 300%; /* La imagen ocupará el ancho del contenedor */
-    max-width: 600px; /* Ajusta el tamaño máximo según tus preferencias */
-    object-fit: contain; /* Evita que la imagen se deforme */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
-}
-
-
-.productos-info-sections {
-  margin-top: 20px;
-}
-
-/* Estilo de los botones */
-.product-info-sections {
-  margin-top: 10px;
-}
-
-@media (max-width: 1440px) {
-  main.product-page {
-    transform: scale(0.90);
-    transform-origin: top center;
-  }
-}
-
-@media (max-width: 1200px) {
-  main.product-page {
-    transform: scale(0.80);
-  }
-}
-
-@media (max-width: 992px) {
-  main.product-page {
-    transform: scale(0.70);
-  }
-}
-
-@media (max-width: 768px) {
-  main.product-page {
-    transform: none; /* en móviles, mantener el diseño normal */
-  }
-}
-main.product-page {
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-}
-@media (max-width: 1440px) {
-  main.product-page {
-    transform: scale(0.90) !important;
-    transform-origin: top center !important;
-    margin-top: 30px !important; /* reduce espacio */
-  }
-}
-
-@media (max-width: 1200px) {
-  main.product-page {
-    transform: scale(0.80) !important;
-    margin-top: 70px !important;
-  }
-}
-
-@media (max-width: 992px) {
-  main.product-page {
-    transform: scale(0.70) !important;
-    margin-top: 60px !important;
-  }
-}
-
-
-/* Estilo de los botones */
-.info-button {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  text-align: left;
-  padding: 15px 0;
-  background-color: transparent; /* Fondo transparente */
-  border: none;
-  border-bottom: 1px solid #ddd; /* Línea separadora */
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  position: relative;
-  transition: color 0.3s ease;
-  outline: none;
-}
-
-/* Efecto de subrayado exclusivo para el texto */
-.info-button span.text {
-  position: relative;
-  display: inline-block;
-  color: #333; /* Color del texto */
-}
-
-.info-button span.text::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: #000;
-  transition: width 0.3s ease;
-}
-
-.info-button:hover span.text::after {
-  width: 100%;
-}
-
-/* Símbolo "+" o "-" */
-.toggle-icon {
-  font-size: 18px;
-  color: #333; /* Color del símbolo */
-  margin-left: auto;
-  transition: transform 0.3s ease;
-}
-
-/* Estilo de las secciones desplegables */
-.info-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease, padding 0.3s ease;
-  padding: 0 20px;
-  background-color: transparent; /* Fondo transparente */
-  font-size: 14px;
-  color: #233f32;
-}
-
-.info-content p {
-  margin: 10px 0;
-  line-height: 1.5;
-}
-
-/* Clase para contenido desplegado */
-.info-content.open {
-  max-height: 200px; /* Ajusta según el contenido */
-  padding: 10px 20px;
-}
-
-/* Cambia el "+" a "-" */
-.info-button.open .toggle-icon::before {
-  content: '-'; /* Muestra el "-" */
-}
-
-.info-button .toggle-icon::before {
-  content: '+'; /* Muestra el "+" por defecto */
-}
-  
-
-.product-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 1rem;
-}
-
-.product-info h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #233f32;
-}
-
-.product-info p {
-    font-size: 1.5rem;
-    color: #333;
-}
-
-.product-sizes span {
-    display: inline-block;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin: 4px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-  }
-  
-  .product-sizes span.selected {
-    background-color: #233f32;
-    color: #fff;
-    border-color: #233f32;
-  }
-  
-
-
-button.add-to-cart, button.buy-now-btn {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 1px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-button.add-to-cart {
-    background-color: #233f32;
-    color: #fff;
-}
-
-button.add-to-cart:hover {
-    background-color: transparent;
-    color: #233f32;
-    border: 1px solid #233f32;
-}
-
-button.buy-now-btn {
-    background-color: #ebd7c1;
-    color: #fff;
-}
-
-button.buy-now-btn:hover {
-    background-color: #d6bca0;
-}
 
 .cart-footer button {
     width: 100%;
     padding: 0.75rem;
     font-size: 1rem;
     font-weight: 600;
-    border-radius: 6px;
+    border-radius: 1px;
     cursor: pointer;
     transition: background 0.3s, color 0.3s, border 0.3s;
     margin-top: 0.5rem;
@@ -1214,14 +970,6 @@ button.buy-now-btn:hover {
 }
 
 
-.size-guide-sucesso {
-  display: block; /* Se asegura de que sea un elemento en bloque */
-margin: 0.2rem auto 0.2rem auto;
-  width: 500px; /* Tamaño del logo ajustable */
-  height: auto; /* Mantiene la proporción */
-}
-
-
 /* === CARRITO TIPO STÜSSY === */
 
 .cart-overlay {
@@ -1335,28 +1083,6 @@ margin: 0.2rem auto 0.2rem auto;
     background-color: #1a2d27;
   }
   
-  .add-to-cart {
-    margin-top: 1rem;
-    padding: 0.9rem 1.5rem;
-    background-color: #233f32;
-    color: white;
-    border: none;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    width: 100%;
-    border-radius: 6px;
-  }
-  
-  .add-to-cart:hover {
-    background-color: #1a2d27;
-  }
-  
-.add-to-cart,
-.buy-now-btn {
-  border-radius: 2px; /* 🔁 igual a "SHOP NOW" */
-}
 
 
   @media (max-width: 500px) {
@@ -2155,6 +1881,7 @@ transition: color 0.3s ease;
     }
   }
 
+
   @media (max-width: 768px) {
   /* Reducir el logo */
   .logo {
@@ -2206,6 +1933,8 @@ transition: color 0.3s ease;
     z-index: 2;
   }
 }
+
+
 
 @media (max-width: 991px) {
   .mobile-footer p {
@@ -2275,6 +2004,8 @@ transition: color 0.3s ease;
   }
 }
 
+
+
 /* Estilos específicos para celular */
 @media (max-width: 768px) {
   .language-popup {
@@ -2298,4 +2029,3 @@ transition: color 0.3s ease;
   right: 14px;
   color: #333;
 }
-
