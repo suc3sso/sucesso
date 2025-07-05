@@ -1696,10 +1696,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const toggles = document.querySelectorAll(".info-toggle");
     toggles.forEach((toggle) => {
       toggle.addEventListener("click", () => {
-  const section = toggle.closest(".info-section");
-  section.classList.toggle("active");
-});
-
+        const section = toggle.closest(".info-section");
+        section.classList.toggle("active");
+      });
     });
   });
 </script>
