@@ -547,16 +547,30 @@
 
   // 🔁 Detectar sesión activa y actualizar enlaces
   onAuthStateChanged(auth, (user) => {
+  const lang = localStorage.getItem("preferredLang") || "en";
+  const sidebarAccountLink = document.getElementById("sidebar-account-link");
+  const sidebarAccountText = document.getElementById("sidebar-account-text");
+
+  // Enlace del ícono de cuenta del header
+  if (accountLink) {
+    accountLink.href = user ? "mi-cuenta.html" : "login.html";
+  }
+
+  // Enlace y texto del botón del sidebar
+  if (sidebarAccountLink) {
+    sidebarAccountLink.href = user ? "mi-cuenta.html" : "login.html";
+  }
+
+  if (sidebarAccountText) {
     if (user) {
-      if (accountLink) accountLink.href = "mi-cuenta.html";
-      if (sidebarAccountLink) sidebarAccountLink.href = "mi-cuenta.html";
-      if (sidebarAccountText) sidebarAccountText.textContent = "My Account";
+      sidebarAccountText.textContent = lang === "es" ? "Mi Cuenta" : "My Account";
     } else {
-      if (accountLink) accountLink.href = "login.html";
-      if (sidebarAccountLink) sidebarAccountLink.href = "login.html";
-      if (sidebarAccountText) sidebarAccountText.textContent = "Log In";
+      sidebarAccountText.textContent = lang === "es" ? "Iniciar Sesión" : "Log In";
     }
-  });
+  }
+});
+
+  
 
   // 🔁 Si haces clic en el ícono de cuenta, decide redirigir a login o cuenta
   if (accountLink) {
@@ -572,6 +586,7 @@
     });
   }
 
+  
   // 🔍 Búsqueda
   const input = document.querySelector('.search-bar input');
   const resultsContainer = document.getElementById('searchResults');
@@ -1046,6 +1061,7 @@ document.addEventListener("DOMContentLoaded", () => {
             el.textContent = data[lang][key];
           }
         });
+        
         document.documentElement.lang = lang;
       })
       .catch(err => console.error("Error cargando idioma:", err));
@@ -1054,6 +1070,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateToggleText(currentLang);
   setLanguage(currentLang);
 });
+
 </script>
 
 
