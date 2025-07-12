@@ -1351,7 +1351,22 @@ menuToggle.addEventListener('click', () => {
 
       if (accountLink) accountLink.href = "mi-cuenta.html";
       if (sidebarAccountLink) sidebarAccountLink.href = "mi-cuenta.html";
-      if (sidebarAccountText) sidebarAccountText.textContent = "Mi Cuenta";
+if (sidebarAccountText) {
+  const lang = localStorage.getItem("preferredLang") || "en";
+  fetch("assets/lang/lang.json")
+    .then(res => res.json())
+    .then(data => {
+      if (data[lang] && data[lang]["sidebar_account"]) {
+        sidebarAccountText.textContent = data[lang]["sidebar_account"];
+      } else {
+        sidebarAccountText.textContent = lang === "es" ? "Mi Cuenta" : "My Account"; // fallback
+      }
+    })
+    .catch(() => {
+      sidebarAccountText.textContent = lang === "es" ? "Mi Cuenta" : "My Account"; // fallback si falla la carga
+    });
+}
+
 
       try {
         const userDoc = await getDoc(doc(db, "usuarios", user.uid));
