@@ -548,14 +548,22 @@
 
   // 🔁 Detectar sesión activa y actualizar enlaces
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      if (accountLink) accountLink.href = "mi-cuenta.html";
-      if (sidebarAccountLink) sidebarAccountLink.href = "mi-cuenta.html";
-      if (sidebarAccountText) sidebarAccountText.textContent = "My Account";
-    } else {
-      if (accountLink) accountLink.href = "login.html";
-      if (sidebarAccountLink) sidebarAccountLink.href = "login.html";
-      if (sidebarAccountText) sidebarAccountText.textContent = "Log In";
+    const lang = localStorage.getItem("preferredLang") || "en";
+
+    if (accountLink) {
+      accountLink.href = user ? "mi-cuenta.html" : "login.html";
+    }
+
+    if (sidebarAccountLink) {
+      sidebarAccountLink.href = user ? "mi-cuenta.html" : "login.html";
+    }
+
+    if (sidebarAccountText) {
+      if (user) {
+        sidebarAccountText.textContent = lang === "es" ? "Mi Cuenta" : "My Account";
+      } else {
+        sidebarAccountText.textContent = lang === "es" ? "Iniciar Sesión" : "Log In";
+      }
     }
   });
 
