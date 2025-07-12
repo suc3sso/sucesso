@@ -656,13 +656,18 @@ html, body {
   const sidebarText = document.getElementById("sidebar-account-text");
 
   onAuthStateChanged(auth, (user) => {
-    if (user) {
-      sidebarText.textContent = "My Account";
-      sidebarLink.href = "mi-cuenta.html";
-    } else {
-      sidebarText.textContent = "Log In";
-      sidebarLink.href = "login.html";
-    }
+    const lang = localStorage.getItem("preferredLang") || "en";
+
+    const isLoggedIn = !!user;
+    const accountText = isLoggedIn
+      ? (lang === "es" ? "Mi Cuenta" : "My Account")
+      : (lang === "es" ? "Iniciar Sesión" : "Log In");
+
+    const accountHref = isLoggedIn ? "mi-cuenta.html" : "login.html";
+
+    if (sidebarLink) sidebarLink.href = accountHref;
+    if (sidebarText) sidebarText.textContent = accountText;
+    if (accountLink) accountLink.href = accountHref;
   });
 
   // 🔍 Búsqueda
@@ -1007,7 +1012,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="sidebar-auth-lang">
       <a id="sidebar-account-link" href="login.html" class="sidebar-link">
         <img src="images/icon account.png" alt="Login" class="sidebar-icon" />
-        <span id="sidebar-account-text" data-i18n="sidebar_login">Log In</span>
+        <span id="sidebar-account-text" data-i18n="sidebar_account">Account</span>
       </a>
       <div class="lang-btn" id="languageToggleSidebar">EN | ES</div>
     </div>
@@ -1117,6 +1122,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 });
 </script>
-  
+
 </body>
 </html>
