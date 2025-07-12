@@ -495,7 +495,7 @@ html, body {
   }
 }
 
-    @media (max-width: 768px) {
+@media (max-width: 768px) {
   /* Ocultar productos */
   .collection-grid,
   .collection-container,
@@ -665,7 +665,7 @@ footer {
   margin-top: 20px; /* Esto separa la línea divisoria del contenido superior */
 }
 
-    
+
  </style>
   
 </head>
@@ -772,15 +772,27 @@ footer {
   const sidebarLink = document.getElementById("sidebar-account-link");
   const sidebarText = document.getElementById("sidebar-account-text");
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      sidebarText.textContent = "My Account";
-      sidebarLink.href = "mi-cuenta.html";
-    } else {
-      sidebarText.textContent = "Log In";
-      sidebarLink.href = "login.html";
-    }
-  });
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    sidebarText.setAttribute("data-i18n", "sidebar_account");
+    sidebarLink.href = "mi-cuenta.html";
+  } else {
+    sidebarText.setAttribute("data-i18n", "sidebar_login");
+    sidebarLink.href = "login.html";
+  }
+
+  // Si ya se cargó el idioma, actualiza el texto mostrado
+  const currentLang = localStorage.getItem("preferredLang") || "en";
+  fetch("assets/lang/lang.json")
+    .then(res => res.json())
+    .then(data => {
+      const key = sidebarText.getAttribute("data-i18n");
+      if (data[currentLang] && data[currentLang][key]) {
+        sidebarText.textContent = data[currentLang][key];
+      }
+    });
+});
+
 
   // 🔍 Búsqueda
   const input = document.querySelector('.search-bar input');
@@ -1019,6 +1031,7 @@ footer {
     <p>&copy; 2025 Sucesso. All rights reserved.</p>
   </footer>
 
+
 <div id="language-popup" class="language-popup">
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
     <strong style="font-size: 12px; letter-spacing: 1px;">LANGUAGE SETTINGS</strong>
@@ -1221,7 +1234,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="sidebar-auth-lang">
       <a id="sidebar-account-link" href="login.html" class="sidebar-link">
         <img src="images/icon account.png" alt="Login" class="sidebar-icon" />
-        <span id="sidebar-account-text" data-i18n="sidebar_login">Log In</span>
+        <span id="sidebar-account-text" data-i18n="sidebar_account">Account</span>
       </a>
       <div class="lang-btn" id="languageToggleSidebar">EN | ES</div>
     </div>
@@ -1345,6 +1358,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 });
 </script>
-  
+
+
 </body>
 </html>
