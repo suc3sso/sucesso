@@ -1158,9 +1158,16 @@ try {
   envio: datosCompra.envio?.toFixed(2) || '0.00',
   total: datosCompra.total?.toFixed(2) || '0.00',
   fecha: new Date().toLocaleString(),
-  items: datosCompra.items.map(i => 
-    `- ${i.nombre} | Talla: ${i.talla} | Cantidad: ${i.cantidad} | Precio: $${i.precio}`
-  ).join('<br>')
+  items_html: datosCompra.items.map(i =>
+  `<tr>
+    <td style="padding:8px; border-bottom:1px solid #eee;">${i.cantidad}</td>
+    <td style="padding:8px; border-bottom:1px solid #eee;">${i.nombre}</td>
+    <td style="padding:8px; border-bottom:1px solid #eee;">${i.talla}</td>
+    <td style="padding:8px; border-bottom:1px solid #eee; text-align:right;">$${i.precio.toFixed(2)}</td>
+  </tr>`
+).join(""),
+
+
 });
 
 
