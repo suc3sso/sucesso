@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Sucesso</title>
   <link rel="icon" href="images\logo cherry png.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -532,7 +533,7 @@ html, body {
 
   /* Ajustar hero image */
   .hero-image {
-    width: 220% !important;         /* Amplía aún más */
+    width: 270% !important;         /* Amplía aún más */
     height: auto !important;
     object-fit: cover !important;
     transform: translateX(-23%) !important; /* Mueve la imagen hacia la izquierda */
@@ -582,41 +583,35 @@ html, body {
 
 @media (max-width: 768px) {
   .hero {
+    height: auto;
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
   }
 
   .hero-image {
+    display: block;
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
-    display: block;
+    object-fit: cover !important;
   }
 
-  main {
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-
-  footer {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-  }
-
+  footer,
   .mobile-footer {
     margin-top: 0 !important;
     padding-top: 0 !important;
   }
 
-  body {
+  main {
     margin: 0 !important;
     padding: 0 !important;
   }
 
-  html {
+  body, html {
     margin: 0 !important;
     padding: 0 !important;
   }
 }
+
 
 @media (min-width: 769px) {
   #new-in .collection-grid {
@@ -695,7 +690,7 @@ footer {
   </div>
   
   <div class="navbar-center">
-    <img src="images/logo sucesso png.png" alt="Nude Logo" class="logo" style="width: 130px; height: auto;"/>
+    <a href="index.html"><img src="images/logo sucesso png.png" alt="Nude Logo" class="logo" style="width: 130px; height: auto;"/></a>
   </div>
 
   <div class="navbar-right">
