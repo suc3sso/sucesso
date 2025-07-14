@@ -47,7 +47,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     return; // no continuar si no hay producto
   }
+if (producto) {
+  document.title = `${producto.name} - Sucesso`; // 🔹 Cambia el título dinámicamente
+  document.getElementById("product-name").textContent = producto.name;
+  document.getElementById("product-price").textContent = producto.price;
+  document.getElementById("product-image-front").src = producto.imageFront;
+  document.getElementById("product-image-back").src = producto.imageBack;
+  document.getElementById("product-description").textContent = producto.description;
+}
 
+
+  // Al cargar, marca S como seleccionada
+const defaultSize = Array.from(document.querySelectorAll(".product-sizes span"))
+  .find(span => span.textContent.trim() === "S");
+
+if (defaultSize) {
+  defaultSize.classList.add("selected");
+}
+
+  
   // === Activar pestañas de información ===
   document.querySelectorAll(".info-button").forEach((button) => {
     button.addEventListener("click", () => {
