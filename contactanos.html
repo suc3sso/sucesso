@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contacto - Sucesso</title>
-    <link rel="icon" href="images\logo cherry png.png" type="image/png">
+  <title>Contact Us - Sucesso</title>
+  <link rel="icon" href="images/sucesso fav icon.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
@@ -543,6 +543,7 @@ html, body {
       btn.disabled = true;
       btn.textContent = "Enviando...";
 
+      document.getElementById("fecha_hora").value = new Date().toLocaleString();
       emailjs.sendForm("service_8yvqy7r", "template_26k9n7y", e.target)
         .then(() => {
           document.getElementById("contact-form").style.display = "none";
@@ -580,7 +581,7 @@ html, body {
     </div>
 
     <div class="navbar-center">
-      <img src="images/logo sucesso png.png" alt="Sucesso Logo" class="logo" style="width: 130px; height: auto;"/>
+    <a href="index.html"><img src="images/logo sucesso png.png" alt="Nude Logo" class="logo" style="width: 130px; height: auto;"/></a>
     </div>
 
     <div class="navbar-right">
@@ -782,6 +783,7 @@ html, body {
       </div>
       <textarea name="message" data-i18n-placeholder="form_message" placeholder="Your message" required style="width: 200%; padding: 12px; font-size: 14px; border: 1px solid #ccc; margin-bottom: 20px;"></textarea>
       <button class="form-button" id="send-btn" type="submit" data-i18n="send_message">Send message</button>
+    <input type="hidden" name="fecha_hora" id="fecha_hora" />
     </form>
     <div id="confirmation" class="confirmation-message" style="display: none">
       <p data-i18n="message_sent">Your message has been successfully sent.</p>
