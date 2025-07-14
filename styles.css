@@ -2029,3 +2029,35 @@ transition: color 0.3s ease;
   right: 14px;
   color: #333;
 }
+
+.mobile-footer {
+  background-color: transparent !important;
+  color: #233f32 !important;
+  padding: 20px;
+}
+
+.mobile-footer a {
+  color: #233f32 !important;
+  text-decoration: none;
+}
+
+.mobile-footer .info-toggle {
+  background: none;
+  border: none;
+  color: #233f32 !important;
+  font-weight: bold;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  padding: 10px 0;
+}
+
+.mobile-footer .info-content {
+  list-style: none;
+  padding-left: 0;
+}
+
+.mobile-footer .info-content li a {
+  color: #233f32 !important;
+  font-size: 13px;
+}
