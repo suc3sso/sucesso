@@ -508,6 +508,29 @@
   transform: translateY(-6px) rotate(-45deg);
 }
 
+@media screen and (max-width: 600px) {
+  main {
+    transform: scale(0.92); /* Ajusta el valor según lo compacto que lo quieras */
+    transform-origin: top center;
+    padding: 0 10px;
+    margin-top: 150px !important;
+  }
+
+  main form {
+    max-width: 100%;
+  }
+
+  input[type="email"],
+  input[type="password"],
+  button {
+    font-size: 15px;
+  }
+
+  .create-account, .forgot {
+    font-size: 0.85rem;
+  }
+}
+
 
   </style>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -539,7 +562,7 @@
   </div>
 
   <div class="navbar-center">
-    <img src="images/logo sucesso png.png" alt="Nude Logo" class="logo" style="width: 130px; height: auto;" />
+    <a href="index.html"><img src="images/logo sucesso png.png" alt="Nude Logo" class="logo" style="width: 130px; height: auto;"/></a>
   </div>
 
   <div class="navbar-right">
