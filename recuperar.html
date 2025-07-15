@@ -315,6 +315,8 @@ input[type="email"]:focus {
   width: 120%;
 }
 
+
+
 .menu-toggle {
   background: none;
   border: none;
@@ -730,6 +732,45 @@ transition: color 0.3s ease;
   font-weight: 600;
 }
 
+@media (max-width: 768px) {
+  .logo {
+    position: absolute;
+    margin-top: 60px;
+margin-left: 30px !important;
+    transform: translate(-50%, -50%);
+    width: 90px; /* o el tamaño que prefieras */
+    height: auto;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+  }
+
+  .menu-toggle,
+  .navbar-right {
+    position: relative;
+    z-index: 2;
+  }
+
+  .container {
+    transform: scale(0.85);
+    transform-origin: top center;
+    margin-top: 4rem;
+  max-width: 420px;
+  margin: 6rem auto;
+  margin-right: 3.5rem;
+  padding: 3rem;
+  border-radius: 10px;
+
+  }
+  
+}
+
   </style>
 </head>
 <body>
@@ -760,7 +801,7 @@ transition: color 0.3s ease;
   </div>
   
    <div class="navbar-center">
-    <a href="index.html"><img src="images/logo sucesso png.png" alt="Nude Logo" class="logo" style="width: 130px; height: auto;"/></a>
+    <a href="index.html"><img src="images/logo sucesso png.png" alt="Nude Logo" class="logo" style="width: 130px; height: auto; margin-top: 10px;"/></a>
   </div>
 
   <div class="navbar-right">
@@ -942,6 +983,34 @@ transition: color 0.3s ease;
   };
 
   loadProducts();
+
+import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const resetForm = document.getElementById('reset-form');
+const emailInput = document.getElementById('email');
+const successMessage = document.getElementById('success-message');
+const errorMessage = document.getElementById('error-message');
+
+if (resetForm) {
+  resetForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = emailInput.value.trim();
+    successMessage.textContent = "";
+    errorMessage.textContent = "";
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      successMessage.textContent = "Revisa tu correo para restablecer tu contraseña.";
+      emailInput.value = "";
+    } catch (error) {
+      console.error("Error al enviar el correo:", error.message);
+      errorMessage.textContent = "No se pudo enviar el correo. Verifica el email ingresado.";
+    }
+  });
+}
+
+
 </script>
 
 
