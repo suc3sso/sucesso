@@ -4,26 +4,48 @@
   <meta charset="UTF-8">
   <title>Página en construcción</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="images/logo cherry png.png" type="image/png">
+  <link rel="icon" href="images/sucesso fav icon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      height: 100%;
       font-family: 'Poppins', sans-serif;
-      background-color: #f9f9f9;
-      color: #333;
+    }
+
+    .container {
       display: flex;
+      height: 100vh;
+      width: 100%;
+    }
+
+    .left {
+      flex: 1;
+      background-image: url('descarga.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .right {
+      flex: 1;
+      background-color: #f9f9f9;
+      color: #233f32;
+      display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      height: 100vh;
-      flex-direction: column;
-      padding: 20px;
+      padding: 40px;
     }
 
     h1 {
       font-size: 2.5rem;
       margin-bottom: 10px;
-      color: #233f32;
     }
 
     p {
@@ -36,7 +58,7 @@
       width: 100%;
       max-width: 300px;
       border: 1px solid #ccc;
-      border-radius: 1px;
+      border-radius: 4px;
       margin-bottom: 10px;
     }
 
@@ -44,8 +66,8 @@
       padding: 10px 20px;
       background-color: transparent;
       color: #233f32;
-      border: 1px solid ;
-      border-radius: 1px #233f32;
+      border: 1px solid #233f32;
+      border-radius: 4px;
       cursor: pointer;
     }
 
@@ -53,12 +75,27 @@
       background-color: #233f32;
       color: #fff;
     }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .left, .right {
+        flex: none;
+        height: 50%;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Página en Construcción</h1>
-  <p>Pronto estará disponible. Déjanos tu email para avisarte.</p>
-  <input class="email-input" type="email" placeholder="Tu correo electrónico">
-  <button class="submit-btn">Notificarme</button>
+  <div class="container">
+    <div class="left"></div>
+    <div class="right">
+      <h1>Página en Construcción</h1>
+      <p>Pronto estará disponible. Déjanos tu email para avisarte.</p>
+      <input class="email-input" type="email" placeholder="Tu correo electrónico">
+      <button class="submit-btn">Notificarme</button>
+    </div>
+  </div>
 </body>
 </html>
