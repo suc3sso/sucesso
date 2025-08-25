@@ -15,6 +15,16 @@ html, body {
   width: 100%;
 }
 
+/* 🔺 Solo Laptops: aumenta la altura vertical del fondo gris de las imágenes */
+@media (min-width: 1024px) and (max-width: 1535px) {
+  body.tees-page .collection-item .image-hover {
+    /* antes tenías padding: 10px; */
+    padding-block: 22px;   /* ↑ más alto solo vertical (top/bottom) */
+    padding-inline: 10px;  /* mantiene el padding lateral original */
+  }
+}
+
+    
 .loader {
       position: fixed;
       inset: 0;
@@ -1300,3 +1310,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+
