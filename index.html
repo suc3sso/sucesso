@@ -1,178 +1,1307 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-  <meta name="msvalidate.01" content="D4CF05FD474073FB45C5C1DDFD03828A" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta property="og:title" content="Sucesso">
-  <meta property="og:description" content="Dress for success.">
-  <meta property="og:image" content="https://www.sucessobrand.com/favicon.ico">
-  <meta property="og:url" content="https://www.sucessobrand.com">
-  <title>Página en construcción</title>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="manifest" href="/manifest.json">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yael Goldmann - Escritora</title>
+    <link rel="icon" href="IMAGES/Imagen de WhatsApp 2025-07-05 a las 16.04.10_4774b179.jpg" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<style>
 
-    body, html {
-      height: 100%;
-      font-family: 'Poppins', sans-serif;
-    }
+    #loaderOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
 
-    .container {
-      display: flex;
-      height: 100vh;
-      width: 100%;
-    }
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .left {
-      flex: 1;
-      background-image: url('images/descarga.png');
-      background-size: cover;
-      background-position: center;
-    }
+.loader {
+  border: 6px solid #ccc;
+  border-top: 6px solid #482922;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+}
 
-    .right {
-      flex: 1;
-      background-color: #f9f9f9;
-      color: #233f32;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 40px;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-    }
-
-    .email-input {
-      padding: 10px;
-      width: 100%;
-      max-width: 300px;
-      border: 1px solid #ccc;
-      border-radius: 1px;
-      margin-bottom: 10px;
-    }
-
-    .submit-btn {
-      padding: 10px 20px;
-      background-color: transparent;
-      color: #233f32;
-      border: 1px solid #233f32;
-      border-radius: 1px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .submit-btn:hover {
-      background-color: #233f32;
-      color: #ffffff;
-    }
-
-    .thank-you {
-      display: none;
-      margin-top: 20px;
-      color: #233f32;
-      font-weight: 600;
-      font-size: 14px;
-      text-align: left;
-      max-width: 300px;
-    }
-
-    .about-logo {
-      display: block;
-      margin: 2rem auto;
-      width: 80px;
-      height: auto;
-    }
-
-    /* ---------------------------- */
-    /* RESPONSIVE CELULARES */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    height: auto;
-  }
-
-  .left, .right {
-    flex: none;
-    width: 100%;
-    height: auto;
-  }
-
-  .right {
-    order: 1; /* Mostrar primero */
-    padding: 20px;
-  }
-
-  .left {
-    order: 2; /* Mostrar después */
-    margin-top: 5px;
-    height: 600px;
-        width: 101%;
-  }
-
-  h1 {
-    font-size: 1.8rem;
-  }
-
-  p {
-    font-size: 1rem;
-    margin-bottom: 20px;
-  }
-
-  .about-logo {
-    width: 60px;
-    margin: 1.5rem auto;
-  }
-
-  .thank-you {
-    font-size: 13px;
-    text-align: left;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
+    .language-selector {
+  position: relative;
+  display: inline-block;
+  margin-left: 1rem;
+  font-size: 14px;
+  cursor: pointer;
+}
 
-  </style>
-</head>
+.selected-lang {
+  display: flex;
+  align-items: center;
+  margin-left: 2rem !important;
+  margin-right: -8rem !important;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 1px;
+  background-color: transparent;
+  color: #482922;
+}
+
+.selected-lang:hover + .language-dropdown,
+.language-dropdown:hover {
+  display: block;
+}
+
+.flag-icon {
+  width: 18px;
+  height: auto;
+}
+
+.language-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  color: black;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 10px;
+  z-index: 999;
+  white-space: nowrap;
+  min-width: 160px;
+}
+
+.language-dropdown label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.language-dropdown input {
+  margin: 0;
+}
+
+.selected-lang:hover + .language-dropdown {
+  display: block;
+  animation: fadeInLang 0.0s ease 0.1s forwards; /* 400ms delay */
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes fadeInLang {
+  to {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+#languageOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(2px);
+  z-index: 100;
+  display: none;
+}
+
+.navbar,
+.language-selector {
+  position: relative;
+  z-index: 101;
+}
+
+#loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  border: 6px solid #ccc;
+  border-top: 6px solid #482922;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+  /* --- PRIORIDAD: que los libros sean clicables en móvil --- */
+  .carousel-fade-section,
+  .carousel-fade-container {
+    position: relative !important;
+    z-index: 0 !important;              /* el carrusel no debe estar por encima del grid */
+  }
+
+  /* Los libros van por encima de cualquier remanente del carrusel */
+  .books-section {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  /* Si por CSS externo el carrusel tuviera overflow raro, evitamos superposición visual */
+  .carousel-fade-container {
+    overflow: hidden;                    /* nada del carrusel sobresale hacia abajo */
+  }
+
+  /* --- Overlays: cuando están ocultos NO deben capturar toques --- */
+  #searchOverlay,
+  #searchOverlayMobile,
+  #languageOverlay,
+  #menuOverlay {
+    display: none;                       /* estado inicial */
+    pointer-events: none;                /* aunque por error queden visibles, no comen taps */
+  }
+
+  /* Cuando se muestren explícitamente, sí aceptan interacción */
+  #searchOverlay[aria-hidden="false"],
+  #searchOverlayMobile[aria-hidden="false"],
+  #languageOverlay[aria-hidden="false"],
+  #menuOverlay[aria-hidden="false"] {
+    pointer-events: auto;
+  }
+
+  /* Flechas del carrusel ya estaban desactivadas en móvil, reforzamos */
+  .carousel-arrow {
+    pointer-events: none !important;
+  }
+
+/* ----- FLECHAS DEL CARRUSEL (DESKTOP) ----- */
+.carousel-fade-container {
+  position: relative;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto !important; /* re-habilita clics */
+  cursor: pointer;
+  z-index: 5;
+  font-size: 38px;
+  line-height: 1;
+  user-select: none;
+  background: transparent;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: opacity .2s ease, background .2s ease;
+}
+
+
+.left-arrow { left: 16px; }
+.right-arrow { right: 16px; }
+
+/* Ocultar flechas en móvil */
+@media (max-width: 768px) {
+  .carousel-arrow {
+    display: none !important;
+    pointer-events: none !important;
+  }
+}
+
+/* ====== BOOKS: márgenes laterales y menor separación ====== */
+.books-grid{
+  display: grid;
+  grid-template-columns: repeat(6, auto); /* 6 portadas por fila */
+  justify-content: center;                /* evita el “space-between” exagerado */
+  column-gap: 4rem !important;                       /* ← separación horizontal mucho menor */
+  row-gap: 26px;                          /* ← separación vertical */
+  padding: 0 48px;                        /* ← ¡gutter! margen izq/der para que no toquen los bordes */
+  align-items: end;                        /* bases alineadas */
+}
+
+.book-card{
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 1px !important;
+  /* no fijamos width/height al contenedor */
+}
+
+.books-grid .book-card img{
+  height: 360px !important;    /* AUMENTO en desktop */
+  width: auto !important;
+  object-fit: contain !important;
+  display: block;
+}
+
+/* Responsivo */
+@media (max-width: 1200px){
+  .books-grid{
+    grid-template-columns: repeat(3, auto);
+    column-gap: 20px;
+    row-gap: 24px;
+    padding: 0 40px;   /* gutters ligeramente menores */
+  }
+}
+
+@media (max-width: 900px){
+  .books-grid{
+    grid-template-columns: repeat(3, auto);
+    column-gap: 18px;
+    row-gap: 22px;
+    padding: 0 28px;
+  }
+}
+
+@media (max-width: 768px){
+  .books-grid{
+    grid-template-columns: repeat(2, auto);
+    column-gap: 14px;
+    row-gap: 18px;
+    padding: 0 16px;   /* gutter móvil */
+  }
+  .book-card img{
+    height: 220px;
+  }
+}
+
+/* Evita que el fondo se desplace mientras el menú lateral está abierto */
+body.scroll-lock {
+  overflow: hidden !important;
+  position: fixed;      /* fija el body para iOS/Android */
+  inset: 0 0 auto 0;    /* asegura ancho completo */
+  width: 100%;
+}
+
+/* El menú puede scrollear internamente si es más alto que la pantalla */
+.mobile-menu {
+  max-height: 100vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+
+
+</style>
 <body>
-  <div class="container">
-    <div class="left"></div>
-    <div class="right">
-      <img src="images/logo cherry png.png" alt="Sucesso Logo" class="about-logo">
-      <h1>Página en Construcción</h1>
-      <p>Pronto estará disponible. Déjanos tu email para avisarte.</p>
-      <form id="notifyForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfP0BWnGmZ_3t5fAd95bvWdLc8osYGaxq59D5bKhTRXzshJpA/formResponse" method="POST" target="hidden_iframe" onsubmit="showThankYou()">
-        <input class="email-input" type="email" name="entry.1976964636" placeholder="Tu correo electrónico" required>
-        <button class="submit-btn" type="submit">Notificarme</button>
-      </form>
-      <p class="thank-you" id="thankYouMessage">
-        Gracias por registrarte,<br>
-        te notificaremos cuando la página esté disponible.
-      </p>
-      <iframe name="hidden_iframe" style="display:none;"></iframe>
-    </div>
+<div id="languageOverlay"></div>
+<div id="loaderOverlay">
+  <div class="loader-wrapper">
+    <div class="loader"></div>
+  </div>
+</div>
+
+    <div class="container">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-content">
+<!-- Ícono toggle menu ≣ a la izquierda del logo -->
+<button id="menuToggle" class="menu-toggle">
+  <span class="toggle-icon">
+    <span class="bar bar1"></span>
+    <span class="bar bar2"></span>
+    <span class="bar bar3"></span>
+  </span>
+</button>
+
+              <div class="logo">Yael Goldmann</div>
+                <div class="amazon-searchbar">
+    <form id="searchForm">
+        <select class="search-category">
+  <option value="all" data-i18n="searchAll">All</option>
+</select>
+<input type="text" id="searchInput" placeholder="Search..." data-i18n-placeholder="searchPlaceholder" />
+
+        <button type="submit">
+            <i data-lucide="search"></i>
+        </button>
+    </form>
+</div>
+                
+<div class="language-selector">
+  <div class="selected-lang">
+    <img src="https://flagcdn.com/us.svg" alt="EN" class="flag-icon" />
+    <span>EN</span>
+    <i data-lucide="chevron-down"></i>
+  </div>
+  <div class="language-dropdown">
+    <label>
+      <input type="radio" name="lang" value="en" checked />
+      English - EN
+    </label>
+    <label>
+      <input type="radio" name="lang" value="es" />
+      Español - ES
+    </label>
+  </div>
+</div>
+
+<!-- Ícono de búsqueda móvil -->
+<button id="mobileSearchBtn" class="mobile-search-button">
+  <i data-lucide="search"></i>
+</button>
+
+
+                <div class="nav-links">
+                    <a href="pagina-libros.html" data-i18n="navBooks">Books</a>
+  <a href="about.html" data-i18n="navAbout">About</a>
+<a href="blog.html" data-i18n="navBlog">Blog</a>
+                    <a id="accountLink" href="login.html" class="nav-icon-button" title="My Account / Login">
+  <i data-lucide="user"></i>
+</a>
+                    <button class="cart-toggle" onclick="toggleCart()">
+                        <i data-lucide="shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="searchOverlay"></div>
+
+    <div id="searchOverlayMobile"></div>
+<!-- Buscador desplegable móvil -->
+<div id="mobileSearchContainer" class="mobile-search-container">
+  <form id="mobileSearchForm">
+    <select class="search-category">
+      <option value="all" data-i18n="searchAll">All</option>
+    </select>
+    <input type="text" id="mobileSearchInput" placeholder="Search..." data-i18n-placeholder="searchPlaceholder" />
+    <button type="submit">
+      <i data-lucide="search"></i>
+    </button>
+  </form>
+</div>
+
+
+<!-- Overlay del menú -->
+<div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div>
+
+<!-- Menú desplegable lateral -->
+<div id="mobileMenu" class="mobile-menu">
+  <div class="menu-header">
+    <span class="menu-title"data-i18n="menu_toggle">Menú</span>
+  </div>
+  <hr style="margin: 1rem 0; border: none; border-top: 1px solid #482922; margin-top: -1rem !important;">
+  <ul class="menu-links">
+    <li><a href="pagina-libros.html" data-i18n="navBooks">Books</a></li>
+    <li><a href="about.html" data-i18n="navAbout">About</a></li>
+<li><a href="blog.html" data-i18n="navBlog">Blog</a></li>
+  </ul>
+<!-- Language Selector (solo en móvil, dentro del menú) -->
+<div class="mobile-language-selector">
+  <div class="selected-lang">
+    <img src="https://flagcdn.com/us.svg" alt="EN" class="flag-icon" />
+    <span>EN</span>
+    <i data-lucide="chevron-down"></i>
+  </div>
+  <div class="language-dropdown">
+    <label>
+      <input type="radio" name="lang" value="en" checked />
+      English - EN
+    </label>
+    <label>
+      <input type="radio" name="lang" value="es" />
+      Español - ES
+    </label>
+  </div>
+</div>
+
+
+
+</div>
+
+
+    <!-- Cart Modal -->
+        <div id="cartModal" class="cart-modal">
+            <div class="cart-modal-content">
+                <div class="cart-header">
+                    <h2>Shopping Cart</h2>
+                    <button class="close-cart" onclick="toggleCart()">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+                <div class="cart-body" id="cartItems">
+                    <!-- Cart items will be populated by JavaScript -->
+                </div>
+                <div class="cart-footer">
+                    <div class="cart-total">
+                        <div class="total-row">
+                            <span>Subtotal:</span>
+                            <span id="cartSubtotal">$0.00</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Tax (8.5%):</span>
+                            <span id="cartTax">$0.00</span>
+                        </div>
+                        <div class="total-row total-final">
+                            <span>Total:</span>
+                            <span id="cartTotal">$0.00</span>
+                        </div>
+                    </div>
+                    <div class="cart-actions">
+                        <button class="btn btn-primero" onclick="clearCart()">Clear Cart</button>
+                        <button class="btn btn-primero" onclick="checkout()" id="checkoutBtn">
+                            <i data-lucide="credit-card"></i>
+                            Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart Page (Alternative view) -->
+        <div id="cartPage" class="cart-page" style="display: none;">
+            <div class="cart-page-container">
+                <div class="cart-page-header">
+                    <h1>Your Shopping Cart</h1>
+                    <button class="btn btn-outline" onclick="showMainPage()">
+                        <i data-lucide="arrow-left"></i>
+                        Continue Shopping
+                    </button>
+                </div>
+                
+                <div class="cart-page-content">
+                    <div class="cart-items-section">
+                        <div id="cartPageItems">
+                            <!-- Cart items will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="cart-summary-section">
+                        <div class="cart-summary">
+                            <h3>Order Summary</h3>
+                            <div class="summary-row">
+                                <span>Subtotal:</span>
+                                <span id="pageSubtotal">$0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Tax (8.5%):</span>
+                                <span id="pageTax">$0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Shipping:</span>
+                                <span>FREE</span>
+                            </div>
+                            <hr>
+                            <div class="summary-row total">
+                                <span>Total:</span>
+                                <span id="pageTotal">$0.00</span>
+                            </div>
+                            
+                            <div class="checkout-section">
+                                <button class="btn btn-primero btn-full" onclick="checkout()">
+                                    <i data-lucide="credit-card"></i>
+                                    Proceed to Checkout
+                                </button>
+                                <button class="btn btn-primero btn-full" onclick="clearCart()">
+                                    Clear Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Carousel Section (Replaces Hero) -->
+<section class="carousel-fade-section">
+  <div class="carousel-fade-container">
+<div class="carousel-fade-slide active">
+  <a href="about.html">
+    <img src="IMAGES/banner yael.png" alt="Slide 1">
+  </a>
+  <div class="carousel-fade-caption">
+    <h1>Yael Goldmann</h1>
+    <h3>Escritora - Coach de Vida - Comunicadora</h3>
+    <a href="about.html" class="btn-more" data-i18n="morebtn">More</a>
+  </div>
+</div>
+
+    <div class="carousel-fade-slide">
+  <a href="book-details.html?book=encuentros-casuales">
+    <img src="IMAGES/banner yael (1).png" alt="Slide 2">
+  </a>
+  <div class="carousel-fade-caption">
+    <h2>Encuentros Casuales</h2>
+    <p>La brillante científica Eliana se encuentra con un descubrimiento revolucionario que tiene la capacidad de detener una epidemia devastadora en el sudeste asiático. Su decisión de actuar furtivamente desencadena una serie de eventos que desafían no solo su carrera, sino también su vida y la de su hija.</p>
+    <a href="book-details.html?book=encuentros-casuales" class="btn btn-primary" data-i18n="seemore">See More</a>
+  </div>
+</div>
+
+    <div class="carousel-fade-slide">
+  <a href="book-details.html?book=cuando-todo-calla">
+    <img src="IMAGES/banner yael (2).png" alt="Slide 3">
+  </a>
+  <div class="carousel-fade-caption">
+    <h2>Cuando Todo Calla</h2>
+    <p>Una historia de amor, pérdidas, resiliencia y segundas oportunidades cuando el escándalo mediático lo cambia todo. La vida de Lilian Mann se derrumba tras una pérdida devastadora. Deberá aprender a confiar cuando todo parece perdido, a amar en medio del caos, y a encontrar sentido en lo que no tiene explicación.</p>
+    <a href="book-details.html?book=cuando-todo-calla" class="btn btn-primary" data-i18n="seemore">See More</a>
+  </div>
+</div>
+
+   <div class="carousel-fade-slide">
+  <a href="book-details.html?book=nombre-de-ella">
+    <img src="IMAGES/banner yael (3).png" alt="Slide 4">
+  </a>
+  <div class="carousel-fade-caption">
+    <h2>En el Nombre de Ella</h2>
+    <p>Un inocente juego virtual conecta a Silvina Stern, una periodista de investigación decidida, con Alessandro De Luca, un cirujano de renombre internacional. En el Nombre de Ella es un thriller vibrante que fusiona pasión, peligro y verdad en una historia donde la emoción nunca da tregua y el amor puede ser la única salida.</p>
+<a href="book-details.html?book=nombre-de-ella" class="btn btn-primary" data-i18n="seemore">See More</a>
+  </div>
+</div>
+
+    <!-- FLECHAS DEL CARRUSEL -->
+<div class="carousel-arrow left-arrow" onclick="prevSlide()">&#10094;</div>
+<div class="carousel-arrow right-arrow" onclick="nextSlide()">&#10095;</div>
+
+  </div>
+</section>
+
+<script>
+/**
+ * Carrusel móvil: 4 imágenes distintas y sin textos/botones.
+ * Edita los paths del array mobileImages con tus imágenes para celular.
+ */
+document.addEventListener('DOMContentLoaded', () => {
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  if (!isMobile) return;
+
+  // 👉 ASIGNA AQUÍ TUS 4 IMÁGENES MÓVILES (en el orden de los 4 slides)
+  const mobileImages = [
+    'IMAGES/banner MOBILE.png', // Slide 1 (ejemplo)
+    'IMAGES/banner MOBILE 1.png', // Slide 2 (ejemplo)
+    'IMAGES/banner MOBILE 2.png', // Slide 3 (ejemplo)
+    'IMAGES/banner MOBILE 3.png'  // Slide 4 (ejemplo)
+  ];
+
+  // 1) Reemplazar imágenes por sus versiones móviles
+  const slides = document.querySelectorAll('.carousel-fade-slide');
+  slides.forEach((slide, i) => {
+    const picture = slide.querySelector('picture');
+    const img = slide.querySelector('img');
+
+    // Quitar <source> para evitar que sobrescriba el src en móviles
+    if (picture) {
+      picture.querySelectorAll('source').forEach(s => s.remove());
+    }
+
+    // Setear la imagen móvil correspondiente (si existe)
+    if (img && mobileImages[i]) {
+      img.src = mobileImages[i];
+      img.srcset = ''; // Limpia posibles srcset previos
+      img.removeAttribute('srcset');
+      img.loading = 'eager'; // Evita parpadeo al cargar
+      img.decoding = 'sync';
+      // Opcional: ajustar alt si quieres un texto distinto
+      // img.alt = `Slide ${i+1} - móvil`;
+    }
+  });
+
+  // 2) Remover captions por completo (no solo ocultar) para que no aparezcan
+  document.querySelectorAll('.carousel-fade-caption').forEach(c => c.remove());
+
+  // 3) Ocultar flechas por si tu CSS las muestra en otros breakpoints
+  document.querySelectorAll('.carousel-arrow').forEach(a => {
+    a.style.display = 'none';
+    a.style.visibility = 'hidden';
+    a.style.pointerEvents = 'none';
+  });
+});
+</script>
+
+
+<!-- Books Section -->
+<section id="books" class="books-section" style="text-align: center; padding: 60px 0;">
+<div style="display: flex; align-items: center; justify-content: center; margin-bottom: 40px;">
+  <div style="flex: 1; height: 1px; background-color: #ccc; margin-right: 20px;"></div>
+  <h2 class="section-title" style="font-size: 24px; margin: 0;margin-bottom: 2rem !important;" data-i18n="currentTitles">Current Titles</h2>
+  <div style="flex: 1; height: 1px; background-color: #ccc; margin-left: 20px;"></div>
+</div>
+
+  
+<div class="books-grid">
+  <a class="book-card" href="book-details.html?book=cuando-todo-calla">
+    <img src="IMAGES/cuando todo calla book.png" alt="Cuando Todo Calla" loading="lazy">
+  </a>
+
+  <a class="book-card" href="book-details.html?book=nombre-de-ella">
+    <img src="IMAGES/en el nombre de ella book.png" alt="En el Nombre de Ella" loading="lazy">
+  </a>
+
+  <a class="book-card" href="book-details.html?book=amina-defiance">
+    <img src="IMAGES/amina book.png" alt="Amina: La Princesa Rebelde" loading="lazy">
+  </a>
+
+  <a class="book-card" href="book-details.html?book=destinos-entrelazados">
+    <img src="IMAGES/destinos entrelazados.png" alt="Destinos Entrelazados" loading="lazy">
+  </a>
+
+  <a class="book-card" href="book-details.html?book=identidades-ocultas">
+    <img src="IMAGES/identidades ocultas book.png" alt="Identidades Ocultas" loading="lazy">
+  </a>
+
+  <a class="book-card" href="book-details.html?book=encuentros-casuales">
+    <img src="IMAGES/encuentros casuales book.png" alt="Encuentros Casuales" loading="lazy">
+  </a>
+</div>
+
+
+
+  <!-- Botón "See More Titles" -->
+  <div style="margin-top: 50px;">
+<a href="pagina-libros.html"
+   class="btn btn-segundo"
+   style="padding: 10px 20px; margin-bottom: -4rem !important;border: 1px solid #000; display: inline-block;"
+   data-i18n="seeMoreTitlesBtn">
+  SEE MORE TITLES
+</a>
+
+  </div>
+</section>
+
+<!-- DISTRIBUCIÓN -->
+<section id="available" style="text-align: center; padding: 60px 0;">
+  <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 40px;">
+    <div style="flex: 1; height: 1px; background-color: #ccc; margin-right: 20px;"></div>
+    <h2 class="section-title" style="font-size: 24px; margin: 0;" data-i18n="availableOn">Available At</h2>
+    <div style="flex: 1; height: 1px; background-color: #ccc; margin-left: 20px;"></div>
   </div>
 
-  <script>
-    function showThankYou() {
-      document.getElementById("thankYouMessage").style.display = "block";
+  <div class="distributors-grid" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 0 20px;">
+  <a href="https://www.amazon.com/stores/author/B0CTTQ1X8C/allbooks?ingress=0&visitId=c146c036-f45e-40fc-834b-f36d50ce9c03&ref_=ap_rdr&ccs_id=fad4e1ac-15b8-48bf-bf20-2c1fd14c3383" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" style="height: 40px;">
+  </a>
+  <a href="https://play.google.com/store/search?q=yael+goldmann&c=books" target="_blank">
+    <img src="IMAGES/Google-Play-Logo.png" alt="Google Play" style="height: 100px; margin-top: -2rem !important;">
+  </a>
+  <a href="https://www.barnesandnoble.com/s/%22Yael%20Goldmann%22?Ntk=P_key_Contributor_List&Ns=P_Sales_Rank&Ntx=mode+matchall" target="_blank">
+    <img src="IMAGES/barnes-and-noble-logo.png" alt="Barnes & Noble" style="height: 40px;">
+  </a>
+  <a href="https://www.kobo.com" target="_blank">
+    <img src="IMAGES/rakuten-kobo-logo.png" alt="Rakuten Kobo" style="height: 140px; margin-top: -3rem !important;">
+  </a>
+  <a href="https://books.apple.com" target="_blank">
+    <img src="IMAGES/Apple-Books-Logo.png" alt="Apple Books" style="height: 100px; margin-top: -2rem !important;">
+  </a>
+  <a href="https://www.everand.com" target="_blank">
+    <img src="IMAGES/logo-everand-2x.png" alt="Everand" style="height: 40px;">
+  </a>
+  <a href="https://mytolino.com" target="_blank">
+    <img src="IMAGES/tolino-logo.png" alt="Tolino" style="height: 70px; margin-top: -2rem !important;">
+  </a>
+  <a href="https://www.overdrive.com/search?q=yael+goldmann" target="_blank">
+    <img src="IMAGES/overdrive-logo.png" alt="OverDrive" style="height: 40px;">
+  </a>
+  <a href="https://www.yourcloudlibrary.com" target="_blank">
+    <img src="IMAGES/CloudLibrary-Logo-v2.png" alt="CloudLibrary" style="height: 70px; margin-top: -2rem !important;">
+  </a>
+  <a href="https://www.baker-taylor.com" target="_blank">
+    <img src="IMAGES/bakertaylor-logo.png" alt="Baker & Taylor" style="height: 40px;">
+  </a>
+  <a href="https://www.hoopladigital.com" target="_blank">
+    <img src="IMAGES/Hoopla-Logo.png" alt="Hoopla" style="height: 40px;">
+  </a>
+  <a href="https://www.odilo.us" target="_blank">
+    <img src="IMAGES/odilo-logo.png" alt="Odilo" style="height: 100px; margin-top: -2rem !important;">
+  </a>
+  <a href="https://www.vivlio.com" target="_blank">
+    <img src="IMAGES/Logo_Vivlio.png" alt="Vivlio" style="height: 40px;">
+  </a>
+  <a href="https://www.borrowbox.com" target="_blank">
+    <img src="IMAGES/Borrowbox2.png" alt="BorrowBox" style="height: 40px;">
+  </a>
+  <a href="https://www.smashwords.com/profile/view/YaelGoldmann" target="_blank">
+    <img src="IMAGES/Smashwords-logo.png" alt="Smashwords" style="height: 100px; margin-top: -2rem !important;">
+  </a>
+  <a href="https://thepalaceproject.org/marketplace/" target="_blank">
+    <img src="IMAGES/Palace-Marketplace-1.png" alt="Palace Marketplace" style="height: 40px;">
+  </a>
+  <a href="https://fable.co" target="_blank">
+    <img src="IMAGES/fable_Logo.png" alt="Fable" style="height: 100px; margin-top: -2rem !important;">
+  </a>
+</div>
+
+</section>
+
+
+            <!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-content">
+      <h3 class="footer-title">Yael Goldmann</h3>
+      <p class="footer-tagline" data-i18n="footerTagline">
+        Crafting stories that inspire, entertain, and transform
+      </p>
+      <div class="footer-links">
+        <!-- Threads icon -->
+        <a href="https://www.threads.com/@coach_yael_goldmann" aria-label="Threads">
+          <img src="IMAGES/threads-icon.png" class="icon-threads" alt="Threads" style="width: auto; height: 20px;">
+        </a>
+
+        <!-- Instagram icon -->
+        <a href="https://www.instagram.com/coach_yael_goldmann/" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+          </svg>
+        </a>
+
+        <!-- Facebook icon -->
+        <a href="https://www.facebook.com/share/14GsERkFrrD/" aria-label="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+          </svg>
+        </a>
+      </div>
+
+      <p class="footer-copyright" data-i18n="footerCopyright">
+        © 2025 Yael Goldmann. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    
+<script>
+  let lastScrollTop = 0;
+  const navbar = document.querySelector('.navbar');
+
+  window.addEventListener('scroll', function () {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+      // Scroll hacia abajo - ocultar navbar
+      navbar.style.top = '-80px'; // Ajusta si tu navbar es más alto
+    } else {
+      // Scroll hacia arriba - mostrar navbar
+      navbar.style.top = '0';
     }
-  </script>
+
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Previene valores negativos
+  });
+</script>
+
+<script type="module">
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBuUHOPcSjO71G0fftwhvqQV3UMqjpJJZU",
+  authDomain: "escritora-yael.firebaseapp.com",
+  projectId: "escritora-yael",
+  storageBucket: "escritora-yael.firebasestorage.app",
+  messagingSenderId: "403131540905",
+  appId: "1:403131540905:web:687084531c4e1ad74590b8",
+  measurementId: "G-2QYFEYN0BG"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const accountLink = document.getElementById("accountLink");
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    accountLink.href = "account.html";
+    localStorage.setItem("userLoggedIn", "true");
+  } else {
+    accountLink.href = "login.html";
+    localStorage.removeItem("userLoggedIn");
+  }
+});
+</script>
+
+<script>
+  // Ocultar el loader cuando la página esté completamente cargada
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("loader-overlay");
+    if (loader) {
+      loader.style.display = "none";
+    }
+  });
+</script>
+
+
+<script>
+  document.getElementById("searchForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const query = document.getElementById("searchInput").value.trim();
+    if (query !== "") {
+      window.location.href = `pagina-libros.html?query=${encodeURIComponent(query)}`;
+    }
+  });
+</script>
+
+<script>
+  const searchInput = document.getElementById("searchInput");
+  const searchOverlay = document.getElementById("searchOverlay");
+  const languageOverlay = document.getElementById("languageOverlay");
+
+  const langButton = document.querySelector('.selected-lang');
+  const langDropdown = document.querySelector('.language-dropdown');
+
+  let searchOverlayVisible = false;
+  let langHoverTimeout;
+
+  // ---------- BUSCADOR ----------
+  searchInput.addEventListener("focus", () => {
+    searchOverlay.style.display = "block";
+    searchOverlayVisible = true;
+  });
+
+  searchInput.addEventListener("blur", () => {
+    setTimeout(() => {
+      searchOverlay.style.display = "none";
+      searchOverlayVisible = false;
+    }, 150);
+  });
+
+  window.addEventListener("wheel", () => {
+    if (searchOverlayVisible) {
+      searchOverlay.style.display = "none";
+      searchOverlayVisible = false;
+      searchInput.blur();
+    }
+  });
+
+  // ---------- SELECTOR DE IDIOMA ----------
+  function showLangOverlay() {
+    languageOverlay.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // opcional para bloquear scroll
+  }
+
+  function hideLangOverlay() {
+    languageOverlay.style.display = 'none';
+    document.body.style.overflow = ''; // restaurar scroll
+  }
+
+  langButton.addEventListener('mouseenter', () => {
+    langHoverTimeout = setTimeout(() => {
+      showLangOverlay();
+    }, 100); // delay de aparición
+  });
+
+  langButton.addEventListener('mouseleave', () => {
+    clearTimeout(langHoverTimeout);
+    setTimeout(() => {
+      if (!langDropdown.matches(':hover') && !langButton.matches(':hover')) {
+        hideLangOverlay();
+      }
+    }, 300);
+  });
+
+  langDropdown.addEventListener('mouseleave', () => {
+    setTimeout(() => {
+      if (!langDropdown.matches(':hover') && !langButton.matches(':hover')) {
+        hideLangOverlay();
+      }
+    }, 300);
+  });
+
+  langDropdown.addEventListener('mouseenter', () => {
+    clearTimeout(langHoverTimeout);
+  });
+</script>
+
+<!-- LOADER (Mismo de pagina-libros.html) -->
+<div id="loader-overlay" style="display: none;">
+  <div class="loader-wrapper">
+    <div class="loader"></div>
+  </div>
+</div>
+
+
+<script>
+  const loadLanguage = async (lang) => {
+    const response = await fetch('lang.json');
+    const translations = await response.json();
+
+    // Traducción de elementos con data-i18n
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const key = el.getAttribute("data-i18n");
+      if (translations[lang] && translations[lang][key]) {
+        if (el.querySelector("i")) {
+          const iconHTML = el.querySelector("i").outerHTML;
+          el.innerHTML = `${iconHTML} ${translations[lang][key]}`;
+        } else {
+          el.innerText = translations[lang][key];
+        }
+      }
+    });
+
+    // Traducción de placeholders (inputs con ID conocidos)
+    const placeholderKeys = ["firstName", "lastName", "email", "subject", "message"];
+    placeholderKeys.forEach(id => {
+      const input = document.getElementById(id);
+      if (input && translations[lang][id]) {
+        input.placeholder = translations[lang][id];
+      }
+    });
+
+    // Traducción de inputs con atributo data-i18n-placeholder
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(input => {
+      const key = input.getAttribute("data-i18n-placeholder");
+      if (translations[lang] && translations[lang][key]) {
+        input.placeholder = translations[lang][key];
+      }
+    });
+
+    // Traducción de opciones de <select> con data-i18n
+    document.querySelectorAll("option[data-i18n]").forEach(option => {
+      const key = option.getAttribute("data-i18n");
+      if (translations[lang] && translations[lang][key]) {
+        option.textContent = translations[lang][key];
+      }
+    });
+
+    // Traducción del botón de idioma (flag + sigla)
+    const langSpan = document.querySelector(".selected-lang span");
+    const langFlag = document.querySelector(".selected-lang img");
+    if (lang === "es") {
+      langSpan.textContent = "ES";
+      langFlag.src = "https://flagcdn.com/es.svg";
+    } else {
+      langSpan.textContent = "EN";
+      langFlag.src = "https://flagcdn.com/us.svg";
+    }
+
+    localStorage.setItem("lang", lang);
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("lang") || "en";
+    loadLanguage(savedLang);
+
+    const inputToCheck = document.querySelector(`input[name="lang"][value="${savedLang}"]`);
+    if (inputToCheck) inputToCheck.checked = true;
+
+    document.querySelectorAll('.language-dropdown input[name="lang"]').forEach(input => {
+      input.addEventListener("change", e => {
+        const selectedLang = e.target.value;
+        document.getElementById('loader-overlay').style.display = 'flex';
+        localStorage.setItem("lang", selectedLang);
+        setTimeout(() => {
+          location.reload();
+        }, 800);
+      });
+    });
+  });
+</script>
+
+<script>
+  document.body.classList.add("loading");
+
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("loaderOverlay");
+
+    // Fase 1: A los 1s, cambiar el fondo blanco a translúcido sin transición
+    setTimeout(() => {
+      loader.style.transition = "none";
+      loader.style.background = "rgba(255, 255, 255, 0.7)";
+      loader.offsetHeight; // Forzar reflow
+      loader.style.transition = "opacity 0.6s ease";
+    }, 1000);
+
+    // Fase 2: A los 3s, ocultar el loader
+    setTimeout(() => {
+      loader.style.opacity = "0";
+      document.body.classList.remove("loading");
+    }, 3000);
+
+    // Fase 3: A los 3.2s, eliminar el loader del DOM
+    setTimeout(() => {
+      loader.remove();
+    }, 3200);
+  });
+</script>
+
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  (function(){
+    emailjs.init("ABJqx_FyXkXU3Pa53"); // reemplaza con tu public key de EmailJS
+  })();
+</script>
+
+<script>
+  function handleFormSubmit(event) {
+    event.preventDefault();
+
+    const form = event.target;
+
+    const data = {
+      firstName: form.firstName.value,
+      lastName: form.lastName.value,
+      email: form.email.value,
+      subject: form.subject.value,
+      message: form.message.value,
+    };
+
+emailjs.send("service_4emdcim", "template_2wu59le", data)
+  .then(() => {
+    console.log("Enviado con:", data);
+    alert("Mensaje enviado correctamente. Te responderé pronto.");
+    form.reset();
+  })
+  .catch((error) => {
+    console.error("Error al enviar:", error);
+    alert("Hubo un error al enviar tu mensaje. Intenta nuevamente.");
+  });
+
+  }
+</script>
+
+<script>
+  const menuToggle   = document.getElementById('menuToggle');
+  const mobileMenu   = document.getElementById('mobileMenu');
+  const menuOverlay  = document.getElementById('menuOverlay');
+
+  let menuOpen = false;
+  let _scrollY = 0;
+
+  function lockScroll() {
+    // Guarda la posición y fija el body para que no se mueva el fondo
+    _scrollY = window.scrollY || window.pageYOffset || 0;
+    document.body.classList.add('scroll-lock');
+    document.body.style.top = `-${_scrollY}px`;
+  }
+
+  function unlockScroll() {
+    // Restaura el scroll tal como estaba
+    document.body.classList.remove('scroll-lock');
+    const y = Math.abs(parseInt(document.body.style.top || '0', 10)) || 0;
+    document.body.style.top = '';
+    window.scrollTo(0, y);
+  }
+
+  function openMenu() {
+    menuOpen = true;
+    mobileMenu.classList.add('open');
+    menuOverlay.style.display = 'block';
+    menuToggle.classList.add('open');
+    lockScroll();
+  }
+
+  function closeMenu() {
+    menuOpen = false;
+    mobileMenu.classList.remove('open');
+    menuOverlay.style.display = 'none';
+    menuToggle.classList.remove('open');
+    unlockScroll();
+  }
+
+  // Toggle por botón
+  menuToggle.addEventListener('click', () => {
+    menuOpen ? closeMenu() : openMenu();
+  });
+
+  // Cerrar al tocar el overlay
+  menuOverlay.addEventListener('click', closeMenu);
+
+  // Bloquea gestos de desplazamiento sobre el overlay para que no “arrastre” el fondo (iOS)
+  ['touchmove', 'wheel'].forEach(evt => {
+    menuOverlay.addEventListener(evt, e => {
+      if (menuOpen) e.preventDefault();
+    }, { passive: false });
+  });
+
+  // Si el menú está abierto y cambia el tamaño/orientación, asegúrate de mantener el bloqueo
+  ['resize', 'orientationchange'].forEach(evt => {
+    window.addEventListener(evt, () => {
+      if (menuOpen) {
+        // Recalcula el lock por si cambió el viewport
+        unlockScroll();
+        lockScroll();
+      }
+    }, { passive: true });
+  });
+
+  // Exporta closeMenu si lo usas en otros scripts
+  window.closeMenu = closeMenu;
+</script>
+
+
+<script>
+  // Detectar clics en los enlaces del menú móvil
+  document.querySelectorAll('#mobileMenu a[href*="#"]').forEach(link => {
+    link.addEventListener('click', function (e) {
+      // Cierra el menú primero
+      closeMenu();
+
+      // Espera a que se cierre visualmente, luego hace scroll
+      const href = this.getAttribute('href');
+      const id = href.split('#')[1];
+      const targetSection = document.getElementById(id);
+
+      if (targetSection) {
+        e.preventDefault(); // Previene salto instantáneo
+        setTimeout(() => {
+          targetSection.scrollIntoView({ behavior: 'smooth' });
+        }, 100); // Pequeña espera para que el menú termine de cerrarse
+      }
+    });
+  });
+</script>
+
+<script>
+  const mobileSearchBtn = document.getElementById('mobileSearchBtn');
+  const mobileSearchContainer = document.getElementById('mobileSearchContainer');
+  const mobileOverlay = document.getElementById('searchOverlayMobile');
+
+  let mobileSearchOpen = false;
+
+  mobileSearchBtn.addEventListener('click', () => {
+    mobileSearchOpen = !mobileSearchOpen;
+    mobileSearchContainer.style.display = mobileSearchOpen ? 'block' : 'none';
+    mobileOverlay.style.display = mobileSearchOpen ? 'block' : 'none';
+    document.body.style.overflow = mobileSearchOpen ? 'hidden' : '';
+  });
+
+  mobileOverlay.addEventListener('click', () => {
+    mobileSearchOpen = false;
+    mobileSearchContainer.style.display = 'none';
+    mobileOverlay.style.display = 'none';
+    document.body.style.overflow = '';
+  });
+
+  document.getElementById("mobileSearchForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const query = document.getElementById("mobileSearchInput").value.trim();
+    if (query !== "") {
+      window.location.href = `pagina-libros.html?query=${encodeURIComponent(query)}`;
+    }
+  });
+</script>
+
+<script>
+  function changeLanguage(lang) {
+    localStorage.setItem("selectedLanguage", lang);
+    location.reload(); // O llamar a tu función de traducción dinámica
+  }
+
+  // Al cargar, aplicamos el idioma guardado
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("selectedLanguage");
+    if (savedLang) {
+      document.getElementById("languageSelect").value = savedLang;
+      // Aplica tu sistema dinámico si usas lang.json
+      // applyLanguage(savedLang); 
+    }
+  });
+</script>
+
+<script>
+  const slides = document.querySelectorAll('.carousel-fade-slide');
+  let currentIndex = 0;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.remove('active');
+    });
+    slides[index].classList.add('active');
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % slides.length;
+    showSlide(currentIndex);
+  }
+
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    showSlide(currentIndex);
+  }
+
+  // Mostrar primer slide
+  showSlide(currentIndex);
+
+  // Avance automático
+  setInterval(nextSlide, 10000); // cada 10 segundos
+</script>
+
+<script>
+  // Función utilitaria: ocultar y desactivar overlays de forma segura
+  function hideOverlaySafe(el) {
+    if (!el) return;
+    el.style.display = 'none';
+    el.setAttribute('aria-hidden', 'true');
+  }
+
+  // Obtiene referencias (si existen)
+  const _searchOverlay        = document.getElementById('searchOverlay');
+  const _searchOverlayMobile  = document.getElementById('searchOverlayMobile');
+  const _languageOverlayFix   = document.getElementById('languageOverlay');
+  const _menuOverlayFix       = document.getElementById('menuOverlay');
+
+  // Al cargar, marcamos como ocultos y sin eventos
+  hideOverlaySafe(_searchOverlay);
+  hideOverlaySafe(_searchOverlayMobile);
+  hideOverlaySafe(_languageOverlayFix);
+  hideOverlaySafe(_menuOverlayFix);
+
+  // Si algún script los muestra, que lo haga usando aria-hidden="false"
+  // Ejemplo: para abrirlos, usar: el.style.display = 'block'; el.setAttribute('aria-hidden','false');
+
+  // En móvil, si cambia orientación/tamaño, cerramos cualquier overlay “pegado”
+  ['resize', 'orientationchange'].forEach(evt => {
+    window.addEventListener(evt, () => {
+      hideOverlaySafe(_searchOverlay);
+      hideOverlaySafe(_searchOverlayMobile);
+      hideOverlaySafe(_languageOverlayFix);
+      hideOverlaySafe(_menuOverlayFix);
+      // Rehabilita el scroll por si quedó bloqueado
+      document.body.style.overflow = '';
+    }, { passive: true });
+  });
+
+  // Extra: por si el carrusel tuviera un contenedor con z-index alto definido en CSS externo:
+  (function lowerCarouselZIndex() {
+    const sec = document.querySelector('.carousel-fade-section');
+    const con = document.querySelector('.carousel-fade-container');
+    if (sec) sec.style.zIndex = '0';
+    if (con) { con.style.zIndex = '0'; con.style.overflow = 'hidden'; }
+  })();
+</script>
+
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="script.js"></script>
+      <script src="product-page.js"></script>
 </body>
 </html>
