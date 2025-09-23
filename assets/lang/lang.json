@@ -148,7 +148,16 @@
     "data_title": "Data Protection",
     "data_text": "The personal information provided by the user will be treated confidentially and in accordance with our Privacy Policy. It will not be shared with third parties, except to fulfill the services offered.",
     "modifications_title": "Modifications of Terms",
-    "modifications_text": "Sucesso may modify these terms and conditions at any time. Modifications will be effective upon publication on the site."
+    "modifications_text": "Sucesso may modify these terms and conditions at any time. Modifications will be effective upon publication on the site.",
+    "contact.title": "CONTACT US",
+    "contact.chat_title": "CHAT",
+    "contact.chat_cta": "START A LIVE CHAT",
+    "contact.contact_title": "CONTACT",
+    "contact.email": "info@sucessobrand.com",
+    "contact.hours_title": "CUSTOMER SUPPORT HOURS",
+    "contact.hours_range": "Monday – Saturday 9:00am - 6:00pm",
+    "contact.hours_note": "Excluding major holidays.",
+    "contact.instagram": "INSTAGRAM"
   },
   "es": {
     "hero_subtitle": "Fundado en 2024.",
@@ -299,6 +308,15 @@
     "data_title": "Protección de datos",
     "data_text": "La información personal suministrada por el usuario será tratada de manera confidencial y de acuerdo con nuestra Política de Privacidad. No será compartida con terceros, salvo para el cumplimiento de los servicios ofrecidos.",
     "modifications_title": "Modificaciones de los términos",
-    "modifications_text": "Sucesso podrá modificar estos términos y condiciones en cualquier momento. Las modificaciones serán efectivas desde su publicación en el sitio."
+    "modifications_text": "Sucesso podrá modificar estos términos y condiciones en cualquier momento. Las modificaciones serán efectivas desde su publicación en el sitio.",
+    "contact.title": "CONTÁCTANOS",
+    "contact.chat_title": "CHAT",
+    "contact.chat_cta": "INICIAR CHAT EN VIVO",
+    "contact.contact_title": "CONTACTO",
+    "contact.email": "info@sucessobrand.com",
+    "contact.hours_title": "HORARIO DE ATENCIÓN",
+    "contact.hours_range": "Lunes a Sábado 9:00am - 6:00pm ",
+    "contact.hours_note": "Excepto feriados.",
+    "contact.instagram": "INSTAGRAM"
   }
 }
