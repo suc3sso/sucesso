@@ -512,7 +512,93 @@ background-color: #233f32;
   }
 }
 
-    
+/* Documento con prefijo interno V/E (zona clicable mínima) */
+.doc-wrapper {
+  position: relative;
+}
+
+.doc-wrapper select#doc-prefix {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 70%;
+  /* NUEVO: ancho controlado para que solo cubra la V/E */
+  width: 2.8em;           /* suficiente para letra + caret nativo */
+  min-width: 36px;        /* evita que se achique demasiado */
+  max-width: 48px;        /* evita que se agrande en algunos navegadores */
+  padding: 0;             /* sin padding extra */
+  text-align: center;     /* centra la V/E */
+  border: none;
+  border-right: 1px solid var(--gray);
+  background: transparent;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #233f32;
+  outline: none;
+  cursor: pointer;
+  appearance: auto;       /* mantiene la flecha nativa */
+  z-index: 2;             /* por encima del input solo en su ancho */
+}
+
+/* Deja espacio solo del ancho real del select */
+.doc-wrapper input#documento-number {
+  padding-left: 52px;     /* ajusta el espacio para que no se solape */
+}
+
+/* Ajuste en mobile para mantener el área reducida */
+@media (max-width: 768px) {
+  .doc-wrapper select#doc-prefix {
+    height: 68%;
+    width: 2.8em;
+    min-width: 34px;
+    max-width: 46px;
+  }
+  .doc-wrapper input#documento-number {
+    padding-left: 50px;
+  }
+}
+
+  /* ✅ Solo cuando el campo esté en foco (clic + escribiendo) */
+  #discount-code:focus {
+border: 2px solid #000 !important; /* grosor 2px y color negro */
+  }
+
+/* Estado inicial: deshabilitado */
+#apply-discount-btn:disabled {
+  background: #f5f5f5 !important;
+  color: #999 !important;
+  border: 1px solid #d9d9d9 !important;
+  cursor: default !important;
+  pointer-events: none !important; /* no recibe clics */
+}
+
+/* Estado habilitado */
+#apply-discount-btn.enabled {
+  background: #233f32 !important;
+  border: 1px solid #233f32 !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease;
+  pointer-events: auto !important; /* vuelve a permitir clics */
+}
+
+/* Hover cuando está habilitado */
+#apply-discount-btn.enabled:hover {
+  background: #233f32 !important;
+  color: #fff !important;
+}
+
+:root {
+  --error: #b00020;
+}
+
+/* Borde rojo para error en el campo de descuento */
+.discount-error {
+  border: 2px solid var(--error) !important;
+}
+
+
   </style>
 </head>
 <body>
@@ -567,9 +653,22 @@ background-color: #233f32;
     </div>
   </div>
 
-  <div class="form-group">
-    <input type="text" id="documento" placeholder="Número de Documento" required>
-  </div>
+<div class="form-group doc-wrapper">
+  <select id="doc-prefix" aria-label="Tipo de documento">
+    <option value="V" selected>V</option>
+    <option value="E">E</option>
+  </select>
+  <input
+    type="text"
+    id="documento-number"
+    placeholder="Número de Documento"
+    inputmode="numeric"
+    autocomplete="off"
+    maxlength="10"
+    required
+  >
+</div>
+
 
   <div class="form-group">
     <input type="text" id="direccion" placeholder="Dirección" required>
@@ -615,8 +714,9 @@ background-color: #233f32;
 </div>
 
     <div class="form-group">
-      <input type="text" id="postal" placeholder="Código Postal" required>
-    </div>
+  <input type="text" id="postal" placeholder="Código Postal (Opcional)">
+</div>
+
   </div>
 
 <h2>Métodos de Envío</h2>
@@ -658,7 +758,7 @@ background-color: #233f32;
       <span>Pago Móvil</span>
     </label>
     <div class="accordion-panel">
-  <p>Banco: Banesco<br>Número: 0414-1234567<br>Cédula: V-12345678<br>Nombre: SUCESSO C.A.</p>
+  <p>Banco: Banco Nacional de Crédito<br>Número: 0424-1333923<br>Cédula: V-32904616<br>Nombre: Lian Beraja</p>
   <div class="file-upload">
   <label for="ref-pago-movil">Adjuntar referencia</label>
   <div class="custom-upload">
@@ -764,8 +864,24 @@ background-color: #233f32;
     <section class="summary-section">
       <h2>Resumen del Pedido</h2>
       <div id="cart-items"></div>
+      
+<!-- DESCUENTO / GIFT CARD -->
+<div class="discount-box" style="margin:16px 0;">
+  <div style="display:flex; gap:8px; align-items:center;">
+    <input id="discount-code" type="text" 
+           placeholder="Código de descuento o tarjeta de regalo"
+           style="flex:1; height:48px; padding:0 12px; border:1px solid #d9d9d9; border-radius:6px; font-size:14px; color:#333; outline:none;">
+    <button id="apply-discount-btn" type="button"
+            style="padding:0 16px; height:48px; border:1px solid #d9d9d9; background:#f5f5f5; color:#333; border-radius:6px; font-size:14px; font-weight:500; cursor:pointer;">
+      Aplicar
+    </button>
+  </div>
+  <div id="discount-msg" style="margin-top:8px; font-size:0.9rem; color:#233f32;"></div>
+</div>
+
       <div class="price-section">
         <p><strong>Subtotal:</strong> <span id="subtotal-value">$0.00</span></p>
+          <p><strong>Descuento:</strong> <span id="discount-value">-$0.00</span></p>
         <p><strong>Envío:</strong> <span id="envio-cost">$0.00</span></p>
       </div>
       <div class="total-section">
@@ -773,6 +889,26 @@ background-color: #233f32;
       </div>
     </section>
   </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const discountInput = document.getElementById("discount-code");
+    const applyBtn = document.getElementById("apply-discount-btn");
+
+    // Deshabilitar inicialmente
+    applyBtn.disabled = true;
+
+    discountInput.addEventListener("input", () => {
+      if (discountInput.value.trim().length > 0) {
+        applyBtn.disabled = false;
+        applyBtn.classList.add("enabled");
+      } else {
+        applyBtn.disabled = true;
+        applyBtn.classList.remove("enabled");
+      }
+    });
+  });
+</script>
 
 <script>
 window.addEventListener("load", () => {
@@ -789,6 +925,14 @@ window.addEventListener("load", () => {
   
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+
+        // --- Documento: permitir solo dígitos en el número ---
+  const docNumberInput = document.getElementById("documento-number");
+  docNumberInput.addEventListener("input", () => {
+    // elimina todo lo que no sea dígito
+    docNumberInput.value = docNumberInput.value.replace(/\D+/g, "");
+  });
+
       const cartContainer = document.getElementById('cart-items');
       const subtotalValue = document.getElementById('subtotal-value');
       const totalFinal = document.getElementById('total-final');
@@ -832,6 +976,237 @@ window.addEventListener("load", () => {
       totalFinal.textContent = `$${subtotal.toFixed(2)}`;
     });
   </script>
+
+<script>
+/* ============ CUPONES CONFIGURABLES ============
+
+Edita/añade tus códigos aquí. Dos tipos:
+- type: "percent" (valor en %)  | p.ej. 10 = 10%
+- type: "fixed"   (valor en USD) | p.ej. 5  = $5.00
+
+Opcionales:
+- minSubtotal: mínimo de compra para aplicar
+- expires: "YYYY-MM-DD" (UTC)   -> fecha límite inclusive
+*/
+const COUPONS = {
+  "SUCESSO10": { type: "percent", value: 10,  minSubtotal: 0,  expires: "2030-12-31" },
+  "LIAN":      { type: "fixed",   value: 50,   minSubtotal: 15, expires: "2030-12-31" },
+  "SUCE550":   { type: "fixed",   value: 200,  minSubtotal: 0,  expires: "2030-12-31" },
+  // agrega los tuyos aquí...
+};
+
+(function initDiscountSystem(){
+  // Estado centralizado
+  const desktopSummary  = document.querySelector(".summary-section");
+  const mobileSummary   = document.getElementById("mobile-summary-content");
+
+  // Intenta leer el subtotal ya renderizado por tu código
+  const parseMoney = s => (parseFloat(String(s).replace(/[^0-9.-]+/g,'')) || 0);
+  const fmt = n => `$${(n).toFixed(2)}`;
+
+  // Guardamos valores maestros en window para reuso sin tocar tus scripts
+  window.__checkoutState = window.__checkoutState || {
+    subtotal: parseMoney(document.getElementById("subtotal-value")?.textContent || 0),
+    shipping: parseMoney(document.querySelector('input[name="metodo-envio"]:checked')?.getAttribute("data-costo") || 0),
+    discount: 0,
+    code: null
+  };
+
+  // Helpers para seleccionar en desktop/móvil sin chocar IDs clonados
+  const $d = sel => desktopSummary?.querySelector(sel);
+  const $m = sel => mobileSummary?.querySelector(sel);
+
+  function renderTotals(){
+    const st  = window.__checkoutState;
+    // corrige si por alguna razón cambió el subtotal ya pintado por tus scripts
+    st.subtotal = parseMoney($d("#subtotal-value")?.textContent || st.subtotal);
+
+    const maxDiscount = Math.min(st.discount, st.subtotal); // jamás más que el subtotal
+    const total = st.subtotal - maxDiscount + st.shipping;
+
+    // Desktop
+    if ($d("#discount-value")) $d("#discount-value").textContent = `-$${maxDiscount.toFixed(2)}`;
+    if ($d("#envio-cost"))     $d("#envio-cost").textContent     = fmt(st.shipping);
+    if ($d("#total-final"))    $d("#total-final").textContent    = fmt(total);
+
+    // Mobile (los mismos IDs existen dentro del contenedor clonado)
+    if ($m("#discount-value")) $m("#discount-value").textContent = `-$${maxDiscount.toFixed(2)}`;
+    if ($m("#envio-cost"))     $m("#envio-cost").textContent     = fmt(st.shipping);
+    if ($m("#total-final"))    $m("#total-final").textContent    = fmt(total);
+
+    const headerTotal = document.getElementById("summary-total");
+    if (headerTotal) headerTotal.textContent = fmt(total);
+  }
+
+  function readShipping(){
+    const checked = document.querySelector('input[name="metodo-envio"]:checked');
+    window.__checkoutState.shipping = parseMoney(checked?.getAttribute("data-costo") || 0);
+  }
+
+  function validateAndComputeDiscount(code){
+    if (!code) return {ok:false, msg:"Ingresa un código."};
+    const c = COUPONS[code.trim().toUpperCase()];
+    if (!c) return {ok:false, msg:"Código inválido o vencido."};
+
+    // vencimiento
+    if (c.expires) {
+      const today = new Date(); today.setHours(0,0,0,0);
+      const exp = new Date(c.expires+"T00:00:00Z");
+      if (today.getTime() > exp.getTime()) return {ok:false, msg:"El código está vencido."};
+    }
+
+    // mínimo
+    const st = window.__checkoutState;
+    if (c.minSubtotal && st.subtotal < c.minSubtotal) {
+      return {ok:false, msg:`Mínimo de compra: $${c.minSubtotal.toFixed(2)}.`};
+    }
+
+    // valor
+    let discount = 0;
+    if (c.type === "percent") discount = st.subtotal * (c.value/100);
+    else if (c.type === "fixed") discount = c.value;
+    discount = Math.max(0, Math.min(discount, st.subtotal)); // cap
+
+    return {ok:true, discount, meta:c};
+  }
+
+  function attachBox(scope){
+    if (!scope) return;
+    const codeInput = scope.querySelector("#discount-code");
+    const btn       = scope.querySelector("#apply-discount-btn");
+    const msgEl     = scope.querySelector("#discount-msg");
+    if (!codeInput || !btn) return;
+
+    // 🔴/✅ Helper para controlar el borde rojo de error
+    const setErrorBorder = (on) => {
+      if (on) codeInput.classList.add("discount-error");
+      else codeInput.classList.remove("discount-error");
+    };
+
+    // ⛔️ Evitar re-habilitar si ya se aplicó (aunque otros scripts intenten)
+    codeInput.addEventListener("input", () => {
+      if (btn.dataset.locked === "1") {
+        // mantener limpio y bloqueado
+        codeInput.value = "";
+        btn.disabled = true;
+        btn.classList.remove("enabled");
+      }
+    });
+
+    const apply = () => {
+      const code = codeInput.value.trim();
+      const res = validateAndComputeDiscount(code);
+
+      msgEl && (msgEl.style.color = res.ok ? "#0b7a5c" : "#b00020");
+
+      if (!res.ok){
+        setErrorBorder(true);
+        window.__checkoutState.discount = 0;
+        window.__checkoutState.code = null;
+        if (msgEl) msgEl.textContent = res.msg;
+        renderTotals();
+        return;
+      }
+
+      // ✅ Código correcto: aplicar descuento
+      setErrorBorder(false);
+      window.__checkoutState.discount = res.discount;
+      window.__checkoutState.code = code.toUpperCase();
+      if (msgEl) msgEl.textContent = `Código aplicado: ${window.__checkoutState.code} (-${fmt(res.discount)})`;
+      renderTotals();
+
+      // 🔒 NUEVO: limpiar input y bloquear botón definitivamente en esta sesión
+      codeInput.value = "";
+      btn.disabled = true;
+      btn.classList.remove("enabled");
+      btn.dataset.locked = "1";
+    };
+
+    btn.addEventListener("click", apply);
+    codeInput.addEventListener("keydown", (e)=>{ if (e.key === "Enter") { e.preventDefault(); apply(); }});
+  }
+
+  // Envío cambia: recalculamos después de tus listeners
+  document.querySelectorAll('input[name="metodo-envio"]').forEach(r=>{
+    r.addEventListener("change", ()=>{ readShipping(); renderTotals(); });
+  });
+
+  // Estado inicial
+  readShipping();
+  renderTotals();
+
+  // Conectar cajas (desktop y móvil)
+  attachBox(desktopSummary);
+  attachBox(mobileSummary);
+
+  // Exponer para que otros scripts puedan forzar un repaint si cambian algo
+  window.__renderTotalsWithDiscount = renderTotals;
+
+  // Permite re-vincular la caja de descuento en el contenedor móvil tras el clonado
+  window.__rebindDiscountBox = () => {
+    const mobile = document.getElementById("mobile-summary-content");
+    if (mobile) {
+      if (mobile.querySelector("#discount-code") && mobile.querySelector("#apply-discount-btn")) {
+        (function(scope){
+          const codeInput = scope.querySelector("#discount-code");
+          const btn = scope.querySelector("#apply-discount-btn");
+          const msgEl = scope.querySelector("#discount-msg");
+          if (!codeInput || !btn) return;
+
+          const setErrorBorder = (on) => {
+            if (on) codeInput.classList.add("discount-error");
+            else codeInput.classList.remove("discount-error");
+          };
+
+          // ⛔️ Mantener bloqueo en móvil también
+          codeInput.addEventListener("input", () => {
+            if (btn.dataset.locked === "1") {
+              codeInput.value = "";
+              btn.disabled = true;
+              btn.classList.remove("enabled");
+            }
+          });
+
+          const apply = () => {
+            const code = codeInput.value.trim();
+            const res = (typeof validateAndComputeDiscount === "function")
+              ? validateAndComputeDiscount(code)
+              : (window.validateAndComputeDiscount && window.validateAndComputeDiscount(code));
+            if (!res) return;
+
+            msgEl && (msgEl.style.color = res.ok ? "#0b7a5c" : "#b00020");
+
+            if (!res.ok){
+              setErrorBorder(true);
+              window.__checkoutState.discount = 0;
+              window.__checkoutState.code = null;
+              if (msgEl) msgEl.textContent = res.msg;
+              window.__renderTotalsWithDiscount?.();
+              return;
+            }
+
+            setErrorBorder(false);
+            window.__checkoutState.discount = res.discount;
+            window.__checkoutState.code = code.toUpperCase();
+            if (msgEl) msgEl.textContent = `Código aplicado: ${code.toUpperCase()} (-${fmt(res.discount)})`;
+            window.__renderTotalsWithDiscount?.();
+
+            // 🔒 NUEVO: limpiar input y bloquear botón definitivamente en esta sesión
+            codeInput.value = "";
+            btn.disabled = true;
+            btn.classList.remove("enabled");
+            btn.dataset.locked = "1";
+          };
+
+          btn.onclick = apply;
+          codeInput.onkeydown = (e)=>{ if (e.key === "Enter") { e.preventDefault(); apply(); }};
+        })(mobile);
+      }
+    }
+  };
+})();
+</script>
+
 
 
 <script>
@@ -922,24 +1297,31 @@ document.getElementById("ref-pago-movil").addEventListener("change", function ()
 
     let subtotal = 0;
 
-    // Obtener subtotal inicial desde HTML
-    if (subtotalElement) {
-      subtotal = parseFloat(subtotalElement.textContent.replace('$', '')) || 0;
-    }
+// Obtener subtotal inicial desde HTML
+if (subtotalElement) {
+  subtotal = parseFloat(subtotalElement.textContent.replace('$', '')) || 0;
+}
 
-    function actualizarTotal() {
-      const envioSeleccionado = document.querySelector('input[name="metodo-envio"]:checked');
-      const costoEnvio = parseFloat(envioSeleccionado.getAttribute('data-costo')) || 0;
+function actualizarTotal() {
+  const envioSeleccionado = document.querySelector('input[name="metodo-envio"]:checked');
+  const costoEnvio = parseFloat(envioSeleccionado.getAttribute('data-costo')) || 0;
 
-      envioCostElement.textContent = `$${costoEnvio.toFixed(2)}`;
-      totalFinalElement.textContent = `$${(subtotal + costoEnvio).toFixed(2)}`;
-    }
+  envioCostElement.textContent = `$${costoEnvio.toFixed(2)}`;
+  totalFinalElement.textContent = `$${(subtotal + costoEnvio).toFixed(2)}`;
 
-    envioRadios.forEach(radio => {
-      radio.addEventListener('change', actualizarTotal);
-    });
+  // ⬇️ Forzar que el total respete el descuento aplicado
+  window.__renderTotalsWithDiscount && window.__renderTotalsWithDiscount();
+}
 
-    actualizarTotal(); // Ejecutar al cargar
+envioRadios.forEach(radio => {
+  radio.addEventListener('change', actualizarTotal);
+});
+
+actualizarTotal(); // Ejecutar al cargar
+
+// ⬇️ También tras el primer cálculo, por si ya había cupón aplicado
+window.__renderTotalsWithDiscount && window.__renderTotalsWithDiscount();
+
   });
 </script>
 
@@ -1027,6 +1409,11 @@ onAuthStateChanged(auth, (user) => {
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById("checkout-form");
 
+    // Referencias del documento (en este scope del módulo)
+  const docNumberInput = document.getElementById("documento-number");
+  const docPrefixSel = document.getElementById("doc-prefix");
+
+
   // MÉTODOS DE PAGO - abrir/cerrar paneles
   const metodoPagoRadios = document.querySelectorAll('input[name="metodo-pago"]');
   function togglePagoPanels() {
@@ -1057,17 +1444,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Validar documento
-    const docInput = document.getElementById("documento");
-    const docVal = docInput.value.trim().toUpperCase();
-    const docRegex = /^(V|E)-?\d{5,10}$/;
-    if (!docRegex.test(docVal)) {
-      docInput.setCustomValidity("El número de documento debe comenzar con V o E seguido de 5 a 10 números. Ej: V-12345678 o E12345678");
-      docInput.reportValidity();
+        // Validar documento (solo números 5–10) + prefijo V/E
+    const docPrefixSel = document.getElementById("doc-prefix");
+    const docNumber = docNumberInput.value.trim();
+    const onlyDigits = /^\d{5,10}$/;
+
+    if (!onlyDigits.test(docNumber)) {
+      docNumberInput.setCustomValidity("Ingresa solo números (5 a 10 dígitos).");
+      docNumberInput.reportValidity();
       valid = false;
     } else {
-      docInput.setCustomValidity("");
+      docNumberInput.setCustomValidity("");
     }
+
+        // Si algo está inválido, corta aquí
+    if (!valid) return;
+
 
         // Validar comprobantes
 const metodoPago = document.querySelector('input[name="metodo-pago"]:checked')?.value;
@@ -1106,19 +1498,33 @@ if (!user) {
 }
 
 
-    // Preparar datos
-    const envio = document.querySelector('input[name="metodo-envio"]:checked');
-    const envioCosto = parseFloat(envio.getAttribute("data-costo")) || 0;
-    const subtotal = carrito.reduce((sum, p) => sum + (p.price * p.quantity), 0);
-    const total = subtotal + envioCosto;
+// Preparar datos
+const envio = document.querySelector('input[name="metodo-envio"]:checked');
+const envioCosto = parseFloat(envio.getAttribute("data-costo")) || 0;
 
-    const datosCompra = {
+// LEER descuento aplicado desde el estado global del cupón
+const appliedDiscount = (window.__checkoutState?.discount || 0);
+const appliedCode     = (window.__checkoutState?.code || null);
+
+const subtotal = carrito.reduce((sum, p) => {
+  const precioNum = typeof p.price === "number"
+    ? p.price
+    : parseFloat(String(p.price ?? p.precio ?? 0).replace(/[^0-9.-]+/g, "")) || 0;
+  const cantNum = typeof p.quantity === "number" ? p.quantity : parseInt(p.quantity ?? p.cantidad ?? 1, 10) || 1;
+  return sum + precioNum * cantNum;
+}, 0);
+
+// TOTAL FINAL RESPETANDO DESCUENTO (nunca negativo)
+const total = Math.max(0, subtotal - appliedDiscount) + envioCosto;
+
+const docFull = `${(docPrefixSel.value || "V").toUpperCase()}-${docNumber}`;
+const datosCompra = {
   uid: user.uid,
   email: document.getElementById("email").value,
   telefono: document.getElementById("phone").value,
   nombre: document.getElementById("nombre").value,
   apellido: document.getElementById("apellido").value,
-  documento: docVal,
+  documento: docFull,
   direccion: document.getElementById("direccion").value,
   ciudad: document.getElementById("ciudad").value,
   municipio: document.getElementById("municipio").value,
@@ -1134,9 +1540,14 @@ if (!user) {
   })),
   subtotal,
   envio: envioCosto,
+  // NUEVO:
+  descuento: appliedDiscount,
+  codigo_descuento: appliedCode,
   total,
   fecha: serverTimestamp()
 };
+
+
 
 try {
   await addDoc(collection(db, "compras"), datosCompra);
@@ -1208,6 +1619,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Copiar el contenido de la summary-section al resumen móvil
   const summaryHTML = document.querySelector(".summary-section").innerHTML;
   document.getElementById("mobile-summary-content").innerHTML = summaryHTML;
+// Re-vincular listeners del cupón en el contenedor móvil
+window.__rebindDiscountBox && window.__rebindDiscountBox();
+
 
   // Actualizar el total
   const total = document.getElementById("total-final").textContent;
