@@ -598,6 +598,56 @@ border: 2px solid #000 !important; /* grosor 2px y color negro */
   border: 2px solid var(--error) !important;
 }
 
+/* ===== Billing toggle & panel ===== */
+.billing-toggle-row {
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+  margin:.75rem 0 0.5rem 0;
+  font-size:.95rem;
+  user-select:none;
+}
+.billing-toggle-row input[type="checkbox"]{
+  width:18px;height:18px; accent-color:#233f32; cursor:pointer;
+}
+
+#billing-section {
+  border:1px solid #e5e5e5;
+  border-radius:6px;
+  background:#fafafa;
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+  transform: translateY(-6px);
+  transition: max-height .30s ease, opacity .30s ease, transform .30s ease, padding .30s ease;
+  padding:0 1rem; /* será 1rem cuando abra */
+  margin-top:.25rem;
+}
+
+#billing-section.open {
+  max-height:650px; /* suficientemente grande para su contenido */
+  opacity:1;
+  transform: translateY(0);
+  padding:1rem;
+}
+
+#billing-section .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+@media (max-width:768px){ #billing-section .form-row{ grid-template-columns:1fr; gap:.5rem; } }
+
+/* País/Región billing con misma apariencia que shipping */
+.billing-pais-wrapper{
+  position:relative;
+  margin-bottom:1rem;
+}
+.billing-pais-wrapper label{
+  position:absolute; top:7px; left:14px; background:#fff; padding:0 4px;
+  font-size:.75rem; color:#888; z-index:2; pointer-events:none;
+}
+.billing-pais-wrapper select{
+  background:#fff; color:#1a1a1a; width:100%;
+  padding:1.75rem .75rem .75rem .75rem; border:1px solid #e5e5e5; border-radius:4px; font-size:1rem; appearance:auto;
+}
+
 
   </style>
 </head>
@@ -653,21 +703,7 @@ border: 2px solid #000 !important; /* grosor 2px y color negro */
     </div>
   </div>
 
-<div class="form-group doc-wrapper">
-  <select id="doc-prefix" aria-label="Tipo de documento">
-    <option value="V" selected>V</option>
-    <option value="E">E</option>
-  </select>
-  <input
-    type="text"
-    id="documento-number"
-    placeholder="Número de Documento"
-    inputmode="numeric"
-    autocomplete="off"
-    maxlength="10"
-    required
-  >
-</div>
+
 
 
   <div class="form-group">
@@ -714,10 +750,100 @@ border: 2px solid #000 !important; /* grosor 2px y color negro */
 </div>
 
     <div class="form-group">
-  <input type="text" id="postal" placeholder="Código Postal (Opcional)">
+  <input type="text" id="postal" placeholder="Código Postal" required>
 </div>
 
   </div>
+
+<!-- ======= Facturación: toggle + panel ======= -->
+<div class="billing-toggle-row">
+  <input type="checkbox" id="use-shipping-as-billing" checked>
+  <label for="use-shipping-as-billing">Usar dirección de envío como dirección de facturación</label>
+</div>
+
+<div id="billing-section" aria-hidden="true">
+  <h2 style="margin:0 0 .5rem 0;">Facturación</h2>
+
+  <div class="billing-pais-wrapper">
+    <label for="billing-pais">País/Región</label>
+    <select id="billing-pais">
+      <option value="Venezuela" selected>Venezuela</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <input type="text" id="billing-nombre" placeholder="Nombre">
+    </div>
+    <div class="form-group">
+      <input type="text" id="billing-apellido" placeholder="Apellido">
+    </div>
+  </div>
+
+<div class="form-group doc-wrapper">
+  <select id="doc-prefix" aria-label="Tipo de documento">
+    <option value="V" selected>V</option>
+    <option value="E">E</option>
+  </select>
+  <input
+    type="text"
+    id="documento-number"
+    placeholder="Cédula de Identidad"
+    inputmode="numeric"
+    autocomplete="off"
+    maxlength="10"
+  >
+</div>
+
+  <div class="form-group">
+    <input type="text" id="billing-direccion" placeholder="Dirección">
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <input type="text" id="billing-ciudad" placeholder="Ciudad">
+    </div>
+    <div class="form-group">
+      <input type="text" id="billing-municipio" placeholder="Municipio">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <select id="billing-estado">
+        <option value="Capital" selected>Capital</option>
+        <option value="Amazonas">Amazonas</option>
+        <option value="Anzoátegui">Anzoátegui</option>
+        <option value="Apure">Apure</option>
+        <option value="Aragua">Aragua</option>
+        <option value="Barinas">Barinas</option>
+        <option value="Bolívar">Bolívar</option>
+        <option value="Carabobo">Carabobo</option>
+        <option value="Cojedes">Cojedes</option>
+        <option value="Delta Amacuro">Delta Amacuro</option>
+        <option value="Falcón">Falcón</option>
+        <option value="Guárico">Guárico</option>
+        <option value="Lara">Lara</option>
+        <option value="Mérida">Mérida</option>
+        <option value="Miranda">Miranda</option>
+        <option value="Monagas">Monagas</option>
+        <option value="Nueva Esparta">Nueva Esparta</option>
+        <option value="Portuguesa">Portuguesa</option>
+        <option value="Sucre">Sucre</option>
+        <option value="Táchira">Táchira</option>
+        <option value="Trujillo">Trujillo</option>
+        <option value="Vargas">Vargas</option>
+        <option value="Yaracuy">Yaracuy</option>
+        <option value="Zulia">Zulia</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <input type="text" id="billing-postal" placeholder="Código Postal" required>
+    </div>
+  </div>
+</div>
+
 
 <h2>Métodos de Envío</h2>
 <div class="accordion" id="envio-accordion">
@@ -1376,12 +1502,121 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+<script>
+/* ====== Billing toggle logic (FIX) ====== */
+(function billingToggleInit(){
+  const chk   = document.getElementById('use-shipping-as-billing');
+  const panel = document.getElementById('billing-section');
+
+  // Campos Shipping
+  const S = {
+    pais:       document.getElementById('pais'),
+    nombre:     document.getElementById('nombre'),
+    apellido:   document.getElementById('apellido'),
+    direccion:  document.getElementById('direccion'),
+    ciudad:     document.getElementById('ciudad'),
+    municipio:  document.getElementById('municipio'),
+    estado:     document.getElementById('estado'),
+    postal:     document.getElementById('postal')
+  };
+
+  // Campos Billing
+  const B = {
+    pais:       document.getElementById('billing-pais'),
+    nombre:     document.getElementById('billing-nombre'),
+    apellido:   document.getElementById('billing-apellido'),
+    direccion:  document.getElementById('billing-direccion'),
+    ciudad:     document.getElementById('billing-ciudad'),
+    municipio:  document.getElementById('billing-municipio'),
+    estado:     document.getElementById('billing-estado'),
+    postal:     document.getElementById('billing-postal')
+  };
+
+  function setDisabledBilling(disabled){
+    Object.values(B).forEach(el => { el.disabled = disabled; });
+  }
+
+  function copyShippingToBilling(){
+    // Copiamos todo 1:1
+    B.pais.value      = (S.pais.value || 'Venezuela');
+    B.nombre.value    = S.nombre.value;
+    B.apellido.value  = S.apellido.value;
+    B.direccion.value = S.direccion.value;
+    B.ciudad.value    = S.ciudad.value;
+    B.municipio.value = S.municipio.value;
+    B.estado.value    = S.estado.value;
+    B.postal.value    = S.postal.value;
+  }
+
+  function clearBilling(){
+    // Dejar inputs VACÍOS; selects en sus defaults visibles
+    if (B.nombre)     B.nombre.value    = '';
+    if (B.apellido)   B.apellido.value  = '';
+    if (B.direccion)  B.direccion.value = '';
+    if (B.ciudad)     B.ciudad.value    = '';
+    if (B.municipio)  B.municipio.value = '';
+    if (B.postal)     B.postal.value    = '';
+    // Defaults (si tus selects no tienen opción vacía)
+    if (B.estado) B.estado.value = 'Capital';
+    if (B.pais)   B.pais.value   = 'Venezuela';
+  }
+
+  // Mantener sincronía solo cuando está marcado
+  Object.values(S).forEach(el=>{
+    el.addEventListener('input',  ()=>{ if (chk.checked){ copyShippingToBilling(); }});
+    el.addEventListener('change', ()=>{ if (chk.checked){ copyShippingToBilling(); }});
+  });
+
+  // Abre/cierra panel y aplica reglas
+  function refreshPanel(){
+    if (chk.checked){
+      // Usar envío como facturación: oculto, sincronizado y bloqueado
+      copyShippingToBilling();
+      setDisabledBilling(true);
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden','true');
+    } else {
+      // Usar facturación distinta: visible, habilitado y VACÍO
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden','false');
+      setDisabledBilling(false);
+      clearBilling();                 // <-- clave del fix: limpiar siempre al desmarcar
+    }
+  }
+
+  // Estado inicial
+  refreshPanel();
+
+  // Al cambiar el checkbox, aplicar comportamiento
+  chk.addEventListener('change', refreshPanel);
+
+  // Exponer helpers para submit
+  window.__billingHelpers = {
+    useShipping: () => chk.checked,
+    getBilling:  () => ({
+      pais:      B.pais.value || 'Venezuela',
+      nombre:    B.nombre.value || '',
+      apellido:  B.apellido.value || '',
+      direccion: B.direccion.value || '',
+      ciudad:    B.ciudad.value || '',
+      municipio: B.municipio.value || '',
+      estado:    B.estado.value || 'Capital',
+      postal:    B.postal.value || ''
+    }),
+    syncNow: copyShippingToBilling
+  };
+})();
+</script>
   
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getFirestore, addDoc, collection, serverTimestamp, setDoc, doc, runTransaction, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+
+
+/* ================== Firebase ================== */
 const firebaseConfig = {
   apiKey: "AIzaSyD3u2GKMSAKC_1Cd88KA-rxTOf_Jnt3fuM",
   authDomain: "sucesso-74f7c.firebaseapp.com",
@@ -1396,210 +1631,486 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 let currentUser = null;
+onAuthStateChanged(auth, (user) => { currentUser = user ? user : null; });
 
-// Verificar sesión activa al cargar
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    currentUser = user;
-  } else {
-    currentUser = null;
+/* ============== Dominio base dinámico ============== */
+/* Usa el mismo origen real de la página (funciona con https://sucessobrand.com o https://www.sucessobrand.com) */
+const BASE_ORIGIN = (typeof window !== "undefined" && window.location && window.location.origin)
+  ? window.location.origin
+  : "https://sucessobrand.com";
+
+/* ========= Helpers de URL/imagen para emails ========= */
+function absolutizeUrl(url) {
+  if (!url) return "";
+  if (/^(https?:|data:|gs:)/i.test(url)) return url; // ya absoluta o data (no la usaremos en email)
+  const raw = url.startsWith("/") ? `${BASE_ORIGIN}${url}` : `${BASE_ORIGIN}/${url}`;
+  try {
+    const u = new URL(raw);
+    u.pathname = u.pathname
+      .split("/")
+      .map(seg => seg ? encodeURIComponent(decodeURIComponent(seg)) : seg)
+      .join("/");
+    return u.toString();
+  } catch {
+    return raw.replace(/ /g, "%20");
   }
-});
+}
+
+/* Devuelve la mejor URL de imagen pública posible para EMAILS */
+function pickImageFromProduct(p) {
+  if (!p) return "";
+
+  // 1) Claves más comunes en tu flujo y variantes posibles
+  const candidates = [
+    p.image, p.imagen, p.imagen_frontal, p.thumbnail, p.imageUrl, p.img, p.foto, p.photo, p.cover,
+    // estructuras anidadas típicas
+    p.images?.front, p.images?.main, p.images?.[0], p.gallery?.[0], p.pictures?.[0],
+    // por si viene en variantes
+    p.variantImage, p.selectedImage
+  ].filter(Boolean);
+
+  // 2) Si no viene nada, intenta deducir por slug/título en carpeta IMAGES (no rompe si no existe)
+  if (!candidates.length) {
+    const name = p.name || p.nombre || "";
+    const slug = (p.slug || (name && name.toLowerCase().trim()
+      .replace(/\s+/g, "-").replace(/[^a-z0-9\-]/g, ""))) || "placeholder";
+    candidates.push(`IMAGES/${slug}.png`, `IMAGES/${slug}.jpg`, `images/${slug}.png`, `images/${slug}.jpg`);
+  }
+
+  // 3) Normaliza y toma la primera que sea válida para clientes de correo
+  for (const c of candidates) {
+    if (!c) continue;
+
+    // Evitar esquemas que los clientes bloquean
+    if (/^(blob:|data:)/i.test(String(c))) continue;
+
+    // Mantener URLs públicas de Firebase Storage
+    if (/^https?:\/\/firebasestorage\.googleapis\.com\//i.test(String(c))) return c;
+
+    // Para rutas locales, fuerza absoluta https
+    const abs = absolutizeUrl(String(c));
+    if (/^https:\/\//i.test(abs)) return abs;
+  }
+
+  // 4) Fallback seguro (favicon de tu sitio)
+  return `${BASE_ORIGIN}/images/sucesso%20fav%20icon.png`;
+}
+
+function normalizeImageUrl(url) {
+  // Conservada por compatibilidad con llamadas existentes
+  return pickImageFromProduct({ image: url });
+}
+
+function toSlug(str) {
+  return String(str || "")
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9\-]/g, "");
+}
+
+/* ============ RENDER DE ITEMS PARA EMAIL (con imágenes OK) ============ */
+function renderItemsEmailHTML(items, { currency = "USD", locale = "es-VE" } = {}) {
+  const fmt = new Intl.NumberFormat(locale, { style: "currency", currency });
+  const esc = (s) => String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const n = (v) => Number(v || 0);
+
+  let html = `
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+  <tbody>
+`;
+
+  items.forEach((it) => {
+    const title = it.nombre || it.title || it.name || "Producto";
+    const size  = it.talla  || it.size  || "Única";
+    const qty   = n(it.cantidad ?? it.quantity ?? 1) || 1;
+    const unit  = n(it.precio   ?? it.price    ?? 0);
+
+    const slug       = it.slug || it.handle || toSlug(title);
+    const productUrl = absolutizeUrl(it.productUrl || `product-page.html?slug=${encodeURIComponent(slug)}`);
+
+    // Forzar URL absoluta https para email
+    const imgUrl = pickImageFromProduct(it);
+
+    html += `
+  <tr>
+    <td style="padding:0 0 16px 0;">
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+        <tr>
+          <!-- Imagen -->
+          <td style="width:96px;vertical-align:top;padding:8px 12px 8px 0;">
+            <a href="${productUrl}" target="_blank" style="text-decoration:none;display:inline-block;">
+              <img src="${imgUrl}" alt="${esc(title)}" width="96" height="96"
+                   style="display:block;width:96px;height:96px;object-fit:contain;border:1px solid #eee;background:#f8f8f8;">
+            </a>
+          </td>
+
+          <!-- Texto -->
+          <td style="vertical-align:top;padding:8px 0;">
+            <a href="${productUrl}" target="_blank" style="text-decoration:none;color:#111;">
+              <p style="margin:0 0 6px 0;font-weight:600;line-height:1.35;">${esc(title)}</p>
+            </a>
+            <p style="margin:0 0 6px 0;color:#666;">TALLA: ${esc(size)}</p>
+            <p style="margin:0 0 6px 0;color:#111;">${fmt.format(unit)}</p>
+            <p style="margin:0;color:#111;">QTY - ${esc(qty)}</p>
+          </td>
+        </tr>
+      </table>
+      <hr style="border:none;border-top:1px solid #e6e6e6;margin:12px 0 0 0;">
+    </td>
+  </tr>
+`;
+  });
+
+  html += `
+  </tbody>
+</table>
+`;
+  return html;
+}
+
+// === Generador de número de pedido de 6 dígitos aleatorios (con intento de unicidad) ===
+async function generateSixDigitOrderNumber(db) {
+  const pick = () => String(Math.floor(100000 + Math.random() * 900000)); // 100000–999999
+
+  // Intentamos hasta 8 veces evitar colisión de ID en la colección "compras"
+  for (let i = 0; i < 8; i++) {
+    const candidate = pick();
+    try {
+      const ref = doc(db, "compras", candidate);
+      const snap = await getDoc(ref);
+      if (!snap.exists()) return candidate;  // libre, úsalo
+    } catch (e) {
+      // Si por reglas no podemos leer, devolvemos el candidato y manejamos colisión en el set/add
+      return candidate;
+    }
+  }
+  // Como fallback final, devolvemos uno cualquiera
+  return pick();
+}
+
+
+
+
+/* ================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById("checkout-form");
 
-    // Referencias del documento (en este scope del módulo)
-  const docNumberInput = document.getElementById("documento-number");
-  const docPrefixSel = document.getElementById("doc-prefix");
-
-
-  // MÉTODOS DE PAGO - abrir/cerrar paneles
+  // Abrir/cerrar paneles de métodos de pago
   const metodoPagoRadios = document.querySelectorAll('input[name="metodo-pago"]');
   function togglePagoPanels() {
-    document.querySelectorAll('.accordion .accordion-panel').forEach(panel => {
-      panel.classList.remove('open');
-    });
+    document.querySelectorAll('.accordion .accordion-panel').forEach(p => p.classList.remove('open'));
     const selected = document.querySelector('input[name="metodo-pago"]:checked');
-    if (selected) {
-      const panel = selected.closest('.accordion-item').querySelector('.accordion-panel');
-      panel.classList.add('open');
-    }
+    if (selected) selected.closest('.accordion-item').querySelector('.accordion-panel').classList.add('open');
   }
-  metodoPagoRadios.forEach(radio => {
-    radio.addEventListener('change', togglePagoPanels);
-  });
+  metodoPagoRadios.forEach(r => r.addEventListener('change', togglePagoPanels));
   togglePagoPanels();
 
-  // SUBMIT DEL FORMULARIO
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
+    // Validaciones mínimas de requeridos
     let valid = true;
-
-    // Validar campos obligatorios
-    form.querySelectorAll("[required]").forEach(input => {
-      if (!input.value.trim()) {
-        input.reportValidity();
-        valid = false;
-      }
+    form.querySelectorAll("[required]").forEach(el => {
+      if (!el.value.trim()) { el.reportValidity(); valid = false; }
     });
-
-        // Validar documento (solo números 5–10) + prefijo V/E
-    const docPrefixSel = document.getElementById("doc-prefix");
-    const docNumber = docNumberInput.value.trim();
-    const onlyDigits = /^\d{5,10}$/;
-
-    if (!onlyDigits.test(docNumber)) {
-      docNumberInput.setCustomValidity("Ingresa solo números (5 a 10 dígitos).");
-      docNumberInput.reportValidity();
-      valid = false;
-    } else {
-      docNumberInput.setCustomValidity("");
-    }
-
-        // Si algo está inválido, corta aquí
     if (!valid) return;
 
+    // Comprobantes según método
+    const metodoPago = document.querySelector('input[name="metodo-pago"]:checked')?.value;
+    const need = (id) => document.getElementById(id).files.length;
+    if (metodoPago === "pago-movil"    && !need("ref-pago-movil"))    return alert("Debes subir el comprobante de Pago Móvil.");
+    if (metodoPago === "transferencia" && !need("ref-transferencia")) return alert("Debes subir el comprobante de Transferencia.");
+    if (metodoPago === "paypal"        && !need("ref-paypal"))        return alert("Debes subir el comprobante de PayPal.");
+    if (metodoPago === "zelle"         && !need("ref-zelle"))         return alert("Debes subir el comprobante de Zelle.");
 
-        // Validar comprobantes
-const metodoPago = document.querySelector('input[name="metodo-pago"]:checked')?.value;
-
-if (metodoPago === "pago-movil" && !document.getElementById("ref-pago-movil").files.length) {
-  alert("Debes subir el comprobante de Pago Móvil.");
-  return;
-}
-if (metodoPago === "transferencia" && !document.getElementById("ref-transferencia").files.length) {
-  alert("Debes subir el comprobante de Transferencia.");
-  return;
-}
-if (metodoPago === "paypal" && !document.getElementById("ref-paypal").files.length) {
-  alert("Debes subir el comprobante de PayPal.");
-  return;
-}
-if (metodoPago === "zelle" && !document.getElementById("ref-zelle").files.length) {
-  alert("Debes subir el comprobante de Zelle.");
-  return;
-}
-
-
-    // Verificar carrito
+    // Carrito y sesión
     const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    if (!carrito.length) {
-      alert("Tu carrito está vacío.");
-      return;
-    }
-
-    // Verificar usuario
+    if (!carrito.length) return alert("Tu carrito está vacío.");
     const user = auth.currentUser;
-if (!user) {
-  alert("Debes iniciar sesión para confirmar tu compra.");
-  window.location.href = "login.html";
-  return;
-}
+    if (!user) { alert("Debes iniciar sesión para confirmar tu compra."); window.location.href = "login.html"; return; }
 
+    // Totales
+    const envio       = document.querySelector('input[name="metodo-envio"]:checked');
+    const envioCosto  = parseFloat(envio?.getAttribute("data-costo")) || 0;
+    const descuento   = (window.__checkoutState?.discount || 0);
+    const cupon       = (window.__checkoutState?.code || null);
 
-// Preparar datos
-const envio = document.querySelector('input[name="metodo-envio"]:checked');
-const envioCosto = parseFloat(envio.getAttribute("data-costo")) || 0;
+    const toNum = (v) => (typeof v === "number" ? v : parseFloat(String(v ?? 0).replace(/[^0-9.-]+/g,"")) || 0);
+    const toInt = (v) => (typeof v === "number" ? v : parseInt(v ?? 1, 10) || 1);
 
-// LEER descuento aplicado desde el estado global del cupón
-const appliedDiscount = (window.__checkoutState?.discount || 0);
-const appliedCode     = (window.__checkoutState?.code || null);
+    const subtotal = carrito.reduce((acc, p) => acc + toNum(p.price ?? p.precio) * toInt(p.quantity ?? p.cantidad), 0);
+    const total    = Math.max(0, subtotal - descuento) + envioCosto;
 
-const subtotal = carrito.reduce((sum, p) => {
-  const precioNum = typeof p.price === "number"
-    ? p.price
-    : parseFloat(String(p.price ?? p.precio ?? 0).replace(/[^0-9.-]+/g, "")) || 0;
-  const cantNum = typeof p.quantity === "number" ? p.quantity : parseInt(p.quantity ?? p.cantidad ?? 1, 10) || 1;
-  return sum + precioNum * cantNum;
-}, 0);
+    // SHIPPING y BILLING
+    const shipping = {
+      pais:       document.getElementById("pais").value || "Venezuela",
+      nombre:     document.getElementById("nombre").value,
+      apellido:   document.getElementById("apellido").value,
+      direccion:  document.getElementById("direccion").value,
+      ciudad:     document.getElementById("ciudad").value,
+      municipio:  document.getElementById("municipio").value,
+      estado:     document.getElementById("estado").value,
+      postal:     document.getElementById("postal").value
+    };
 
-// TOTAL FINAL RESPETANDO DESCUENTO (nunca negativo)
-const total = Math.max(0, subtotal - appliedDiscount) + envioCosto;
+    const useShipAsBill = (window.__billingHelpers?.useShipping?.() === true);
+    const billing = useShipAsBill
+      ? { ...shipping }
+      : (window.__billingHelpers?.getBilling?.() || { ...shipping });
 
-const docFull = `${(docPrefixSel.value || "V").toUpperCase()}-${docNumber}`;
-const datosCompra = {
-  uid: user.uid,
-  email: document.getElementById("email").value,
-  telefono: document.getElementById("phone").value,
-  nombre: document.getElementById("nombre").value,
-  apellido: document.getElementById("apellido").value,
-  documento: docFull,
-  direccion: document.getElementById("direccion").value,
-  ciudad: document.getElementById("ciudad").value,
-  municipio: document.getElementById("municipio").value,
-  estado: document.getElementById("estado").value,
-  postal: document.getElementById("postal").value,
-  metodo_envio: envio.value,
-  metodo_pago: metodoPago,
-  items: carrito.map(p => ({
-    nombre: p.name || p.nombre || "Producto",
-    cantidad: p.quantity || p.cantidad || 1,
-    precio: p.price || p.precio || 0,
-    talla: p.size || p.talla || "Única"
-  })),
-  subtotal,
-  envio: envioCosto,
-  // NUEVO:
-  descuento: appliedDiscount,
-  codigo_descuento: appliedCode,
-  total,
-  fecha: serverTimestamp()
-};
+    // Documento V/E + número (ya validado en otros scripts)
+    const docPrefix = (document.getElementById("doc-prefix").value || "V").toUpperCase();
+    const docNumber = (document.getElementById("documento-number").value || "").trim();
+    const docFull   = `${docPrefix}-${docNumber}`;
 
+    // Normalizar items para guardar y para email (imagen absoluta + URL producto)
+    const normalizados = carrito.map(p => {
+      const nombre = p.name || p.nombre || "Producto";
+      const slug   = p.slug || p.handle || (nombre ? nombre.toLowerCase().trim().replace(/\s+/g,"-").replace(/[^a-z0-9\-]/g,"") : "");
+      const productUrl = p.productUrl || (slug ? `${BASE_ORIGIN}/product-page.html?slug=${encodeURIComponent(slug)}` : `${BASE_ORIGIN}/`);
 
+      // **AQUÍ** garantizamos imagen válida para EMAIL
+      const image  = pickImageFromProduct(p);
 
+      return {
+        nombre,
+        cantidad: toInt(p.quantity ?? p.cantidad),
+        precio:   toNum(p.price ?? p.precio), // unitario
+        talla:    p.size || p.talla || "Única",
+        color:    p.color || p.colorName || "",
+        slug,
+        productUrl,
+        image
+      };
+    });
+
+    const datosCompra = {
+      uid: user.uid,
+      email:    document.getElementById("email").value,
+      telefono: document.getElementById("phone").value,
+      documento: docFull,
+
+      // SHIPPING
+      nombre:    shipping.nombre,
+      apellido:  shipping.apellido,
+      direccion: shipping.direccion,
+      ciudad:    shipping.ciudad,
+      municipio: shipping.municipio,
+      estado:    shipping.estado,
+      postal:    shipping.postal,
+      pais:      shipping.pais,
+
+      // BILLING
+      billing_nombre:    billing.nombre,
+      billing_apellido:  billing.apellido,
+      billing_direccion: billing.direccion,
+      billing_ciudad:    billing.ciudad,
+      billing_municipio: billing.municipio,
+      billing_estado:    billing.estado,
+      billing_postal:    billing.postal,
+      billing_pais:      billing.pais,
+
+      metodo_envio: envio?.value || "N/A",
+      metodo_pago:  metodoPago || "N/A",
+      items: normalizados,
+      subtotal,
+      envio: envioCosto,
+      descuento,
+      codigo_descuento: cupon,
+      total,
+      fecha: serverTimestamp()
+    };
+
+    // UI bloquear submit
+    const submitBtn = document.querySelector('#checkout-form button[type="submit"]');
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Procesando...'; }
+
+    // Helper envío EmailJS silencioso
+    async function safeSend(service, template, vars, label) {
+      try {
+        if (!window.emailjs) throw new Error("EmailJS no cargado");
+        await emailjs.send(service, template, vars);
+        return true;
+      } catch (e) {
+        console.error(`Fallo envío ${label}:`, e);
+        return false;
+      }
+    }
+    const toMoney = (n) => Number(n || 0).toFixed(2);
+
+    try {
+// 1) Generar número de pedido de 6 dígitos
+const orderNumber = await generateSixDigitOrderNumber(db);
+
+// Usaremos preferentemente el ID del doc = orderNumber para que sea fácil de encontrar.
+// Si las reglas no permiten setDoc con ID arbitrario, caemos a addDoc (ID interno distinto).
+let orderId = orderNumber;
 try {
-  await addDoc(collection(db, "compras"), datosCompra);
-
-  await emailjs.send("service_8yvqy7r", "template_id2awis", {
-  nombre: datosCompra.nombre || 'N/A',
-  apellido: datosCompra.apellido || 'N/A',
-  email: datosCompra.email || 'N/A',
-  telefono: datosCompra.telefono || 'N/A',
-  documento: datosCompra.documento || 'N/A',
-  direccion: datosCompra.direccion || 'N/A',
-  ciudad: datosCompra.ciudad || 'N/A',
-  municipio: datosCompra.municipio || 'N/A',
-  estado: datosCompra.estado || 'N/A',
-  postal: datosCompra.postal || 'N/A',
-  metodo_envio: datosCompra.metodo_envio || 'N/A',
-  metodo_pago: datosCompra.metodo_pago || 'N/A',
-  subtotal: datosCompra.subtotal?.toFixed(2) || '0.00',
-  envio: datosCompra.envio?.toFixed(2) || '0.00',
-  total: datosCompra.total?.toFixed(2) || '0.00',
-  fecha: new Date().toLocaleString(),
-  items_html: datosCompra.items.map(i =>
-  `<tr>
-    <td style="padding:8px; border-bottom:1px solid #eee;">${i.cantidad}</td>
-    <td style="padding:8px; border-bottom:1px solid #eee;">${i.nombre}</td>
-    <td style="padding:8px; border-bottom:1px solid #eee;">${i.talla}</td>
-    <td style="padding:8px; border-bottom:1px solid #eee; text-align:right;">$${i.precio.toFixed(2)}</td>
-  </tr>`
-).join(""),
-
-
-});
-
-
-  localStorage.removeItem("carrito");
-  window.location.href = "thank-you.html";
-
-} catch (err) {
-  console.error("Error al guardar compra:", err);
-  alert("Hubo un error al registrar la compra. Intenta de nuevo.");
+  await setDoc(doc(db, "compras", orderNumber), { ...datosCompra, orderNumber }, { merge: false });
+} catch (e) {
+  console.warn("Fallo setDoc(compras, orderNumber). Uso addDoc fallback:", e);
+  const ref = await addDoc(collection(db, "compras"), { ...datosCompra, orderNumber });
+  orderId = ref.id; // ID interno (no visible al cliente)
 }
 
+// Guarda el número para mostrarlo en thank-you (si esa página lo lee de localStorage)
+try { localStorage.setItem("last_order_number", orderNumber); } catch(e) {}
+
+
+
+
+      // 2) Construir items_html “bonito” para email (con imágenes absolutas y codificadas)
+      const items_html = renderItemsEmailHTML(datosCompra.items, { currency: "USD", locale: "es-VE" });
+      const nowStr = new Date().toLocaleString();
+
+      // 3) Emails
+      await safeSend(
+        "service_8yvqy7r",
+        "template_id2awis",  // ADMIN
+        {
+          to_email: datosCompra.email,
+          email:    datosCompra.email,
+          customer_name:       `${datosCompra.nombre} ${datosCompra.apellido}`.trim(),
+          customer_first_name: datosCompra.nombre,
+          phone:               datosCompra.telefono,
+
+          order_id: orderNumber,
+          order_date: nowStr,
+          fecha: nowStr,
+
+          subtotal:  toMoney(datosCompra.subtotal),
+          shipping:  toMoney(datosCompra.envio),
+          envio:     toMoney(datosCompra.envio),
+          tax:       "0.00",
+          discount:  toMoney(datosCompra.descuento),
+          descuento: toMoney(datosCompra.descuento),
+          total:     toMoney(datosCompra.total),
+
+          payment_method: (datosCompra.metodo_pago || 'N/A').toUpperCase(),
+          metodo_pago:    (datosCompra.metodo_pago || 'N/A').toUpperCase(),
+          metodo_envio:   (datosCompra.metodo_envio || 'N/A').toUpperCase(),
+
+          shipping_name:     `${datosCompra.nombre} ${datosCompra.apellido}`.trim(),
+          shipping_address1: datosCompra.direccion,
+          shipping_address2: '',
+          shipping_city:     datosCompra.ciudad,
+          shipping_state:    datosCompra.estado,
+          shipping_postal:   datosCompra.postal,
+          shipping_country:  datosCompra.pais,
+
+          billing_name:     `${datosCompra.billing_nombre} ${datosCompra.billing_apellido}`.trim(),
+          billing_address1: datosCompra.billing_direccion,
+          billing_address2: '',
+          billing_city:     datosCompra.billing_ciudad,
+          billing_state:    datosCompra.billing_estado,
+          billing_postal:   datosCompra.billing_postal,
+          billing_country:  datosCompra.billing_pais,
+
+          order_status_url: `${BASE_ORIGIN}/mi-pedido`,
+          faq_url:          `${BASE_ORIGIN}/faq`,
+          terms_url:        `${BASE_ORIGIN}/terminos`,
+          site_url:         `${BASE_ORIGIN}/`,
+          support_email:    "help.sucsso@gmail.com",
+
+          items_html
+        },
+        "ADMIN"
+      );
+
+      await safeSend(
+        "service_8yvqy7r",
+        "template_y1gnb4l",  // CLIENTE
+        {
+          to_email: datosCompra.email,
+          email:    datosCompra.email,
+          customer_name:       `${datosCompra.nombre} ${datosCompra.apellido}`.trim(),
+          customer_first_name: datosCompra.nombre,
+          phone:               datosCompra.telefono,
+
+          order_id: orderNumber,
+          order_date: nowStr,
+          fecha: nowStr,
+
+          subtotal:  toMoney(datosCompra.subtotal),
+          shipping:  toMoney(datosCompra.envio),
+          envio:     toMoney(datosCompra.envio),
+          tax:       "0.00",
+          discount:  toMoney(datosCompra.descuento),
+          descuento: toMoney(datosCompra.descuento),
+          total:     toMoney(datosCompra.total),
+
+          payment_method: (datosCompra.metodo_pago || 'N/A').toUpperCase(),
+          metodo_pago:    (datosCompra.metodo_pago || 'N/A').toUpperCase(),
+          metodo_envio:   (datosCompra.metodo_envio || 'N/A').toUpperCase(),
+
+          shipping_name:     `${datosCompra.nombre} ${datosCompra.apellido}`.trim(),
+          shipping_address1: datosCompra.direccion,
+          shipping_address2: '',
+          shipping_city:     datosCompra.ciudad,
+          shipping_state:    datosCompra.estado,
+          shipping_postal:   datosCompra.postal,
+          shipping_country:  datosCompra.pais,
+
+          billing_name:     `${datosCompra.billing_nombre} ${datosCompra.billing_apellido}`.trim(),
+          billing_address1: datosCompra.billing_direccion,
+          billing_address2: '',
+          billing_city:     datosCompra.billing_ciudad,
+          billing_state:    datosCompra.billing_estado,
+          billing_postal:   datosCompra.billing_postal,
+          billing_country:  datosCompra.billing_pais,
+
+          order_status_url: `${BASE_ORIGIN}/mi-pedido`,
+          faq_url:          `${BASE_ORIGIN}/faq`,
+          terms_url:        `${BASE_ORIGIN}/terminos`,
+          site_url:         `${BASE_ORIGIN}/`,
+          support_email:    "help.sucsso@gmail.com",
+
+          items_html
+        },
+        "CLIENTE"
+      );
+
+      // 4) Limpiar carrito y redirigir
+      try { localStorage.removeItem("carrito"); } catch(e){}
+      window.location.href = "thank-you.html";
+      setTimeout(() => {
+        if (!/thank-you\.html/i.test(window.location.href)) {
+          window.location.assign("thank-you.html");
+        }
+      }, 800);
+
+    } catch (err) {
+      console.error("Error registrando compra:", err);
+      alert("Hubo un error al registrar tu compra. Intenta nuevamente.");
+      const submitBtn = document.querySelector('#checkout-form button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Confirmar Compra'; }
+    }
   });
 });
 </script>
+
+
+
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
-  window.onload = function () {
-    emailjs.init("ZBp0ewAzqXPihpO94"); // Tu USER ID
-  };
+  // Inicializa EmailJS apenas el DOM está listo (no esperar onload)
+  document.addEventListener('DOMContentLoaded', function () {
+    try {
+      if (window.emailjs && !emailjs.__inited) {
+        emailjs.init("ZBp0ewAzqXPihpO94"); // tu PUBLIC KEY
+        emailjs.__inited = true;
+      }
+    } catch(e) {
+      console.error("No se pudo inicializar EmailJS:", e);
+    }
+  });
 </script>
+
 
 <script>
 function toggleMobileSummary() {
