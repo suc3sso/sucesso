@@ -157,7 +157,9 @@
     "contact.hours_title": "CUSTOMER SUPPORT HOURS",
     "contact.hours_range": "Monday – Saturday 9:00am - 6:00pm",
     "contact.hours_note": "Excluding major holidays.",
-    "contact.instagram": "INSTAGRAM"
+    "contact.instagram": "INSTAGRAM",
+    "404_title": "404 PAGE NOT FOUND",
+    "404_desc": "The page you requested does not exist. Click below to continue shopping."
   },
   "es": {
     "hero_subtitle": "Fundado en 2024.",
@@ -317,6 +319,8 @@
     "contact.hours_title": "HORARIO DE ATENCIÓN",
     "contact.hours_range": "Lunes a Sábado 9:00am - 6:00pm ",
     "contact.hours_note": "Excepto feriados.",
-    "contact.instagram": "INSTAGRAM"
+    "contact.instagram": "INSTAGRAM",
+    "404_title": "404 PÁGINA NO ENCONTRADA",
+    "404_desc": "La página que solicitaste no existe. Haz clic abajo para seguir comprando."
   }
 }
