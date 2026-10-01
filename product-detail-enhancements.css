@@ -1,0 +1,347 @@
+/* SUCESSO product detail refinements — 2026-10-01
+   Scope is intentionally limited to product-detail pages. */
+:root{--sucesso-green:#233f32;}
+
+body:has(main.product-page) .product-details{display:none!important;}
+
+body:has(main.product-page) .product-short-description{
+  margin:24px 0 34px!important;
+  padding:0!important;
+  max-width:430px;
+  color:var(--sucesso-green)!important;
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif!important;
+  font-size:12px!important;
+  line-height:1.45!important;
+  font-weight:400!important;
+  letter-spacing:-.08px!important;
+}
+
+body:has(main.product-page) .size-fit-guide-trigger{
+  appearance:none;
+  -webkit-appearance:none;
+  display:inline-block;
+  width:auto;
+  min-width:0;
+  margin:0 0 34px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:var(--sucesso-green)!important;
+  box-shadow:none!important;
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif!important;
+  font-size:12px!important;
+  line-height:1.2!important;
+  font-weight:400!important;
+  text-align:left!important;
+  text-decoration:underline!important;
+  text-decoration-thickness:1px!important;
+  text-underline-offset:2px!important;
+  cursor:pointer!important;
+  transition:none!important;
+}
+body:has(main.product-page) .size-fit-guide-trigger:hover,
+body:has(main.product-page) .size-fit-guide-trigger:active,
+body:has(main.product-page) .size-fit-guide-trigger:focus-visible{
+  color:var(--sucesso-green)!important;
+  background:transparent!important;
+  text-decoration:none!important;
+  transform:none!important;
+  opacity:1!important;
+  outline:none!important;
+}
+
+/* Lower only the right-hand information column. Product imagery remains untouched. */
+@media (min-width:769px){
+  body:has(main.product-page) .product-info{
+    margin-top:46px!important;
+  }
+}
+
+/* Drawer uses the same overlay/slide language as the existing cart. */
+.size-guide-drawer-overlay{
+  position:fixed;
+  inset:0;
+  z-index:15050;
+  display:flex;
+  justify-content:flex-end;
+  width:100%;
+  height:100%;
+  height:100dvh;
+  background:rgba(35,63,50,.48);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .3s ease,visibility .3s ease;
+}
+.size-guide-drawer-overlay.active{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+.size-guide-drawer{
+  width:min(44vw,520px);
+  max-width:100%;
+  height:100%;
+  min-height:100%;
+  background:#fff;
+  color:var(--sucesso-green);
+  box-shadow:-2px 0 5px rgba(0,0,0,.14);
+  transform:translateX(100%);
+  transition:transform .3s ease-in-out;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+.size-guide-drawer-overlay.active .size-guide-drawer{transform:translateX(0);}
+.size-guide-drawer-header{
+  flex:0 0 auto;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+  padding:30px 26px 20px;
+  background:#fff;
+}
+.size-guide-drawer-header h2{
+  margin:0!important;
+  padding:0!important;
+  color:var(--sucesso-green)!important;
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif!important;
+  font-size:clamp(30px,3.1vw,46px)!important;
+  line-height:.98!important;
+  font-weight:500!important;
+  letter-spacing:-2.1px!important;
+}
+.close-size-guide{
+  position:relative;
+  flex:0 0 26px;
+  width:26px;
+  height:26px;
+  min-width:26px;
+  margin:-2px 0 0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:transparent;
+  font-size:0;
+  line-height:0;
+  cursor:pointer;
+  box-shadow:none;
+}
+.close-size-guide::before,.close-size-guide::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:18px;
+  height:1px;
+  background:var(--sucesso-green);
+  transform-origin:center;
+}
+.close-size-guide::before{transform:translate(-50%,-50%) rotate(45deg);}
+.close-size-guide::after{transform:translate(-50%,-50%) rotate(-45deg);}
+.close-size-guide:hover,.close-size-guide:focus-visible{opacity:1;outline:none;}
+
+.size-guide-drawer-body{
+  flex:1 1 auto;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  padding:62px 32px 34px;
+  box-sizing:border-box;
+  color:var(--sucesso-green);
+  scrollbar-width:thin;
+}
+.size-guide-product-heading{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  margin:0 0 30px;
+  color:var(--sucesso-green);
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.size-guide-product-heading strong{
+  display:block;
+  margin:0 0 5px;
+  font-size:15px;
+  line-height:1.1;
+  font-weight:600;
+}
+.size-guide-product-heading span{
+  display:block;
+  font-size:11px;
+  line-height:1.2;
+  font-weight:400;
+}
+
+/* Re-home the existing Sucesso chart inside the lateral drawer. */
+#size-guide-section .su-size-guide{
+  width:100%!important;
+  max-width:410px!important;
+  margin:0 auto!important;
+  box-sizing:border-box!important;
+  color:var(--sucesso-green)!important;
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif!important;
+}
+#size-guide-section .su-size-guide-units{
+  justify-content:center!important;
+  gap:12px!important;
+  margin:0 0 22px!important;
+  color:var(--sucesso-green)!important;
+}
+#size-guide-section .su-size-unit,
+#size-guide-section .su-size-guide-divider,
+#size-guide-section .su-size-guide-table,
+#size-guide-section .su-size-guide-table th,
+#size-guide-section .su-size-guide-table td{
+  color:var(--sucesso-green)!important;
+}
+#size-guide-section .su-size-unit{
+  border-bottom-color:transparent!important;
+  transition:none!important;
+}
+#size-guide-section .su-size-unit:hover,
+#size-guide-section .su-size-unit:focus-visible,
+#size-guide-section .su-size-unit.is-active{
+  border-bottom-color:var(--sucesso-green)!important;
+}
+#size-guide-section .su-size-guide-table{
+  min-width:0!important;
+  font-size:11px!important;
+}
+#size-guide-section .su-size-guide-table tbody tr + tr th,
+#size-guide-section .su-size-guide-table tbody tr + tr td{
+  border-top:1px solid rgba(35,63,50,.22)!important;
+}
+#size-guide-section .su-size-guide-diagram-wrap{
+  justify-content:center!important;
+  margin-top:26px!important;
+}
+#size-guide-section .su-size-guide-diagram{
+  width:210px!important;
+  max-width:58%!important;
+  margin:0 auto!important;
+}
+
+html.sucesso-size-guide-open,
+body.sucesso-size-guide-open{overflow:hidden!important;overscroll-behavior:none!important;}
+
+@media (max-width:768px){
+  body:has(main.product-page) .product-info{
+    margin-top:22px!important;
+  }
+  body:has(main.product-page) .product-short-description{
+    margin:22px 0 30px!important;
+    max-width:none;
+    font-size:11.5px!important;
+    line-height:1.5!important;
+  }
+  body:has(main.product-page) .size-fit-guide-trigger{
+    margin-bottom:30px!important;
+    font-size:11.5px!important;
+  }
+  .size-guide-drawer{width:100%!important;max-width:100%!important;}
+  .size-guide-drawer-header{padding:24px 20px 18px;}
+  .size-guide-drawer-header h2{
+    font-size:34px!important;
+    letter-spacing:-1.6px!important;
+  }
+  .size-guide-drawer-body{padding:44px 20px 28px;}
+  .size-guide-product-heading{margin-bottom:26px;}
+  #size-guide-section .su-size-guide{max-width:100%!important;}
+  #size-guide-section .su-size-guide-table{font-size:10px!important;}
+  #size-guide-section .su-size-guide-diagram{width:190px!important;max-width:62%!important;}
+}
+
+@media (max-width:420px){
+  .size-guide-drawer-header{padding-left:16px;padding-right:16px;}
+  .size-guide-drawer-body{padding-left:16px;padding-right:16px;}
+  .size-guide-drawer-header h2{font-size:31px!important;}
+  #size-guide-section .su-size-guide-table th,
+  #size-guide-section .su-size-guide-table td{padding:7px 2px!important;}
+}
+
+/* Price now hands off directly to the new product description. */
+body:has(main.product-page) #product-price{margin-bottom:0!important;}
+
+/* The original lower SIZE GUIDE control remains in the information group, but now opens the drawer. */
+body:has(main.product-page) .size-guide-secondary-trigger .toggle-icon{pointer-events:none;}
+
+
+/* =========================================================
+   PRODUCT IMAGE VIEWER — close controls only
+   Match the Size & Fit Guide X exactly and use a minus cursor
+   over the enlarged product image. No other zoom/layout styles.
+   ========================================================= */
+#zoom-overlay #close-zoom{
+  position:fixed!important;
+  top:28px!important;
+  right:26px!important;
+  width:26px!important;
+  height:26px!important;
+  min-width:26px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:transparent!important;
+  font-size:0!important;
+  line-height:0!important;
+  font-weight:400!important;
+  box-shadow:none!important;
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  cursor:pointer!important;
+  z-index:2147483647!important;
+}
+#zoom-overlay #close-zoom::before,
+#zoom-overlay #close-zoom::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:18px;
+  height:1px;
+  background:var(--sucesso-green,#233f32);
+  transform-origin:center;
+  pointer-events:none;
+}
+#zoom-overlay #close-zoom::before{transform:translate(-50%,-50%) rotate(45deg);}
+#zoom-overlay #close-zoom::after{transform:translate(-50%,-50%) rotate(-45deg);}
+#zoom-overlay #close-zoom:hover,
+#zoom-overlay #close-zoom:focus-visible{
+  opacity:1!important;
+  background:transparent!important;
+  outline:none!important;
+}
+
+@media (min-width:769px) and (hover:hover) and (pointer:fine){
+  #zoom-overlay.su-desktop-product-zoom #zoom-image{
+    cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M5 16h22' fill='none' stroke='%23233f32' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E") 16 16, zoom-out!important;
+  }
+}
+
+@media (max-width:768px){
+  #zoom-overlay #close-zoom{top:22px!important;right:20px!important;}
+}
+@media (max-width:420px){
+  #zoom-overlay #close-zoom{right:16px!important;}
+}
+
+/* SUCESSO zoom close — keep one single Size & Fit style X.
+   The legacy desktop zoom stylesheet styles the button text itself; the button is
+   intentionally textless and these rules ensure only the two pseudo-element
+   strokes render, preventing stacked close marks. */
+#zoom-overlay.su-desktop-product-zoom #close-zoom,
+#zoom-overlay #close-zoom{
+  color:transparent!important;
+  font-size:0!important;
+  line-height:0!important;
+  text-indent:0!important;
+  overflow:visible!important;
+}

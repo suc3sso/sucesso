@@ -1,0 +1,314 @@
+/* =========================================================
+   PRODUCT PAGE — related products only
+   ========================================================= */
+.related-products-section{
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:28px 0 46px;
+  background:#fff;
+  border-top:1px solid #e5e5e5;
+  box-sizing:border-box;
+}
+
+.related-products-heading{
+  margin:0;
+  padding:0 12px 18px;
+  color:#111;
+  font-family:"SystemSansBold","Helvetica Neue",Arial,Helvetica,sans-serif;
+  font-size:12px;
+  line-height:1.2;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.2px;
+}
+
+.related-products-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:1px;
+  width:100%;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  align-items:start;
+}
+
+.related-product-card{
+  min-width:0;
+  width:100%;
+  margin:0;
+  padding:0;
+  background:#fff;
+  color:#111;
+  box-sizing:border-box;
+}
+
+.related-product-media{
+  position:relative;
+  display:block;
+  width:100%;
+  aspect-ratio:4/5;
+  margin:0;
+  padding:0;
+  overflow:hidden;
+  background:#f7f7f7;
+  text-decoration:none;
+  color:inherit;
+}
+
+.related-product-link{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:block;
+  text-decoration:none;
+  color:inherit;
+}
+
+.related-product-media img{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0;
+  object-fit:contain;
+  background:transparent;
+  transition:opacity .36s ease;
+}
+
+.related-product-media .related-product-back{opacity:0;}
+.related-product-card:hover .related-product-front,
+.related-product-card:focus-within .related-product-front{opacity:0;}
+.related-product-card:hover .related-product-back,
+.related-product-card:focus-within .related-product-back{opacity:1;}
+
+.related-size-bar{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:4;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:20px;
+  min-height:44px;
+  padding:8px 14px;
+  box-sizing:border-box;
+  background:rgba(239,239,239,.90);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+  opacity:0;
+  transform:translateY(100%);
+  transition:transform .28s ease,opacity .22s ease;
+  pointer-events:none;
+}
+
+.related-product-card:hover .related-size-bar,
+.related-product-card:focus-within .related-size-bar{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+
+.related-size-btn{
+  appearance:none;
+  -webkit-appearance:none;
+  margin:0;
+  padding:2px 0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:#111;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:12px;
+  line-height:1;
+  font-weight:400;
+  cursor:pointer;
+  text-transform:uppercase;
+}
+.related-size-btn:hover,.related-size-btn:focus-visible{
+  text-decoration:none;
+  text-underline-offset:none;
+  outline:none;
+}
+
+.related-product-info-link{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+}
+.related-product-info-link:hover .related-product-name,
+.related-product-info-link:focus-visible .related-product-name{
+  text-decoration:none;
+  text-underline-offset:none;
+}
+.related-product-info-link:focus-visible{outline:1px solid #233f32;outline-offset:-1px;}
+
+.related-product-info{
+  padding:10px 10px 22px;
+  box-sizing:border-box;
+  text-align:left;
+}
+.related-product-name{
+  margin:0 0 5px;
+  color:#000;
+  font-family:"SystemSansBold","Helvetica Neue",Arial,Helvetica,sans-serif;
+  font-size:11px;
+  line-height:1.1;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.2px;
+}
+.related-product-price{
+  margin:0;
+  color:#333;
+  font-family:"SystemSansBold","Helvetica Neue",Arial,Helvetica,sans-serif;
+  font-size:12px;
+  line-height:1.1;
+  font-weight:500;
+}
+
+@media (max-width:1023px){
+  .related-products-section{padding-top:24px;padding-bottom:34px;}
+  .related-products-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .related-size-bar{gap:16px;min-height:42px;padding:8px 11px;}
+}
+
+@media (max-width:600px){
+  .related-products-heading{padding:0 8px 14px;font-size:11px;}
+  .related-products-section{padding-top:20px;padding-bottom:28px;}
+  .related-product-info{padding:8px 7px 18px;}
+  .related-size-bar{gap:13px;min-height:39px;padding:7px 8px;}
+  .related-size-btn{font-size:11px;}
+}
+
+/* Touchscreens have no real hover: keep the size action usable. */
+@media (hover:none){
+  .related-size-bar{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+  }
+  .related-product-media .related-product-front{opacity:1;}
+  .related-product-media .related-product-back{opacity:0;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .related-product-media img,.related-size-bar{transition:none;}
+}
+
+/* =========================================================
+   SUCESSO — product-card two-image gallery arrows
+   Applies only to cards that already use .related-product-card.
+   Keeps the existing card/layout/size bar unchanged.
+   ========================================================= */
+.related-product-card.su-gallery-card .related-product-front{
+  opacity:1;
+}
+.related-product-card.su-gallery-card .related-product-back{
+  opacity:0;
+}
+
+/* The image changes only while the pointer is over the media area. */
+@media (hover:hover) and (pointer:fine){
+  .related-product-card.su-gallery-card .related-product-media:hover .related-product-front{
+    opacity:0;
+  }
+  .related-product-card.su-gallery-card .related-product-media:hover .related-product-back{
+    opacity:1;
+  }
+}
+
+/* Arrow controls: deliberately bare, like the supplied reference. */
+.su-product-gallery-arrow{
+  appearance:none;
+  -webkit-appearance:none;
+  position:absolute;
+  top:50%;
+  z-index:7;
+  width:38px;
+  height:52px;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:#111;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  opacity:0;
+  transform:translateY(-50%);
+  transition:opacity .14s ease;
+  -webkit-tap-highlight-color:transparent;
+  outline:none;
+}
+.su-product-gallery-arrow--prev{ left:8px; }
+.su-product-gallery-arrow--next{ right:8px; }
+.su-product-gallery-arrow svg{
+  display:block;
+  width:20px;
+  height:20px;
+  overflow:visible;
+  pointer-events:none;
+}
+.su-product-gallery-arrow path{
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  vector-effect:non-scaling-stroke;
+}
+
+.related-product-card.su-gallery-card .related-product-media:hover .su-product-gallery-arrow,
+.related-product-card.su-gallery-card .related-product-media:focus-within .su-product-gallery-arrow{
+  opacity:1;
+}
+
+/* Manual arrow navigation overrides the hover swap until the pointer leaves. */
+.related-product-card.su-gallery-card.su-gallery-show-front .related-product-front,
+.related-product-card.su-gallery-card.su-gallery-show-front .related-product-media:hover .related-product-front{
+  opacity:1 !important;
+}
+.related-product-card.su-gallery-card.su-gallery-show-front .related-product-back,
+.related-product-card.su-gallery-card.su-gallery-show-front .related-product-media:hover .related-product-back{
+  opacity:0 !important;
+}
+.related-product-card.su-gallery-card.su-gallery-show-back .related-product-front,
+.related-product-card.su-gallery-card.su-gallery-show-back .related-product-media:hover .related-product-front{
+  opacity:0 !important;
+}
+.related-product-card.su-gallery-card.su-gallery-show-back .related-product-back,
+.related-product-card.su-gallery-card.su-gallery-show-back .related-product-media:hover .related-product-back{
+  opacity:1 !important;
+}
+
+/* On touch devices there is no hover, so keep the arrows available for navigation. */
+@media (hover:none), (pointer:coarse){
+  .related-product-card.su-gallery-card .su-product-gallery-arrow{
+    opacity:.9;
+  }
+}
+
+@media (max-width:600px){
+  .su-product-gallery-arrow{
+    width:32px;
+    height:46px;
+  }
+  .su-product-gallery-arrow--prev{ left:4px; }
+  .su-product-gallery-arrow--next{ right:4px; }
+  .su-product-gallery-arrow svg{
+    width:17px;
+    height:17px;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .su-product-gallery-arrow{ transition:none; }
+}

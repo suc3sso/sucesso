@@ -1,0 +1,2160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="bcv-rate.js"></script>
+<script src="country-settings.js" defer></script>
+<script src="checkout-return.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms & Conditions - Sucesso</title>
+  <link rel="icon" href="images/sucesso fav icon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+
+    html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+    .loader {
+      position: fixed;
+      inset: 0;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .loader img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      animation: zoomInClean 2s ease forwards;
+    }
+
+    @keyframes zoomInClean {
+      0% { transform: scale(0.1); opacity: 0; }
+      70% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .account-icon, .cart-icon {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+  
+.cart-icon:hover,
+.search-toggle:hover,
+.account-icon:hover {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+
+    .collection-item .tallas {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      font-size: 0.85rem;
+      text-align: center;
+      color: #233f32;
+      margin-top: 6px;
+      pointer-events: none;
+    }
+
+    .collection-item:hover .tallas {
+      opacity: 1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Syne', sans-serif; background-color: #fff; }
+    header.navbar {
+      position: fixed; top: 0; width: 100%; height: 70px; background-color: white;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 20px; z-index: 1001; border-bottom: 1px solid #e5e5e5;
+    }
+    .navbar-left, .navbar-right {
+      display: flex; align-items: center; gap: 30px;
+    }
+    .navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+    .logo { height: 35px; }
+    .nav-link {
+      text-decoration: none; color: #000; font-weight: 600; font-size: 14px;
+      transition: opacity 0.3s ease;
+    }
+    .nav-link:hover { opacity: 1; }
+    .nav-icon, .search-toggle {
+      background: none; border: none; font-size: 18px; cursor: pointer;
+      color: #000; transition: opacity 0.3s ease;
+    }
+    .nav-icon:hover, .search-toggle:hover { opacity: 0.5; }
+    .overlay {
+      position: fixed; top: 70px; left: 0; width: 100%; height: calc(100% - 70px);
+      background-color: rgba(0, 0, 0, 0.3); z-index: 1000; display: none;
+    }
+    .search-bar {
+      position: fixed; top: 70px; left: 0; width: 100%; height: 42px;
+      background-color: white; display: flex; align-items: center; gap: 10px;
+      padding: 0 20px; border-bottom: 1px solid #e5e5e5;
+      transform: translateY(-100%); opacity: 0; pointer-events: none;
+      transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+      z-index: 1002; will-change: transform, opacity;
+    }
+    .search-bar.active {
+      transform: translateY(0); opacity: 1; pointer-events: auto;
+    }
+    .search-bar.hiding { z-index: 999; }
+    .search-bar input {
+      width: 100%; padding: 8px 0 8px 60px; font-size: 15px;
+      border: none; outline: none; background-color: transparent; color: #000;
+    }
+    .search-icon {
+      margin-right: 0; color: #000; flex-shrink: 0; position: absolute; left: 30px;
+    }
+    .close-search {
+      margin-left: 16px; background: none; border: none; cursor: pointer;
+      color: #000; padding: 4px; display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.3s ease;
+    }
+    .close-search:hover { opacity: 0.5; }
+.search-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: #000;
+  transition: opacity 0.3s ease;
+  margin-top: 2px; /* 👈 Ajustá este valor si querés más o menos bajado */
+}
+
+.search-toggle svg {
+  display: block;
+  stroke: #000;
+}
+
+
+    .search-results {
+  position: fixed;
+  top: 112px;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1001;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  padding: 0;
+  box-sizing: border-box;
+  max-height: calc(100vh - 112px);
+  overflow-y: auto;
+  gap: 1px; /* visualmente simula 0.3px ajustando ancho abajo */
+}
+
+
+.search-result-item {
+  width: 100%;
+  max-width: 375px; /* Más grande, similar a Nude Project */
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-decoration: none;
+  color: #000;
+  padding: 0 10px 32px;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease;
+}
+
+.product-image-wrapper {
+  width: 100%;
+  padding-top: 125%; /* Proporción 4:5 sin usar aspect-ratio */
+  position: relative;
+  background-color: #f8f8f8;
+  margin-bottom: 12px;
+}
+
+.product-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* MUY IMPORTANTE para que no se corte */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.4s ease;
+}
+
+
+.product-image-wrapper .back {
+  opacity: 0;
+}
+
+.search-result-item:hover .back {
+  opacity: 1;
+}
+
+.search-result-item:hover .front {
+  opacity: 0;
+}
+
+.result-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding-left: 4px;
+  width: 100%;
+}
+
+.result-info .name {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.result-info .price {
+  font-size: 17px;
+  font-weight: 400;
+  color: #000;
+  text-align: left;
+}
+ 
+         .nav-desktop ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-desktop ul li {
+            margin: 0 15px;
+        }
+        
+        .nav-desktop ul li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-desktop ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #000; /* Color de subrayado */
+            transition: width 0.3s ease;
+        }
+        
+        .nav-desktop ul li a:hover:after {
+            width: 100%;
+        }
+
+/* Visibilidad por breakpoint:
+   - Desktop XL (≥1536px): mostrar texto, ocultar íconos
+   - Laptop/Móvil (<1536px): mostrar íconos, ocultar texto
+*/
+.show-desktop-xl { display: none; }
+.hide-desktop-xl { display: flex; }
+
+@media (min-width: 1536px) {
+  .show-desktop-xl { display: flex !important; }
+  .hide-desktop-xl { display: none !important; }
+
+  .nav-text {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    font-size: 12px;
+    position: relative; /* necesario para el pseudo-elemento */
+    padding: 0;
+    margin: 0 8px; /* espaciado entre los nav-text */
+    color: #000;
+    transition: color 0.3s ease;
+  }
+
+  /* línea animada como en el language-toggle */
+  .nav-text::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: #000;
+    transition: width 0.3s ease;
+  }
+
+  .nav-text:hover::after {
+    width: 100%;
+  }
+}
+
+/* 🔧 Ajustes solo para pantallas grandes */
+@media (min-width: 1536px) {
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;     /* ✅ evita que salte a otra fila */
+    gap: 16px;             /* ✅ mismo espaciado que los nav-left */
+  }
+
+  .navbar-right .language-toggle {
+    margin: 0;             /* quita margen extra */
+    transform: none;       /* elimina el pequeño desajuste vertical */
+    padding: 0;
+  }
+
+  .language-toggle {
+margin-top: 1.5px !important;
+margin-right: 0.4rem !important;
+  }
+}
+
+/* 🔽 Disminuir tamaño de nav-left y nav-right SOLO en pantallas grandes */
+@media (min-width: 1536px) {
+  .nav-desktop ul li a,   /* enlaces de nav-left */
+  .navbar-right .nav-text, 
+  .navbar-right .language-toggle {
+    font-size: 11px;      /* antes 12px → más pequeño */
+    letter-spacing: 1px;  /* ajusta el espaciado de letras */
+  }
+}
+
+
+.language-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 30px;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  width: 460px; /* antes era 300px */
+  font-family: 'Poppins', sans-serif;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  border-radius: 4px;
+}
+
+
+  .language-popup.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .language-popup button.close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+ 
+.language-toggle {
+  text-decoration: none;
+  color: #000;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-right: 8px;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background: none;
+  line-height: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative; /* 🔑 para que el ::after se posicione bien */
+  user-select: none;
+  transition: color 0.3s ease;
+  transform: translateY(1px); /* Ajustá a 1px o 3px si querés más fino */
+}
+
+.language-toggle::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #000;
+  transition: width 0.3s ease;
+}
+
+.language-toggle:hover::after {
+  width: 100%;
+}
+
+.cart-item img {
+  width: 145px;          /* Aumenta el tamaño de la imagen */
+  height: auto;
+  object-fit: contain;
+  margin-right: 1.2rem;  /* Espacio entre imagen y texto */
+  flex-shrink: 0;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;   /* Centra verticalmente imagen y contenido */
+  gap: 1rem;             /* Espacio entre imagen y detalles */
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+
+.cart-item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cart-item-details h4 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.cart-item-details p {
+  font-size: 0.85rem;
+  color: #333;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.cart-item-price {
+  font-weight: bold;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  width: fit-content;
+  padding: 2px 4px;
+  height: 36px;
+  font-size: 16px;
+}
+
+.quantity-selector button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #555;
+  padding: 0 10px;
+}
+
+.quantity-selector input {
+  border: none;
+  text-align: center;
+  width: 24px;
+  font-size: 16px;
+  outline: none;
+  pointer-events: none;
+  background: transparent;
+  color: #000;
+}
+
+.cart-item {
+  position: relative;
+}
+
+.cart-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cart-item.loading .cart-loading-overlay {
+  opacity: 1;
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #333;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cart-item-price {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* === NAV con flechita — Desktop XL solamente === */
+@media (min-width: 1536px) {
+  .nav-desktop ul { display:flex; list-style:none; }
+  .nav-desktop ul li { margin: 0 15px; }
+
+  .nav-item { display:flex; align-items:center; gap:6px; position:relative; }
+
+  .nav-main, .nav-arrow {
+    background:none; border:none; padding:0; margin:0; cursor:pointer;
+    color:#000; font-size:12px; text-transform:uppercase; letter-spacing:1.5px;
+    font-weight:700; line-height:1;
+  }
+
+  /* Subrayado ANIMADO solo para los main (izquierda) */
+  .nav-main { position:relative; }
+  .nav-main::after {
+    content:''; position:absolute; left:0; bottom:-2px; height:1px; width:0; background:#000;
+    transition: width 0.3s ease;
+  }
+  .nav-main:hover::after { width:100%; }
+
+  .nav-arrow { display:flex; align-items:center; }
+  .nav-arrow svg { display:block; transition:none; }        /* sin animación */
+  .nav-item.open .nav-arrow svg { transform: rotate(90deg); } /* ▶ a ▼ */
+
+  /* Dropdown: OCULTO por defecto, sin fondo ni borde, sin animaciones */
+  .dropdown {
+    position:absolute; top:22px; left:0;
+    display:none !important;        /* nunca visible si no está "open" */
+    background: transparent !important;  /* SIN fondo */
+    border: none !important;              /* SIN borde */
+    padding: 0;                           /* SIN padding de caja */
+    white-space:nowrap; z-index:1200;
+  }
+  .nav-item.open .dropdown {
+    display:flex !important;
+  }
+
+  /* Ítems del dropdown: sin animación de subrayado */
+  .dropdown .dropdown-item {
+    text-decoration:none; color:#000; font-size:12px; font-weight:700;
+    text-transform:uppercase; letter-spacing:1.5px; display:inline-block; margin-right:18px;
+    position: static; /* sin pseudo línea */
+  }
+  .dropdown .dropdown-item:last-child { margin-right:0; }
+  .dropdown .dropdown-item:hover { text-decoration: underline; } /* subrayado instantáneo */
+
+  /* Legal en fila horizontal (como la captura) */
+  .dropdown.row { display:flex; gap:24px; }
+
+  /* Oculta el nav antiguo si existía */
+  .nav-desktop ul li a.nav-link { display:none !important; }
+}
+/* ✅ Dropdown: sin subrayado al abrir; subrayado SOLO al hover, sin animación */
+@media (min-width: 1536px) {
+  /* Estado base: NADA subrayado ni transiciones heredadas */
+  .nav-desktop .nav-item .dropdown .dropdown-item {
+    text-decoration: none !important;
+    position: static;
+    transition: none !important;         /* sin transiciones de color, etc. */
+  }
+
+  /* Hover/focus: subrayado inmediato (sin animación) */
+  .nav-desktop .nav-item .dropdown .dropdown-item:hover,
+  .nav-desktop .nav-item .dropdown .dropdown-item:focus-visible {
+    text-decoration: underline !important;
+    /* opcional: si querés más fino y prolijo
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    */
+  }
+
+  /* Mata cualquier línea animada heredada (el ::after) en dropdowns */
+  .nav-desktop .nav-item .dropdown .dropdown-item::after,
+  .nav-desktop .nav-item .dropdown .dropdown-item:hover::after {
+    content: none !important;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    transition: none !important;
+  }
+}
+/* ================================
+   NAV DESKTOP XL – tamaños alineados a nav-right
+   ================================ */
+@media (min-width: 1536px) {
+  /* 1) Mismo tamaño tipográfico que nav-right */
+  .nav-desktop .nav-item .nav-main,
+  .nav-desktop .nav-item .nav-arrow,
+  .nav-desktop .dropdown .dropdown-item,
+  .navbar-right .nav-text,
+  .navbar-right .language-toggle {
+    font-size: 11px !important;     /* igual que nav-right */
+    letter-spacing: 1px !important;  /* igual que nav-right */
+    line-height: 1 !important;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  /* 2) Compactar separación para que no se vean “grandes” */
+  .nav-desktop ul li {
+    margin: 0 10px !important;       /* antes 15px */
+  }
+  .nav-desktop .nav-item {
+    gap: 4px !important;             /* antes 6px */
+  }
+
+  /* 3) Reducir la flechita (icono) y su hit area */
+  .nav-desktop .nav-item .nav-arrow svg {
+    width: 7px !important;           /* antes 8px */
+    height: 11px !important;         /* antes 12px */
+  }
+  .nav-desktop .nav-item .nav-arrow {
+    padding: 0 !important;           /* sin padding extra */
+  }
+
+  /* 4) Subrayado fino y sin “overhang” en .nav-main */
+  .nav-desktop .nav-item .nav-main::after {
+    height: 1px !important;
+    bottom: -2px !important;
+  }
+
+  /* 5) Dropdown: tipografía y espacios iguales a nav-right */
+
+  .nav-desktop .dropdown .dropdown-item {
+    margin-right: 14px !important;   /* antes 18px */
+    text-decoration: none !important;
+  }
+  .nav-desktop .dropdown .dropdown-item:hover {
+    text-decoration: underline !important;
+  }
+
+  /* 6) Alinear altura y compacidad de la barra entera */
+  .navbar-left, .navbar-right {
+    gap: 16px !important;            /* ya usas 16px en right; igualamos */
+  }
+
+  /* 7) Asegurar que nav-left y nav-right comparten font-size global */
+  .nav-desktop ul li a,
+  .navbar-right .nav-text,
+  .navbar-right .language-toggle {
+    font-size: 11px !important;
+    letter-spacing: 1px !important;
+  }
+}
+/* 🔹 Aumentar espacio entre SHOP, LEGAL y SUPPORT en desktop XL */
+@media (min-width: 1536px) {
+  #nav-shop,
+  #nav-legal,
+  #nav-support {
+    margin: 0 18px !important; /* antes 15px → ahora el doble */
+  }
+}
+/* ⬇️ Bajar los dropdowns solo en Desktop XL */
+@media (min-width: 1536px) {
+  .nav-desktop .dropdown {
+    top: 70px !important; /* antes 20–22px; ajusta este valor a tu gusto */
+  }
+}
+
+/* 🎯 Estilos de los items del dropdown en Desktop XL */
+@media (min-width: 1536px) {
+  .nav-desktop .nav-item .dropdown .dropdown-item {
+    color: #555 !important;        /* Estado base */
+    font-weight: 600 !important;    /* Semibold para contraste sutil */
+  }
+
+  .nav-desktop .nav-item .dropdown .dropdown-item:hover,
+  .nav-desktop .nav-item .dropdown .dropdown-item:focus-visible {
+    color: #000 !important;         /* Hover */
+    text-decoration: underline !important; /* Ya lo tenías, lo reafirmo */
+  }
+}
+@media (min-width: 1536px) {
+  #nav-legal .dropdown .dropdown-item.active {
+    color: #000 !important;
+    text-decoration: underline !important;
+  }
+  /* Cuando el usuario pasa el mouse por Terms, "relajamos" el activo de Privacy */
+  #nav-legal .dropdown .dropdown-item.active.deemphasize {
+    text-decoration: none !important;
+  }
+}
+  /* Desktop XL */
+  @media (min-width: 1536px) {
+    /* Base: LEGAL siempre rotado 90° (▼) */
+    #nav-legal .nav-arrow svg {
+      transform: rotate(90deg) !important;
+      transition: none !important;
+    }
+
+    /* Aunque el item entre/salga de "open", mantener ▼ */
+    .nav-desktop .nav-item#nav-legal.open .nav-arrow svg {
+      transform: rotate(90deg) !important;
+    }
+  }
+
+/* 🔹 Aumentar espacio entre SHOP, LEGAL, SUPPORT y BRAND en desktop XL */
+@media (min-width: 1536px) {
+  #nav-shop,
+  #nav-legal,
+  #nav-support,
+  #nav-brand {
+    margin: 0 18px !important;
+  }
+}
+/* === NAV: un poco más pequeño (sin tocar el logo) — Desktop XL === */
+@media (min-width: 1536px) {
+  /* Texto de botones izquierda (main + flecha), items del dropdown y derecha */
+  .nav-desktop .nav-item .nav-main,
+  .nav-desktop .nav-item .nav-arrow,
+  .nav-desktop .dropdown .dropdown-item,
+  .navbar-right .nav-text,
+  .navbar-right .language-toggle {
+    font-size: 10.3px !important;      /* antes 11–12px */
+    letter-spacing: 0.9px !important; /* antes ~1–1.5px */
+    line-height: 1 !important;
+  }
+
+  /* Flechita un poco más chica */
+  .nav-desktop .nav-item .nav-arrow svg {
+    width: 7px !important;   /* antes 7–8px */
+    height: 10px !important; /* antes 11–12px */
+  }
+
+  /* Compacidad lateral (sin apretar demasiado) */
+  .nav-desktop ul li {
+    margin: 0 9px !important;       /* antes 10–15px */
+  }
+  .nav-desktop .nav-item {
+    gap: 3px !important;            /* antes 4–6px */
+  }
+  .nav-desktop .dropdown .dropdown-item {
+    margin-right: 13px !important;  /* antes 14–18px */
+  }
+
+  /* Espaciado entre grupos principales alineado al nuevo tamaño */
+  #nav-shop,
+  #nav-legal,
+  #nav-support,
+  #nav-brand {
+    margin: 0 17px !important;      /* antes 18px */
+  }
+
+  /* Ligeramente más compacto a la derecha */
+  .navbar-right {
+    gap: 14px !important;           /* antes 16px */
+  }
+
+  /* Subrayado: mantené la línea fina y posición */
+  .nav-desktop .nav-item .nav-main::after {
+    height: 1px !important;
+    bottom: -2px !important;
+  }
+}
+
+  </style>
+<link rel="stylesheet" href="requested-changes.css">
+
+<link rel="stylesheet" href="search-system.css">
+<script src="search-text.js" defer></script>
+<script src="search-engine.js" defer></script>
+<script src="search-interface.js" defer></script>
+<script src="search-catalog.js" defer></script>
+  <link rel="stylesheet" href="sucesso-footer.css">
+  <link rel="stylesheet" href="mobile-menu-refresh.css">
+<style id="su-navbar-uploaded-svg-icons-20261001">
+/* Exact uploaded responsive navbar icons: laptop + mobile only. */
+@media (max-width: 1535px) {
+  header.navbar .search-toggle .su-nav-search-svg {
+    width: 22px !important;
+    height: 22px !important;
+    display: block !important;
+    flex: 0 0 auto !important;
+  }
+  header.navbar .account-button .su-nav-account-svg {
+    width: 22px !important;
+    height: 22px !important;
+    display: block !important;
+    flex: 0 0 auto !important;
+    filter: none !important;
+  }
+  header.navbar .su-nav-cart-svg {
+    width: 22px !important;
+    height: 22px !important;
+    display: block !important;
+    flex: 0 0 auto !important;
+    filter: none !important;
+  }
+  header.navbar .search-toggle .su-nav-search-svg *,
+  header.navbar .account-button .su-nav-account-svg *,
+  header.navbar .su-nav-cart-svg * {
+    stroke: #233f32 !important;
+  }
+  header.navbar #cart-count {
+    position: absolute !important;
+    top: -2px !important;
+    right: -15px !important;
+    min-width: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #233f32 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+    pointer-events: none !important;
+  }
+  header.navbar #cart-count::before { content: "("; }
+  header.navbar #cart-count::after  { content: ")"; }
+}
+</style>
+
+<style id="su-navbar-mobile-icon-size-20261001">
+/* Mobile-only icon sizing: preserve laptop 22x22, reduce on phones. */
+
+@media (max-width: 767px) {
+  header.navbar .search-toggle .su-nav-search-svg,
+  header.navbar .account-button .su-nav-account-svg,
+  header.navbar .su-nav-cart-svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  header.navbar #cart-count {
+    top: -1px !important;
+    right: -13px !important;
+    font-size: 10px !important;
+  }
+}
+</style>
+
+</head>
+<body>
+
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <img src="images/logo cherry png.png" alt="Sucesso Logo">
+  </div>
+
+  <header class="navbar">
+<button class="menu-toggle" aria-label="Menú">
+  <svg class="menu-icon" viewBox="0 0 32 32" width="28" height="28" stroke-linecap="round">
+    <g class="lines" stroke="currentColor" stroke-width="2" fill="none">
+      <line class="top" x1="6" y1="10" x2="26" y2="10" />
+      <line class="middle" x1="6" y1="16" x2="26" y2="16" />
+      <line class="bottom" x1="6" y1="22" x2="26" y2="22" />
+    </g>
+  </svg>
+</button>
+
+
+
+<div class="nav-desktop">
+  <ul>
+        <!-- SHOP -->
+    <li class="nav-item has-dropdown" id="nav-shop" data-nav-role="shop">
+      <button class="nav-main" data-i18n="nav_shop" aria-label="Shop">SHOP</button>
+      <button class="nav-arrow" aria-label="Abrir Shop" aria-expanded="false">
+        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2L6 6L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="dropdown sucesso-hover-dropdown" data-dd="shop" hidden>
+        <a href="collections/t-shirts/" class="dropdown-item" data-i18n="nav_tees">T-SHIRTS</a>
+      </div>
+    </li>
+
+    <!-- COLLECTIONS -->
+    <li class="nav-item has-dropdown" id="nav-collections" data-nav-role="collections">
+      <button class="nav-main" data-i18n="nav_collections" aria-label="Collections">COLLECTIONS</button>
+      <button class="nav-arrow" aria-label="Abrir Collections" aria-expanded="false">
+        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2L6 6L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="dropdown sucesso-hover-dropdown collection-dropdown" data-dd="collections" hidden>
+        <a href="collections/dice-drp/" class="collection-hover-card" aria-label="DICE DRP">
+          <img src="images/collection-dice-drp-cover.png" alt="DICE DRP">
+          <span class="collection-hover-name">DICE DRP</span>
+        </a>
+      </div>
+    </li>
+
+    <!-- SUPPORT -->
+    <li class="nav-item has-dropdown" id="nav-support">
+      <button class="nav-main" data-i18n="support" aria-label="Support">SUPPORT</button>
+      <button class="nav-arrow" aria-label="Abrir Support" aria-expanded="false">
+        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2L6 6L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="dropdown" data-dd="support" hidden>
+        <a href="contactanos.html" class="dropdown-item" data-i18n="contact_us">Contact Us</a>
+      </div>
+    </li>
+  
+    <!-- BRAND -->
+<li class="nav-item has-dropdown" id="nav-brand">
+  <button class="nav-main" data-i18n="brand" aria-label="Brand">BRAND</button>
+  <button class="nav-arrow" aria-label="Abrir Brand" aria-expanded="false">
+    <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 2L6 6L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="dropdown" data-dd="brand" hidden>
+    <a href="about.html" class="dropdown-item" data-i18n="nav_about">ABOUT</a>
+  </div>
+</li>
+  </ul>
+</div>
+
+
+  
+  <div class="navbar-center">
+    <a href="index.html"><img src="images/logo sucesso png.png" alt="Nude Logo" class="logo" style="width: 130px; height: auto;"/></a>
+  </div>
+
+<div class="navbar-right">
+  <!-- Botón de idioma (sigue igual) -->
+  <div class="language-toggle" id="languageToggle">EN | ES</div>
+
+<!-- SEARCH -->
+<!-- Versión TEXTO para desktop XL -->
+<button class="nav-text show-desktop-xl" onclick="toggleSearchBar()" aria-label="Open search" id="search-text-btn" data-i18n="nav_search">
+  Search
+</button>
+<!-- Versión ÍCONO para laptop/móvil -->
+<button class="search-toggle hide-desktop-xl" onclick="toggleSearchBar()" aria-label="Abrir búsqueda">
+  <img src="images/nav-search.svg" alt="" class="su-nav-search-svg" aria-hidden="true">
+</button>
+
+<!-- ACCOUNT -->
+<!-- Versión TEXTO para desktop XL -->
+<a id="account-link-text" href="login.html" style="text-decoration: none !important;" class="nav-text show-desktop-xl" data-i18n="nav_account">
+  Account
+</a>
+<!-- Versión ÍCONO para laptop/móvil -->
+<a id="account-link" href="login.html" class="account-button hide-desktop-xl">
+  <img src="images/nav-account.svg" alt="Cuenta" class="account-icon su-nav-account-svg">
+</a>
+
+<!-- CART -->
+<!-- Versión TEXTO para desktop XL -->
+<button id="cart-text-btn" class="nav-text show-desktop-xl" type="button">
+  <span data-i18n="nav_cart">Cart</span> 
+  <span id="cart-count-text" style="margin-left: 0.2rem !important;">(0)</span>
+</button>
+
+<!-- Versión ÍCONO para laptop/móvil -->
+<div class="hide-desktop-xl" style="position: relative; display: flex; align-items: center; margin-left: 0px;">
+  <img src="images/nav-cart.svg" alt="Carrito" class="cart-icon su-nav-cart-svg" id="cart-btn" style="width:22px;height:22px;pointer-events:auto;cursor:pointer;">
+  <span id="cart-count">0</span>
+</div>
+
+
+</header>
+
+  <div class="search-bar" id="searchBar">
+    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input type="text" placeholder="Buscar...">
+    <button class="close-search" onclick="toggleSearchBar()" aria-label="Cerrar búsqueda">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="search-results" id="searchResults"></div>
+  <div class="overlay" id="overlay" onclick="toggleSearchBar()"></div>
+
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  /* ============== Firebase ============== */
+  const firebaseConfig = {
+    apiKey: "AIzaSyD3u2GKMSAKC_1Cd88KA-rxTOf_Jnt3fuM",
+    authDomain: "sucesso-74f7c.firebaseapp.com",
+    projectId: "sucesso-74f7c",
+    storageBucket: "sucesso-74f7c.appspot.com",
+    messagingSenderId: "878844661636",
+    appId: "1:878844661636:web:6382f86f18201aecfdd7d1"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+  const auth = getAuth(app);
+
+  /* ============== Auth links ============== */
+  const accountLink = document.getElementById("account-link");
+  if (accountLink) {
+    accountLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      onAuthStateChanged(auth, (user) => {
+        window.location.href = user ? "mi-cuenta.html" : "login.html";
+      });
+    });
+  }
+  const sidebarLink = document.getElementById("sidebar-account-link");
+  const sidebarText = document.getElementById("sidebar-account-text");
+  onAuthStateChanged(auth, (user) => {
+    if (!sidebarLink || !sidebarText) return;
+    if (user) {
+      sidebarText.setAttribute("data-i18n","sidebar_account");
+      sidebarLink.href = "mi-cuenta.html";
+    } else {
+      sidebarText.setAttribute("data-i18n","sidebar_login");
+      sidebarLink.href = "login.html";
+    }
+    const currentLang = localStorage.getItem("preferredLang") || "en";
+    fetch("assets/lang/lang.json").then(r=>r.json()).then(data=>{
+      const key = sidebarText.getAttribute("data-i18n");
+      if (data[currentLang]?.[key]) sidebarText.textContent = data[currentLang][key];
+    }).catch(()=>{});
+  });
+
+  /* ============== Búsqueda (datos + UI) ============== */
+  const input = document.querySelector(".search-bar input");
+  const resultsContainer = document.getElementById("searchResults");
+  const searchBar = document.getElementById("searchBar");
+  const overlay = document.getElementById("overlay");
+  const navbar = document.querySelector("header.navbar");
+
+  let allProducts = [];
+  let searchTimeout;
+
+  async function loadProducts() {
+    try {
+      const qs = await getDocs(collection(db, "productos"));
+      allProducts = [];
+      qs.forEach(doc => {
+        const d = doc.data();
+        if (d.titulo && d.precio !== undefined && d.imagen_frontal && d.imagen_trasera) {
+          allProducts.push({
+            titulo: d.titulo,
+            nombre: d.nombre,
+            precio: Number(d.precio),
+            imagen_frontal: String(d.imagen_frontal).replace(/\\/g, "/"),
+            imagen_trasera: String(d.imagen_trasera).replace(/\\/g, "/"),
+            keywords: Array.isArray(d.keywords) ? d.keywords : []
+          });
+        }
+      });
+    } catch (e) { console.error("Error al cargar productos:", e); }
+  }
+
+  function renderResults(filtered) {
+    if (!resultsContainer) return;
+    resultsContainer.innerHTML = "";
+    if (!filtered.length) {
+      resultsContainer.innerHTML = `<div style="padding:20px;font-size:14px;">No se encontraron resultados</div>`;
+    } else {
+      filtered.forEach(p => {
+        const a = document.createElement("a");
+        a.className = "search-result-item";
+        a.href = `product-page.html?nombre=${encodeURIComponent(p.nombre)}`;
+        a.innerHTML = `
+          <div class="product-image-wrapper">
+            <img src="${p.imagen_frontal}" class="front" alt="${p.titulo}">
+            <img src="${p.imagen_trasera}" class="back"  alt="${p.titulo}">
+          </div>
+          <div class="result-info">
+            <span class="name">${p.titulo}</span>
+            <span class="price">$${p.precio.toFixed(2)}</span>
+          </div>
+        `;
+        resultsContainer.appendChild(a);
+      });
+    }
+    resultsContainer.style.display = "grid";
+  }
+
+  if (input) {
+    input.addEventListener("input", () => {
+      clearTimeout(searchTimeout);
+      const q = input.value.toLowerCase().trim();
+      searchTimeout = setTimeout(() => {
+        if (!q) { if (resultsContainer) resultsContainer.style.display = "none"; return; }
+        const filtered = allProducts.filter(p =>
+          p.titulo.toLowerCase().includes(q) ||
+          p.nombre.toLowerCase().includes(q) ||
+          p.keywords.some(k => String(k||"").toLowerCase().includes(q))
+        );
+        renderResults(filtered);
+      }, 1000);
+    });
+  }
+
+  /* ============== BLOQUEO TOTAL DE SCROLL ============== */
+  let LOCKED = false;
+  let scrollY = 0;
+  const SCROLL_KEYS = new Set(["ArrowUp","ArrowDown","PageUp","PageDown","Home","End"," ","Spacebar"]);
+
+  function typingInSearch(target) {
+    if (!target) return false;
+    const inBar = target.closest && target.closest(".search-bar");
+    return !!inBar && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable === true);
+  }
+
+  function wheelHandler(e){ if (LOCKED) e.preventDefault(); }
+  function touchMoveHandler(e){ if (LOCKED) e.preventDefault(); }
+  function keyDownHandler(e){
+    if (!LOCKED) return;
+    if (typingInSearch(e.target)) return;
+    if (SCROLL_KEYS.has(e.key)) e.preventDefault();
+  }
+  // Registrar una sola vez (captura + non-passive)
+  window.addEventListener("wheel", wheelHandler, {capture:true, passive:false});
+  window.addEventListener("touchmove", touchMoveHandler, {capture:true, passive:false});
+  window.addEventListener("keydown", keyDownHandler, true);
+
+  function lockScroll() {
+    if (LOCKED) return;
+    LOCKED = true;
+    scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+
+    document.documentElement.classList.add("no-scroll");
+    document.body.classList.add("no-scroll","scroll-locked");
+    document.body.style.top = `-${scrollY}px`;
+    document.documentElement.style.overscrollBehavior = "none";
+    document.body.style.overscrollBehavior = "none";
+
+    // 🔒 también bloquea scroll interno de resultados (quita estas 2 líneas si quieres permitir scroll ahí)
+    if (resultsContainer) {
+      resultsContainer.dataset.prevOverflow = resultsContainer.style.overflow || "";
+      resultsContainer.style.overflow = "hidden";
+      resultsContainer.style.touchAction = "none";
+    }
+    if (navbar) navbar.classList.add("force-solid");
+  }
+
+  function unlockScroll() {
+    if (!LOCKED) return;
+    LOCKED = false;
+
+    document.documentElement.classList.remove("no-scroll");
+    document.body.classList.remove("no-scroll","scroll-locked");
+    document.body.style.top = "";
+    document.documentElement.style.overscrollBehavior = "";
+    document.body.style.overscrollBehavior = "";
+
+    if (resultsContainer) {
+      resultsContainer.style.overflow = resultsContainer.dataset.prevOverflow || "";
+      resultsContainer.style.touchAction = "";
+      delete resultsContainer.dataset.prevOverflow;
+      resultsContainer.style.display = "none";
+      resultsContainer.innerHTML = "";
+    }
+    if (input) input.value = "";
+    if (overlay) overlay.style.display = "none";
+    if (navbar) navbar.classList.remove("force-solid");
+
+    window.scrollTo(0, scrollY);
+  }
+
+  /* ============== Toggle + observador de estado ============== */
+  function isActive() { return searchBar && searchBar.classList.contains("active"); }
+
+  function openSearch() {
+    if (!searchBar || !overlay) return;
+    searchBar.classList.add("active");
+    overlay.style.display = "block";
+    if (input) input.focus();
+    lockScroll();
+  }
+
+  function closeSearch() {
+    if (!searchBar || !overlay) return;
+    searchBar.classList.add("hiding");
+    searchBar.classList.remove("active");
+    setTimeout(()=>searchBar.classList.remove("hiding"),200);
+    unlockScroll();
+  }
+
+  function toggleSearchBar() { isActive() ? closeSearch() : openSearch(); }
+  window.toggleSearchBar = toggleSearchBar;
+  // Reasignar al final para pisar otros scripts
+  window.addEventListener("load", () => { window.toggleSearchBar = toggleSearchBar; });
+
+  // Si otro script cambia la clase sin nuestro toggle: lo detectamos y aplicamos lock/unlock
+  if (searchBar) {
+    const mo = new MutationObserver(() => { isActive() ? lockScroll() : unlockScroll(); });
+    mo.observe(searchBar, { attributes:true, attributeFilter:["class"] });
+  }
+
+  // ESC para cerrar
+  document.addEventListener("keydown", (e) => {
+    if (LOCKED && e.key === "Escape") closeSearch();
+  });
+
+  /* ============== Init ============== */
+  loadProducts();
+</script>
+
+
+  <main class="sucesso-legal-type" style="margin-top: 10rem !important;max-width: 900px; margin: 100px auto 60px auto; padding: 0 20px; font-family: 'Poppins', sans-serif; color: #233f32; line-height: 1.7;">
+
+
+  <ol style="font-size: 16px; margin-left: 20px; margin-bottom: 20px; text-align: justify;">
+    <li style="margin-bottom: 20px;"><strong data-i18n="info_site_title">Site Information</strong><br>
+      <span data-i18n="info_site_text">Sucesso is a registered brand of clothing and accessories based in Venezuela. This website aims to offer products to the general public for online purchase.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="acceptance_title">Acceptance of Terms</strong><br>
+      <span data-i18n="acceptance_text">By browsing or purchasing on this website, you agree to be bound by these terms and conditions, our privacy policies, and any applicable regulations.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="prices_title">Prices and Payments</strong><br>
+      <span data-i18n="prices_text">All prices are expressed in bolívares (Bs.) or US dollars (USD), as applicable. Payments can be made via mobile payment, bank transfer, credit/debit card, or authorized platforms. Prices may change without prior notice.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="availability_title">Product Availability</strong><br>
+      <span data-i18n="availability_text">The products offered are subject to availability. If the purchased product is not available, Sucesso will notify the customer to offer a replacement or a refund.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="shippings_title">Shipping</strong><br>
+      <span data-i18n="shipping_text">Shipments are made throughout the national territory through courier companies. Delivery times and costs are informed during the purchase process. Sucesso is not responsible for delays attributable to third parties.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="return_title">Exchanges and Returns</strong><br>
+      <span data-i18n="returns_text">Returns for size or color change are not accepted. Exchanges will only be accepted if the product has manufacturing defects. The customer must notify us within 48 hours of receiving the order.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="site_use_title">Site Use</strong><br>
+      <span data-i18n="site_use_text">The user agrees to make proper and legal use of the website and not to carry out actions that may damage, disable, or overload the site.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="ip_title">Intellectual Property</strong><br>
+      <span data-i18n="ip_text">All website content, including images, logos, text, and designs, is owned by Sucesso and protected by applicable laws. Use without authorization is not permitted.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="data_title">Data Protection</strong><br>
+      <span data-i18n="data_text">The personal information provided by the user will be treated confidentially and in accordance with our Privacy Policy. It will not be shared with third parties, except to fulfill the services offered.</span>
+    </li>
+    
+    <li style="margin-bottom: 20px;"><strong data-i18n="modifications_title">Modifications of Terms</strong><br>
+      <span data-i18n="modifications_text">Sucesso may modify these terms and conditions at any time. Modifications will be effective upon publication on the site.</span>
+    </li>
+  </ol>
+</main>
+
+
+
+  <!-- 🛒 Carrito lateral -->
+  <div id="cart-overlay" class="cart-overlay hidden">
+    <div class="cart-panel">
+      <div class="cart-header">
+<h2 data-i18n="your_cart">Your Cart</h2>
+        <button class="close-cart">&times;</button>
+      </div>
+      <div class="cart-items"></div>
+      <div class="cart-footer">
+<p class="cart-total"><span data-i18n="total">Total:</span> $0.00</p>
+<button class="checkout-btn" data-i18n="checkout">Checkout</button>
+<button id="clear-cart-btn" style="display:none;" data-i18n="empty_cart">Empty Cart</button>
+      </div>
+    </div>
+  </div>
+
+<!-- 📱 FOOTER PARA CELULARES (solo visible en pantallas pequeñas) -->
+
+<!-- Sucesso continuous footer marquee -->
+
+
+
+  
+
+<footer class="sucesso-site-footer" aria-label="Footer">
+  <div class="sucesso-footer-inner">
+    <div class="sucesso-footer-legal">
+      <h2 class="sucesso-footer-heading" data-i18n="footer_policies_conditions">POLÍTICAS Y CONDICIONES</h2>
+      <ul class="sucesso-footer-links">
+        <li><a href="politica-de-privacidad.html" data-i18n="footer_privacy_policy">POLÍTICA DE PRIVACIDAD</a></li>
+        <li><a href="cookies.html" data-i18n="footer_cookies">COOKIES</a></li>
+        <li><a href="terms-and-conditions.html" data-i18n="footer_terms">TÉRMINOS Y CONDICIONES</a></li>
+        <li><a href="tracking.html" data-i18n="footer_order_tracking">SEGUIMIENTO DE PEDIDO</a></li>
+      </ul>
+      <div class="sucesso-footer-social">
+        <a class="sucesso-footer-instagram" href="https://www.instagram.com/sucessobrand" target="_blank" rel="noopener noreferrer" aria-label="Instagram @sucessobrand">
+          <img src="/images/instagram-icon.svg" alt="Instagram">
+        </a>
+      </div>
+    </div>
+
+    <a class="sucesso-footer-brandmark" href="index.html" aria-label="Sucesso home">
+      <img src="images/logo cherry png.png" alt="Sucesso">
+    </a>
+
+    <div class="sucesso-footer-payments" aria-label="Métodos de pago admitidos">
+      <img class="sucesso-footer-payment-logo" src="images/payment-amex.svg" alt="American Express">
+      <img class="sucesso-footer-payment-logo" src="images/payment-discover.svg" alt="Discover">
+      <img class="sucesso-footer-payment-logo" src="images/payment-mastercard.svg" alt="Mastercard">
+      <img class="sucesso-footer-payment-logo" src="images/payment-visa.svg" alt="Visa">
+      <span class="sucesso-footer-payment-tile"><img src="images/payment-paypal.svg" alt="PayPal"></span>
+      <span class="sucesso-footer-payment-tile zelle"><img src="images/payment-zelle.png" alt="Zelle"></span>
+    </div>
+
+    <p class="sucesso-footer-copy">© SUCESSO</p>
+  </div>
+</footer>
+
+<div id="language-popup" class="language-popup">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <strong style="font-size: 12px; letter-spacing: 1px;">LANGUAGE SETTINGS</strong>
+    <button class="close-btn" onclick="closeLanguagePopup()">&times;</button>
+  </div>
+  <label for="language-select" style="font-size: 10px; display: block; margin-bottom: 8px;">SELECT LANGUAGE:</label>
+  <select id="language-select" style="width: 100%; padding: 10px; font-size: 12px; border: 1px solid #ccc;">
+    <option value="en">English</option>
+    <option value="es">Español</option>
+  </select>
+  <button onclick="saveLanguage()" style="width: 100%; margin-top: 20px; padding: 10px; background: #233f32; color: white; font-size: 12px; border: none; cursor: pointer; text-transform: uppercase;">Save</button>
+</div>
+
+<script>
+  const popup = document.getElementById("language-popup");
+  const trigger = document.getElementById("openLanguagePopup");
+  const select = document.getElementById("language-select");
+
+  trigger.addEventListener("click", (e) => {
+    e.preventDefault();
+    const savedLang = localStorage.getItem("preferredLang");
+    const currentLang = savedLang || document.documentElement.lang || "en";
+    select.value = currentLang; // Mostrar idioma actual
+    popup.classList.add("show");
+  });
+
+  function closeLanguagePopup() {
+    popup.classList.remove("show");
+  }
+
+function saveLanguage() {
+  const lang = select.value;
+  localStorage.setItem("preferredLang", lang); // Guardar idioma
+  setLanguage(lang);
+  closeLanguagePopup();
+
+  // 👇 Esto forzará que el carrito se re-renderice con las etiquetas traducidas
+  if (typeof updateCart === "function") {
+    updateCart();
+  }
+}
+
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(res => res.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        document.documentElement.lang = lang;
+      })
+      .catch(err => console.error("Error cargando idioma:", err));
+  }
+
+  // Al cargar la página, aplicar idioma guardado
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("preferredLang") || "en";
+    select.value = savedLang;
+    setLanguage(savedLang);
+  });
+</script>
+
+
+  <script>
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("loader");
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 2500);
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("abrir") === "carrito") {
+        const cartBtn = document.getElementById("cart-btn");
+        if (cartBtn) {
+          setTimeout(() => cartBtn.click(), 300); // espera a que todo cargue
+        }
+      }
+    });
+  </script>
+
+  <script src="script.js"></script>
+  <script src="cart.js"></script>
+  <script src="styles.css"></script>
+
+<script>
+  const langSwitcher = document.getElementById("languageSwitcher");
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(response => response.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        localStorage.setItem("preferredLang", lang);
+      })
+      .catch(error => console.error("Error cargando idioma:", error));
+  }
+
+  langSwitcher.addEventListener("change", (e) => {
+    setLanguage(e.target.value);
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("preferredLang") || "en";
+    langSwitcher.value = savedLang;
+    setLanguage(savedLang);
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const langToggleHeader = document.getElementById("languageToggle");
+  const langToggleSidebar = document.getElementById("languageToggleSidebar");
+  const popup = document.getElementById("language-popup");
+  const languageSelect = document.getElementById("language-select");
+  const sidebar = document.querySelector(".sidebar");
+  const overlay = document.getElementById("overlay");
+
+  const currentLang = localStorage.getItem("preferredLang") || "en";
+  languageSelect.value = currentLang;
+
+  function updateToggleText(lang) {
+    const text = lang === "es" ? "ES | EN" : "EN | ES";
+    if (langToggleHeader) langToggleHeader.textContent = text;
+    if (langToggleSidebar) langToggleSidebar.textContent = text;
+  }
+
+  function openLanguagePopup() {
+    popup.classList.add("show");
+    languageSelect.value = localStorage.getItem("preferredLang") || "en";
+  }
+
+  if (langToggleHeader) {
+    langToggleHeader.addEventListener("click", () => {
+      openLanguagePopup();
+    });
+  }
+
+  if (langToggleSidebar) {
+  langToggleSidebar.addEventListener("click", () => {
+    openLanguagePopup(); // ✅ Mantener el sidebar abierto
+  });
+}
+
+
+
+  window.saveLanguage = function () {
+    const selectedLang = languageSelect.value;
+    localStorage.setItem("preferredLang", selectedLang);
+    setLanguage(selectedLang);
+    updateToggleText(selectedLang);
+    popup.classList.remove("show");
+    if (typeof updateCart === "function") updateCart();
+  };
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(res => res.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        document.documentElement.lang = lang;
+      })
+      .catch(err => console.error("Error cargando idioma:", err));
+  }
+
+  updateToggleText(currentLang);
+  setLanguage(currentLang);
+});
+</script>
+
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <a href="index.html" data-i18n="nav_new_in">NEW IN</a>
+  <a href="collections/t-shirts/" data-i18n="nav_tees">T-SHIRTS</a>
+  <a href="about.html" data-i18n="nav_about">ABOUT</a>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-auth-lang">
+      <a id="sidebar-account-link" href="login.html" class="sidebar-link">
+        <img src="images/icon account.png" alt="Login" class="sidebar-icon" />
+        <span id="sidebar-account-text" data-i18n="sidebar_account">Account</span>
+      </a>
+      <div class="lang-btn" id="languageToggleSidebar">EN | ES</div>
+    </div>
+  </div>
+</aside>
+
+<!-- SCRIPT -->
+<script>
+  const toggleBtn = document.querySelector('.menu-toggle');
+  const sidebar = document.querySelector('.sidebar');
+  const closeBtn = document.querySelector('.close-sidebar');
+
+toggleBtn.addEventListener('click', () => {
+  const icon = toggleBtn.querySelector('.menu-icon');
+  sidebar.classList.toggle('active');
+  icon.classList.toggle('open');
+});
+
+closeBtn.addEventListener('click', () => {
+  const icon = toggleBtn.querySelector('.menu-icon');
+  sidebar.classList.remove('active');
+  icon.classList.remove('open');
+});
+
+
+</script>
+
+<script>
+function updateLanguageToggleVisibility() {
+  const navDesktop = document.querySelector('.nav-desktop');
+  const languageToggle = document.getElementById('languageToggle');
+
+  if (!navDesktop || !languageToggle) return;
+
+  const navVisible = window.getComputedStyle(navDesktop).display !== 'none';
+
+  // Mostrar solo si los nav links están visibles (pantalla grande)
+  languageToggle.style.display = navVisible ? 'flex' : 'none';
+}
+
+// Ejecutar al cargar
+document.addEventListener("DOMContentLoaded", updateLanguageToggleVisibility);
+
+// Ejecutar al redimensionar
+window.addEventListener("resize", updateLanguageToggleVisibility);
+</script>
+
+
+<script>
+const menuToggle = document.querySelector('.menu-toggle');
+const menuIcon = document.querySelector('.menu-icon');
+
+menuToggle.addEventListener('click', () => {
+  menuIcon.classList.toggle('open');
+});
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggles = document.querySelectorAll(".info-toggle");
+    toggles.forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        const section = toggle.closest(".info-section");
+        section.classList.toggle("active");
+      });
+    });
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.querySelector('.search-bar input');
+  const resultsContainer = document.getElementById('searchResults');
+  const searchBar = document.getElementById('searchBar');
+  const overlay = document.getElementById('overlay');
+  let allProducts = []; // Esto lo tienes cargado ya con loadProducts()
+  let searchTimeout;
+
+  function hideResults() {
+    resultsContainer.innerHTML = "";
+    resultsContainer.style.display = "none";
+  }
+
+  input.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    const query = input.value.toLowerCase().trim();
+
+    searchTimeout = setTimeout(() => {
+      if (query === "") {
+        hideResults();
+      } else {
+        const filtered = allProducts.filter(product =>
+          product.titulo.toLowerCase().includes(query) ||
+          product.nombre.toLowerCase().includes(query) ||
+          product.keywords.some(k => k.toLowerCase().includes(query))
+        );
+
+        renderResults(filtered); // Ya la tienes definida
+      }
+    }, 1000); // ✅ Mismo delay para mostrar u ocultar
+  });
+
+  window.toggleSearchBar = function () {
+    const isActive = searchBar.classList.contains('active');
+    if (isActive) {
+      searchBar.classList.add('hiding');
+      searchBar.classList.remove('active');
+      overlay.style.display = 'none';
+      hideResults();
+      input.value = "";
+      setTimeout(() => {
+        searchBar.classList.remove('hiding');
+      }, 200);
+    } else {
+      searchBar.classList.add('active');
+      overlay.style.display = 'block';
+      input.focus();
+    }
+  };
+});
+</script>
+
+<script>
+/* --- 1) Conectar acciones al modo TEXTO (desktop XL) --- */
+document.addEventListener('DOMContentLoaded', () => {
+  // Search (texto) ya llama a toggleSearchBar() en el onClick del botón.
+
+  // Account (texto) debe comportarse como account-link original con Auth
+  const accountLinkText = document.getElementById('account-link-text');
+  if (accountLinkText) {
+    accountLinkText.addEventListener('click', (e) => {
+      e.preventDefault();
+      try {
+        // Si ya hay Firebase Auth cargado en otro script:
+        if (window.firebaseAuth && typeof window.firebaseAuth.onAuthStateChanged === 'function') {
+          window.firebaseAuth.onAuthStateChanged((user) => {
+            window.location.href = user ? 'mi-cuenta.html' : 'login.html';
+          });
+        } else {
+          // Fallback: imitar el comportamiento del link con ID account-link
+          const original = document.getElementById('account-link');
+          if (original) original.click(); else window.location.href = 'login.html';
+        }
+      } catch (err) {
+        window.location.href = 'login.html';
+      }
+    });
+  }
+
+  // Cart (texto) debe abrir el mismo panel que el ícono
+  const cartTextBtn = document.getElementById('cart-text-btn');
+  const cartIconBtn = document.getElementById('cart-btn');
+  if (cartTextBtn && cartIconBtn) {
+    cartTextBtn.addEventListener('click', () => cartIconBtn.click());
+  }
+});
+
+/* --- 2) Contador unificado: actualiza badge (ícono) y texto (Cart (n)) --- */
+(function setupCartCountSync() {
+  const badge = document.getElementById('cart-count');       // burbuja en ícono
+  const textCount = document.getElementById('cart-count-text'); // (n) en texto
+
+  function safeParse(json) {
+    try { return JSON.parse(json); } catch { return null; }
+  }
+
+  function computeQtyFromArray(arr) {
+    if (!Array.isArray(arr)) return 0;
+    return arr.reduce((sum, item) => {
+      const q = (item && (item.quantity ?? item.qty ?? item.cantidad ?? 1)) ?? 1;
+      return sum + (Number.isFinite(+q) ? +q : 1);
+    }, 0);
+  }
+
+  function readCartQty() {
+    // Intenta varias claves comunes:
+    const keys = ['carrito'];
+    for (const k of keys) {
+      const raw = localStorage.getItem(k);
+      if (!raw) continue;
+      const data = safeParse(raw);
+      if (!data) continue;
+      // si es objeto con items
+      if (data && Array.isArray(data.items)) return computeQtyFromArray(data.items);
+      // si es array
+      if (Array.isArray(data)) return computeQtyFromArray(data);
+      // si es objeto con conteo directo
+      if (typeof data.totalQty === 'number') return data.totalQty;
+      if (typeof data.count === 'number') return data.count;
+    }
+    // Como fallback, si existe window.cartItems (algunos setups lo exponen)
+    if (Array.isArray(window.cartItems)) return computeQtyFromArray(window.cartItems);
+    return 0;
+  }
+
+  function applyCount(n) {
+    if (badge) badge.textContent = String(n);
+    if (textCount) textCount.textContent = `(${n})`;
+  }
+
+  // Actualiza inmediatamente
+  applyCount(readCartQty());
+
+  // Escucha cambios por almacenamiento (otras pestañas / scripts que escriben)
+  window.addEventListener('storage', (e) => {
+    if (['cart','cartItems','carrito','sucesso_cart'].includes(e.key)) {
+      applyCount(readCartQty());
+    }
+  });
+
+  // Si tu cart.js dispara este evento, reaccionamos al instante:
+  window.addEventListener('cart:updated', () => {
+    applyCount(readCartQty());
+  });
+
+  // Fallback polling suave por si el carrito se actualiza sin eventos:
+  let last = null;
+  const tick = () => {
+    const qty = readCartQty();
+    if (qty !== last) {
+      last = qty;
+      applyCount(qty);
+    }
+  };
+  const interval = setInterval(tick, 800);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) clearInterval(interval);
+    else setInterval(tick, 800);
+  });
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+
+  function closeAll() {
+    document.querySelectorAll('.nav-item.has-dropdown').forEach(it => {
+      it.classList.remove('open');
+      const dd = it.querySelector('.dropdown');
+      if (dd) dd.hidden = true;
+      const arrow = it.querySelector('.nav-arrow');
+      if (arrow) arrow.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function setupDesktopNav() {
+    if (!mq.matches) return;
+    closeAll(); // estado inicial: todo cerrado y oculto
+
+    // SHOP
+    const shop = document.getElementById('nav-shop');
+    if (shop) {
+      const main = shop.querySelector('.nav-main');
+      const arrow = shop.querySelector('.nav-arrow');
+      const dd = shop.querySelector('.dropdown');
+
+      // Clic en texto: ir a Tees
+      main.onclick = () => { window.location.href = 'collections/t-shirts/'; };
+
+      // Clic en flecha: toggle SOLO el de Shop
+      arrow.onclick = (e) => {
+        e.stopPropagation();
+        const willOpen = !shop.classList.contains('open');
+        closeAll();
+        if (willOpen) {
+          shop.classList.add('open');
+          dd.hidden = false;
+          arrow.setAttribute('aria-expanded', 'true');
+        }
+      };
+    }
+
+    // LEGAL y SUPPORT: clic en texto o flecha -> toggle
+    [['nav-legal'], ['nav-support']].forEach(([id]) => {
+      const li = document.getElementById(id);
+      if (!li) return;
+      const main = li.querySelector('.nav-main');
+      const arrow = li.querySelector('.nav-arrow');
+      const dd = li.querySelector('.dropdown');
+
+      const toggle = (e) => {
+        e.stopPropagation();
+        const willOpen = !li.classList.contains('open');
+        closeAll();
+        if (willOpen) {
+          li.classList.add('open');
+          dd.hidden = false;
+          arrow.setAttribute('aria-expanded', 'true');
+        }
+      };
+
+      main.onclick = toggle;
+      arrow.onclick = toggle;
+    });
+
+    // Cerrar si clic fuera
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav-item.has-dropdown')) closeAll();
+    });
+  }
+
+  setupDesktopNav();
+  mq.addEventListener('change', () => { if (mq.matches) setupDesktopNav(); else closeAll(); });
+});
+</script>
+
+<!-- 1) Abrir LEGAL por defecto en Terms & Conditions (≥1536px) y marcar "Terms" activo -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+  const isTermsPage =
+    /terms-and-conditions\.html(\?|$)/i.test(location.pathname) ||
+    /términos|terminos|terms/i.test(document.title);
+
+  function openLegalByDefault() {
+    if (!isTermsPage || !mq.matches) return;
+
+    const legal = document.getElementById('nav-legal');
+    if (!legal) return;
+
+    // Reutiliza tu listener global para cerrar todo primero
+    document.dispatchEvent(new Event('click'));
+
+    const dd = legal.querySelector('.dropdown');
+    const arrow = legal.querySelector('.nav-arrow');
+    if (dd && arrow) {
+      legal.classList.add('open');
+      dd.hidden = false;
+      arrow.setAttribute('aria-expanded', 'true');
+    }
+
+    // Activar visualmente "Terms & Conditions"
+    const termsLink = legal.querySelector('.dropdown a[href*="terms-and-conditions"]');
+    if (termsLink) termsLink.classList.add('active');
+  }
+
+  openLegalByDefault();
+  mq.addEventListener('change', openLegalByDefault);
+});
+</script>
+
+<!-- 2) En desktop, "Terms" activo por defecto; al pasar por "Privacy" se atenúa el activo de Terms -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+  if (!mq.matches) return;
+
+  const legal = document.getElementById('nav-legal');
+  if (!legal) return;
+
+  const privacyLink = legal.querySelector('.dropdown a[href*="politica-de-privacidad"]');
+  const termsLink   = legal.querySelector('.dropdown a[href*="terms-and-conditions"]');
+
+  if (privacyLink && termsLink) {
+    // Por si no quedó marcado (defensa extra)
+    termsLink.classList.add('active');
+
+    // Al pasar por Privacy, "relajamos" el activo de Terms
+    privacyLink.addEventListener('mouseenter', () => {
+      termsLink.classList.add('deemphasize');
+    });
+    privacyLink.addEventListener('mouseleave', () => {
+      termsLink.classList.remove('deemphasize');
+    });
+  }
+});
+</script>
+
+<!-- 3) En Terms: si estaba abierto SHOP→TEES y clickeas LEGAL, se cierra SHOP y se muestra LEGAL -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+  const isTerms =
+    /terms-and-conditions\.html(\?|$)/i.test(location.pathname) ||
+    /términos|terminos|terms/i.test(document.title);
+  if (!mq.matches) return;
+
+  const legal = document.getElementById('nav-legal');
+  const shop  = document.getElementById('nav-shop');
+  if (!legal) return;
+
+  const legalMain  = legal.querySelector('.nav-main');
+  const legalArrow = legal.querySelector('.nav-arrow');
+  const legalDD    = legal.querySelector('.dropdown');
+
+  function closeShopOnly() {
+    if (!shop) return;
+    shop.classList.remove('open');
+    const shopDD    = shop.querySelector('.dropdown');
+    const shopArrow = shop.querySelector('.nav-arrow');
+    if (shopDD) shopDD.hidden = true;
+    if (shopArrow) shopArrow.setAttribute('aria-expanded','false');
+  }
+
+  function openLegalOnly() {
+    legal.classList.add('open');
+    if (legalDD) legalDD.hidden = false;
+    if (legalArrow) legalArrow.setAttribute('aria-expanded','true');
+  }
+
+  function handleLegalClick(e) {
+    if (e) e.stopPropagation();
+    if (isTerms) closeShopOnly();  // 👈 oculta TEES si estaba abierto
+    openLegalOnly();               // 👈 muestra los botones de LEGAL
+  }
+
+  // LEGAL no toggleará: siempre abrirá (y en Terms cierra SHOP antes)
+  if (legalMain)  legalMain.onclick  = handleLegalClick;
+  if (legalArrow) legalArrow.onclick = handleLegalClick;
+});
+</script>
+
+
+
+<!-- 5) En Terms (≥1536px): click fuera cierra todo MENOS LEGAL; LEGAL queda abierto y flecha estable -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+  const isTerms =
+    /terms-and-conditions\.html(\?|$)/i.test(location.pathname) ||
+    /términos|terminos|terms/i.test(document.title);
+  if (!mq.matches || !isTerms) return;
+
+  const legal = document.getElementById('nav-legal');
+  const shop  = document.getElementById('nav-shop');
+  const support = document.getElementById('nav-support');
+  if (!legal) return;
+
+  const legalDD = legal.querySelector('.dropdown');
+  const legalArrow = legal.querySelector('.nav-arrow');
+
+  function openLegalOnly() {
+    // Cierra los otros dropdowns
+    [shop, support].forEach(li => {
+      if (!li) return;
+      li.classList.remove('open');
+      const dd = li.querySelector('.dropdown');
+      const ar = li.querySelector('.nav-arrow');
+      if (dd) dd.hidden = true;
+      if (ar) ar.setAttribute('aria-expanded', 'false');
+    });
+    // Abre LEGAL
+    legal.classList.add('open');
+    if (legalDD) legalDD.hidden = false;
+    if (legalArrow) legalArrow.setAttribute('aria-expanded', 'true');
+  }
+
+  // 1) Abrir LEGAL por defecto en la página de Terms
+  openLegalOnly();
+
+  // 2) Click en espacio blanco: reabrir LEGAL (por si otro listener lo cerró)
+  document.addEventListener('click', (e) => {
+    const clickedInsideAnyDropdown = e.target.closest('.nav-item.has-dropdown');
+    if (!clickedInsideAnyDropdown) {
+      setTimeout(openLegalOnly, 0);
+    }
+  }, true);
+
+  // 3) Click en LEGAL (texto o flecha): mantener LEGAL abierto y cerrar los demás
+  const legalMain  = legal.querySelector('.nav-main');
+  const legalArrowBtn = legal.querySelector('.nav-arrow');
+  const keepLegal = (e) => { e.stopPropagation(); openLegalOnly(); };
+  if (legalMain)  legalMain.onclick  = keepLegal;
+  if (legalArrowBtn) legalArrowBtn.onclick = keepLegal;
+});
+</script>
+
+<script>
+/* === SUPPORT como SHOP en Desktop XL (≥1536px) ===
+   - Clic en texto "SUPPORT" => navegar a contactanos.html
+   - Clic en flechita => sólo abrir/cerrar dropdown
+   - No toca el comportamiento en laptops/móviles
+   - Usa captura + stopImmediatePropagation para imponerse a listeners previos
+*/
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+
+  function closeOthers(except) {
+    document.querySelectorAll('.nav-item.has-dropdown').forEach(li => {
+      if (li === except) return;
+      li.classList.remove('open');
+      const dd = li.querySelector('.dropdown');
+      if (dd) dd.hidden = true;
+      li.querySelector('.nav-arrow')?.setAttribute('aria-expanded','false');
+    });
+  }
+
+  function wireSupportHandlers() {
+    const support = document.getElementById('nav-support');
+    if (!support) return;
+
+    const supportMain  = support.querySelector('.nav-main');
+    const supportArrow = support.querySelector('.nav-arrow');
+    const supportDD    = support.querySelector('.dropdown');
+
+    // Limpia posibles estados
+    supportMain?.replaceWith(supportMain.cloneNode(true));
+    supportArrow?.replaceWith(supportArrow.cloneNode(true));
+
+    // Re-obtener referencias tras cloneNode
+    const main  = support.querySelector('.nav-main');
+    const arrow = support.querySelector('.nav-arrow');
+    const dd    = supportDD;
+
+    if (!main || !arrow || !dd) return;
+
+    // Desktop XL: aplicar comportamiento especial
+    if (mq.matches) {
+      // 1) Clic en texto SUPPORT => navegar
+      main.addEventListener('click', (e) => {
+        e.stopImmediatePropagation();
+        // No prevenimos el default en <button>, solo navegamos:
+        window.location.href = 'contactanos.html';
+      }, true); // captura
+
+      // 2) Clic en flecha => toggle dropdown (sin navegar)
+      arrow.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        const willOpen = !support.classList.contains('open');
+        closeOthers(support);
+
+        support.classList.toggle('open', willOpen);
+        dd.hidden = !willOpen;
+        arrow.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      }, true); // captura
+    }
+    // En tamaños <1536px no se engancha nada nuevo: todo queda como ya lo tienes
+  }
+
+  // Wire al inicio y en cambios de tamaño
+  wireSupportHandlers();
+  mq.addEventListener('change', wireSupportHandlers);
+});
+</script>
+
+<script>
+/* === BRAND como SHOP en Desktop XL (≥1536px) ===
+   - Clic en texto "BRAND" => navegar a about.html
+   - Clic en flechita => sólo abrir/cerrar su dropdown
+   - No toca el comportamiento en laptops/móviles
+   - Se cierra cualquier otro dropdown abierto
+*/
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+
+  function closeOthers(except) {
+    document.querySelectorAll('.nav-item.has-dropdown').forEach(li => {
+      if (li === except) return;
+      li.classList.remove('open');
+      const dd = li.querySelector('.dropdown');
+      if (dd) dd.hidden = true;
+      li.querySelector('.nav-arrow')?.setAttribute('aria-expanded','false');
+    });
+  }
+
+  function wireBrandHandlers() {
+    const brand = document.getElementById('nav-brand');
+    if (!brand) return;
+
+    const brandMain  = brand.querySelector('.nav-main');
+    const brandArrow = brand.querySelector('.nav-arrow');
+    const brandDD    = brand.querySelector('.dropdown');
+
+    // Reemplazar listeners previos (si existieran)
+    brandMain?.replaceWith(brandMain.cloneNode(true));
+    brandArrow?.replaceWith(brandArrow.cloneNode(true));
+
+    // Re-obtener referencias
+    const main  = brand.querySelector('.nav-main');
+    const arrow = brand.querySelector('.nav-arrow');
+    const dd    = brandDD;
+
+    if (!main || !arrow || !dd) return;
+
+    if (mq.matches) {
+      // 1) Clic en texto BRAND => navegar a about.html
+      main.addEventListener('click', (e) => {
+        e.stopImmediatePropagation();
+        window.location.href = 'about.html';
+      }, true); // captura
+
+      // 2) Clic en flecha => toggle dropdown (sin navegar)
+      arrow.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        const willOpen = !brand.classList.contains('open');
+        closeOthers(brand);
+
+        brand.classList.toggle('open', willOpen);
+        dd.hidden = !willOpen;
+        arrow.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      }, true); // captura
+    }
+    // En <1536px: no hacemos nada extra; conserva tu comportamiento móvil
+  }
+
+  // Inicial + en cambios de tamaño
+  wireBrandHandlers();
+  mq.addEventListener('change', wireBrandHandlers);
+});
+</script>
+
+<script src="support-nav-fix.js"></script>
+
+<script src="storefront-enhancements.js"></script>
+  <script src="mobile-menu-refresh.js"></script>
+</body>
+</html>

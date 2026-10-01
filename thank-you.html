@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script src="checkout-return.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Order confirmed - Sucesso</title>
+  <link rel="icon" href="images/sucesso fav icon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --sucesso:#233f32;
+      --line:#d9dfdc;
+      --muted:#68736e;
+      --soft:#f7f8f7;
+      --white:#fff;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;min-height:100%;background:#fff;color:var(--sucesso)}
+    body{font-family:'Poppins',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:inherit}
+
+    /* Exact Cherry loader used by the rest of Sucesso. */
+    .loader{position:fixed;inset:0;background-color:#fff;display:flex;justify-content:center;align-items:center;z-index:999999;opacity:1;visibility:visible;transition:opacity .4s ease,visibility .4s ease}
+    .loader img{width:120px;height:120px;object-fit:contain;animation:zoomInClean 2s ease forwards}
+    @keyframes zoomInClean{0%{transform:scale(.1);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1);opacity:1}}
+
+    .order-page{min-height:100svh;display:flex;flex-direction:column;background:#fff}
+    .order-header{height:92px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);flex:0 0 auto}
+    .order-header img{width:132px;height:auto;display:block}
+
+    .order-main{width:min(1180px,calc(100% - 64px));margin:auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:clamp(54px,8vw,120px);align-items:center;padding:62px 0}
+    .order-eyebrow{font-size:11px;line-height:1;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px;font-weight:500}
+    .order-title{font-size:clamp(38px,4.5vw,68px);line-height:.97;letter-spacing:-.055em;font-weight:500;max-width:700px;margin-bottom:26px}
+    .order-copy{font-size:14px;line-height:1.65;color:#344b40;max-width:600px;margin-bottom:34px}
+
+    .order-number-wrap{border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:20px;padding:17px 0;margin-bottom:30px;max-width:650px}
+    .order-number-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+    .order-number{font-size:14px;font-weight:600;letter-spacing:.04em;white-space:nowrap}
+
+    .order-actions{display:flex;gap:10px;flex-wrap:wrap;max-width:650px}
+    .order-btn{height:50px;min-width:190px;padding:0 24px;border:1px solid var(--sucesso);display:inline-flex;align-items:center;justify-content:center;text-decoration:none;text-transform:uppercase;font-size:11px;letter-spacing:.08em;font-weight:500;cursor:pointer;background:#fff;color:var(--sucesso);transition:none}
+    .order-btn.primary{background:var(--sucesso);color:#fff}
+    .order-btn:hover,.order-btn:focus{outline:none;text-decoration:none}
+
+    .next-panel{border-left:1px solid var(--line);padding-left:clamp(34px,5vw,70px)}
+    .next-title{font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:600;margin-bottom:26px}
+    .step{display:grid;grid-template-columns:34px 1fr;column-gap:14px;padding:0 0 24px;position:relative}
+    .step:not(:last-of-type)::after{content:"";position:absolute;left:12px;top:25px;bottom:2px;width:1px;background:var(--line)}
+    .step-index{width:25px;height:25px;border:1px solid var(--sucesso);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;background:#fff;z-index:1}
+    .step:first-of-type .step-index{background:var(--sucesso);color:#fff}
+    .step h3{font-size:13px;font-weight:500;margin:2px 0 4px}
+    .step p{font-size:11px;line-height:1.5;color:var(--muted);max-width:330px}
+    .support-note{border-top:1px solid var(--line);padding-top:20px;margin-top:2px;font-size:11px;line-height:1.6;color:var(--muted)}
+    .support-note a{text-decoration:underline;text-underline-offset:3px}
+
+    .order-footer{height:62px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:center;gap:28px;flex:0 0 auto;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:#496057}
+    .order-footer a{text-decoration:none}
+
+    @media(max-width:800px){
+      .order-header{height:78px}.order-header img{width:118px}
+      .order-main{width:min(100% - 38px,620px);grid-template-columns:1fr;gap:44px;padding:46px 0 50px;align-items:start}
+      .order-title{font-size:clamp(34px,10vw,48px);max-width:500px}
+      .order-copy{font-size:13px;margin-bottom:28px}
+      .next-panel{border-left:0;border-top:1px solid var(--line);padding:32px 0 0}
+      .order-actions{display:grid;grid-template-columns:1fr}
+      .order-btn{width:100%;min-width:0}
+      .order-footer{height:auto;min-height:64px;padding:18px;gap:18px;flex-wrap:wrap}
+    }
+    @media(max-width:420px){
+      .order-main{width:calc(100% - 30px);padding-top:36px}
+      .order-number-wrap{align-items:flex-start;flex-direction:column;gap:7px}
+    }
+  </style>
+</head>
+<body>
+  <div class="loader" id="loader"><img src="images/logo cherry png.png" alt="Sucesso Logo"></div>
+
+  <div class="order-page">
+    <header class="order-header">
+      <a href="index.html" aria-label="Sucesso home"><img src="images/logo sucesso png.png" alt="Sucesso"></a>
+    </header>
+
+    <main class="order-main">
+      <section class="confirmation" aria-labelledby="order-title">
+        <p class="order-eyebrow" data-copy="eyebrow">PEDIDO CONFIRMADO</p>
+        <h1 class="order-title" id="order-title" data-copy="title">Gracias por tu compra.</h1>
+        <p class="order-copy" data-copy="copy">Recibimos tu pedido correctamente. Te enviaremos una confirmación por correo y volveremos a escribirte cuando salga de nuestro almacén.</p>
+
+        <div class="order-number-wrap" id="order-number-wrap">
+          <span class="order-number-label" data-copy="orderLabel">NÚMERO DE PEDIDO</span>
+          <strong class="order-number">#<span id="order-number">—</span></strong>
+        </div>
+
+        <div class="order-actions">
+          <a class="order-btn primary" id="track-order" href="tracking.html" data-copy="track">SEGUIR PEDIDO</a>
+          <a class="order-btn" href="index.html" data-copy="continue">SEGUIR COMPRANDO</a>
+        </div>
+      </section>
+
+      <aside class="next-panel" aria-label="Order next steps">
+        <h2 class="next-title" data-copy="nextTitle">QUÉ SIGUE</h2>
+        <div class="step">
+          <span class="step-index">01</span>
+          <div><h3 data-copy="step1Title">Pedido recibido</h3><p data-copy="step1Text">Tu compra quedó registrada y ya estamos preparando el siguiente paso.</p></div>
+        </div>
+        <div class="step">
+          <span class="step-index">02</span>
+          <div><h3 data-copy="step2Title">Preparación</h3><p data-copy="step2Text">Cuando el pedido esté listo para salir, recibirás la actualización correspondiente.</p></div>
+        </div>
+        <div class="step">
+          <span class="step-index">03</span>
+          <div><h3 data-copy="step3Title">Envío</h3><p data-copy="step3Text">Podrás seguir el recorrido con el código de seguimiento asociado a tu compra.</p></div>
+        </div>
+        <p class="support-note"><span data-copy="support">¿Necesitas ayuda con tu pedido?</span> <a href="mailto:help.sucsso@gmail.com">help.sucsso@gmail.com</a></p>
+      </aside>
+    </main>
+
+    <footer class="order-footer">
+      <a href="politica-de-privacidad.html" data-copy="privacy">Política de privacidad</a>
+      <a href="terms-and-conditions.html" data-copy="terms">Términos y condiciones</a>
+      <span>© SUCESSO</span>
+    </footer>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      setTimeout(() => { loader.style.display = 'none'; }, 2500);
+    });
+
+    (function initConfirmation(){
+      const copies = {
+        es:{
+          eyebrow:'PEDIDO CONFIRMADO',title:'Gracias por tu compra.',
+          copy:'Recibimos tu pedido correctamente. Te enviaremos una confirmación por correo y volveremos a escribirte cuando salga de nuestro almacén.',
+          orderLabel:'NÚMERO DE PEDIDO',track:'SEGUIR PEDIDO',continue:'SEGUIR COMPRANDO',nextTitle:'QUÉ SIGUE',
+          step1Title:'Pedido recibido',step1Text:'Tu compra quedó registrada y ya estamos preparando el siguiente paso.',
+          step2Title:'Preparación',step2Text:'Cuando el pedido esté listo para salir, recibirás la actualización correspondiente.',
+          step3Title:'Envío',step3Text:'Podrás seguir el recorrido con el código de seguimiento asociado a tu compra.',
+          support:'¿Necesitas ayuda con tu pedido?',privacy:'Política de privacidad',terms:'Términos y condiciones'
+        },
+        en:{
+          eyebrow:'ORDER CONFIRMED',title:'Thank you for your order.',
+          copy:'Your order has been received. We’ll send you a confirmation email and another update as soon as it leaves our warehouse.',
+          orderLabel:'ORDER NUMBER',track:'TRACK ORDER',continue:'CONTINUE SHOPPING',nextTitle:'WHAT HAPPENS NEXT',
+          step1Title:'Order received',step1Text:'Your purchase is registered and we are getting everything ready for the next step.',
+          step2Title:'Preparing',step2Text:'As soon as your order is ready to leave, we’ll send you an update.',
+          step3Title:'Shipping',step3Text:'You’ll be able to follow the journey with the tracking code linked to your order.',
+          support:'Need help with your order?',privacy:'Privacy policy',terms:'Terms & conditions'
+        }
+      };
+      const lang = localStorage.getItem('preferredLang') === 'en' ? 'en' : 'es';
+      document.documentElement.lang = lang;
+      document.querySelectorAll('[data-copy]').forEach(el => {
+        const key = el.dataset.copy;
+        if(copies[lang][key]) el.textContent = copies[lang][key];
+      });
+
+      let order = null, tracking = null;
+      try {
+        order = localStorage.getItem('last_order_number');
+        tracking = localStorage.getItem('last_tracking_code');
+      } catch(e) {}
+      const wrap = document.getElementById('order-number-wrap');
+      const slot = document.getElementById('order-number');
+      if(order && /^\d{6}$/.test(order)) slot.textContent = order;
+      else if(wrap) wrap.hidden = true;
+
+      const track = document.getElementById('track-order');
+      if(tracking && /^\d{6}$/.test(tracking)) track.href = `tracking.html?code=${encodeURIComponent(tracking)}`;
+      else track.href = 'tracking.html';
+    })();
+  </script>
+</body>
+</html>

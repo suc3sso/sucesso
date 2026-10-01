@@ -1,0 +1,122 @@
+/* Sucesso editorial footer — shared across pages that use the site footer */
+.sucesso-site-footer,
+.sucesso-site-footer * { box-sizing: border-box; }
+.sucesso-site-footer {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  min-height: 470px;
+  margin: 0 !important;
+  padding: 48px 48px 24px !important;
+  border-top: 1px solid #171717 !important;
+  background: #fff !important;
+  color: #111 !important;
+  font-family: 'Poppins', 'Syne', Arial, sans-serif !important;
+  text-align: left !important;
+  overflow: hidden;
+}
+.sucesso-site-footer a { color: #444 !important; text-decoration: none !important; }
+.sucesso-site-footer a:hover { color: #000 !important; opacity: 1 !important; }
+.sucesso-footer-inner {
+  position: relative;
+  min-height: 396px;
+  width: 100%;
+}
+.sucesso-footer-legal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: min(330px, 45vw);
+}
+.sucesso-footer-heading {
+  margin: 0 0 24px !important;
+  color: #111 !important;
+  font-size: 11px !important;
+  line-height: 1.2 !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  text-transform: uppercase;
+}
+.sucesso-footer-links { list-style: none !important; margin: 0 !important; padding: 0 !important; }
+.sucesso-footer-links li { margin: 0 0 14px !important; padding: 0 !important; }
+.sucesso-footer-links a {
+  display: inline-block;
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+  font-weight: 400 !important;
+  text-transform: uppercase;
+}
+.sucesso-footer-social { margin-top: 42px; }
+.sucesso-footer-instagram {
+  display: inline-flex !important;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.sucesso-footer-instagram img { width: 20px !important; height: 20px !important; object-fit: contain; display: block; }
+.sucesso-footer-brandmark {
+  position: absolute;
+  top: -4px;
+  right: 0;
+  width: 104px;
+  height: 104px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+.sucesso-footer-brandmark img {
+  display: block;
+  width: 98px !important;
+  height: 98px !important;
+  object-fit: contain;
+}
+.sucesso-footer-payments {
+  position: absolute;
+  right: 0;
+  bottom: 74px;
+  display: grid;
+  grid-template-columns: repeat(4, 38px);
+  grid-auto-rows: 24px;
+  gap: 10px 9px;
+  justify-content: end;
+  align-items: center;
+}
+.sucesso-footer-payment-logo,
+.sucesso-footer-payment-tile {
+  width: 38px !important;
+  height: 24px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #fff;
+}
+.sucesso-footer-payment-logo { object-fit: contain; }
+.sucesso-footer-payment-tile { border: 1px solid rgba(0,0,0,.08); }
+.sucesso-footer-payment-tile img { max-width: 31px !important; max-height: 14px !important; width: auto !important; height: auto !important; object-fit: contain; display: block; }
+.sucesso-footer-payment-tile.zelle img { max-width: 32px !important; max-height: 13px !important; }
+.sucesso-footer-copy {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  margin: 0 !important;
+  color: #111 !important;
+  font-size: 11px !important;
+  line-height: 1 !important;
+  font-weight: 500 !important;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+@media (max-width: 700px) {
+  .sucesso-site-footer { min-height: 520px; padding: 34px 22px 22px !important; }
+  .sucesso-footer-inner { min-height: 462px; }
+  .sucesso-footer-legal { position: relative; width: 100%; }
+  .sucesso-footer-brandmark { top: 0; right: 0; width: 74px; height: 74px; }
+  .sucesso-footer-brandmark img { width: 70px !important; height: 70px !important; }
+  .sucesso-footer-payments { right: 0; bottom: 50px; grid-template-columns: repeat(3, 38px); }
+  .sucesso-footer-copy { bottom: 0; }
+}

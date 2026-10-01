@@ -1,0 +1,14 @@
+SUCESSO — CAMBIOS DE AUTENTICACIÓN
+
+- Login unificado por correo + código de 6 dígitos.
+- Ya no hace falta pantalla separada de Crear cuenta ni Recuperar contraseña.
+- Un correo nuevo crea la cuenta; un correo existente inicia sesión.
+- Tras validar el código se redirige a Mi Cuenta o vuelve al Checkout si correspondía.
+- Diseño responsive inspirado en la referencia enviada: logo arriba, formulario centrado, 6 casillas de código y sin scroll en la pantalla base.
+- Sin bloque de newsletter.
+- Términos del servicio y Política de privacidad se abren en modales.
+- Traducción ES/EN conectada al sistema de país/idioma existente.
+- Mi Cuenta ya no muestra una contraseña ficticia; indica acceso por código de un solo uso.
+- Backend seguro incluido en /functions: OTP con expiración de 15 min, máximo 5 intentos, espera de reenvío, rate limiting, hash HMAC y envío SMTP.
+
+IMPORTANTE: para enviar correos reales debes completar AUTH-SETUP.md y desplegar las dos Firebase Functions. No se incluyeron contraseñas, claves privadas ni secretos dentro del proyecto.
