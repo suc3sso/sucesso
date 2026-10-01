@@ -1,0 +1,10 @@
+ARCHIVOS CORREGIDOS PARA GITHUB PAGES
+
+Estos archivos corrigen:
+- navegación del menú responsive en laptop/celular bajo /sucesso/
+- icono Instagram del footer en todas las páginas que lo usan
+- icono Instagram del menú responsive usando recurso local
+- favicon/manifest de la home compatibles con GitHub Pages
+
+Sube estos archivos conservando exactamente sus carpetas y reemplaza los existentes.
+No muevas el contenido de las carpetas.

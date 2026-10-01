@@ -59,7 +59,7 @@
           </button>
           <div class="su-mobile-submenu" id="su-mobile-shop-panel" aria-hidden="true">
             <div class="su-mobile-submenu-inner">
-              <a class="su-mobile-sub-link" href="/collections/t-shirts/" data-su-label="tees"></a>
+              <a class="su-mobile-sub-link" href="collections/t-shirts/" data-su-label="tees"></a>
             </div>
           </div>
         </div>
@@ -73,21 +73,21 @@
           </button>
           <div class="su-mobile-submenu" id="su-mobile-collections-panel" aria-hidden="true">
             <div class="su-mobile-submenu-inner">
-              <a class="su-mobile-sub-link" href="/collections/dice-drp/">Dice DRP</a>
+              <a class="su-mobile-sub-link" href="collections/dice-drp/">Dice DRP</a>
             </div>
           </div>
         </div>
 
-        <a class="su-mobile-direct" href="/contactanos.html" data-su-label="contact"></a>
-        <a class="su-mobile-direct" href="/about.html" data-su-label="brand"></a>
+        <a class="su-mobile-direct" href="contactanos.html" data-su-label="contact"></a>
+        <a class="su-mobile-direct" href="about.html" data-su-label="brand"></a>
       </nav>
 
       <div class="sidebar-footer">
         <div class="sidebar-auth-lang">
-          <a class="su-mobile-account" href="/login.html" data-su-label="account"></a>
+          <a class="su-mobile-account" href="login.html" data-su-label="account"></a>
           <a class="su-mobile-instagram" href="https://www.instagram.com/sucessobrand/"
              target="_blank" rel="noopener noreferrer" aria-label="Instagram @sucessobrand">
-            <img src="https://raw.githubusercontent.com/suc3sso/sucesso/refs/heads/main/images/instagram.png"
+            <img src="images/instagram-icon.svg"
                  alt="Instagram" width="19" height="19" />
           </a>
           <div class="lang-btn" id="languageToggleSidebar">ES | EN</div>
@@ -102,8 +102,8 @@
   /* Same footer asset; a local vector fallback prevents a broken icon offline. */
   const instagramImage = sidebar.querySelector('.su-mobile-instagram img');
   instagramImage?.addEventListener('error', () => {
-    if (!instagramImage.src.endsWith('/images/instagram-icon.svg')) {
-      instagramImage.src = '/images/instagram-icon.svg';
+    if (!instagramImage.src.includes('images/instagram-icon.svg')) {
+      instagramImage.src = new URL('images/instagram-icon.svg', document.baseURI).href;
     }
   });
 
@@ -157,7 +157,7 @@
       originalAccount.click();
       return;
     }
-    window.location.href = '/login.html';
+    window.location.href = new URL('login.html', document.baseURI).href;
   });
 
   /* Existing menu handler still opens/closes the drawer. This observer keeps the new icon synchronized. */
