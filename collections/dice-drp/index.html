@@ -1,0 +1,2825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="../../">
+<script src="bcv-rate.js"></script>
+<script src="country-settings.js" defer></script>
+<script src="checkout-return.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dice Drp – Sucesso</title>
+  <link rel="icon" href="images/sucesso fav icon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+
+/* Reducir espacio inferior del footer SOLO en tees.html y SOLO en pantallas grandes */
+@media (min-width: 1536px) {
+
+    .collection-grid {
+      margin-bottom: 8.5rem !important;
+      margin-top: 3.5rem !important;
+    }
+  
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* 🔺 Solo Laptops: aumenta la altura vertical del fondo gris de las imágenes */
+@media (min-width: 1024px) and (max-width: 1535px) {
+  body.tees-page .collection-item .image-hover {
+    /* antes tenías padding: 10px; */
+    padding-block: 22px;   /* ↑ más alto solo vertical (top/bottom) */
+    padding-inline: 10px;  /* mantiene el padding lateral original */
+  }
+}
+
+
+.loader {
+      position: fixed;
+      inset: 0;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .loader img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      animation: zoomInClean 2s ease forwards;
+    }
+
+    @keyframes zoomInClean {
+      0% { transform: scale(0.1); opacity: 0; }
+      70% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .account-icon, .cart-icon {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+  
+.cart-icon:hover,
+.search-toggle:hover,
+.account-icon:hover {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+
+    .collection-item .tallas {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      font-size: 0.85rem;
+      text-align: center;
+      color: #233f32;
+      margin-top: 6px;
+      pointer-events: none;
+    }
+
+    .collection-item:hover .tallas {
+      opacity: 1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Syne', sans-serif; background-color: #fff; }
+    header.navbar {
+      position: fixed; top: 0; width: 100%; height: 70px; background-color: white;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 20px; z-index: 1001; border-bottom: 1px solid #e5e5e5;
+    }
+    .navbar-left, .navbar-right {
+      display: flex; align-items: center; gap: 30px;
+    }
+    .navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+    .logo { height: 35px; }
+    .nav-link {
+      text-decoration: none; color: #000; font-weight: 600; font-size: 14px;
+      transition: opacity 0.3s ease;
+    }
+    .nav-link:hover { opacity: 1; }
+    .nav-icon, .search-toggle {
+      background: none; border: none; font-size: 18px; cursor: pointer;
+      color: #000; transition: opacity 0.3s ease;
+    }
+    .nav-icon:hover, .search-toggle:hover { opacity: 0.5; }
+    .overlay {
+      position: fixed; top: 70px; left: 0; width: 100%; height: calc(100% - 70px);
+      background-color: rgba(0, 0, 0, 0.3); z-index: 1000; display: none;
+    }
+    .search-bar {
+      position: fixed; top: 70px; left: 0; width: 100%; height: 42px;
+      background-color: white; display: flex; align-items: center; gap: 10px;
+      padding: 0 20px; border-bottom: 1px solid #e5e5e5;
+      transform: translateY(-100%); opacity: 0; pointer-events: none;
+      transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+      z-index: 1002; will-change: transform, opacity;
+    }
+    .search-bar.active {
+      transform: translateY(0); opacity: 1; pointer-events: auto;
+    }
+    .search-bar.hiding { z-index: 999; }
+    .search-bar input {
+      width: 100%; padding: 8px 0 8px 60px; font-size: 15px;
+      border: none; outline: none; background-color: transparent; color: #000;
+    }
+    .search-icon {
+      margin-right: 0; color: #000; flex-shrink: 0; position: absolute; left: 30px;
+    }
+    .close-search {
+      margin-left: 16px; background: none; border: none; cursor: pointer;
+      color: #000; padding: 4px; display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.3s ease;
+    }
+    .close-search:hover { opacity: 0.5; }
+.search-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: #000;
+  transition: opacity 0.3s ease;
+  margin-top: 2px; /* 👈 Ajustá este valor si querés más o menos bajado */
+}
+
+.search-toggle svg {
+  display: block;
+  stroke: #000;
+}
+
+
+    .search-results {
+  position: fixed;
+  top: 112px;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1001;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  padding: 0;
+  box-sizing: border-box;
+  max-height: calc(100vh - 112px);
+  overflow-y: auto;
+  gap: 1px; /* visualmente simula 0.3px ajustando ancho abajo */
+}
+
+
+.search-result-item {
+  width: 100%;
+  max-width: 375px; /* Más grande, similar a Nude Project */
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-decoration: none;
+  color: #000;
+  padding: 0 10px 32px;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease;
+}
+
+.product-image-wrapper {
+  width: 100%;
+  padding-top: 125%; /* Proporción 4:5 sin usar aspect-ratio */
+  position: relative;
+  background-color: #f8f8f8;
+  margin-bottom: 12px;
+}
+
+.product-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* MUY IMPORTANTE para que no se corte */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.4s ease;
+}
+
+
+.product-image-wrapper .back {
+  opacity: 0;
+}
+
+.search-result-item:hover .back {
+  opacity: 1;
+}
+
+.search-result-item:hover .front {
+  opacity: 0;
+}
+
+.result-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding-left: 4px;
+  width: 100%;
+}
+
+.result-info .name {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.result-info .price {
+  font-size: 17px;
+  font-weight: 400;
+  color: #000;
+  text-align: left;
+}
+ 
+         .nav-desktop ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-desktop ul li {
+            margin: 0 15px;
+        }
+        
+        .nav-desktop ul li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-desktop ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #000; /* Color de subrayado */
+            transition: width 0.3s ease;
+        }
+        
+        .nav-desktop ul li a:hover:after {
+            width: 100%;
+        }
+
+/* Visibilidad por breakpoint:
+   - Desktop XL (≥1536px): mostrar texto, ocultar íconos
+   - Laptop/Móvil (<1536px): mostrar íconos, ocultar texto
+*/
+.show-desktop-xl { display: none; }
+.hide-desktop-xl { display: flex; }
+
+@media (min-width: 1536px) {
+  .show-desktop-xl { display: flex !important; }
+  .hide-desktop-xl { display: none !important; }
+
+  .nav-text {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    font-size: 12px;
+    position: relative; /* necesario para el pseudo-elemento */
+    padding: 0;
+    margin: 0 8px; /* espaciado entre los nav-text */
+    color: #000;
+    transition: color 0.3s ease;
+  }
+
+  /* línea animada como en el language-toggle */
+  .nav-text::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: #000;
+    transition: width 0.3s ease;
+  }
+
+  .nav-text:hover::after {
+    width: 100%;
+  }
+}
+
+/* 🔧 Ajustes solo para pantallas grandes */
+@media (min-width: 1536px) {
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;     /* ✅ evita que salte a otra fila */
+    gap: 16px;             /* ✅ mismo espaciado que los nav-left */
+  }
+
+  .navbar-right .language-toggle {
+    margin: 0;             /* quita margen extra */
+    transform: none;       /* elimina el pequeño desajuste vertical */
+    padding: 0;
+  }
+
+  .language-toggle {
+margin-top: 1.5px !important;
+margin-right: 0.4rem !important;
+  }
+}
+
+/* 🔽 Disminuir tamaño de nav-left y nav-right SOLO en pantallas grandes */
+@media (min-width: 1536px) {
+  .nav-desktop ul li a,   /* enlaces de nav-left */
+  .navbar-right .nav-text, 
+  .navbar-right .language-toggle {
+    font-size: 11px;      /* antes 12px → más pequeño */
+    letter-spacing: 1px;  /* ajusta el espaciado de letras */
+  }
+}
+
+.language-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 30px;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  width: 460px; /* antes era 300px */
+  font-family: 'Poppins', sans-serif;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  border-radius: 4px;
+}
+
+
+  .language-popup.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .language-popup button.close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+.language-toggle {
+  text-decoration: none;
+  color: #000;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-right: 8px;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background: none;
+  line-height: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative; /* 🔑 para que el ::after se posicione bien */
+  user-select: none;
+  transition: color 0.3s ease;
+  transform: translateY(1px); /* Ajustá a 1px o 3px si querés más fino */
+}
+
+.language-toggle::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #000;
+  transition: width 0.3s ease;
+}
+
+.language-toggle:hover::after {
+  width: 100%;
+}
+
+.cart-item img {
+  width: 145px;          /* Aumenta el tamaño de la imagen */
+  height: auto;
+  object-fit: contain;
+  margin-right: 1.2rem;  /* Espacio entre imagen y texto */
+  flex-shrink: 0;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;   /* Centra verticalmente imagen y contenido */
+  gap: 1rem;             /* Espacio entre imagen y detalles */
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+
+.cart-item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cart-item-details h4 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.cart-item-details p {
+  font-size: 0.85rem;
+  color: #333;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.cart-item-price {
+  font-weight: bold;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  width: fit-content;
+  padding: 2px 4px;
+  height: 36px;
+  font-size: 16px;
+}
+
+.quantity-selector button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #555;
+  padding: 0 10px;
+}
+
+.quantity-selector input {
+  border: none;
+  text-align: center;
+  width: 24px;
+  font-size: 16px;
+  outline: none;
+  pointer-events: none;
+  background: transparent;
+  color: #000;
+}
+
+.cart-item {
+  position: relative;
+}
+
+.cart-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cart-item.loading .cart-loading-overlay {
+  opacity: 1;
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #333;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cart-item-price {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  body.tees-page .collection-item a {
+    display: block;
+    width: 100%;
+    background-color: rgba(244, 244, 244, 0.8);
+    padding: 12px;
+    border-radius: 2px; /* opcional, si quieres esquinas ligeramente redondeadas */
+  }
+
+  body.tees-page .collection-item img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    background: transparent;
+  }
+
+  body.tees-page .collection-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    padding: 0 2px;
+  }
+
+  body.tees-page .collection-item {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  body.tees-page .collection-item h3 {
+    font-size: 0.8rem;
+    margin: 4px 0 0 0;
+  }
+
+  body.tees-page .collection-item .price {
+    font-size: 0.8rem;
+    margin: 2px 0 8px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  h2[data-i18n="nav_tees"] {
+    font-size: 1.2rem; /* Reducir el tamaño del título */
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+
+  h2[data-i18n="nav_tees"]::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #ddd; /* gris claro */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+@media (min-width: 769px) {
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px; /* Reducido para que los productos queden más juntos */
+    padding: 0 10px; /* Opcional: controla el margen lateral */
+    justify-items: start; /* Alinea productos a la izquierda */
+  }
+
+  .collection-item {
+    text-align: left;
+    align-items: flex-start;
+    margin: 0; /* Elimina márgenes que separen de más */
+  }
+
+  .collection-item .image-hover {
+    background-color: rgba(244, 244, 244, 0.8);
+    padding: 10px;
+    display: block;
+  }
+
+  .collection-item .image-hover img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    background: transparent;
+  }
+
+  .collection-item h3 {
+    font-size: 0.9rem;
+    margin: 4px 0 2px 0;
+  }
+
+  .collection-item .price {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+}
+
+/* === NAV con flechita — Desktop XL solamente === */
+@media (min-width: 1536px) {
+  .nav-desktop ul { display:flex; list-style:none; }
+  .nav-desktop ul li { margin: 0 15px; }
+
+  .nav-item { display:flex; align-items:center; gap:6px; position:relative; }
+
+  .nav-main, .nav-arrow {
+    background:none; border:none; padding:0; margin:0; cursor:pointer;
+    color:#000; font-size:12px; text-transform:uppercase; letter-spacing:1.5px;
+    font-weight:700; line-height:1;
+  }
+
+  /* Subrayado ANIMADO solo para los main (izquierda) */
+  .nav-main { position:relative; }
+  .nav-main::after {
+    content:''; position:absolute; left:0; bottom:-2px; height:1px; width:0; background:#000;
+    transition: width 0.3s ease;
+  }
+  .nav-main:hover::after { width:100%; }
+
+  .nav-arrow { display:flex; align-items:center; }
+  .nav-arrow svg { display:block; transition:none; }        /* sin animación */
+  .nav-item.open .nav-arrow svg { transform: rotate(90deg); } /* ▶ a ▼ */
+
+  /* Dropdown: OCULTO por defecto, sin fondo ni borde, sin animaciones */
+  .dropdown {
+    position:absolute; top:22px; left:0;
+    display:none !important;        /* nunca visible si no está "open" */
+    background: transparent !important;  /* SIN fondo */
+    border: none !important;              /* SIN borde */
+    padding: 0;                           /* SIN padding de caja */
+    white-space:nowrap; z-index:1200;
+  }
+  .nav-item.open .dropdown {
+    display:flex !important;
+  }
+
+  /* Ítems del dropdown: sin animación de subrayado */
+  .dropdown .dropdown-item {
+    text-decoration:none; color:#000; font-size:12px; font-weight:700;
+    text-transform:uppercase; letter-spacing:1.5px; display:inline-block; margin-right:18px;
+    position: static; /* sin pseudo línea */
+  }
+  .dropdown .dropdown-item:last-child { margin-right:0; }
+  .dropdown .dropdown-item:hover { text-decoration: underline; } /* subrayado instantáneo */
+
+  /* Legal en fila horizontal (como la captura) */
+  .dropdown.row { display:flex; gap:24px; }
+
+  /* Oculta el nav antiguo si existía */
+  .nav-desktop ul li a.nav-link { display:none !important; }
+}
+/* ✅ Dropdown: sin subrayado al abrir; subrayado SOLO al hover, sin animación */
+@media (min-width: 1536px) {
+  /* Estado base: NADA subrayado ni transiciones heredadas */
+  .nav-desktop .nav-item .dropdown .dropdown-item {
+    text-decoration: none !important;
+    position: static;
+    transition: none !important;         /* sin transiciones de color, etc. */
+  }
+
+  /* Hover/focus: subrayado inmediato (sin animación) */
+  .nav-desktop .nav-item .dropdown .dropdown-item:hover,
+  .nav-desktop .nav-item .dropdown .dropdown-item:focus-visible {
+    text-decoration: underline !important;
+    /* opcional: si querés más fino y prolijo
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    */
+  }
+
+  /* Mata cualquier línea animada heredada (el ::after) en dropdowns */
+  .nav-desktop .nav-item .dropdown .dropdown-item::after,
+  .nav-desktop .nav-item .dropdown .dropdown-item:hover::after {
+    content: none !important;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    transition: none !important;
+  }
+}
+/* ================================
+   NAV DESKTOP XL – tamaños alineados a nav-right
+   ================================ */
+@media (min-width: 1536px) {
+  /* 1) Mismo tamaño tipográfico que nav-right */
+  .nav-desktop .nav-item .nav-main,
+  .nav-desktop .nav-item .nav-arrow,
+  .nav-desktop .dropdown .dropdown-item,
+  .navbar-right .nav-text,
+  .navbar-right .language-toggle {
+    font-size: 11px !important;     /* igual que nav-right */
+    letter-spacing: 1px !important;  /* igual que nav-right */
+    line-height: 1 !important;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  /* 2) Compactar separación para que no se vean “grandes” */
+  .nav-desktop ul li {
+    margin: 0 10px !important;       /* antes 15px */
+  }
+  .nav-desktop .nav-item {
+    gap: 4px !important;             /* antes 6px */
+  }
+
+  /* 3) Reducir la flechita (icono) y su hit area */
+  .nav-desktop .nav-item .nav-arrow svg {
+    width: 7px !important;           /* antes 8px */
+    height: 11px !important;         /* antes 12px */
+  }
+  .nav-desktop .nav-item .nav-arrow {
+    padding: 0 !important;           /* sin padding extra */
+  }
+
+  /* 4) Subrayado fino y sin “overhang” en .nav-main */
+  .nav-desktop .nav-item .nav-main::after {
+    height: 1px !important;
+    bottom: -2px !important;
+  }
+
+  /* 5) Dropdown: tipografía y espacios iguales a nav-right */
+
+  .nav-desktop .dropdown .dropdown-item {
+    margin-right: 14px !important;   /* antes 18px */
+    text-decoration: none !important;
+  }
+  .nav-desktop .dropdown .dropdown-item:hover {
+    text-decoration: underline !important;
+  }
+
+  /* 6) Alinear altura y compacidad de la barra entera */
+  .navbar-left, .navbar-right {
+    gap: 16px !important;            /* ya usas 16px en right; igualamos */
+  }
+
+  /* 7) Asegurar que nav-left y nav-right comparten font-size global */
+  .nav-desktop ul li a,
+  .navbar-right .nav-text,
+  .navbar-right .language-toggle {
+    font-size: 11px !important;
+    letter-spacing: 1px !important;
+  }
+}
+/* 🔹 Aumentar espacio entre SHOP, LEGAL y SUPPORT en desktop XL */
+@media (min-width: 1536px) {
+  #nav-shop,
+  #nav-legal,
+  #nav-support {
+    margin: 0 18px !important; /* antes 15px → ahora el doble */
+  }
+}
+/* ⬇️ Bajar los dropdowns solo en Desktop XL */
+@media (min-width: 1536px) {
+  .nav-desktop .dropdown {
+    top: 70px !important; /* antes 20–22px; ajusta este valor a tu gusto */
+  }
+}
+
+
+/* ===== Utilidades de visibilidad por breakpoint ===== */
+.show-desktop-xl { display: none !important; }
+.hide-desktop-xl { display: inline-flex !important; }
+
+/* Laptop y móvil (hasta 1535px): nav-desktop oculto, menú hamburguesa visible,
+   íconos visibles y textos ocultos. */
+@media (max-width: 1535px) {
+  .nav-desktop { display: none !important; }
+  .menu-toggle { display: inline-flex !important; }
+
+  /* Íconos visibles en laptop/móvil */
+  .hide-desktop-xl { display: inline-flex !important; }
+
+  /* Textos (Search, Account, Cart) ocultos en laptop/móvil */
+  .show-desktop-xl { display: none !important; }
+}
+
+/* Desktop XL (desde 1536px): nav-desktop visible, menú hamburguesa oculto,
+   textos visibles e íconos ocultos. */
+@media (min-width: 1536px) {
+  .nav-desktop { display: block !important; }
+  .menu-toggle { display: none !important; }
+
+  /* Textos (Search, Account, Cart) visibles en desktop XL */
+  .show-desktop-xl { display: inline-flex !important; }
+
+  /* Íconos ocultos en desktop XL */
+  .hide-desktop-xl { display: none !important; }
+
+  /* Alinear y compactar la derecha si hace falta */
+  .navbar-right { display: flex; align-items: center; gap: 16px; }
+}
+
+
+/* 🧲 tees.html — Forzar flecha de SHOP siempre hacia abajo en Desktop XL */
+@media (min-width:1536px){
+  body.tees-page #nav-shop .nav-arrow svg { 
+    transform: rotate(90deg) !important;
+  }
+
+
+  body.tees-page .collection-item .image-hover {
+    /* más alto arriba y abajo */
+    padding-block: 50px;      /* antes 10px → más “largo” vertical */
+    padding-inline: 20px;     /* mantiene el lateral */
+  }
+
+  /* (opcional, por prolijidad visual) asegura render limpio de la imagen */
+  body.tees-page .collection-item .image-hover img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    background: transparent;
+  }
+}
+
+/* 🔹 Aumentar espacio entre SHOP, LEGAL, SUPPORT y BRAND en desktop XL */
+@media (min-width: 1536px) {
+  #nav-shop,
+  #nav-legal,
+  #nav-support,
+  #nav-brand {
+    margin: 0 18px !important;
+  }
+}
+/* === NAV: un poco más pequeño (sin tocar el logo) — Desktop XL === */
+@media (min-width: 1536px) {
+  /* Texto de botones izquierda (main + flecha), items del dropdown y derecha */
+  .nav-desktop .nav-item .nav-main,
+  .nav-desktop .nav-item .nav-arrow,
+  .nav-desktop .dropdown .dropdown-item,
+  .navbar-right .nav-text,
+  .navbar-right .language-toggle {
+    font-size: 10.3px !important;      /* antes 11–12px */
+    letter-spacing: 0.9px !important; /* antes ~1–1.5px */
+    line-height: 1 !important;
+  }
+
+  /* Flechita un poco más chica */
+  .nav-desktop .nav-item .nav-arrow svg {
+    width: 7px !important;   /* antes 7–8px */
+    height: 10px !important; /* antes 11–12px */
+  }
+
+  /* Compacidad lateral (sin apretar demasiado) */
+  .nav-desktop ul li {
+    margin: 0 9px !important;       /* antes 10–15px */
+  }
+  .nav-desktop .nav-item {
+    gap: 3px !important;            /* antes 4–6px */
+  }
+  .nav-desktop .dropdown .dropdown-item {
+    margin-right: 13px !important;  /* antes 14–18px */
+  }
+
+  /* Espaciado entre grupos principales alineado al nuevo tamaño */
+  #nav-shop,
+  #nav-legal,
+  #nav-support,
+  #nav-brand {
+    margin: 0 17px !important;      /* antes 18px */
+  }
+
+  /* Ligeramente más compacto a la derecha */
+  .navbar-right {
+    gap: 14px !important;           /* antes 16px */
+  }
+
+  /* Subrayado: mantené la línea fina y posición */
+  .nav-desktop .nav-item .nav-main::after {
+    height: 1px !important;
+    bottom: -2px !important;
+  }
+}
+/* ====== TITULOS DE PRODUCTO (idéntico a la referencia) ====== */
+
+/* 1) Familia y peso: Helvetica Neue/Arial Bold */
+@font-face {
+  font-family: "SystemSansBold";
+  src: local("HelveticaNeue-Bold"), local("Helvetica Neue Bold"),
+       local("HelveticaNeue"), local("Helvetica Neue"),
+       local("Arial Bold"), local("Arial-BoldMT");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 2) Título en grid de tees + resultados de búsqueda */
+body.tees-page .collection-item h3,
+.search-results .result-info .name {
+  font-family: "SystemSansBold", "Helvetica Neue", Arial, Helvetica, sans-serif !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  color: #000 !important;
+  /* tamaño/compacidad como la imagen */
+  font-size: 11px !important;
+  line-height: 1.05 !important;
+  letter-spacing: 0.2px !important;
+  /* separación del entorno */
+  margin: 4px 0 2px 0 !important;
+  /* render nítido */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  word-break: keep-all;
+  hyphens: none;
+}
+
+/* 3) Precio pegado al título y sin subir de peso (solo precio, no todo el body) */
+body.tees-page .collection-item .price,
+.search-results .result-info .price {
+  font-family: "SystemSansBold", "Helvetica Neue", Arial, Helvetica, sans-serif !important;
+  font-weight: 500 !important;
+  color: #333 !important;
+  font-size: 12px !important;
+  line-height: 1.1 !important;
+  margin-top: 4px !important;
+}
+
+.result-info .price {
+  font-family: "SystemSansBold", "Helvetica Neue", Arial, Helvetica, sans-serif !important;
+  font-weight: 500 !important;
+  color: #333 !important;
+  font-size: 12px !important;
+  line-height: 1.1 !important;
+  margin-top: 4px !important;
+}
+
+.collection-item .price {
+font-family: "SystemSansBold", "Helvetica Neue", Arial, Helvetica, sans-serif !important;
+  font-weight: 500 !important;
+  color: #333 !important;
+  font-size: 12px !important;
+  line-height: 1.1 !important;
+  margin-top: 4px !important;
+}
+
+/* 4) Ajuste fino por breakpoints (opcional) */
+@media (min-width: 1536px) {         /* Desktop XL */
+  body.tees-page .collection-item h3,
+  .search-results .result-info .name {
+    font-size: 11px !important;      /* se mantiene */
+    letter-spacing: 0.18px !important;
+  }
+}
+@media (max-width: 1023px) {         /* Mobile / tablets */
+  body.tees-page .collection-item h3,
+  .search-results .result-info .name {
+    font-size: 10.5px !important;
+    letter-spacing: 0.25px !important; /* un pelín más de tracking para legibilidad */
+  }
+}
+/* Separación entre imagen (recuadro gris) y título en la página de TEES */
+body.tees-page .collection-item .image-hover{
+  margin-bottom: 12px !important; /* 👈 espacio principal */
+  display: block;                  /* por si acaso */
+}
+
+/* Asegura que el título no sume margen extra arriba */
+body.tees-page .collection-item h3{
+  margin-top: 0 !important;
+}
+
+/* Ajustes finos por breakpoint (opcional) */
+@media (min-width: 1536px){        /* Desktop XL */
+  body.tees-page .collection-item .image-hover{ margin-bottom: 14px !important; }
+}
+@media (max-width: 768px){         /* Mobile */
+  body.tees-page .collection-item .image-hover{ margin-bottom: 10px !important; }
+}
+/* 🎯 Estilos base Desktop XL */
+@media (min-width: 1536px) {
+  .nav-desktop .nav-item .dropdown .dropdown-item {
+    color: #555 !important;
+    font-weight: 600 !important;
+  }
+
+  .nav-desktop .nav-item .dropdown .dropdown-item:hover,
+  .nav-desktop .nav-item .dropdown .dropdown-item:focus-visible {
+    color: #000 !important;
+    text-decoration: underline !important;
+  }
+}
+
+/* ✅ Activo REAL (colócalo DESPUÉS de lo anterior) */
+@media (min-width: 1536px) {
+  .nav-desktop .nav-item .dropdown .dropdown-item.route-link.active {
+    color: #000 !important;
+    font-weight: 700 !important;
+    text-decoration: underline !important;
+    text-underline-offset: 2px;
+  }
+}
+
+/* ===== TEES — four-column product grid matching the full search-results proportions ===== */
+body.tees-page:not(.su-search-page) .collections{
+  width:100%!important;max-width:none!important;margin-left:0!important;padding-left:0!important;box-sizing:border-box!important;
+}
+body.tees-page:not(.su-search-page) .collections-wrapper{
+  width:100%!important;max-width:none!important;margin:0!important;padding:0 10px!important;box-sizing:border-box!important;
+}
+body.tees-page:not(.su-search-page) .collection-grid{
+  display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  width:100%!important;max-width:none!important;padding-left:0!important;padding-right:0!important;
+  gap:50px 12px!important;justify-items:stretch!important;box-sizing:border-box!important;
+}
+body.tees-page:not(.su-search-page) .collection-item{
+  width:100%!important;max-width:none!important;min-width:0!important;text-align:left!important;margin:0!important;padding:0!important;
+}
+body.tees-page:not(.su-search-page) .collection-item .image-hover{
+  position:relative!important;display:block!important;width:100%!important;aspect-ratio:4/5!important;
+  margin:0 0 12px!important;padding:0!important;background:#f8f8f8!important;overflow:hidden!important;
+}
+body.tees-page:not(.su-search-page) .collection-item .image-hover img{
+  position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+  object-fit:contain!important;margin:0!important;padding:0!important;background:transparent!important;
+}
+@media(max-width:1023px){
+  body.tees-page:not(.su-search-page) .collections-wrapper{padding:0 12px!important;}
+  body.tees-page:not(.su-search-page) .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:34px 12px!important;}
+}
+@media(max-width:600px){
+  body.tees-page:not(.su-search-page) .collections-wrapper{padding:0 4px!important;}
+  body.tees-page:not(.su-search-page) .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:30px 6px!important;}
+  body.tees-page:not(.su-search-page) .collection-item .image-hover{margin-bottom:10px!important;}
+}
+
+
+/* DICE DRP fixed collection strip: same visual relationship as the T-Shirts strip. */
+body.collection-page {
+  --dice-nav-height:70px;
+  --dice-strip-height:62px;
+}
+body.collection-page header.navbar {
+  top:0 !important;
+  transition:top .30s cubic-bezier(.22,.72,.24,1) !important;
+  z-index:1001 !important;
+}
+body.collection-page.su-dice-nav-scrolled header.navbar {
+  top:calc(-1 * var(--dice-nav-height)) !important;
+}
+body.collection-page main {
+  padding-top:calc(var(--dice-nav-height) + var(--dice-strip-height)) !important;
+}
+body.collection-page .dice-drp-page-heading {
+  position:fixed !important;
+  top:var(--dice-nav-height) !important;
+  left:0 !important;
+  right:0 !important;
+  width:100% !important;
+  height:var(--dice-strip-height) !important;
+  min-height:var(--dice-strip-height) !important;
+  margin:0 !important;
+  padding:0 8px !important;
+  box-sizing:border-box !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  background:#fff !important;
+  border:0 !important;
+  border-bottom:1px solid rgba(0,0,0,.07) !important;
+  box-shadow:0 8px 18px rgba(0,0,0,.025) !important;
+  z-index:990 !important;
+  transition:top .30s cubic-bezier(.22,.72,.24,1) !important;
+}
+body.collection-page.su-dice-nav-scrolled .dice-drp-page-heading {
+  top:0 !important;
+}
+body.collection-page .dice-drp-page-heading .collection-route-title {
+  margin:0 !important;
+  padding:0 !important;
+  color:#233f32 !important;
+  font-family:'Poppins',sans-serif !important;
+  font-size:24px !important;
+  line-height:1.12 !important;
+  font-weight:400 !important;
+  letter-spacing:-.035em !important;
+}
+body.collection-page .dice-drp-page-heading .collection-route-title sup {
+  display:inline-block !important;
+  margin-left:2px !important;
+  position:relative !important;
+  top:-.9em !important;
+  color:#233f32 !important;
+  font-family:'Poppins',sans-serif !important;
+  font-size:9px !important;
+  line-height:1 !important;
+  font-weight:400 !important;
+  letter-spacing:0 !important;
+}
+body.collection-page .collections {
+  padding-top:0 !important;
+  margin-top:0 !important;
+}
+body.collection-page .collection-grid {
+  margin-top:0 !important;
+}
+/* Side panels/search/cart stay above the fixed collection strip. */
+body.collection-page .cart-overlay { z-index:13000 !important; }
+body.collection-page .search-bar { z-index:13020 !important; }
+body.collection-page .search-results { z-index:13030 !important; }
+body.collection-page .overlay { z-index:13010 !important; }
+body.collection-page .sidebar,
+body.collection-page .sidebar.active { z-index:13000 !important; }
+
+@media (max-width:1023px) {
+  body.collection-page { --dice-strip-height:58px; }
+  body.collection-page .dice-drp-page-heading { padding:0 12px !important; }
+  body.collection-page .dice-drp-page-heading .collection-route-title { font-size:22px !important; }
+}
+@media (max-width:600px) {
+  body.collection-page { --dice-strip-height:56px; }
+  body.collection-page .dice-drp-page-heading { padding:0 8px !important; }
+  body.collection-page .dice-drp-page-heading .collection-route-title { font-size:21px !important; }
+}
+
+ </style>
+  
+<link rel="stylesheet" href="requested-changes.css">
+<link rel="stylesheet" href="related-products.css">
+<link rel="stylesheet" href="tees-product-grid.css">
+
+<link rel="stylesheet" href="search-system.css">
+<script src="search-text.js" defer></script>
+<script src="search-engine.js" defer></script>
+<script src="search-interface.js" defer></script>
+<script src="search-catalog.js" defer></script>
+  <link rel="stylesheet" href="sucesso-footer.css">
+  <link rel="stylesheet" href="mobile-menu-refresh.css">
+<style id="su-navbar-uploaded-svg-icons-20261001">
+/* Exact uploaded responsive navbar icons: laptop + mobile only. */
+@media (max-width: 1535px) {
+  header.navbar .search-toggle .su-nav-search-svg {
+    width: 22px !important;
+    height: 22px !important;
+    display: block !important;
+    flex: 0 0 auto !important;
+  }
+  header.navbar .account-button .su-nav-account-svg {
+    width: 22px !important;
+    height: 22px !important;
+    display: block !important;
+    flex: 0 0 auto !important;
+    filter: none !important;
+  }
+  header.navbar .su-nav-cart-svg {
+    width: 22px !important;
+    height: 22px !important;
+    display: block !important;
+    flex: 0 0 auto !important;
+    filter: none !important;
+  }
+  header.navbar .search-toggle .su-nav-search-svg *,
+  header.navbar .account-button .su-nav-account-svg *,
+  header.navbar .su-nav-cart-svg * {
+    stroke: #233f32 !important;
+  }
+  header.navbar #cart-count {
+    position: absolute !important;
+    top: -2px !important;
+    right: -15px !important;
+    min-width: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #233f32 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+    pointer-events: none !important;
+  }
+  header.navbar #cart-count::before { content: "("; }
+  header.navbar #cart-count::after  { content: ")"; }
+}
+</style>
+
+<style id="su-navbar-mobile-icon-size-20261001">
+/* Mobile-only icon sizing: preserve laptop 22x22, reduce on phones. */
+
+@media (max-width: 767px) {
+  header.navbar .search-toggle .su-nav-search-svg,
+  header.navbar .account-button .su-nav-account-svg,
+  header.navbar .su-nav-cart-svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  header.navbar #cart-count {
+    top: -1px !important;
+    right: -13px !important;
+    font-size: 10px !important;
+  }
+}
+</style>
+
+</head>
+<body class="tees-page collection-page" data-collection="dice-drp">
+  <div id="loader" class="loader">
+    <img src="images/logo cherry png.png" alt="Sucesso Logo">
+  </div>
+
+<header class="navbar">
+    <button class="menu-toggle" id="menu-toggle">
+      <svg class="menu-icon" width="24" height="24" viewBox="0 0 24 24">
+        <line class="top" x1="3" y1="6" x2="21" y2="6" />
+        <line class="middle" x1="3" y1="12" x2="21" y2="12" />
+        <line class="bottom" x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+
+    <div class="nav-desktop">
+  <ul>
+    <!-- SHOP -->
+    <li class="nav-item has-dropdown" id="nav-shop" data-nav-role="shop">
+      <button class="nav-main" data-i18n="nav_shop" aria-label="Shop">SHOP</button>
+      <button class="nav-arrow" aria-label="Abrir Shop" aria-expanded="false">
+        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2L6 6L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="dropdown sucesso-hover-dropdown" data-dd="shop" hidden>
+        <a href="collections/t-shirts/" class="dropdown-item" data-i18n="nav_tees">T-SHIRTS</a>
+      </div>
+    </li>
+
+    <!-- COLLECTIONS -->
+    <li class="nav-item has-dropdown" id="nav-collections" data-nav-role="collections">
+      <button class="nav-main" data-i18n="nav_collections" aria-label="Collections">COLLECTIONS</button>
+      <button class="nav-arrow" aria-label="Abrir Collections" aria-expanded="false">
+        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2L6 6L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="dropdown sucesso-hover-dropdown collection-dropdown" data-dd="collections" hidden>
+        <a href="collections/dice-drp/" class="collection-hover-card" aria-label="DICE DRP">
+          <img src="images/collection-dice-drp-cover.png" alt="DICE DRP">
+          <span class="collection-hover-name">DICE DRP</span>
+        </a>
+      </div>
+    </li>
+
+    <!-- SUPPORT -->
+    <li class="nav-item has-dropdown" id="nav-support">
+      <button class="nav-main" data-i18n="support" aria-label="Support">SUPPORT</button>
+      <button class="nav-arrow" aria-label="Abrir Support" aria-expanded="false">
+        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2L6 6L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="dropdown" data-dd="support" hidden>
+        <a href="contactanos.html" class="dropdown-item" data-i18n="contact_us">Contact Us</a>
+      </div>
+    </li>
+  
+  <!-- BRAND -->
+<li class="nav-item has-dropdown" id="nav-brand">
+  <button class="nav-main" data-i18n="brand" aria-label="Brand">BRAND</button>
+  <button class="nav-arrow" aria-label="Abrir Brand" aria-expanded="false">
+    <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 2L6 6L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="dropdown" data-dd="brand" hidden>
+    <a href="about.html" class="dropdown-item" data-i18n="nav_about">ABOUT</a>
+  </div>
+</li>
+  </ul>
+</div>
+
+
+  
+  <div class="navbar-center">
+    <a href="index.html"><img src="images/logo sucesso png.png" alt="Nude Logo" class="logo" style="width: 130px; height: auto;"/></a>
+  </div>
+
+<div class="navbar-right">
+  <!-- Botón de idioma (sigue igual) -->
+  <div class="language-toggle" id="languageToggle">EN | ES</div>
+
+<!-- SEARCH -->
+<!-- Versión TEXTO para desktop XL -->
+<button class="nav-text show-desktop-xl" onclick="toggleSearchBar()" aria-label="Open search" id="search-text-btn" data-i18n="nav_search">
+  Search
+</button>
+<!-- Versión ÍCONO para laptop/móvil -->
+<button class="search-toggle hide-desktop-xl" onclick="toggleSearchBar()" aria-label="Abrir búsqueda">
+  <img src="images/nav-search.svg" alt="" class="su-nav-search-svg" aria-hidden="true">
+</button>
+
+<!-- ACCOUNT -->
+<!-- Versión TEXTO para desktop XL -->
+<a id="account-link-text" href="login.html" style="text-decoration: none !important;" class="nav-text show-desktop-xl" data-i18n="nav_account">
+  Account
+</a>
+<!-- Versión ÍCONO para laptop/móvil -->
+<a id="account-link" href="login.html" class="account-button hide-desktop-xl">
+  <img src="images/nav-account.svg" alt="Cuenta" class="account-icon su-nav-account-svg">
+</a>
+
+<!-- CART -->
+<!-- Versión TEXTO para desktop XL -->
+<button id="cart-text-btn" class="nav-text show-desktop-xl" type="button">
+  <span data-i18n="nav_cart">Cart</span> 
+  <span id="cart-count-text" style="margin-left: 0.2rem !important;">(0)</span>
+</button>
+
+<!-- Versión ÍCONO para laptop/móvil -->
+<div class="hide-desktop-xl" style="position: relative; display: flex; align-items: center; margin-left: 0px;">
+  <img src="images/nav-cart.svg" alt="Carrito" class="cart-icon su-nav-cart-svg" id="cart-btn" style="width:22px;height:22px;pointer-events:auto;cursor:pointer;">
+  <span id="cart-count">0</span>
+</div>
+
+
+</header>
+
+  <div class="search-bar" id="searchBar">
+    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input type="text" placeholder="Buscar...">
+    <button class="close-search" onclick="toggleSearchBar()" aria-label="Cerrar búsqueda">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="search-results" id="searchResults"></div>
+  <div class="overlay" id="overlay" onclick="toggleSearchBar()"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  /* ============== Firebase ============== */
+  const firebaseConfig = {
+    apiKey: "AIzaSyD3u2GKMSAKC_1Cd88KA-rxTOf_Jnt3fuM",
+    authDomain: "sucesso-74f7c.firebaseapp.com",
+    projectId: "sucesso-74f7c",
+    storageBucket: "sucesso-74f7c.appspot.com",
+    messagingSenderId: "878844661636",
+    appId: "1:878844661636:web:6382f86f18201aecfdd7d1"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+  const auth = getAuth(app);
+
+  /* ============== Auth links ============== */
+  const accountLink = document.getElementById("account-link");
+  if (accountLink) {
+    accountLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      onAuthStateChanged(auth, (user) => {
+        window.location.href = user ? "mi-cuenta.html" : "login.html";
+      });
+    });
+  }
+  const sidebarLink = document.getElementById("sidebar-account-link");
+  const sidebarText = document.getElementById("sidebar-account-text");
+  onAuthStateChanged(auth, (user) => {
+    if (!sidebarLink || !sidebarText) return;
+    if (user) {
+      sidebarText.setAttribute("data-i18n","sidebar_account");
+      sidebarLink.href = "mi-cuenta.html";
+    } else {
+      sidebarText.setAttribute("data-i18n","sidebar_login");
+      sidebarLink.href = "login.html";
+    }
+    const currentLang = localStorage.getItem("preferredLang") || "en";
+    fetch("assets/lang/lang.json").then(r=>r.json()).then(data=>{
+      const key = sidebarText.getAttribute("data-i18n");
+      if (data[currentLang]?.[key]) sidebarText.textContent = data[currentLang][key];
+    }).catch(()=>{});
+  });
+
+  /* ============== Búsqueda (datos + UI) ============== */
+  const input = document.querySelector(".search-bar input");
+  const resultsContainer = document.getElementById("searchResults");
+  const searchBar = document.getElementById("searchBar");
+  const overlay = document.getElementById("overlay");
+  const navbar = document.querySelector("header.navbar");
+
+  let allProducts = [];
+  let searchTimeout;
+
+  async function loadProducts() {
+    try {
+      const qs = await getDocs(collection(db, "productos"));
+      allProducts = [];
+      qs.forEach(doc => {
+        const d = doc.data();
+        if (d.titulo && d.precio !== undefined && d.imagen_frontal && d.imagen_trasera) {
+          allProducts.push({
+            titulo: d.titulo,
+            nombre: d.nombre,
+            precio: Number(d.precio),
+            imagen_frontal: String(d.imagen_frontal).replace(/\\/g, "/"),
+            imagen_trasera: String(d.imagen_trasera).replace(/\\/g, "/"),
+            keywords: Array.isArray(d.keywords) ? d.keywords : []
+          });
+        }
+      });
+    } catch (e) { console.error("Error al cargar productos:", e); }
+  }
+
+  function renderResults(filtered) {
+    if (!resultsContainer) return;
+    resultsContainer.innerHTML = "";
+    if (!filtered.length) {
+      resultsContainer.innerHTML = `<div style="padding:20px;font-size:14px;">No se encontraron resultados</div>`;
+    } else {
+      filtered.forEach(p => {
+        const a = document.createElement("a");
+        a.className = "search-result-item";
+        a.href = window.SucessoStorefront?.productHref(p.nombre, 'dice-drp') || `collections/dice-drp/products/${encodeURIComponent(p.nombre)}/`;
+        a.innerHTML = `
+          <div class="product-image-wrapper">
+            <img src="${p.imagen_frontal}" class="front" alt="${p.titulo}">
+            <img src="${p.imagen_trasera}" class="back"  alt="${p.titulo}">
+          </div>
+          <div class="result-info">
+            <span class="name">${p.titulo}</span>
+            <span class="price">$${p.precio.toFixed(2)}</span>
+          </div>
+        `;
+        resultsContainer.appendChild(a);
+      });
+    }
+    resultsContainer.style.display = "grid";
+  }
+
+  if (input) {
+    input.addEventListener("input", () => {
+      clearTimeout(searchTimeout);
+      const q = input.value.toLowerCase().trim();
+      searchTimeout = setTimeout(() => {
+        if (!q) { if (resultsContainer) resultsContainer.style.display = "none"; return; }
+        const filtered = allProducts.filter(p =>
+          p.titulo.toLowerCase().includes(q) ||
+          p.nombre.toLowerCase().includes(q) ||
+          p.keywords.some(k => String(k||"").toLowerCase().includes(q))
+        );
+        renderResults(filtered);
+      }, 1000);
+    });
+  }
+
+  /* ============== BLOQUEO TOTAL DE SCROLL ============== */
+  let LOCKED = false;
+  let scrollY = 0;
+  const SCROLL_KEYS = new Set(["ArrowUp","ArrowDown","PageUp","PageDown","Home","End"," ","Spacebar"]);
+
+  function typingInSearch(target) {
+    if (!target) return false;
+    const inBar = target.closest && target.closest(".search-bar");
+    return !!inBar && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable === true);
+  }
+
+  function wheelHandler(e){ if (LOCKED) e.preventDefault(); }
+  function touchMoveHandler(e){ if (LOCKED) e.preventDefault(); }
+  function keyDownHandler(e){
+    if (!LOCKED) return;
+    if (typingInSearch(e.target)) return;
+    if (SCROLL_KEYS.has(e.key)) e.preventDefault();
+  }
+  // Registrar una sola vez (captura + non-passive)
+  window.addEventListener("wheel", wheelHandler, {capture:true, passive:false});
+  window.addEventListener("touchmove", touchMoveHandler, {capture:true, passive:false});
+  window.addEventListener("keydown", keyDownHandler, true);
+
+  function lockScroll() {
+    if (LOCKED) return;
+    LOCKED = true;
+    scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+
+    document.documentElement.classList.add("no-scroll");
+    document.body.classList.add("no-scroll","scroll-locked");
+    document.body.style.top = `-${scrollY}px`;
+    document.documentElement.style.overscrollBehavior = "none";
+    document.body.style.overscrollBehavior = "none";
+
+    // 🔒 también bloquea scroll interno de resultados (quita estas 2 líneas si quieres permitir scroll ahí)
+    if (resultsContainer) {
+      resultsContainer.dataset.prevOverflow = resultsContainer.style.overflow || "";
+      resultsContainer.style.overflow = "hidden";
+      resultsContainer.style.touchAction = "none";
+    }
+    if (navbar) navbar.classList.add("force-solid");
+  }
+
+  function unlockScroll() {
+    if (!LOCKED) return;
+    LOCKED = false;
+
+    document.documentElement.classList.remove("no-scroll");
+    document.body.classList.remove("no-scroll","scroll-locked");
+    document.body.style.top = "";
+    document.documentElement.style.overscrollBehavior = "";
+    document.body.style.overscrollBehavior = "";
+
+    if (resultsContainer) {
+      resultsContainer.style.overflow = resultsContainer.dataset.prevOverflow || "";
+      resultsContainer.style.touchAction = "";
+      delete resultsContainer.dataset.prevOverflow;
+      resultsContainer.style.display = "none";
+      resultsContainer.innerHTML = "";
+    }
+    if (input) input.value = "";
+    if (overlay) overlay.style.display = "none";
+    if (navbar) navbar.classList.remove("force-solid");
+
+    window.scrollTo(0, scrollY);
+  }
+
+  /* ============== Toggle + observador de estado ============== */
+  function isActive() { return searchBar && searchBar.classList.contains("active"); }
+
+  function openSearch() {
+    if (!searchBar || !overlay) return;
+    searchBar.classList.add("active");
+    overlay.style.display = "block";
+    if (input) input.focus();
+    lockScroll();
+  }
+
+  function closeSearch() {
+    if (!searchBar || !overlay) return;
+    searchBar.classList.add("hiding");
+    searchBar.classList.remove("active");
+    setTimeout(()=>searchBar.classList.remove("hiding"),200);
+    unlockScroll();
+  }
+
+  function toggleSearchBar() { isActive() ? closeSearch() : openSearch(); }
+  window.toggleSearchBar = toggleSearchBar;
+  // Reasignar al final para pisar otros scripts
+  window.addEventListener("load", () => { window.toggleSearchBar = toggleSearchBar; });
+
+  // Si otro script cambia la clase sin nuestro toggle: lo detectamos y aplicamos lock/unlock
+  if (searchBar) {
+    const mo = new MutationObserver(() => { isActive() ? lockScroll() : unlockScroll(); });
+    mo.observe(searchBar, { attributes:true, attributeFilter:["class"] });
+  }
+
+  // ESC para cerrar
+  document.addEventListener("keydown", (e) => {
+    if (LOCKED && e.key === "Escape") closeSearch();
+  });
+
+  /* ============== Init ============== */
+  loadProducts();
+</script>
+
+
+
+
+<!-- Sección de camisetas -->
+<main>
+  <header class="dice-drp-page-heading" aria-labelledby="dice-drp-title">
+    <h1 id="dice-drp-title" class="collection-route-title">Dice Drp<sup aria-label="4 products">4</sup></h1>
+  </header>
+  <section id="collections" class="collections">
+    <div class="collections-wrapper">
+      <section class="collection-grid tees-related-grid">    
+
+        <article class="collection-item related-product-card tees-product-card"
+                 data-tee-name="Sucesso Jackpot Tee"
+                 data-tee-slug="sucesso-jackpot-tee"
+                 data-tee-price="30"
+                 data-tee-image="images/jackpot-front.png">
+          <div class="related-product-media">
+            <a class="related-product-link" href="collections/dice-drp/products/sucesso-jackpot-tee/" aria-label="View Sucesso Jackpot Tee">
+              <img class="related-product-front" src="images/jackpot-front.png" alt="Sucesso Jackpot Tee - Frente" loading="lazy" decoding="async">
+              <img class="related-product-back" src="images/jackpot-back.png" alt="Sucesso Jackpot Tee - Espalda" loading="lazy" decoding="async">
+            </a>
+            <div class="related-size-bar tees-size-bar" aria-label="Available sizes">
+              <button class="related-size-btn tees-size-btn" type="button" data-tee-size="S" aria-label="Add Sucesso Jackpot Tee, size S, to cart">S</button>
+              <button class="related-size-btn tees-size-btn" type="button" data-tee-size="M" aria-label="Add Sucesso Jackpot Tee, size M, to cart">M</button>
+              <button class="related-size-btn tees-size-btn" type="button" data-tee-size="L" aria-label="Add Sucesso Jackpot Tee, size L, to cart">L</button>
+              <button class="related-size-btn tees-size-btn" type="button" data-tee-size="XL" aria-label="Add Sucesso Jackpot Tee, size XL, to cart">XL</button>
+            </div>
+          </div>
+          <a class="related-product-info related-product-info-link" href="collections/dice-drp/products/sucesso-jackpot-tee/">
+            <p class="related-product-name">Sucesso Jackpot Tee</p>
+            <p class="related-product-price">$30.00</p>
+          </a>
+        </article>
+
+        <article class="collection-item related-product-card tees-product-card"
+                 data-tee-name="Cherry Dice Tee"
+                 data-tee-slug="cherry-dice-tee"
+                 data-tee-price="30"
+                 data-tee-image="images/cherry-dice-front.png">
+          <div class="related-product-media">
+            <a class="related-product-link" href="collections/dice-drp/products/cherry-dice-tee/" aria-label="View Cherry Dice Tee">
+              <img class="related-product-front" src="images/cherry-dice-front.png" alt="Cherry Dice Tee - Frente" loading="lazy" decoding="async">
+              <img class="related-product-back" src="images/cherry-dice-back.png" alt="Cherry Dice Tee - Espalda" loading="lazy" decoding="async">
+            </a>
+            <div class="related-size-bar tees-size-bar" aria-label="Available sizes">
+              <button class="related-size-btn tees-size-btn" type="button" data-tee-size="S" aria-label="Add Cherry Dice Tee, size S, to cart">S</button>
+              <button class="related-size-btn tees-size-btn" type="button" data-tee-size="M" aria-label="Add Cherry Dice Tee, size M, to cart">M</button>
+              <button class="related-size-btn tees-size-btn" type="button" data-tee-size="L" aria-label="Add Cherry Dice Tee, size L, to cart">L</button>
+              <button class="related-size-btn tees-size-btn" type="button" data-tee-size="XL" aria-label="Add Cherry Dice Tee, size XL, to cart">XL</button>
+            </div>
+          </div>
+          <a class="related-product-info related-product-info-link" href="collections/dice-drp/products/cherry-dice-tee/">
+            <p class="related-product-name">Cherry Dice Tee</p>
+            <p class="related-product-price">$30.00</p>
+          </a>
+        </article>
+
+        <article class="collection-item related-product-card tees-product-card"
+                 data-tee-name="Chinese Success Tee"
+                 data-tee-slug="chinese-success-tee"
+                 data-tee-price="25"
+                 data-tee-image="images/chinese-front.png">
+          <div class="related-product-media">
+            <a class="related-product-link" href="collections/dice-drp/products/chinese-success-tee/" aria-label="View Chinese Success Tee">
+              <img class="related-product-front" src="images/chinese-front.png" alt="Chinese Success Tee - Frente" loading="lazy" decoding="async">
+              <img class="related-product-back" src="images/chinese-back.png" alt="Chinese Success Tee - Espalda" loading="lazy" decoding="async">
+            </a>
+            <div class="related-size-bar tees-size-bar" aria-label="Available sizes">
+              <button class="related-size-btn tees-size-btn" type="button" data-tee-size="S" aria-label="Add Chinese Success Tee, size S, to cart">S</button>
+              <button class="related-size-btn tees-size-btn" type="button" data-tee-size="M" aria-label="Add Chinese Success Tee, size M, to cart">M</button>
+              <button class="related-size-btn tees-size-btn" type="button" data-tee-size="L" aria-label="Add Chinese Success Tee, size L, to cart">L</button>
+              <button class="related-size-btn tees-size-btn" type="button" data-tee-size="XL" aria-label="Add Chinese Success Tee, size XL, to cart">XL</button>
+            </div>
+          </div>
+          <a class="related-product-info related-product-info-link" href="collections/dice-drp/products/chinese-success-tee/">
+            <p class="related-product-name">Chinese Success Tee</p>
+            <p class="related-product-price">$25.00</p>
+          </a>
+        </article>
+
+        <article class="collection-item related-product-card tees-product-card"
+                 data-tee-name="Crayon Tee"
+                 data-tee-slug="crayon-tee"
+                 data-tee-price="40"
+                 data-tee-image="images/crayon-front.png">
+          <div class="related-product-media">
+            <a class="related-product-link" href="collections/dice-drp/products/crayon-tee/" aria-label="View Crayon Tee">
+              <img class="related-product-front" src="images/crayon-front.png" alt="Crayon Tee - Frente" loading="lazy" decoding="async">
+              <img class="related-product-back" src="images/crayon-back.png" alt="Crayon Tee - Espalda" loading="lazy" decoding="async">
+            </a>
+            <div class="related-size-bar tees-size-bar" aria-label="Available sizes">
+              <button class="related-size-btn tees-size-btn" type="button" data-tee-size="S" aria-label="Add Crayon Tee, size S, to cart">S</button>
+              <button class="related-size-btn tees-size-btn" type="button" data-tee-size="M" aria-label="Add Crayon Tee, size M, to cart">M</button>
+              <button class="related-size-btn tees-size-btn" type="button" data-tee-size="L" aria-label="Add Crayon Tee, size L, to cart">L</button>
+              <button class="related-size-btn tees-size-btn" type="button" data-tee-size="XL" aria-label="Add Crayon Tee, size XL, to cart">XL</button>
+            </div>
+          </div>
+          <a class="related-product-info related-product-info-link" href="collections/dice-drp/products/crayon-tee/">
+            <p class="related-product-name">Crayon Tee</p>
+            <p class="related-product-price">$40.00</p>
+          </a>
+        </article>
+
+      </section>
+    </div>
+  </section>
+</main>
+
+  <!-- 🛒 Carrito lateral -->
+  <div id="cart-overlay" class="cart-overlay hidden">
+    <div class="cart-panel">
+      <div class="cart-header">
+<h2 data-i18n="your_cart">Your Cart</h2>
+        <button class="close-cart">&times;</button>
+      </div>
+      <div class="cart-items"></div>
+      <div class="cart-footer">
+<p class="cart-total"><span data-i18n="total">Total:</span> $0.00</p>
+<button class="checkout-btn" data-i18n="checkout">Checkout</button>
+<button id="clear-cart-btn" style="display:none;" data-i18n="empty_cart">Empty Cart</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+
+    const products = [
+      {
+        name: "Sucesso Jackpot Tee",
+        price: "$30.00",
+        image: "images/jackpot-back.png",
+        link: "collections/dice-drp/products/sucesso-jackpot-tee/"
+      },
+      {
+        name: "Cherry Dice Tee",
+        price: "$30.00",
+        image: "images/cherry-dice-back.png",
+        link: "collections/dice-drp/products/cherry-dice-tee/"
+      },
+      {
+        name: "Chinese Success Tee",
+        price: "$25.00",
+        image: "images/chinese-back.png",
+        link: "collections/dice-drp/products/chinese-success-tee/"
+      },
+    
+    {
+  name: "Crayon Tee",
+  price: "$40.00",
+  image: "images/crayon-back.png",
+  link: "collections/dice-drp/products/crayon-tee/"
+}
+
+    
+    ];
+
+    function renderResults(filtered) {
+      searchResults.innerHTML = "";
+      if (filtered.length === 0) {
+        searchResults.innerHTML = `<div class="no-results">No se encontraron productos</div>`;
+      } else {
+        filtered.forEach(product => {
+          const item = document.createElement("a");
+          item.className = "search-item";
+          item.href = product.link;
+          item.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <div class="info">
+              <strong>${product.name}</strong><br>
+              <span>${product.price}</span>
+            </div>
+          `;
+          searchResults.appendChild(item);
+        });
+      }
+      searchResults.style.display = "block";
+    }
+
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.trim().toLowerCase();
+      if (query === "") {
+        searchResults.style.display = "none";
+        return;
+      }
+      const filtered = products.filter(p =>
+        p.name.toLowerCase().includes(query)
+      );
+      renderResults(filtered);
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!document.querySelector(".search-wrapper").contains(e.target)) {
+        searchResults.style.display = "none";
+      }
+    });
+  });
+</script>
+
+<!-- 📱 FOOTER PARA CELULARES (solo visible en pantallas pequeñas) -->
+
+<!-- Sucesso continuous footer marquee -->
+
+
+
+  
+
+<footer class="sucesso-site-footer" aria-label="Footer">
+  <div class="sucesso-footer-inner">
+    <div class="sucesso-footer-legal">
+      <h2 class="sucesso-footer-heading" data-i18n="footer_policies_conditions">POLÍTICAS Y CONDICIONES</h2>
+      <ul class="sucesso-footer-links">
+        <li><a href="politica-de-privacidad.html" data-i18n="footer_privacy_policy">POLÍTICA DE PRIVACIDAD</a></li>
+        <li><a href="cookies.html" data-i18n="footer_cookies">COOKIES</a></li>
+        <li><a href="terms-and-conditions.html" data-i18n="footer_terms">TÉRMINOS Y CONDICIONES</a></li>
+        <li><a href="tracking.html" data-i18n="footer_order_tracking">SEGUIMIENTO DE PEDIDO</a></li>
+      </ul>
+      <div class="sucesso-footer-social">
+        <a class="sucesso-footer-instagram" href="https://www.instagram.com/sucessobrand" target="_blank" rel="noopener noreferrer" aria-label="Instagram @sucessobrand">
+          <img src="/images/instagram-icon.svg" alt="Instagram">
+        </a>
+      </div>
+    </div>
+
+    <a class="sucesso-footer-brandmark" href="index.html" aria-label="Sucesso home">
+      <img src="images/logo cherry png.png" alt="Sucesso">
+    </a>
+
+    <div class="sucesso-footer-payments" aria-label="Métodos de pago admitidos">
+      <img class="sucesso-footer-payment-logo" src="images/payment-amex.svg" alt="American Express">
+      <img class="sucesso-footer-payment-logo" src="images/payment-discover.svg" alt="Discover">
+      <img class="sucesso-footer-payment-logo" src="images/payment-mastercard.svg" alt="Mastercard">
+      <img class="sucesso-footer-payment-logo" src="images/payment-visa.svg" alt="Visa">
+      <span class="sucesso-footer-payment-tile"><img src="images/payment-paypal.svg" alt="PayPal"></span>
+      <span class="sucesso-footer-payment-tile zelle"><img src="images/payment-zelle.png" alt="Zelle"></span>
+    </div>
+
+    <p class="sucesso-footer-copy">© SUCESSO</p>
+  </div>
+</footer>
+
+<div id="language-popup" class="language-popup">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <strong style="font-size: 12px; letter-spacing: 1px;">LANGUAGE SETTINGS</strong>
+    <button class="close-btn" onclick="closeLanguagePopup()">&times;</button>
+  </div>
+  <label for="language-select" style="font-size: 10px; display: block; margin-bottom: 8px;">SELECT LANGUAGE:</label>
+  <select id="language-select" style="width: 100%; padding: 10px; font-size: 12px; border: 1px solid #ccc;">
+    <option value="en">English</option>
+    <option value="es">Español</option>
+  </select>
+  <button onclick="saveLanguage()" style="width: 100%; margin-top: 20px; padding: 10px; background: #233f32; color: white; font-size: 12px; border: none; cursor: pointer; text-transform: uppercase;">Save</button>
+</div>
+
+<script>
+  const popup = document.getElementById("language-popup");
+  const trigger = document.getElementById("openLanguagePopup");
+  const select = document.getElementById("language-select");
+
+  trigger.addEventListener("click", (e) => {
+    e.preventDefault();
+    const savedLang = localStorage.getItem("preferredLang");
+    const currentLang = savedLang || document.documentElement.lang || "en";
+    select.value = currentLang; // Mostrar idioma actual
+    popup.classList.add("show");
+  });
+
+  function closeLanguagePopup() {
+    popup.classList.remove("show");
+  }
+
+function saveLanguage() {
+  const lang = select.value;
+  localStorage.setItem("preferredLang", lang); // Guardar idioma
+  setLanguage(lang);
+  closeLanguagePopup();
+
+  // 👇 Esto forzará que el carrito se re-renderice con las etiquetas traducidas
+  if (typeof updateCart === "function") {
+    updateCart();
+  }
+}
+
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(res => res.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        document.documentElement.lang = lang;
+      })
+      .catch(err => console.error("Error cargando idioma:", err));
+  }
+
+  // Al cargar la página, aplicar idioma guardado
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("preferredLang") || "en";
+    select.value = savedLang;
+    setLanguage(savedLang);
+  });
+</script>
+
+
+  <script>
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("loader");
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 2500);
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("abrir") === "carrito") {
+        const cartBtn = document.getElementById("cart-btn");
+        if (cartBtn) {
+          setTimeout(() => cartBtn.click(), 300); // espera a que todo cargue
+        }
+      }
+    });
+  </script>
+
+  <script src="script.js"></script>
+  <script src="cart.js"></script>
+  <script src="tees-product-grid.js"></script>
+  <script src="styles.css"></script>
+
+<script>
+  const langSwitcher = document.getElementById("languageSwitcher");
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(response => response.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        localStorage.setItem("preferredLang", lang);
+      })
+      .catch(error => console.error("Error cargando idioma:", error));
+  }
+
+  langSwitcher.addEventListener("change", (e) => {
+    setLanguage(e.target.value);
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("preferredLang") || "en";
+    langSwitcher.value = savedLang;
+    setLanguage(savedLang);
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const langToggleHeader = document.getElementById("languageToggle");
+  const langToggleSidebar = document.getElementById("languageToggleSidebar");
+  const popup = document.getElementById("language-popup");
+  const languageSelect = document.getElementById("language-select");
+  const sidebar = document.querySelector(".sidebar");
+  const overlay = document.getElementById("overlay");
+
+  const currentLang = localStorage.getItem("preferredLang") || "en";
+  languageSelect.value = currentLang;
+
+  function updateToggleText(lang) {
+    const text = lang === "es" ? "ES | EN" : "EN | ES";
+    if (langToggleHeader) langToggleHeader.textContent = text;
+    if (langToggleSidebar) langToggleSidebar.textContent = text;
+  }
+
+  function openLanguagePopup() {
+    popup.classList.add("show");
+    languageSelect.value = localStorage.getItem("preferredLang") || "en";
+  }
+
+  if (langToggleHeader) {
+    langToggleHeader.addEventListener("click", () => {
+      openLanguagePopup();
+    });
+  }
+
+  if (langToggleSidebar) {
+  langToggleSidebar.addEventListener("click", () => {
+    openLanguagePopup(); // ✅ Mantener el sidebar abierto
+  });
+}
+
+
+
+  window.saveLanguage = function () {
+    const selectedLang = languageSelect.value;
+    localStorage.setItem("preferredLang", selectedLang);
+    setLanguage(selectedLang);
+    updateToggleText(selectedLang);
+    popup.classList.remove("show");
+    if (typeof updateCart === "function") updateCart();
+  };
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(res => res.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        document.documentElement.lang = lang;
+      })
+      .catch(err => console.error("Error cargando idioma:", err));
+  }
+
+  updateToggleText(currentLang);
+  setLanguage(currentLang);
+});
+</script>
+
+
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <a href="index.html" data-i18n="nav_new_in">NEW IN</a>
+  <a href="collections/t-shirts/" data-i18n="nav_tees">T-SHIRTS</a>
+  <a href="about.html" data-i18n="nav_about">ABOUT</a>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-auth-lang">
+      <a id="sidebar-account-link" href="login.html" class="sidebar-link">
+        <img src="images/icon account.png" alt="Login" class="sidebar-icon" />
+        <span id="sidebar-account-text" data-i18n="sidebar_account">Account</span>
+      </a>
+      <div class="lang-btn" id="languageToggleSidebar">EN | ES</div>
+    </div>
+  </div>
+</aside>
+
+  <!-- SCRIPT -->
+<script>
+  const toggleBtn = document.querySelector('.menu-toggle');
+  const sidebar = document.querySelector('.sidebar');
+  const closeBtn = document.querySelector('.close-sidebar');
+
+toggleBtn.addEventListener('click', () => {
+  const icon = toggleBtn.querySelector('.menu-icon');
+  sidebar.classList.toggle('active');
+  icon.classList.toggle('open');
+});
+
+closeBtn.addEventListener('click', () => {
+  const icon = toggleBtn.querySelector('.menu-icon');
+  sidebar.classList.remove('active');
+  icon.classList.remove('open');
+});
+
+
+</script>
+
+<script>
+function updateLanguageToggleVisibility() {
+  const navDesktop = document.querySelector('.nav-desktop');
+  const languageToggle = document.getElementById('languageToggle');
+
+  if (!navDesktop || !languageToggle) return;
+
+  const navVisible = window.getComputedStyle(navDesktop).display !== 'none';
+
+  // Mostrar solo si los nav links están visibles (pantalla grande)
+  languageToggle.style.display = navVisible ? 'flex' : 'none';
+}
+
+// Ejecutar al cargar
+document.addEventListener("DOMContentLoaded", updateLanguageToggleVisibility);
+
+// Ejecutar al redimensionar
+window.addEventListener("resize", updateLanguageToggleVisibility);
+</script>
+
+
+<script>
+const menuToggle = document.querySelector('.menu-toggle');
+const menuIcon = document.querySelector('.menu-icon');
+
+menuToggle.addEventListener('click', () => {
+  menuIcon.classList.toggle('open');
+});
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggles = document.querySelectorAll(".info-toggle");
+    toggles.forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        const section = toggle.closest(".info-section");
+        section.classList.toggle("active");
+      });
+    });
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.querySelector('.search-bar input');
+  const resultsContainer = document.getElementById('searchResults');
+  const searchBar = document.getElementById('searchBar');
+  const overlay = document.getElementById('overlay');
+  let allProducts = []; // Esto lo tienes cargado ya con loadProducts()
+  let searchTimeout;
+
+  function hideResults() {
+    resultsContainer.innerHTML = "";
+    resultsContainer.style.display = "none";
+  }
+
+  input.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    const query = input.value.toLowerCase().trim();
+
+    searchTimeout = setTimeout(() => {
+      if (query === "") {
+        hideResults();
+      } else {
+        const filtered = allProducts.filter(product =>
+          product.titulo.toLowerCase().includes(query) ||
+          product.nombre.toLowerCase().includes(query) ||
+          product.keywords.some(k => k.toLowerCase().includes(query))
+        );
+
+        renderResults(filtered); // Ya la tienes definida
+      }
+    }, 1000); // ✅ Mismo delay para mostrar u ocultar
+  });
+
+  window.toggleSearchBar = function () {
+    const isActive = searchBar.classList.contains('active');
+    if (isActive) {
+      searchBar.classList.add('hiding');
+      searchBar.classList.remove('active');
+      overlay.style.display = 'none';
+      hideResults();
+      input.value = "";
+      setTimeout(() => {
+        searchBar.classList.remove('hiding');
+      }, 200);
+    } else {
+      searchBar.classList.add('active');
+      overlay.style.display = 'block';
+      input.focus();
+    }
+  };
+});
+</script>
+
+<script>
+/* --- 1) Conectar acciones al modo TEXTO (desktop XL) --- */
+document.addEventListener('DOMContentLoaded', () => {
+  // Search (texto) ya llama a toggleSearchBar() en el onClick del botón.
+
+  // Account (texto) debe comportarse como account-link original con Auth
+  const accountLinkText = document.getElementById('account-link-text');
+  if (accountLinkText) {
+    accountLinkText.addEventListener('click', (e) => {
+      e.preventDefault();
+      try {
+        // Si ya hay Firebase Auth cargado en otro script:
+        if (window.firebaseAuth && typeof window.firebaseAuth.onAuthStateChanged === 'function') {
+          window.firebaseAuth.onAuthStateChanged((user) => {
+            window.location.href = user ? 'mi-cuenta.html' : 'login.html';
+          });
+        } else {
+          // Fallback: imitar el comportamiento del link con ID account-link
+          const original = document.getElementById('account-link');
+          if (original) original.click(); else window.location.href = 'login.html';
+        }
+      } catch (err) {
+        window.location.href = 'login.html';
+      }
+    });
+  }
+
+  // Cart (texto) debe abrir el mismo panel que el ícono
+  const cartTextBtn = document.getElementById('cart-text-btn');
+  const cartIconBtn = document.getElementById('cart-btn');
+  if (cartTextBtn && cartIconBtn) {
+    cartTextBtn.addEventListener('click', () => cartIconBtn.click());
+  }
+});
+
+/* --- 2) Contador unificado: actualiza badge (ícono) y texto (Cart (n)) --- */
+(function setupCartCountSync() {
+  const badge = document.getElementById('cart-count');       // burbuja en ícono
+  const textCount = document.getElementById('cart-count-text'); // (n) en texto
+
+  function safeParse(json) {
+    try { return JSON.parse(json); } catch { return null; }
+  }
+
+  function computeQtyFromArray(arr) {
+    if (!Array.isArray(arr)) return 0;
+    return arr.reduce((sum, item) => {
+      const q = (item && (item.quantity ?? item.qty ?? item.cantidad ?? 1)) ?? 1;
+      return sum + (Number.isFinite(+q) ? +q : 1);
+    }, 0);
+  }
+
+  function readCartQty() {
+    // Intenta varias claves comunes:
+    const keys = ['carrito'];
+    for (const k of keys) {
+      const raw = localStorage.getItem(k);
+      if (!raw) continue;
+      const data = safeParse(raw);
+      if (!data) continue;
+      // si es objeto con items
+      if (data && Array.isArray(data.items)) return computeQtyFromArray(data.items);
+      // si es array
+      if (Array.isArray(data)) return computeQtyFromArray(data);
+      // si es objeto con conteo directo
+      if (typeof data.totalQty === 'number') return data.totalQty;
+      if (typeof data.count === 'number') return data.count;
+    }
+    // Como fallback, si existe window.cartItems (algunos setups lo exponen)
+    if (Array.isArray(window.cartItems)) return computeQtyFromArray(window.cartItems);
+    return 0;
+  }
+
+  function applyCount(n) {
+    if (badge) badge.textContent = String(n);
+    if (textCount) textCount.textContent = `(${n})`;
+  }
+
+  // Actualiza inmediatamente
+  applyCount(readCartQty());
+
+  // Escucha cambios por almacenamiento (otras pestañas / scripts que escriben)
+  window.addEventListener('storage', (e) => {
+    if (['cart','cartItems','carrito','sucesso_cart'].includes(e.key)) {
+      applyCount(readCartQty());
+    }
+  });
+
+  // Si tu cart.js dispara este evento, reaccionamos al instante:
+  window.addEventListener('cart:updated', () => {
+    applyCount(readCartQty());
+  });
+
+  // Fallback polling suave por si el carrito se actualiza sin eventos:
+  let last = null;
+  const tick = () => {
+    const qty = readCartQty();
+    if (qty !== last) {
+      last = qty;
+      applyCount(qty);
+    }
+  };
+  const interval = setInterval(tick, 800);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) clearInterval(interval);
+    else setInterval(tick, 800);
+  });
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+
+  const isTeesPage = () => {
+    const file = location.pathname.split('/').pop().toLowerCase();
+    return file === 'tees.html' || (file === '' && document.body.classList.contains('tees-page'));
+  };
+
+  function openShop() {
+    const shop = document.getElementById('nav-shop');
+    if (!shop) return;
+    shop.classList.add('open');
+    const dd = shop.querySelector('.dropdown');
+    const arrow = shop.querySelector('.nav-arrow');
+    if (dd) dd.hidden = false;
+    if (arrow) arrow.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeAll({ exceptShop = false } = {}) {
+    document.querySelectorAll('.nav-item.has-dropdown').forEach(it => {
+      if (exceptShop && it.id === 'nav-shop') return; // 👈 no cerrar SHOP si está bloqueado
+      it.classList.remove('open');
+      const dd = it.querySelector('.dropdown');
+      if (dd) dd.hidden = true;
+      const arrow = it.querySelector('.nav-arrow');
+      if (arrow) arrow.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function lockShopInteractions() {
+    const shop = document.getElementById('nav-shop');
+    if (!shop) return;
+    const arrow = shop.querySelector('.nav-arrow');
+
+    // Deshabilitar la flecha totalmente en tees desktop XL
+    if (arrow) {
+      arrow.setAttribute('aria-disabled', 'true');
+      arrow.style.pointerEvents = 'none';
+      arrow.style.cursor = 'default';
+      shop.classList.add('locked'); // por si querés estilizar .locked en CSS
+    }
+
+    // Clic fuera: NO cerramos SHOP, solo los demás
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav-item.has-dropdown')) {
+        closeAll({ exceptShop: true });
+      }
+    }, { passive: true });
+
+    // Abrir LEGAL/SUPPORT no debe cerrar SHOP
+    [['nav-legal'], ['nav-support']].forEach(([id]) => {
+      const li = document.getElementById(id);
+      if (!li) return;
+      const main = li.querySelector('.nav-main');
+      const arrowBtn = li.querySelector('.nav-arrow');
+      const dd = li.querySelector('.dropdown');
+
+      const toggle = (e) => {
+        e.stopPropagation();
+        const willOpen = !li.classList.contains('open');
+        closeAll({ exceptShop: true }); // 👈 mantené SHOP abierto
+        if (willOpen) {
+          li.classList.add('open');
+          if (dd) dd.hidden = false;
+          if (arrowBtn) arrowBtn.setAttribute('aria-expanded', 'true');
+        }
+      };
+
+      main.onclick = toggle;
+      arrowBtn.onclick = toggle;
+    });
+
+    // Clic en el texto SHOP sigue yendo a tees.html (no afecta al lock)
+    const shopMain = shop.querySelector('.nav-main');
+    if (shopMain) shopMain.onclick = () => { window.location.href = 'tees.html'; };
+  }
+
+  function setupDesktopNav() {
+    const LOCK_SHOP = mq.matches && isTeesPage();
+
+    // Estado base
+    if (LOCK_SHOP) {
+      closeAll({ exceptShop: true });
+      openShop();
+      lockShopInteractions();
+    } else {
+      // Modo normal en otras páginas o tamaños
+      closeAll();
+      // ---- comportamiento normal (tu lógica previa) ----
+      const shop = document.getElementById('nav-shop');
+      if (shop) {
+        const main = shop.querySelector('.nav-main');
+        const arrow = shop.querySelector('.nav-arrow');
+        const dd = shop.querySelector('.dropdown');
+
+        if (main) main.onclick = () => { window.location.href = 'tees.html'; };
+        if (arrow) {
+          arrow.onclick = (e) => {
+            e.stopPropagation();
+            const willOpen = !shop.classList.contains('open');
+            closeAll();
+            if (willOpen) {
+              shop.classList.add('open');
+              if (dd) dd.hidden = false;
+              arrow.setAttribute('aria-expanded', 'true');
+            }
+          };
+        }
+      }
+
+      // LEGAL/SUPPORT normales
+      [['nav-legal'], ['nav-support']].forEach(([id]) => {
+        const li = document.getElementById(id);
+        if (!li) return;
+        const main = li.querySelector('.nav-main');
+        const arrow = li.querySelector('.nav-arrow');
+        const dd = li.querySelector('.dropdown');
+
+        const toggle = (e) => {
+          e.stopPropagation();
+          const willOpen = !li.classList.contains('open');
+          closeAll();
+          if (willOpen) {
+            li.classList.add('open');
+            if (dd) dd.hidden = false;
+            if (arrow) arrow.setAttribute('aria-expanded', 'true');
+          }
+        };
+
+        main.onclick = toggle;
+        arrow.onclick = toggle;
+      });
+
+      // Clic fuera: cerrar todo
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nav-item.has-dropdown')) closeAll();
+      }, { passive: true });
+    }
+  }
+
+  // Inicial
+  setupDesktopNav();
+
+  // Al cambiar ancho, reconfigurar
+  mq.addEventListener('change', setupDesktopNav);
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const isTeesPage = location.pathname.endsWith("tees.html");
+  if (isTeesPage) {
+    const shop = document.getElementById("nav-shop");
+    if (shop) {
+      shop.classList.add("open");
+      const dd = shop.querySelector(".dropdown");
+      const arrow = shop.querySelector(".nav-arrow");
+      if (dd) dd.hidden = false;
+      if (arrow) arrow.setAttribute("aria-expanded", "true");
+    }
+  }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+  const isTees = location.pathname.toLowerCase().endsWith('tees.html');
+
+  if (!mq.matches || !isTees) return;
+
+  // --- refs
+  const shop     = document.getElementById('nav-shop');
+  const shopDD   = shop?.querySelector('.dropdown');
+  const shopMain = shop?.querySelector('.nav-main');
+  const shopArr  = shop?.querySelector('.nav-arrow');
+
+  const legal     = document.getElementById('nav-legal');
+  const legalDD   = legal?.querySelector('.dropdown');
+  const legalMain = legal?.querySelector('.nav-main');
+  const legalArr  = legal?.querySelector('.nav-arrow');
+
+  const support     = document.getElementById('nav-support');
+  const supportDD   = support?.querySelector('.dropdown');
+  const supportMain = support?.querySelector('.nav-main');
+  const supportArr  = support?.querySelector('.nav-arrow');
+
+  // --- helpers
+  const open  = (li, dd) => { li?.classList.add('open');   if (dd) dd.hidden = false;  li?.querySelector('.nav-arrow')?.setAttribute('aria-expanded','true'); };
+  const close = (li, dd) => { li?.classList.remove('open'); if (dd) dd.hidden = true;   li?.querySelector('.nav-arrow')?.setAttribute('aria-expanded','false'); };
+
+  // Estado inicial: SHOP visible; LEGAL/SUPPORT ocultos
+  open(shop, shopDD);
+  close(legal, legalDD);
+  close(support, supportDD);
+
+  // Asegurar que la flecha de SHOP no esté deshabilitada por scripts previos
+  if (shopArr) { shopArr.style.pointerEvents = 'auto'; shopArr.removeAttribute('aria-disabled'); }
+
+  // Al abrir LEGAL o SUPPORT => ocultar dropdown de SHOP (TEES desaparece)
+  const openSection = (li) => {
+    if (li === legal)  { open(legal, legalDD);   close(support, supportDD); }
+    if (li === support){ open(support, supportDD); close(legal, legalDD);   }
+    close(shop, shopDD); // ocultar TEES; la flecha de SHOP sigue hacia abajo por CSS
+  };
+
+  // Volver a SHOP => cerrar otros y mostrar TEES resaltado
+  const backToShop = () => {
+    close(legal, legalDD);
+    close(support, supportDD);
+    open(shop, shopDD);
+  };
+
+  // Enganchar en fase de captura para sobreescribir handlers previos
+  const bindOpen = (btn, li) => {
+    if (!btn) return;
+    btn.addEventListener('click', (e) => {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      openSection(li);
+    }, true);
+  };
+
+  bindOpen(legalMain,  legal);
+  bindOpen(legalArr,   legal);
+  bindOpen(supportMain, support);
+  bindOpen(supportArr,  support);
+
+  [shopMain, shopArr].forEach(btn => {
+    if (!btn) return;
+    btn.addEventListener('click', (e) => {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      backToShop();
+    }, true);
+  });
+
+  // Clic fuera: cerrar LEGAL/SUPPORT y volver a mostrar TEES
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav-item.has-dropdown')) {
+      close(legal, legalDD);
+      close(support, supportDD);
+      open(shop, shopDD);
+    }
+  }, true);
+});
+</script>
+
+<script>
+/* === NAV estricto para tees.html @ ≥1536px === */
+document.addEventListener('DOMContentLoaded', () => {
+  const isTees = location.pathname.toLowerCase().endsWith('tees.html') || document.body.classList.contains('tees-page');
+  const desktopXL = matchMedia('(min-width:1536px)').matches;
+  if (!isTees || !desktopXL) return;
+
+  const shop    = document.getElementById('nav-shop');
+  const legal   = document.getElementById('nav-legal');
+  const support = document.getElementById('nav-support');
+
+  const shopDD    = shop?.querySelector('.dropdown');
+  const legalDD   = legal?.querySelector('.dropdown');
+  const supportDD = support?.querySelector('.dropdown');
+
+  const shopArrow    = shop?.querySelector('.nav-arrow');
+  const legalArrow   = legal?.querySelector('.nav-arrow');
+  const supportArrow = support?.querySelector('.nav-arrow');
+
+  const open  = (li, dd) => { li?.classList.add('open');  if (dd) dd.hidden = false;  li?.querySelector('.nav-arrow')?.setAttribute('aria-expanded','true'); };
+  const close = (li, dd) => { li?.classList.remove('open'); if (dd) dd.hidden = true; li?.querySelector('.nav-arrow')?.setAttribute('aria-expanded','false'); };
+  const isOpen = (li) => li?.classList.contains('open');
+
+  // Estado inicial: TEES visible
+  open(shop, shopDD);
+  close(legal, legalDD);
+  close(support, supportDD);
+
+  // --- SHOP flecha ---
+  if (shopArrow) {
+    shopArrow.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      // Vuelve a TEES siempre, cerrando los otros
+      close(legal, legalDD);
+      close(support, supportDD);
+      open(shop, shopDD);
+    });
+  }
+
+  // --- LEGAL ---
+  if (legalArrow) {
+    legalArrow.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      if (isOpen(legal)) {
+        close(legal, legalDD);
+        open(shop, shopDD); // volver a TEES
+      } else {
+        open(legal, legalDD);
+        close(support, supportDD);
+        close(shop, shopDD); // ocultar TEES
+      }
+    });
+  }
+
+  // --- SUPPORT ---
+  if (supportArrow) {
+    supportArrow.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      if (isOpen(support)) {
+        close(support, supportDD);
+        open(shop, shopDD); // volver a TEES
+      } else {
+        open(support, supportDD);
+        close(legal, legalDD);
+        close(shop, shopDD); // ocultar TEES
+      }
+    });
+  }
+
+  // Bloquear clicks fuera: NO hacemos nada (para que TEES no reaparezca por error)
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav-item.has-dropdown')) {
+      // No cerrar ni abrir nada aquí. Se ignora.
+    }
+  }, true);
+});
+</script>
+
+<script>
+/* === SUPPORT como SHOP en Desktop XL (≥1536px) ===
+   - Clic en texto "SUPPORT" => navegar a contactanos.html
+   - Clic en flechita => sólo abrir/cerrar dropdown
+   - No toca el comportamiento en laptops/móviles
+   - Usa captura + stopImmediatePropagation para imponerse a listeners previos
+*/
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+
+  function closeOthers(except) {
+    document.querySelectorAll('.nav-item.has-dropdown').forEach(li => {
+      if (li === except) return;
+      li.classList.remove('open');
+      const dd = li.querySelector('.dropdown');
+      if (dd) dd.hidden = true;
+      li.querySelector('.nav-arrow')?.setAttribute('aria-expanded','false');
+    });
+  }
+
+  function wireSupportHandlers() {
+    const support = document.getElementById('nav-support');
+    if (!support) return;
+
+    const supportMain  = support.querySelector('.nav-main');
+    const supportArrow = support.querySelector('.nav-arrow');
+    const supportDD    = support.querySelector('.dropdown');
+
+    // Limpia posibles estados
+    supportMain?.replaceWith(supportMain.cloneNode(true));
+    supportArrow?.replaceWith(supportArrow.cloneNode(true));
+
+    // Re-obtener referencias tras cloneNode
+    const main  = support.querySelector('.nav-main');
+    const arrow = support.querySelector('.nav-arrow');
+    const dd    = supportDD;
+
+    if (!main || !arrow || !dd) return;
+
+    // Desktop XL: aplicar comportamiento especial
+    if (mq.matches) {
+      // 1) Clic en texto SUPPORT => navegar
+      main.addEventListener('click', (e) => {
+        e.stopImmediatePropagation();
+        // No prevenimos el default en <button>, solo navegamos:
+        window.location.href = 'contactanos.html';
+      }, true); // captura
+
+      // 2) Clic en flecha => toggle dropdown (sin navegar)
+      arrow.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        const willOpen = !support.classList.contains('open');
+        closeOthers(support);
+
+        support.classList.toggle('open', willOpen);
+        dd.hidden = !willOpen;
+        arrow.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      }, true); // captura
+    }
+    // En tamaños <1536px no se engancha nada nuevo: todo queda como ya lo tienes
+  }
+
+  // Wire al inicio y en cambios de tamaño
+  wireSupportHandlers();
+  mq.addEventListener('change', wireSupportHandlers);
+});
+</script>
+
+<script>
+/* === BRAND como SHOP en Desktop XL (≥1536px) ===
+   - Clic en texto "BRAND" => navegar a about.html
+   - Clic en flechita => sólo abrir/cerrar su dropdown
+   - No toca el comportamiento en laptops/móviles
+   - Se cierra cualquier otro dropdown abierto
+*/
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+
+  function closeOthers(except) {
+    document.querySelectorAll('.nav-item.has-dropdown').forEach(li => {
+      if (li === except) return;
+      li.classList.remove('open');
+      const dd = li.querySelector('.dropdown');
+      if (dd) dd.hidden = true;
+      li.querySelector('.nav-arrow')?.setAttribute('aria-expanded','false');
+    });
+  }
+
+  function wireBrandHandlers() {
+    const brand = document.getElementById('nav-brand');
+    if (!brand) return;
+
+    const brandMain  = brand.querySelector('.nav-main');
+    const brandArrow = brand.querySelector('.nav-arrow');
+    const brandDD    = brand.querySelector('.dropdown');
+
+    // Reemplazar listeners previos (si existieran)
+    brandMain?.replaceWith(brandMain.cloneNode(true));
+    brandArrow?.replaceWith(brandArrow.cloneNode(true));
+
+    // Re-obtener referencias
+    const main  = brand.querySelector('.nav-main');
+    const arrow = brand.querySelector('.nav-arrow');
+    const dd    = brandDD;
+
+    if (!main || !arrow || !dd) return;
+
+    if (mq.matches) {
+      // 1) Clic en texto BRAND => navegar a about.html
+      main.addEventListener('click', (e) => {
+        e.stopImmediatePropagation();
+        window.location.href = 'about.html';
+      }, true); // captura
+
+      // 2) Clic en flecha => toggle dropdown (sin navegar)
+      arrow.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        const willOpen = !brand.classList.contains('open');
+        closeOthers(brand);
+
+        brand.classList.toggle('open', willOpen);
+        dd.hidden = !willOpen;
+        arrow.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      }, true); // captura
+    }
+    // En <1536px: no hacemos nada extra; conserva tu comportamiento móvil
+  }
+
+  // Inicial + en cambios de tamaño
+  wireBrandHandlers();
+  mq.addEventListener('change', wireBrandHandlers);
+});
+</script>
+
+<script>
+  function showLoader() {
+    const l = document.getElementById('loader');
+    if (!l) return;
+    l.style.display = 'flex';
+    // forzamos reflow para que la transición aplique
+    void l.offsetWidth;
+    l.style.opacity = '1';
+    l.style.visibility = 'visible';
+  }
+  function hideLoader(afterMs = 600) {
+    const l = document.getElementById('loader');
+    if (!l) return;
+    // dejamos que se vea un toque y luego ocultamos suave
+    setTimeout(() => {
+      l.style.opacity = '0';
+      l.style.visibility = 'hidden';
+      setTimeout(() => { l.style.display = 'none'; }, 400); // igual a tu transition
+    }, afterMs);
+  }
+</script>
+
+
+<script>
+/* DICE DRP: navbar and fixed title strip scroll as one continuous unit. */
+(function(){
+  'use strict';
+  if(!document.body.classList.contains('collection-page')) return;
+
+  const body=document.body;
+  const nav=document.querySelector('header.navbar');
+  let lastY=window.scrollY||0;
+  let ticking=false;
+
+  function syncNavHeight(){
+    if(!nav) return;
+    const h=Math.max(1,Math.round(nav.getBoundingClientRect().height||70));
+    body.style.setProperty('--dice-nav-height',h+'px');
+  }
+
+  function updateScrollState(){
+    const y=window.scrollY||0;
+    if(y>90 && y>lastY+2) body.classList.add('su-dice-nav-scrolled');
+    else if(y<lastY-2 || y<40) body.classList.remove('su-dice-nav-scrolled');
+    lastY=y;
+    ticking=false;
+  }
+
+  syncNavHeight();
+  window.addEventListener('resize',syncNavHeight,{passive:true});
+  window.addEventListener('scroll',function(){
+    if(ticking) return;
+    ticking=true;
+    requestAnimationFrame(updateScrollState);
+  },{passive:true});
+})();
+</script>
+
+<script src="support-nav-fix.js"></script>
+
+<script src="storefront-enhancements.js"></script>
+  <script src="mobile-menu-refresh.js"></script>
+</body>
+</html>
