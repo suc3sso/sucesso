@@ -1,0 +1,3288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="../../../../">
+<script src="bcv-rate.js"></script>
+<script src="country-settings.js" defer></script>
+<script src="checkout-return.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details - Sucesso</title>
+  <link rel="icon" href="images/sucesso fav icon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .loader {
+      position: fixed;
+      inset: 0;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .loader img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      animation: zoomInClean 2s ease forwards;
+    }
+
+    @keyframes zoomInClean {
+      0% {
+        transform: scale(0.1);
+        opacity: 0;
+      }
+      70% {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+      .account-icon, .cart-icon {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+  
+.cart-icon:hover,
+.search-toggle:hover,
+.account-icon:hover {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+
+    .collection-item .tallas {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      font-size: 0.85rem;
+      text-align: center;
+      color: #233f32;
+      margin-top: 6px;
+      pointer-events: none;
+    }
+
+    .collection-item:hover .tallas {
+      opacity: 1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Syne', sans-serif; background-color: #fff; }
+    header.navbar {
+      position: fixed; top: 0; width: 100%; height: 70px; background-color: white;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 20px; z-index: 1001; border-bottom: 1px solid #e5e5e5;
+    }
+    .navbar-left, .navbar-right {
+      display: flex; align-items: center; gap: 30px;
+    }
+    .navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+    .logo { height: 35px; }
+    .nav-link {
+      text-decoration: none; color: #000; font-weight: 600; font-size: 14px;
+      transition: opacity 0.3s ease;
+    }
+    .nav-link:hover { opacity: 1; }
+    .nav-icon, .search-toggle {
+      background: none; border: none; font-size: 18px; cursor: pointer;
+      color: #000; transition: opacity 0.3s ease;
+    }
+    .nav-icon:hover, .search-toggle:hover { opacity: 0.5; }
+    .overlay {
+      position: fixed; top: 70px; left: 0; width: 100%; height: calc(100% - 70px);
+      background-color: rgba(0, 0, 0, 0.3); z-index: 1000; display: none;
+    }
+    .search-bar {
+      position: fixed; top: 70px; left: 0; width: 100%; height: 42px;
+      background-color: white; display: flex; align-items: center; gap: 10px;
+      padding: 0 20px; border-bottom: 1px solid #e5e5e5;
+      transform: translateY(-100%); opacity: 0; pointer-events: none;
+      transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+      z-index: 1002; will-change: transform, opacity;
+    }
+    .search-bar.active {
+      transform: translateY(0); opacity: 1; pointer-events: auto;
+    }
+    .search-bar.hiding { z-index: 999; }
+    .search-bar input {
+      width: 100%; padding: 8px 0 8px 60px; font-size: 15px;
+      border: none; outline: none; background-color: transparent; color: #000;
+    }
+    .search-icon {
+      margin-right: 0; color: #000; flex-shrink: 0; position: absolute; left: 30px;
+    }
+    .close-search {
+      margin-left: 16px; background: none; border: none; cursor: pointer;
+      color: #000; padding: 4px; display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.3s ease;
+    }
+    .close-search:hover { opacity: 0.5; }
+.search-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: #000;
+  transition: opacity 0.3s ease;
+  margin-top: 2px; /* 👈 Ajustá este valor si querés más o menos bajado */
+}
+
+.search-toggle svg {
+  display: block;
+  stroke: #000;
+}
+
+
+    .search-results {
+  position: fixed;
+  top: 112px;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1001;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  padding: 0;
+  box-sizing: border-box;
+  max-height: calc(100vh - 112px);
+  overflow-y: auto;
+  gap: 1px; /* visualmente simula 0.3px ajustando ancho abajo */
+}
+
+
+.search-result-item {
+  width: 100%;
+  max-width: 375px; /* Más grande, similar a Nude Project */
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-decoration: none;
+  color: #000;
+  padding: 0 10px 32px;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease;
+}
+
+.product-image-wrapper {
+  width: 100%;
+  padding-top: 125%; /* Proporción 4:5 sin usar aspect-ratio */
+  position: relative;
+  background-color: #f8f8f8;
+  margin-bottom: 12px;
+}
+
+.product-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* MUY IMPORTANTE para que no se corte */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.4s ease;
+}
+
+
+.product-image-wrapper .back {
+  opacity: 0;
+}
+
+.search-result-item:hover .back {
+  opacity: 1;
+}
+
+.search-result-item:hover .front {
+  opacity: 0;
+}
+
+.result-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding-left: 4px;
+  width: 100%;
+}
+
+.result-info .name {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.result-info .price {
+  font-size: 17px;
+  font-weight: 400;
+  color: #000;
+  text-align: left;
+}
+  
+           .nav-desktop ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-desktop ul li {
+            margin: 0 15px;
+        }
+        
+        .nav-desktop ul li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-desktop ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #000; /* Color de subrayado */
+            transition: width 0.3s ease;
+        }
+        
+        .nav-desktop ul li a:hover:after {
+            width: 100%;
+        }
+
+/* Visibilidad por breakpoint:
+   - Desktop XL (≥1536px): mostrar texto, ocultar íconos
+   - Laptop/Móvil (<1536px): mostrar íconos, ocultar texto
+*/
+.show-desktop-xl { display: none; }
+.hide-desktop-xl { display: flex; }
+
+@media (min-width: 1536px) {
+  .show-desktop-xl { display: flex !important; }
+  .hide-desktop-xl { display: none !important; }
+
+  .nav-text {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    font-size: 12px;
+    position: relative; /* necesario para el pseudo-elemento */
+    padding: 0;
+    margin: 0 8px; /* espaciado entre los nav-text */
+    color: #000;
+    transition: color 0.3s ease;
+  }
+
+  /* línea animada como en el language-toggle */
+  .nav-text::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: #000;
+    transition: width 0.3s ease;
+  }
+
+  .nav-text:hover::after {
+    width: 100%;
+  }
+}
+
+/* 🔧 Ajustes solo para pantallas grandes */
+@media (min-width: 1536px) {
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;     /* ✅ evita que salte a otra fila */
+    gap: 16px;             /* ✅ mismo espaciado que los nav-left */
+  }
+
+  .navbar-right .language-toggle {
+    margin: 0;             /* quita margen extra */
+    transform: none;       /* elimina el pequeño desajuste vertical */
+    padding: 0;
+  }
+
+  .language-toggle {
+margin-top: 1.5px !important;
+margin-right: 0.4rem !important;
+  }
+}
+
+/* 🔽 Disminuir tamaño de nav-left y nav-right SOLO en pantallas grandes */
+@media (min-width: 1536px) {
+  .nav-desktop ul li a,   /* enlaces de nav-left */
+  .navbar-right .nav-text, 
+  .navbar-right .language-toggle {
+    font-size: 11px;      /* antes 12px → más pequeño */
+    letter-spacing: 1px;  /* ajusta el espaciado de letras */
+  }
+}
+
+
+main.product-page {
+  margin-top: 100px; /* Ajusta según necesites */
+}
+
+ .language-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 30px;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  width: 460px; /* antes era 300px */
+  font-family: 'Poppins', sans-serif;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  border-radius: 4px;
+}
+
+
+  .language-popup.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .language-popup button.close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+.language-toggle {
+  text-decoration: none;
+  color: #000;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-right: 8px;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background: none;
+  line-height: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative; /* 🔑 para que el ::after se posicione bien */
+  user-select: none;
+  transition: color 0.3s ease;
+  transform: translateY(1px); /* Ajustá a 1px o 3px si querés más fino */
+}
+
+.language-toggle::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #000;
+  transition: width 0.3s ease;
+}
+
+.language-toggle:hover::after {
+  width: 100%;
+}
+
+.cart-item img {
+  width: 145px;          /* Aumenta el tamaño de la imagen */
+  height: auto;
+  object-fit: contain;
+  margin-right: 1.2rem;  /* Espacio entre imagen y texto */
+  flex-shrink: 0;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;   /* Centra verticalmente imagen y contenido */
+  gap: 1rem;             /* Espacio entre imagen y detalles */
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+
+.cart-item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cart-item-details h4 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.cart-item-details p {
+  font-size: 0.85rem;
+  color: #333;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.cart-item-price {
+  font-weight: bold;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  width: fit-content;
+  padding: 2px 4px;
+  height: 36px;
+  font-size: 16px;
+}
+
+.quantity-selector button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #555;
+  padding: 0 10px;
+}
+
+.quantity-selector input {
+  border: none;
+  text-align: center;
+  width: 24px;
+  font-size: 16px;
+  outline: none;
+  pointer-events: none;
+  background: transparent;
+  color: #000;
+}
+
+.cart-item {
+  position: relative;
+}
+
+.cart-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cart-item.loading .cart-loading-overlay {
+  opacity: 1;
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #333;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.cart-item-price {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+
+[data-i18n="details_text"] {
+  white-space: pre-line;
+  font-size: 12px;
+  color: #233f32;
+  line-height: 1.8;
+  font-family: 'Poppins', sans-serif;
+}
+
+[data-i18n="details_text"] strong {
+  font-weight: 700;
+  display: block;
+  margin-top: 12px;
+}
+
+.product-container {
+  align-items: flex-start;
+}
+
+.image-scroll-container {
+  width: 800px;   /* antes 600px, ahora más ancho */
+  height: 900px; /* antes 800px, ahora más alto */
+  overflow-y: scroll;
+  scroll-snap-type: none;
+  scrollbar-width: none;
+  margin-left: -30px; /* mueve el scroll a la izquierda */
+}
+
+.image-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+
+.image-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espacio entre los recuadros de imagen */
+}
+
+.image-box {
+  background-color: #f5f5f5;
+  padding: 60px; /* antes 40px, margen interno mayor para resaltar */
+  border-radius: 2px; /* opcional: un poco más suave */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 900px; /* igual al scroll container */
+}
+
+.image-box img {
+  width: 105%;
+  height: 105%;
+  object-fit: contain;
+  cursor: zoom-in;
+}
+
+  
+.product-info {
+  position: sticky;
+  top: 100px; /* Ajusta según la altura de tu navbar */
+  width: 45%;
+}
+
+#product-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px; /* Reduce separación vertical */
+}
+
+#product-price {
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 0; /* Elimina espacio superior extra */
+}
+
+/* TALLAS SIN FONDO NI COLOR AL SELECCIONAR */
+.product-sizes span {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background: none;
+  color: #000; /* Asegura que siempre es negro */
+}
+
+.product-sizes span::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background-color: #000;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.product-sizes span.active::after {
+  width: 100%;
+  left: 0;
+}
+
+
+/* En móviles */
+@media (max-width: 768px) {
+  #product-name {
+    font-size: 16px;
+  }
+  #product-price {
+    font-size: 14px;
+  }
+  .product-sizes span {
+    font-size: 11px;
+  }
+}
+
+
+.info-button {
+  padding: 8px 0;
+}
+
+.product-info-sections {
+  gap: 2px;
+}
+
+
+.product-buttons {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.product-buttons button {
+  flex: 1;                     /* Ambos botones ocupan mismo ancho */
+  height: 50px;                /* Altura exacta */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 1px;
+  box-sizing: border-box;
+  line-height: 1;
+  padding: 0 16px;
+  transition: background 0.1s ease;
+}
+
+.add-to-cart {
+  background-color: #233f32;
+  color: #fff;
+  border: none;
+}
+
+.add-to-cart:hover {
+    background-color: transparent;
+    border: 1px solid #000;
+    color:#000;
+  }
+
+.buy-now-btn {
+  background-color: #f5f5f5;
+  color: #000;
+  border: 1px solid #000;
+}
+
+.buy-now-btn:hover {
+    background-color: #e5e5e5;
+    border: 1px solid #000;
+    color:#000;
+  }
+
+.product-info-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 0px; /* 🔹 Reduce el espacio entre botones y secciones */
+}
+
+.info-button {
+  padding: 0px 0; /* 🔹 Reduce el padding vertical */
+  font-size: 14px; /* 🔹 Opcional: texto un poco más compacto */
+}
+
+.info-content {
+  padding: 0px 0; /* 🔹 Reduce el padding interno de las secciones */
+  margin: 0; /* 🔹 Elimina márgenes extra */
+}
+
+.section-title {
+  margin: 4px 0; /* 🔹 Menos margen entre títulos */
+  font-size: 12px; 
+}
+
+.section-text {
+  margin: 2px 0; /* 🔹 Menos margen entre líneas de texto */
+  font-size: 12px; 
+}
+
+.product-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 2rem auto;
+    padding: 2rem;
+    max-width: 1200px;
+}
+
+.product-container {
+    display: flex; /* Usar flexbox para alinear los elementos */
+    gap: 15rem; /* Espaciado entre la imagen y los detalles */
+    align-items: flex-start; /* Asegura que todo esté alineado en la parte superior */
+    justify-content: space-between; /* Espaciado entre imagen y detalles */
+    max-width: 1200px; /* Ancho máximo de la sección */
+    margin: 10; /* Centrar en la página */
+    padding: 2rem; /* Espaciado interno */
+}
+
+
+.productos-image {
+    width: 400px; /* Ajusta el tamaño según prefieras */
+    height: auto; /* Mantén la proporción de la imagen */
+    margin: 0 auto; /* Centrar si es necesario */
+    display: block; /* Asegura que se comporten como bloques */
+}
+
+
+.productos-image img {
+    width: 300%; /* La imagen ocupará el ancho del contenedor */
+    max-width: 600px; /* Ajusta el tamaño máximo según tus preferencias */
+    object-fit: contain; /* Evita que la imagen se deforme */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+}
+
+
+.productos-info-sections {
+  margin-top: 20px;
+}
+
+/* Estilo de los botones */
+.product-info-sections {
+  margin-top: 10px;
+}
+
+
+
+
+/* Estilo de los botones */
+.info-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: 0px 0;
+  background-color: transparent; /* Fondo transparente */
+  border: none;
+  border-bottom: 1px solid #ddd; /* Línea separadora */
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease;
+  outline: none;
+}
+
+/* Efecto de subrayado exclusivo para el texto */
+.info-button span.text {
+  position: relative;
+  display: inline-block;
+  color: #000; /* Color del texto */
+}
+
+.info-button span.text::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;  /* 👉 Que se dibuje exactamente sobre la línea de división */
+  left: 0;
+  width: 0;
+  height: 1px;  /* 👉 Mucho más fino */
+  background-color: #000;
+  transition: width 0.3s ease;
+}
+
+
+.info-button:hover span.text::after {
+  width: 100%;
+}
+
+/* Símbolo "+" o "-" */
+.toggle-icon {
+  font-size: 18px;
+  color: #333; /* Color del símbolo */
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+/* Estilo de las secciones desplegables */
+.info-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  padding: 0 20px;
+  background-color: transparent; /* Fondo transparente */
+  font-size: 14px;
+  color: #233f32;
+}
+
+.info-content p {
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+/* Clase para contenido desplegado */
+.info-content.open {
+  max-height: 200px; /* Ajusta según el contenido */
+  padding: 10px 20px;
+}
+
+/* Cambia el "+" a "-" */
+.info-button.open .toggle-icon::before {
+  content: '-'; /* Muestra el "-" */
+}
+
+.info-button .toggle-icon::before {
+  content: '+'; /* Muestra el "+" por defecto */
+}
+  
+
+.product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.product-info h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #233f32;
+}
+
+.product-info p {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.size-guide-sucesso {
+  display: block; /* Se asegura de que sea un elemento en bloque */
+  margin-top: -3rem !important;
+  margin-left: -1.1rem !important;
+  margin: 0.2rem auto 0.2rem auto;
+  width: 480px; /* Tamaño del logo ajustable */
+  height: auto; /* Mantiene la proporción */
+}
+
+@media (max-width: 768px) {
+  .product-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+main.product-page {
+    margin-top: 0 !important; /* Elimina el margen superior */
+    padding-top: 0 !important; /* Si hubiera padding, también lo quitamos */
+  }
+
+  .image-scroll-container {
+    margin-top: 0 !important; /* Por si hubiera un margen superior */
+    padding-top: 0 !important;
+  }
+
+  .image-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden; /* 🔹 Evita scroll vertical */
+    scroll-snap-type: x mandatory;
+    gap: 8px;
+    width: 100vw;
+    height: 70vh;
+  }
+
+  .image-wrapper {
+    display: flex;
+    flex-direction: row; /* 🔹 Cambia a fila para carrusel horizontal */
+  }
+
+  .image-box {
+    min-width: 100vw;
+    height: 70vh;
+    scroll-snap-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f5f5;
+  }
+
+  .image-box img {
+    width: 130%;
+    height: 130%;
+    object-fit: contain;
+  }
+
+
+  .product-info {
+    width: 100%;
+    padding: 0 1rem;
+    position: static;
+  }
+
+  #product-name,
+#product-price {
+  text-align: left;
+  padding-left: -30px; /* Un pequeño margen a la izquierda */
+}
+
+.product-sizes {
+  justify-content: flex-start;
+  padding-left: -30px;
+}
+
+.product-sizes span {
+    font-size: 13px;   /* Aumenta un poco el tamaño del texto */
+    padding: 6px 10px; /* Aumenta el área de clic */
+  }
+
+  .product-buttons {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .product-buttons button {
+    font-size: 12px;
+    padding: 12px;
+  }
+
+  .info-button {
+    font-size: 12px;
+  }
+
+  .size-guide-sucesso {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  /* Asegura que los info-content estén completamente colapsados por defecto */
+.info-content {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+}
+
+/* Cuando se abre, calcula un max-height suficiente para el contenido */
+.info-content.open {
+  max-height: 500px; /* Ajusta según lo necesario, o usa un valor grande */
+  padding: 10px 20px; /* Solo se aplica cuando está abierto */
+}
+
+}
+
+@media (max-width: 768px) {
+  #zoom-overlay {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    align-items: flex-start; /* Para que la imagen comience arriba */
+    padding: 50px 0; /* Espaciado arriba y abajo */
+  }
+
+  #zoom-image {
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    min-width: 150%;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .carousel-dots .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: transparent;
+   border: 1px solid #233f32;
+    transition: background 0.3s ease;
+  }
+
+  .carousel-dots .dot.active {
+    background: #233f32;
+  }
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* === NAV con flechita — Desktop XL solamente === */
+@media (min-width: 1536px) {
+  .nav-desktop ul { display:flex; list-style:none; }
+  .nav-desktop ul li { margin: 0 15px; }
+
+  .nav-item { display:flex; align-items:center; gap:6px; position:relative; }
+
+  .nav-main, .nav-arrow {
+    background:none; border:none; padding:0; margin:0; cursor:pointer;
+    color:#000; font-size:12px; text-transform:uppercase; letter-spacing:1.5px;
+    font-weight:700; line-height:1;
+  }
+
+  /* Subrayado ANIMADO solo para los main (izquierda) */
+  .nav-main { position:relative; }
+  .nav-main::after {
+    content:''; position:absolute; left:0; bottom:-2px; height:1px; width:0; background:#000;
+    transition: width 0.3s ease;
+  }
+  .nav-main:hover::after { width:100%; }
+
+  .nav-arrow { display:flex; align-items:center; }
+  .nav-arrow svg { display:block; transition:none; }        /* sin animación */
+  .nav-item.open .nav-arrow svg { transform: rotate(90deg); } /* ▶ a ▼ */
+
+  /* Dropdown: OCULTO por defecto, sin fondo ni borde, sin animaciones */
+  .dropdown {
+    position:absolute; top:22px; left:0;
+    display:none !important;        /* nunca visible si no está "open" */
+    background: transparent !important;  /* SIN fondo */
+    border: none !important;              /* SIN borde */
+    padding: 0;                           /* SIN padding de caja */
+    white-space:nowrap; z-index:1200;
+  }
+  .nav-item.open .dropdown {
+    display:flex !important;
+  }
+
+  /* Ítems del dropdown: sin animación de subrayado */
+  .dropdown .dropdown-item {
+    text-decoration:none; color:#000; font-size:12px; font-weight:700;
+    text-transform:uppercase; letter-spacing:1.5px; display:inline-block; margin-right:18px;
+    position: static; /* sin pseudo línea */
+  }
+  .dropdown .dropdown-item:last-child { margin-right:0; }
+  .dropdown .dropdown-item:hover { text-decoration: underline; } /* subrayado instantáneo */
+
+  /* Legal en fila horizontal (como la captura) */
+  .dropdown.row { display:flex; gap:24px; }
+
+  /* Oculta el nav antiguo si existía */
+  .nav-desktop ul li a.nav-link { display:none !important; }
+}
+/* ✅ Dropdown: sin subrayado al abrir; subrayado SOLO al hover, sin animación */
+@media (min-width: 1536px) {
+  /* Estado base: NADA subrayado ni transiciones heredadas */
+  .nav-desktop .nav-item .dropdown .dropdown-item {
+    text-decoration: none !important;
+    position: static;
+    transition: none !important;         /* sin transiciones de color, etc. */
+  }
+
+  /* Hover/focus: subrayado inmediato (sin animación) */
+  .nav-desktop .nav-item .dropdown .dropdown-item:hover,
+  .nav-desktop .nav-item .dropdown .dropdown-item:focus-visible {
+    text-decoration: underline !important;
+    /* opcional: si querés más fino y prolijo
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    */
+  }
+
+  /* Mata cualquier línea animada heredada (el ::after) en dropdowns */
+  .nav-desktop .nav-item .dropdown .dropdown-item::after,
+  .nav-desktop .nav-item .dropdown .dropdown-item:hover::after {
+    content: none !important;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    transition: none !important;
+  }
+}
+/* ================================
+   NAV DESKTOP XL – tamaños alineados a nav-right
+   ================================ */
+@media (min-width: 1536px) {
+  /* 1) Mismo tamaño tipográfico que nav-right */
+  .nav-desktop .nav-item .nav-main,
+  .nav-desktop .nav-item .nav-arrow,
+  .nav-desktop .dropdown .dropdown-item,
+  .navbar-right .nav-text,
+  .navbar-right .language-toggle {
+    font-size: 11px !important;     /* igual que nav-right */
+    letter-spacing: 1px !important;  /* igual que nav-right */
+    line-height: 1 !important;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  /* 2) Compactar separación para que no se vean “grandes” */
+  .nav-desktop ul li {
+    margin: 0 10px !important;       /* antes 15px */
+  }
+  .nav-desktop .nav-item {
+    gap: 4px !important;             /* antes 6px */
+  }
+
+  /* 3) Reducir la flechita (icono) y su hit area */
+  .nav-desktop .nav-item .nav-arrow svg {
+    width: 7px !important;           /* antes 8px */
+    height: 11px !important;         /* antes 12px */
+  }
+  .nav-desktop .nav-item .nav-arrow {
+    padding: 0 !important;           /* sin padding extra */
+  }
+
+  /* 4) Subrayado fino y sin “overhang” en .nav-main */
+  .nav-desktop .nav-item .nav-main::after {
+    height: 1px !important;
+    bottom: -2px !important;
+  }
+
+  /* 5) Dropdown: tipografía y espacios iguales a nav-right */
+
+  .nav-desktop .dropdown .dropdown-item {
+    margin-right: 14px !important;   /* antes 18px */
+    text-decoration: none !important;
+  }
+  .nav-desktop .dropdown .dropdown-item:hover {
+    text-decoration: underline !important;
+  }
+
+  /* 6) Alinear altura y compacidad de la barra entera */
+  .navbar-left, .navbar-right {
+    gap: 16px !important;            /* ya usas 16px en right; igualamos */
+  }
+
+  /* 7) Asegurar que nav-left y nav-right comparten font-size global */
+  .nav-desktop ul li a,
+  .navbar-right .nav-text,
+  .navbar-right .language-toggle {
+    font-size: 11px !important;
+    letter-spacing: 1px !important;
+  }
+}
+/* 🔹 Aumentar espacio entre SHOP, LEGAL y SUPPORT en desktop XL */
+@media (min-width: 1536px) {
+  #nav-shop,
+  #nav-legal,
+  #nav-support {
+    margin: 0 18px !important; /* antes 15px → ahora el doble */
+  }
+}
+/* ⬇️ Bajar los dropdowns solo en Desktop XL */
+@media (min-width: 1536px) {
+  .nav-desktop .dropdown {
+    top: 70px !important; /* antes 20–22px; ajusta este valor a tu gusto */
+  }
+}
+
+/* 🎯 Estilos de los items del dropdown en Desktop XL */
+@media (min-width: 1536px) {
+  .nav-desktop .nav-item .dropdown .dropdown-item {
+    color: #555 !important;        /* Estado base */
+    font-weight: 600 !important;    /* Semibold para contraste sutil */
+  }
+
+  .nav-desktop .nav-item .dropdown .dropdown-item:hover,
+  .nav-desktop .nav-item .dropdown .dropdown-item:focus-visible {
+    color: #000 !important;         /* Hover */
+    text-decoration: underline !important; /* Ya lo tenías, lo reafirmo */
+  }
+}
+
+/* 🔹 Aumentar espacio entre SHOP, LEGAL, SUPPORT y BRAND en desktop XL */
+@media (min-width: 1536px) {
+  #nav-shop,
+  #nav-legal,
+  #nav-support,
+  #nav-brand {
+    margin: 0 18px !important;
+  }
+}
+/* === NAV: un poco más pequeño (sin tocar el logo) — Desktop XL === */
+@media (min-width: 1536px) {
+  /* Texto de botones izquierda (main + flecha), items del dropdown y derecha */
+  .nav-desktop .nav-item .nav-main,
+  .nav-desktop .nav-item .nav-arrow,
+  .nav-desktop .dropdown .dropdown-item,
+  .navbar-right .nav-text,
+  .navbar-right .language-toggle {
+    font-size: 10.3px !important;      /* antes 11–12px */
+    letter-spacing: 0.9px !important; /* antes ~1–1.5px */
+    line-height: 1 !important;
+  }
+
+  /* Flechita un poco más chica */
+  .nav-desktop .nav-item .nav-arrow svg {
+    width: 7px !important;   /* antes 7–8px */
+    height: 10px !important; /* antes 11–12px */
+  }
+
+  /* Compacidad lateral (sin apretar demasiado) */
+  .nav-desktop ul li {
+    margin: 0 9px !important;       /* antes 10–15px */
+  }
+  .nav-desktop .nav-item {
+    gap: 3px !important;            /* antes 4–6px */
+  }
+  .nav-desktop .dropdown .dropdown-item {
+    margin-right: 13px !important;  /* antes 14–18px */
+  }
+
+  /* Espaciado entre grupos principales alineado al nuevo tamaño */
+  #nav-shop,
+  #nav-legal,
+  #nav-support,
+  #nav-brand {
+    margin: 0 17px !important;      /* antes 18px */
+  }
+
+  /* Ligeramente más compacto a la derecha */
+  .navbar-right {
+    gap: 14px !important;           /* antes 16px */
+  }
+
+  /* Subrayado: mantené la línea fina y posición */
+  .nav-desktop .nav-item .nav-main::after {
+    height: 1px !important;
+    bottom: -2px !important;
+  }
+}
+
+/* El chart de tallas necesita altura suficiente para verse completo al desplegarse. */
+#size-guide-section.info-content.open {
+  max-height: 340px;
+}
+#size-guide-section.info-content.open .size-guide-sucesso {
+  margin-top: 0 !important;
+}
+
+/* Cursor de lupa en el size guide */
+.size-guide-sucesso { cursor: zoom-in; }
+
+/* Overlay: permitir pan en ambos ejes cuando hay zoom */
+#zoom-overlay {
+  overflow: auto !important;        /* antes sólo vertical */
+  cursor: default;
+}
+
+/* Imagen dentro del overlay: transiciones suaves y click-zoom */
+#zoom-image {
+  cursor: zoom-in;
+  transition: transform 0.18s ease; /* zoom suave */
+  transform-origin: center center;  /* punto de zoom */
+}
+
+/* Cuando está “zoomed” cambiamos el cursor */
+#zoom-image.zoomed {
+  cursor: zoom-out;
+}
+
+/* Botón X consistente y clickable por encima de todo */
+#close-zoom {
+  z-index: 10000;
+  line-height: 1;
+}
+
+  </style>
+<link rel="stylesheet" href="requested-changes.css">
+
+<link rel="stylesheet" href="search-system.css">
+<link rel="stylesheet" href="related-products.css">
+<link rel="stylesheet" href="wishlist.css">
+<script src="search-text.js" defer></script>
+<script src="search-engine.js" defer></script>
+<script src="search-interface.js" defer></script>
+<script src="search-catalog.js" defer></script>
+  <link rel="stylesheet" href="sucesso-footer.css">
+
+<style id="sucesso-product-detail-refresh-20260913">
+/* Product heading, price and New In — editorial sizing inspired by the supplied reference. */
+.product-info { gap: 0 !important; }
+.product-new-in {
+  display:block;
+  margin:0 0 7px !important;
+  color:#233f32;
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size:10px;
+  line-height:1.1;
+  font-weight:400;
+  letter-spacing:0;
+}
+#product-name {
+  margin:0 0 5px !important;
+  color:#233f32 !important;
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;
+  font-size:26px !important;
+  line-height:1.02 !important;
+  font-weight:500 !important;
+  letter-spacing:-1.25px !important;
+}
+#product-price {
+  margin:0 0 34px !important;
+  color:#233f32 !important;
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;
+  font-size:14px !important;
+  line-height:1.15 !important;
+  font-weight:400 !important;
+  letter-spacing:-.15px !important;
+}
+
+/* Sizes: clean, regular weight, evenly spaced, instant underline on selection. */
+.product-sizes {
+  display:flex !important;
+  align-items:center;
+  justify-content:flex-start !important;
+  gap:34px !important;
+  width:100%;
+  margin:0 0 8px !important;
+  padding:0 !important;
+  flex-wrap:wrap;
+}
+.product-sizes span {
+  position:relative;
+  display:inline-block;
+  margin:0 !important;
+  padding:0 0 4px !important;
+  color:#233f32 !important;
+  background:transparent !important;
+  border:0 !important;
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;
+  font-size:13px !important;
+  line-height:1 !important;
+  font-weight:400 !important;
+  letter-spacing:0 !important;
+  text-transform:uppercase;
+  cursor:pointer;
+}
+.product-sizes span::after {
+  content:'';
+  position:absolute;
+  left:0 !important;
+  bottom:0 !important;
+  width:100% !important;
+  height:1px !important;
+  background:#233f32 !important;
+  transform:scaleX(0);
+  transform-origin:center;
+  transition:none !important;
+}
+.product-sizes span.active::after,
+.product-sizes span.selected::after { transform:scaleX(1); }
+.size-required-message {
+  margin:0 0 28px !important;
+  padding:0 !important;
+  color:#d71920 !important;
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;
+  font-size:11px !important;
+  line-height:1.2 !important;
+  font-weight:400 !important;
+}
+.size-required-message[hidden] { display:none !important; }
+
+/* One full-width Add to Cart button; the Buy Now control is removed. */
+.product-info-sections { margin-top:0 !important; gap:0 !important; }
+.product-buttons { display:block !important; width:100% !important; margin:0 0 22px !important; }
+.product-buttons .add-to-cart {
+  width:100% !important;
+  min-width:100% !important;
+  flex:none !important;
+}
+
+/* Accordions sit closer together while preserving their opening/closing behavior. */
+.info-button {
+  min-height:38px !important;
+  margin:0 !important;
+  padding:0 !important;
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;
+  font-size:12px !important;
+  line-height:1 !important;
+}
+.info-button + .info-content { margin:0 !important; }
+.info-content { padding-top:0 !important; padding-bottom:0 !important; }
+.info-content.open { padding-top:8px !important; padding-bottom:8px !important; }
+
+
+/* 2026-09-13 refinement: Sucesso only produces S / M / L / XL. */
+@media (min-width:769px) {
+  /* Lower the complete information block to match the reference breathing room below the navbar. */
+  .product-info {
+    top: 178px !important;
+  }
+
+  /* Make the product itself slightly larger while keeping it centered inside the grey image panel. */
+  .image-box {
+    overflow: hidden !important;
+  }
+  .image-box img {
+    width: 110% !important;
+    height: 110% !important;
+    max-width: 110% !important;
+    max-height: 110% !important;
+    object-position: center center !important;
+  }
+}
+
+/* More air between sizes and Add to Cart, matching the supplied reference. */
+.product-sizes {
+  margin-bottom: 30px !important;
+}
+.product-sizes:has(+ .size-required-message:not([hidden])) {
+  margin-bottom: 8px !important;
+}
+.size-required-message {
+  margin-bottom: 24px !important;
+}
+
+/* Separate the accordion group from Add to Cart without changing its functionality. */
+.product-buttons {
+  margin-bottom: 40px !important;
+}
+
+/* Accordion: no horizontal separators; simple instant underline on hover. */
+.info-button {
+  border-bottom: 0 !important;
+}
+.info-button span.text::after {
+  bottom: -2px !important;
+  height: 1px !important;
+  transition: none !important;
+}
+.info-button:hover span.text::after,
+.info-button:focus-visible span.text::after {
+  width: 100% !important;
+}
+
+@media (max-width:768px) {
+  .product-new-in { font-size:9px; margin-bottom:6px !important; }
+  #product-name { font-size:23px !important; letter-spacing:-1px !important; }
+  #product-price { font-size:13px !important; margin-bottom:28px !important; }
+  .product-sizes { gap:clamp(24px,8vw,38px) !important; margin-bottom:26px !important; }
+  .product-sizes:has(+ .size-required-message:not([hidden])) { margin-bottom:8px !important; }
+  .product-sizes span { font-size:12px !important; }
+  .size-required-message { font-size:10.5px !important; margin-bottom:22px !important; }
+  .product-buttons { margin-bottom:34px !important; }
+  .product-buttons .add-to-cart { height:50px !important; padding:0 14px !important; }
+  .info-button { min-height:36px !important; font-size:11.5px !important; }
+}
+</style>
+
+
+<style>
+/* === SUCESSO PRODUCT ROUTING / THUMBNAILS / MOBILE FIX 20260913 === */
+.product-context-breadcrumb{
+  width:100%;
+  margin:0 0 12px;
+  padding:0 clamp(18px,2.2vw,34px);
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+  font-size:10px;
+  line-height:1.35;
+  font-weight:500;
+  color:#233f32;
+  position:relative;
+  z-index:2;
+}
+.product-context-breadcrumb a{
+  color:#233f32;
+  text-decoration:none;
+}
+.product-context-breadcrumb a:hover,
+.product-context-breadcrumb a:focus-visible{
+  text-decoration:underline;
+  text-underline-offset:2px;
+}
+.product-container{position:relative!important;}
+.product-thumbnail-rail{
+  position:absolute;
+  left:8px;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:8;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  width:48px;
+}
+.product-thumbnail{
+  appearance:none;
+  border:0;
+  padding:0;
+  margin:0;
+  width:48px;
+  height:62px;
+  background:#f5f5f5;
+  cursor:pointer;
+  opacity:.38;
+  transition:opacity .16s ease;
+  overflow:hidden;
+}
+.product-thumbnail.is-active,
+.product-thumbnail:hover,
+.product-thumbnail:focus-visible{opacity:1;outline:none;}
+.product-thumbnail img{width:100%;height:100%;object-fit:contain;display:block;}
+.info-button.open .text{
+  text-decoration:underline!important;
+  text-underline-offset:3px!important;
+  text-decoration-thickness:1px!important;
+}
+@media (min-width:769px){
+  .image-scroll-container{scroll-behavior:smooth;}
+}
+@media (max-width:768px){
+  .product-context-breadcrumb{
+    padding:10px 18px 8px!important;
+    margin:0!important;
+    font-size:9px!important;
+  }
+  .product-thumbnail-rail{display:none!important;}
+  .product-container{
+    width:100%!important;
+    max-width:100%!important;
+    padding:0 16px 24px!important;
+    box-sizing:border-box!important;
+    align-items:stretch!important;
+  }
+  .image-scroll-container{
+    width:100%!important;
+    max-width:100%!important;
+    height:min(70vh,640px)!important;
+    margin:0!important;
+    padding:0!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    scroll-snap-type:x mandatory!important;
+    scrollbar-width:none!important;
+  }
+  .image-wrapper{
+    display:flex!important;
+    flex-direction:row!important;
+    gap:8px!important;
+    width:max-content!important;
+    height:100%!important;
+  }
+  .image-box{
+    flex:0 0 calc(100vw - 32px)!important;
+    min-width:calc(100vw - 32px)!important;
+    width:calc(100vw - 32px)!important;
+    height:100%!important;
+    min-height:0!important;
+    padding:20px!important;
+    box-sizing:border-box!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    overflow:hidden!important;
+  }
+  .image-box img{
+    display:block!important;
+    width:100%!important;
+    height:100%!important;
+    max-width:100%!important;
+    max-height:100%!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+    margin:auto!important;
+    transform:none!important;
+  }
+}
+</style>
+
+  <link rel="stylesheet" href="mobile-menu-refresh.css">
+  <link rel="stylesheet" href="product-detail-enhancements.css">
+<style id="su-navbar-uploaded-svg-icons-20261001">
+/* Exact uploaded responsive navbar icons: laptop + mobile only. */
+@media (max-width: 1535px) {
+  header.navbar .search-toggle .su-nav-search-svg {
+    width: 22px !important;
+    height: 22px !important;
+    display: block !important;
+    flex: 0 0 auto !important;
+  }
+  header.navbar .account-button .su-nav-account-svg {
+    width: 22px !important;
+    height: 22px !important;
+    display: block !important;
+    flex: 0 0 auto !important;
+    filter: none !important;
+  }
+  header.navbar .su-nav-cart-svg {
+    width: 22px !important;
+    height: 22px !important;
+    display: block !important;
+    flex: 0 0 auto !important;
+    filter: none !important;
+  }
+  header.navbar .search-toggle .su-nav-search-svg *,
+  header.navbar .account-button .su-nav-account-svg *,
+  header.navbar .su-nav-cart-svg * {
+    stroke: #233f32 !important;
+  }
+  header.navbar #cart-count {
+    position: absolute !important;
+    top: -2px !important;
+    right: -15px !important;
+    min-width: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #233f32 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+    pointer-events: none !important;
+  }
+  header.navbar #cart-count::before { content: "("; }
+  header.navbar #cart-count::after  { content: ")"; }
+}
+</style>
+
+<style id="su-navbar-mobile-icon-size-20261001">
+/* Mobile-only icon sizing: preserve laptop 22x22, reduce on phones. */
+
+@media (max-width: 767px) {
+  header.navbar .search-toggle .su-nav-search-svg,
+  header.navbar .account-button .su-nav-account-svg,
+  header.navbar .su-nav-cart-svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  header.navbar #cart-count {
+    top: -1px !important;
+    right: -13px !important;
+    font-size: 10px !important;
+  }
+}
+</style>
+
+  <link rel="stylesheet" href="sucesso-alt-desktop.css">
+  <script src="sucesso-alt-desktop.js" defer></script>
+</head>
+<body>
+  <div id="loader" class="loader">
+    <img src="images/logo cherry png.png" alt="Sucesso Logo">
+  </div>
+
+<header class="navbar">
+<button class="menu-toggle" aria-label="Menú">
+  <svg class="menu-icon" viewBox="0 0 32 32" width="28" height="28" stroke-linecap="round">
+    <g class="lines" stroke="currentColor" stroke-width="2" fill="none">
+      <line class="top" x1="6" y1="10" x2="26" y2="10" />
+      <line class="middle" x1="6" y1="16" x2="26" y2="16" />
+      <line class="bottom" x1="6" y1="22" x2="26" y2="22" />
+    </g>
+  </svg>
+</button>
+
+
+
+<div class="nav-desktop">
+  <ul>
+        <!-- SHOP -->
+    <li class="nav-item has-dropdown" id="nav-shop" data-nav-role="shop">
+      <button class="nav-main" data-i18n="nav_shop" aria-label="Shop">SHOP</button>
+      <button class="nav-arrow" aria-label="Abrir Shop" aria-expanded="false">
+        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2L6 6L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="dropdown sucesso-hover-dropdown" data-dd="shop" hidden>
+        <a href="collections/t-shirts/" class="dropdown-item" data-i18n="nav_tees">T-SHIRTS</a>
+      </div>
+    </li>
+
+    <!-- COLLECTIONS -->
+    <li class="nav-item has-dropdown" id="nav-collections" data-nav-role="collections">
+      <button class="nav-main" data-i18n="nav_collections" aria-label="Collections">COLLECTIONS</button>
+      <button class="nav-arrow" aria-label="Abrir Collections" aria-expanded="false">
+        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2L6 6L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="dropdown sucesso-hover-dropdown collection-dropdown" data-dd="collections" hidden>
+        <a href="collections/dice-drp/" class="collection-hover-card" aria-label="DICE DRP">
+          <img src="images/collection-dice-drp-cover.png" alt="DICE DRP">
+          <span class="collection-hover-name">DICE DRP</span>
+        </a>
+      </div>
+    </li>
+
+    <!-- SUPPORT -->
+    <li class="nav-item has-dropdown" id="nav-support">
+      <button class="nav-main" data-i18n="support" aria-label="Support">SUPPORT</button>
+      <button class="nav-arrow" aria-label="Abrir Support" aria-expanded="false">
+        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2L6 6L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="dropdown" data-dd="support" hidden>
+        <a href="contactanos.html" class="dropdown-item" data-i18n="contact_us">Contact Us</a>
+      </div>
+    </li>
+
+<!-- BRAND -->
+<li class="nav-item has-dropdown" id="nav-brand">
+  <button class="nav-main" data-i18n="brand" aria-label="Brand">BRAND</button>
+  <button class="nav-arrow" aria-label="Abrir Brand" aria-expanded="false">
+    <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 2L6 6L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="dropdown" data-dd="brand" hidden>
+    <a href="about.html" class="dropdown-item" data-i18n="nav_about">ABOUT</a>
+  </div>
+</li>
+
+  </ul>
+</div>
+
+
+  
+  <div class="navbar-center">
+    <a href="index.html"><img src="images/logo sucesso png.png" alt="Nude Logo" class="logo" style="width: 130px; height: auto;"/></a>
+  </div>
+
+<div class="navbar-right">
+  <!-- Botón de idioma (sigue igual) -->
+  <div class="language-toggle" id="languageToggle">EN | ES</div>
+
+<!-- SEARCH -->
+<!-- Versión TEXTO para desktop XL -->
+<button class="nav-text show-desktop-xl" onclick="toggleSearchBar()" aria-label="Open search" id="search-text-btn" data-i18n="nav_search">
+  Search
+</button>
+<!-- Versión ÍCONO para laptop/móvil -->
+<button class="search-toggle hide-desktop-xl" onclick="toggleSearchBar()" aria-label="Abrir búsqueda">
+  <img src="images/nav-search.svg" alt="" class="su-nav-search-svg" aria-hidden="true">
+</button>
+
+<!-- ACCOUNT -->
+<!-- Versión TEXTO para desktop XL -->
+<a id="account-link-text" href="login.html" style="text-decoration: none !important;" class="nav-text show-desktop-xl" data-i18n="nav_account">
+  Account
+</a>
+<!-- Versión ÍCONO para laptop/móvil -->
+<a id="account-link" href="login.html" class="account-button hide-desktop-xl">
+  <img src="images/nav-account.svg" alt="Cuenta" class="account-icon su-nav-account-svg">
+</a>
+
+<!-- CART -->
+<!-- Versión TEXTO para desktop XL -->
+<button id="cart-text-btn" class="nav-text show-desktop-xl" type="button">
+  <span data-i18n="nav_cart">Cart</span> 
+  <span id="cart-count-text" style="margin-left: 0.2rem !important;">(0)</span>
+</button>
+
+<!-- Versión ÍCONO para laptop/móvil -->
+<div class="hide-desktop-xl" style="position: relative; display: flex; align-items: center; margin-left: 0px;">
+  <img src="images/nav-cart.svg" alt="Carrito" class="cart-icon su-nav-cart-svg" id="cart-btn" style="width:22px;height:22px;pointer-events:auto;cursor:pointer;">
+  <span id="cart-count">0</span>
+</div>
+
+
+</header>
+
+  <div class="search-bar" id="searchBar">
+    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input type="text" placeholder="Buscar...">
+    <button class="close-search" onclick="toggleSearchBar()" aria-label="Cerrar búsqueda">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="search-results" id="searchResults"></div>
+  <div class="overlay" id="overlay" onclick="toggleSearchBar()"></div>
+
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD3u2GKMSAKC_1Cd88KA-rxTOf_Jnt3fuM",
+    authDomain: "sucesso-74f7c.firebaseapp.com",
+    projectId: "sucesso-74f7c",
+    storageBucket: "sucesso-74f7c.appspot.com",
+    messagingSenderId: "878844661636",
+    appId: "1:878844661636:web:6382f86f18201aecfdd7d1"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  const accountLink = document.getElementById("account-link");
+  if (accountLink) {
+    accountLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          window.location.href = "mi-cuenta.html";
+        } else {
+          window.location.href = "login.html";
+        }
+      });
+    });
+  }
+
+  // 🔄 Actualizar botón del sidebar según el estado de sesión
+  const sidebarLink = document.getElementById("sidebar-account-link");
+  const sidebarText = document.getElementById("sidebar-account-text");
+
+  onAuthStateChanged(auth, (user) => {
+  if (user) {
+    sidebarText.setAttribute("data-i18n", "sidebar_account");
+    sidebarLink.href = "mi-cuenta.html";
+  } else {
+    sidebarText.setAttribute("data-i18n", "sidebar_login");
+    sidebarLink.href = "login.html";
+  }
+
+  // Si ya se cargó el idioma, actualiza el texto mostrado
+  const currentLang = localStorage.getItem("preferredLang") || "en";
+  fetch("assets/lang/lang.json")
+    .then(res => res.json())
+    .then(data => {
+      const key = sidebarText.getAttribute("data-i18n");
+      if (data[currentLang] && data[currentLang][key]) {
+        sidebarText.textContent = data[currentLang][key];
+      }
+    });
+});
+
+  // 🔍 Búsqueda
+  const input = document.querySelector('.search-bar input');
+  const resultsContainer = document.getElementById('searchResults');
+  let allProducts = [];
+
+  async function loadProducts() {
+    try {
+      const querySnapshot = await getDocs(collection(db, "productos"));
+      allProducts = [];
+      querySnapshot.forEach(doc => {
+        const data = doc.data();
+        if (data.titulo && data.precio !== undefined && data.imagen_frontal && data.imagen_trasera) {
+          allProducts.push({
+            titulo: window.SucessoStorefront?.displayProductName?.(data.titulo) || data.titulo,
+            nombre: data.nombre,
+            precio: Number(data.precio),
+            imagen_frontal: data.imagen_frontal.replace(/\\/g, '/'),
+            imagen_trasera: data.imagen_trasera.replace(/\\/g, '/'),
+            keywords: Array.isArray(data.keywords) ? data.keywords : []
+          });
+        }
+      });
+      console.log("Productos cargados:", allProducts);
+    } catch (error) {
+      console.error("Error al cargar productos:", error);
+    }
+  }
+
+  function renderResults(filtered) {
+    resultsContainer.innerHTML = '';
+    if (filtered.length === 0) {
+      resultsContainer.innerHTML = `<div style="padding: 20px; font-size: 14px;">No se encontraron resultados</div>`;
+    } else {
+      filtered.forEach(product => {
+        const item = document.createElement('a');
+        item.className = 'search-result-item';
+        item.href = `product-page.html?nombre=${product.nombre}`;
+        item.innerHTML = `
+          <div class="product-image-wrapper">
+            <img src="${product.imagen_frontal}" class="front" alt="${product.titulo}">
+            <img src="${product.imagen_trasera}" class="back" alt="${product.titulo}">
+          </div>
+          <div class="result-info">
+            <span class="name">${product.titulo}</span>
+            <span class="price">$${product.precio.toFixed(2)}</span>
+          </div>
+        `;
+        resultsContainer.appendChild(item);
+      });
+    }
+    resultsContainer.style.display = 'grid';
+  }
+
+  let searchTimeout;
+
+  if (input) {
+    input.addEventListener('input', function () {
+      clearTimeout(searchTimeout);
+      const query = input.value.toLowerCase().trim();
+
+      searchTimeout = setTimeout(() => {
+        if (query.length === 0) {
+          resultsContainer.style.display = 'none';
+          return;
+        }
+
+        const filtered = allProducts.filter(product =>
+          product.titulo.toLowerCase().includes(query) ||
+          product.nombre.toLowerCase().includes(query) ||
+          product.keywords.some(k => k.toLowerCase().includes(query))
+        );
+
+        renderResults(filtered);
+      }, 1000);
+    });
+  }
+
+  window.toggleSearchBar = function () {
+    const searchBar = document.getElementById('searchBar');
+    const overlay = document.getElementById('overlay');
+    const results = document.getElementById('searchResults');
+    const isActive = searchBar.classList.contains('active');
+
+    if (isActive) {
+      searchBar.classList.add('hiding');
+      searchBar.classList.remove('active');
+      overlay.style.display = 'none';
+      results.style.display = 'none';
+      setTimeout(() => {
+        searchBar.classList.remove('hiding');
+      }, 200);
+    } else {
+      searchBar.classList.add('active');
+      overlay.style.display = 'block';
+      input.focus();
+    }
+  };
+
+  loadProducts();
+</script>
+
+
+  <!-- Contenido del Producto -->
+  <main class="product-page">
+    <section id="product-details">
+      <nav class="product-context-breadcrumb" aria-label="Product breadcrumb">
+        <a id="product-context-link" href="collections/t-shirts/">T-Shirts</a>
+        <span aria-hidden="true"> / </span>
+        <span id="product-context-name"></span>
+      </nav>
+      <div class="product-container" style="display: flex; gap: 20px;">
+  <div class="product-thumbnail-rail" aria-label="Product images">
+    <button type="button" class="product-thumbnail is-active" data-product-image-index="0" aria-label="View front image"><img id="product-thumb-front" src="" alt=""></button>
+    <button type="button" class="product-thumbnail" data-product-image-index="1" aria-label="View back image"><img id="product-thumb-back" src="" alt=""></button>
+  </div>
+  <div class="image-scroll-container">
+  <div class="image-wrapper">
+    <div class="image-box">
+      <img id="product-image-front" src="" alt="Frente del producto">
+    </div>
+    <div class="image-box">
+      <img id="product-image-back" src="" alt="Espalda del producto">
+    </div>
+  </div>
+</div>
+<div class="carousel-dots"></div>
+
+<div id="zoom-overlay" style="
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: #f5f5f5;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow-y: scroll;
+">
+  <img id="zoom-image" src="" alt="Zoomed Image" style="
+    max-width: 90%;
+    max-height: none;
+    object-fit: contain;
+    margin: 50px 0;
+  ">
+  <button id="close-zoom" style="
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 40px;
+    font-weight: normal;
+    cursor: pointer;
+  ">&times;</button>
+</div>
+
+
+        <div class="product-info">
+          <button id="product-wishlist-toggle" class="product-wishlist-toggle" type="button" aria-label="Add to wish list" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 3.5h10a1.5 1.5 0 0 1 1.5 1.5v16L12 17.1 5.5 21V5A1.5 1.5 0 0 1 7 3.5Z"></path>
+            </svg>
+          </button>
+          <span class="product-new-in" data-i18n="product_new_in">New In</span>
+          <h1 id="product-name"></h1>
+          <p id="product-price"></p>
+          <p id="product-description" class="product-short-description"></p>
+          <button id="size-fit-guide-trigger" class="size-fit-guide-trigger" type="button" aria-controls="size-guide-drawer" aria-expanded="false">
+            <span data-i18n="size_fit_guide">Size &amp; Fit Guide</span>
+          </button>
+          <div id="product-container"></div>
+
+<div class="product-sizes" aria-label="Product sizes">
+  <span data-size="S" role="button" tabindex="0">S</span>
+  <span data-size="M" role="button" tabindex="0">M</span>
+  <span data-size="L" role="button" tabindex="0">L</span>
+  <span data-size="XL" role="button" tabindex="0">XL</span>
+</div>
+<p id="size-required-message" class="size-required-message" data-i18n="size_required" aria-live="polite" hidden>Select Your Size</p>
+
+          
+          <div class="product-info-sections">
+
+<div class="product-buttons">
+    <button id="add-to-cart-btn" class="add-to-cart" data-i18n="add_to_cart">Add to cart</button>
+  </div>
+</div>
+    <!-- DETAILS -->
+    <button class="info-button" data-target="details-section">
+      <span class="text" data-i18n="details"></span>
+      <span class="toggle-icon"></span>
+    </button>
+    <div id="details-section" class="info-content">
+      <span class="section-title product-details-heading" data-i18n="product_details_title">PRODUCT DETAILS</span>
+      <ul class="product-details-list">
+        <li data-i18n="product_detail_cotton">100% cotton.</li>
+        <li data-i18n="product_detail_screenprint_both">Screen-printed design on the front and back.</li>
+        <li data-i18n="product_detail_fit">Oversized fit.</li>
+        <li data-i18n="product_detail_weight">220 g/m² fabric weight.</li>
+      </ul>
+    </div>
+
+    <!-- CLOTHING CARE GUIDE -->
+    <button id="clothing-care-trigger" class="info-button" data-target="clothing-care-section" type="button">
+      <span class="text" data-i18n="clothing_care_guide">CLOTHING CARE GUIDE</span>
+      <span class="toggle-icon"></span>
+    </button>
+    <div id="clothing-care-section" class="info-content clothing-care-content">
+      <div class="clothing-care-row">
+        <svg class="clothing-care-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="4" y="4" width="16" height="16" rx="1"></rect><circle cx="12" cy="12" r="5"></circle><path d="M7.5 7.5l9 9M16.5 7.5l-9 9"></path>
+        </svg>
+        <span data-i18n="care_no_dryer">Do not tumble dry</span>
+      </div>
+      <div class="clothing-care-row">
+        <svg class="clothing-care-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="7.5"></circle><path d="M7 7l10 10M17 7L7 17"></path>
+        </svg>
+        <span data-i18n="care_no_dry_clean">Do not dry clean</span>
+      </div>
+      <div class="clothing-care-row">
+        <svg class="clothing-care-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4.5 16.5h15l-1.4-7.2c-.2-1.1-1.2-1.8-2.3-1.8H9.2c-1 0-1.9.6-2.2 1.5L4.5 16.5Z"></path><path d="M7.3 16.5v2h9.4v-2"></path><path d="M8.5 7.5c1.5-1.5 4.2-2.2 7-1.8"></path>
+        </svg>
+        <span data-i18n="care_iron_max">Iron at max. 110°</span>
+      </div>
+      <div class="clothing-care-row">
+        <svg class="clothing-care-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 4L4.5 18h15L12 4Z"></path><path d="M7.8 8.2l8.4 8.4M16.2 8.2l-8.4 8.4"></path>
+        </svg>
+        <span data-i18n="care_no_bleach">Do not use bleach</span>
+      </div>
+      <div class="clothing-care-row">
+        <svg class="clothing-care-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 8h16l-1.1 10H5.1L4 8Z"></path><path d="M5 11c2-1.4 3.8 1.4 5.8 0s3.8 1.4 5.8 0 2.4-.5 3.1-.1"></path><text x="12" y="7" text-anchor="middle" font-size="6" fill="currentColor" stroke="none">20°</text>
+        </svg>
+        <span data-i18n="care_machine_wash">Machine wash max. 20 °C. Short spin cycle</span>
+      </div>
+    </div>
+
+    <!-- SHIPPING -->
+    <button class="info-button" data-target="shipping-section">
+      <span class="text" data-i18n="shipping_title"></span>
+      <span class="toggle-icon"></span>
+    </button>
+    <div id="shipping-section" class="info-content">
+      <span class="section-title" data-i18n="shipping_title_detail">SHIPPING & RETURNS</span>
+      <span class="section-text" data-i18n="shipping_text_detail">Free shipping on orders over $100.00. Easy 15-day returns.</span>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+<div class="product-details">
+
+  
+    </section>
+  </main>
+
+
+  <!-- Related products: other Sucesso tees -->
+  <section class="related-products-section" id="related-products" aria-labelledby="related-products-title">
+    <h2 class="related-products-heading" id="related-products-title" data-i18n="related_products">Related Products</h2>
+    <div class="related-products-grid" id="related-products-grid"></div>
+  </section>
+
+
+  <!-- SIZE & FIT GUIDE DRAWER -->
+  <div id="size-guide-drawer-overlay" class="size-guide-drawer-overlay" aria-hidden="true">
+    <aside id="size-guide-drawer" class="size-guide-drawer" role="dialog" aria-modal="true" aria-labelledby="size-guide-drawer-title">
+      <div class="size-guide-drawer-header">
+        <h2 id="size-guide-drawer-title" data-i18n="size_fit_guide_title">Size &amp; Fit Guide</h2>
+        <button id="close-size-guide" class="close-size-guide" type="button" aria-label="Close size guide">&times;</button>
+      </div>
+      <div id="size-guide-section" class="size-guide-drawer-body" aria-live="polite">
+        <div class="size-guide-product-heading">
+          <strong id="size-guide-product-name"></strong>
+          <span data-i18n="size_fit_guide_subtitle">Men's Unisex Size Guide</span>
+        </div>
+        <div class="su-size-guide" data-unit="cm">
+          <div class="su-size-guide-units" role="tablist" aria-label="Measurement units">
+            <button type="button" class="su-size-unit is-active" data-unit="cm" role="tab" aria-selected="true">CM</button>
+            <span class="su-size-guide-divider" aria-hidden="true">|</span>
+            <button type="button" class="su-size-unit" data-unit="in" role="tab" aria-selected="false">INCHES</button>
+          </div>
+
+          <div class="su-size-guide-table-wrap">
+            <table class="su-size-guide-table">
+              <thead>
+                <tr>
+                  <th class="su-sg-label-size">TALLA</th>
+                  <th>S</th>
+                  <th>M</th>
+                  <th>L</th>
+                  <th>XL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th class="su-sg-label-chest">PECHO</th>
+                  <td data-measure="chest" data-size="S"></td>
+                  <td data-measure="chest" data-size="M"></td>
+                  <td data-measure="chest" data-size="L"></td>
+                  <td data-measure="chest" data-size="XL"></td>
+                </tr>
+                <tr>
+                  <th class="su-sg-label-length">LARGO</th>
+                  <td data-measure="length" data-size="S"></td>
+                  <td data-measure="length" data-size="M"></td>
+                  <td data-measure="length" data-size="L"></td>
+                  <td data-measure="length" data-size="XL"></td>
+                </tr>
+                <tr>
+                  <th class="su-sg-label-sleeve">MANGA</th>
+                  <td data-measure="sleeve" data-size="S"></td>
+                  <td data-measure="sleeve" data-size="M"></td>
+                  <td data-measure="sleeve" data-size="L"></td>
+                  <td data-measure="sleeve" data-size="XL"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="su-size-guide-diagram-wrap">
+            <img id="su-size-guide-diagram" class="su-size-guide-diagram" src="images/size-guide-diagram-es.png" alt="Diagrama de medidas de camiseta" decoding="async">
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- 🛒 Carrito lateral -->
+  <div id="cart-overlay" class="cart-overlay hidden">
+    <div class="cart-panel">
+      <div class="cart-header">
+        <h2>Your Cart</h2>
+        <button class="close-cart">&times;</button>
+      </div>
+      <div class="cart-items"></div>
+      <div class="cart-footer">
+        <p class="cart-total">Total: $0.00</p>
+        <button class="checkout-btn">Checkout</button>
+        <button id="clear-cart-btn" style="display:none;">Empty Cart</button>
+      </div>
+    </div>
+  </div>
+
+<!-- 📱 FOOTER PARA CELULARES (solo visible en pantallas pequeñas) -->
+
+<!-- Sucesso continuous footer marquee -->
+
+
+
+  
+
+<footer class="sucesso-site-footer" aria-label="Footer">
+  <div class="sucesso-footer-inner">
+    <div class="sucesso-footer-legal">
+      <h2 class="sucesso-footer-heading" data-i18n="footer_policies_conditions">POLÍTICAS Y CONDICIONES</h2>
+      <ul class="sucesso-footer-links">
+        <li><a href="politica-de-privacidad.html" data-i18n="footer_privacy_policy">POLÍTICA DE PRIVACIDAD</a></li>
+        <li><a href="cookies.html" data-i18n="footer_cookies">COOKIES</a></li>
+        <li><a href="terms-and-conditions.html" data-i18n="footer_terms">TÉRMINOS Y CONDICIONES</a></li>
+        <li><a href="tracking.html" data-i18n="footer_order_tracking">SEGUIMIENTO DE PEDIDO</a></li>
+      </ul>
+      <div class="sucesso-footer-social">
+        <a class="sucesso-footer-instagram" href="https://www.instagram.com/sucessobrand" target="_blank" rel="noopener noreferrer" aria-label="Instagram @sucessobrand">
+          <img src="images/instagram-icon.svg" alt="Instagram">
+        </a>
+      </div>
+    </div>
+
+    <a class="sucesso-footer-brandmark" href="index.html" aria-label="Sucesso home">
+      <img src="images/logo cherry png.png" alt="Sucesso">
+    </a>
+
+    <div class="sucesso-footer-payments" aria-label="Métodos de pago admitidos">
+      <img class="sucesso-footer-payment-logo" src="images/payment-amex.svg" alt="American Express">
+      <img class="sucesso-footer-payment-logo" src="images/payment-discover.svg" alt="Discover">
+      <img class="sucesso-footer-payment-logo" src="images/payment-mastercard.svg" alt="Mastercard">
+      <img class="sucesso-footer-payment-logo" src="images/payment-visa.svg" alt="Visa">
+      <span class="sucesso-footer-payment-tile"><img src="images/payment-paypal.svg" alt="PayPal"></span>
+      <span class="sucesso-footer-payment-tile zelle"><img src="images/payment-zelle.png" alt="Zelle"></span>
+    </div>
+
+    <p class="sucesso-footer-copy">© SUCESSO</p>
+  </div>
+</footer>
+
+<div id="language-popup" class="language-popup">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <strong style="font-size: 12px; letter-spacing: 1px;">LANGUAGE SETTINGS</strong>
+    <button class="close-btn" onclick="closeLanguagePopup()">&times;</button>
+  </div>
+  <label for="language-select" style="font-size: 10px; display: block; margin-bottom: 8px;">SELECT LANGUAGE:</label>
+  <select id="language-select" style="width: 100%; padding: 10px; font-size: 12px; border: 1px solid #ccc;">
+    <option value="en">English</option>
+    <option value="es">Español</option>
+  </select>
+  <button onclick="saveLanguage()" style="width: 100%; margin-top: 20px; padding: 10px; background: #233f32; color: white; font-size: 12px; border: none; cursor: pointer; text-transform: uppercase;">Save</button>
+</div>
+
+<script>
+  const popup = document.getElementById("language-popup");
+  const trigger = document.getElementById("openLanguagePopup");
+  const select = document.getElementById("language-select");
+
+  trigger.addEventListener("click", (e) => {
+    e.preventDefault();
+    const savedLang = localStorage.getItem("preferredLang");
+    const currentLang = savedLang || document.documentElement.lang || "en";
+    select.value = currentLang; // Mostrar idioma actual
+    popup.classList.add("show");
+  });
+
+  function closeLanguagePopup() {
+    popup.classList.remove("show");
+  }
+
+function saveLanguage() {
+  const lang = select.value;
+  localStorage.setItem("preferredLang", lang); // Guardar idioma
+  setLanguage(lang);
+  closeLanguagePopup();
+
+  // 👇 Esto forzará que el carrito se re-renderice con las etiquetas traducidas
+  if (typeof updateCart === "function") {
+    updateCart();
+  }
+}
+
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(res => res.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        document.documentElement.lang = lang;
+      })
+      .catch(err => console.error("Error cargando idioma:", err));
+  }
+
+  // Al cargar la página, aplicar idioma guardado
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("preferredLang") || "en";
+    select.value = savedLang;
+    setLanguage(savedLang);
+  });
+</script>
+
+
+  <script>
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("loader");
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 2500);
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("abrir") === "carrito") {
+        const cartBtn = document.getElementById("cart-btn");
+        if (cartBtn) {
+          setTimeout(() => cartBtn.click(), 300); // espera a que todo cargue
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script src="script.js"></script>
+  <script src="styles.css"></script>
+
+<script>
+  const langSwitcher = document.getElementById("languageSwitcher");
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(response => response.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        localStorage.setItem("preferredLang", lang);
+      })
+      .catch(error => console.error("Error cargando idioma:", error));
+  }
+
+  langSwitcher.addEventListener("change", (e) => {
+    setLanguage(e.target.value);
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("preferredLang") || "en";
+    langSwitcher.value = savedLang;
+    setLanguage(savedLang);
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const langToggleHeader = document.getElementById("languageToggle");
+  const langToggleSidebar = document.getElementById("languageToggleSidebar");
+  const popup = document.getElementById("language-popup");
+  const languageSelect = document.getElementById("language-select");
+  const sidebar = document.querySelector(".sidebar");
+  const overlay = document.getElementById("overlay");
+
+  const currentLang = localStorage.getItem("preferredLang") || "en";
+  languageSelect.value = currentLang;
+
+  function updateToggleText(lang) {
+    const text = lang === "es" ? "ES | EN" : "EN | ES";
+    if (langToggleHeader) langToggleHeader.textContent = text;
+    if (langToggleSidebar) langToggleSidebar.textContent = text;
+  }
+
+  function openLanguagePopup() {
+    popup.classList.add("show");
+    languageSelect.value = localStorage.getItem("preferredLang") || "en";
+  }
+
+  if (langToggleHeader) {
+    langToggleHeader.addEventListener("click", () => {
+      openLanguagePopup();
+    });
+  }
+
+  if (langToggleSidebar) {
+  langToggleSidebar.addEventListener("click", () => {
+    openLanguagePopup(); // ✅ Mantener el sidebar abierto
+  });
+}
+
+
+
+  window.saveLanguage = function () {
+    const selectedLang = languageSelect.value;
+    localStorage.setItem("preferredLang", selectedLang);
+    setLanguage(selectedLang);
+    updateToggleText(selectedLang);
+    popup.classList.remove("show");
+    if (typeof updateCart === "function") updateCart();
+  };
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(res => res.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        document.documentElement.lang = lang;
+      })
+      .catch(err => console.error("Error cargando idioma:", err));
+  }
+
+  updateToggleText(currentLang);
+  setLanguage(currentLang);
+});
+</script>
+
+
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <a href="index.html" data-i18n="nav_new_in">NEW IN</a>
+  <a href="collections/t-shirts/" data-i18n="nav_tees">T-SHIRTS</a>
+  <a href="about.html" data-i18n="nav_about">ABOUT</a>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-auth-lang">
+      <a id="sidebar-account-link" href="login.html" class="sidebar-link">
+        <img src="images/icon account.png" alt="Login" class="sidebar-icon" />
+        <span id="sidebar-account-text" data-i18n="sidebar_account">Account</span>
+      </a>
+      <div class="lang-btn" id="languageToggleSidebar">EN | ES</div>
+    </div>
+  </div>
+</aside>
+
+  <!-- SCRIPT -->
+<script>
+  const toggleBtn = document.querySelector('.menu-toggle');
+  const sidebar = document.querySelector('.sidebar');
+  const closeBtn = document.querySelector('.close-sidebar');
+
+toggleBtn.addEventListener('click', () => {
+  const icon = toggleBtn.querySelector('.menu-icon');
+  sidebar.classList.toggle('active');
+  icon.classList.toggle('open');
+});
+
+closeBtn.addEventListener('click', () => {
+  const icon = toggleBtn.querySelector('.menu-icon');
+  sidebar.classList.remove('active');
+  icon.classList.remove('open');
+});
+
+
+</script>
+
+<script>
+function updateLanguageToggleVisibility() {
+  const navDesktop = document.querySelector('.nav-desktop');
+  const languageToggle = document.getElementById('languageToggle');
+
+  if (!navDesktop || !languageToggle) return;
+
+  const navVisible = window.getComputedStyle(navDesktop).display !== 'none';
+
+  // Mostrar solo si los nav links están visibles (pantalla grande)
+  languageToggle.style.display = navVisible ? 'flex' : 'none';
+}
+
+// Ejecutar al cargar
+document.addEventListener("DOMContentLoaded", updateLanguageToggleVisibility);
+
+// Ejecutar al redimensionar
+window.addEventListener("resize", updateLanguageToggleVisibility);
+</script>
+
+
+<script>
+const menuToggle = document.querySelector('.menu-toggle');
+const menuIcon = document.querySelector('.menu-icon');
+
+menuToggle.addEventListener('click', () => {
+  menuIcon.classList.toggle('open');
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const zoomOverlay = document.getElementById("zoom-overlay");
+  const zoomImage = document.getElementById("zoom-image");
+  const closeZoom = document.getElementById("close-zoom");
+
+  // Selecciona todas las imágenes dentro de image-box
+  document.querySelectorAll(".image-box img").forEach(img => {
+    img.addEventListener("click", () => {
+      zoomImage.src = img.src;
+      zoomOverlay.style.display = "flex";
+      zoomOverlay.scrollTop = 0;
+    });
+  });
+
+  closeZoom.addEventListener("click", () => {
+    zoomOverlay.style.display = "none";
+    zoomImage.src = "";
+  });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const zoomOverlay = document.getElementById("zoom-overlay");
+  const zoomImage   = document.getElementById("zoom-image");
+  const closeZoom   = document.getElementById("close-zoom");
+  const sizeGuide   = document.getElementById("size-guide-img") || document.querySelector(".size-guide-sucesso");
+
+  let zoomed = false;
+
+  function openZoom(src) {
+    zoomImage.src = src;
+    zoomImage.style.transform = "scale(1)";
+    zoomImage.classList.remove("zoomed");
+    zoomed = false;
+    zoomOverlay.style.display = "flex";
+    // Resetea scroll para empezar centrado
+    zoomOverlay.scrollTop  = 0;
+    zoomOverlay.scrollLeft = 0;
+  }
+
+  function closeOverlay() {
+    zoomOverlay.style.display = "none";
+    zoomImage.src = "";
+    zoomImage.style.transform = "scale(1)";
+    zoomImage.classList.remove("zoomed");
+    zoomed = false;
+  }
+
+  // 👉 Abrir overlay al clickear el Size Guide
+  if (sizeGuide) {
+    sizeGuide.style.cursor = "zoom-in";
+    sizeGuide.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const src = sizeGuide.getAttribute("src");
+      if (src) openZoom(src);
+    });
+  }
+
+  // 👉 Cerrar con la X
+  if (closeZoom) {
+    closeZoom.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closeOverlay();
+    });
+  }
+
+  // 👉 Cerrar con ESC
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && zoomOverlay.style.display === "flex") {
+      closeOverlay();
+    }
+  });
+
+  // 👉 Cerrar si clic fuera de la imagen
+  zoomOverlay.addEventListener("click", (e) => {
+    if (e.target === zoomOverlay) {
+      closeOverlay();
+    }
+  });
+
+  // 👉 Click-zoom dentro del overlay (toggle 1x ↔ 2x)
+  zoomImage.addEventListener("click", (e) => {
+    // Evitá que un click en la imagen cierre el overlay
+    e.stopPropagation();
+
+    if (!zoomed) {
+      zoomed = true;
+      zoomImage.style.transform = "scale(2)"; // podés subir a 2.2 si querés más zoom
+      zoomImage.classList.add("zoomed");
+      // Centrar más o menos la zona clickada
+      // (esto es simple; para un pan avanzado habría que calcular offsets)
+      // De todas maneras, podés hacer pan con el scroll del overlay.
+    } else {
+      zoomed = false;
+      zoomImage.style.transform = "scale(1)";
+      zoomImage.classList.remove("zoomed");
+    }
+  });
+});
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const sizeButtons = Array.from(document.querySelectorAll('.product-sizes [data-size], .product-sizes span'));
+  const message = document.getElementById('size-required-message');
+  if (!sizeButtons.length) return;
+
+  // Product pages always open with no size selected.
+  sizeButtons.forEach(el => {
+    if (!el.dataset.size) el.dataset.size = (el.textContent || '').trim().toUpperCase();
+    el.classList.remove('active', 'selected');
+    el.setAttribute('aria-pressed', 'false');
+  });
+
+  const activate = (size) => {
+    sizeButtons.forEach(b => {
+      const selected = b.dataset.size === size;
+      b.classList.toggle('active', selected);
+      b.classList.toggle('selected', selected);
+      b.setAttribute('aria-pressed', selected ? 'true' : 'false');
+    });
+    if (message) message.hidden = true;
+  };
+
+  sizeButtons.forEach(btn => {
+    btn.addEventListener('click', () => activate(btn.dataset.size));
+    btn.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        activate(btn.dataset.size);
+      }
+    });
+  });
+});
+</script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggles = document.querySelectorAll(".info-toggle");
+    toggles.forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        const section = toggle.closest(".info-section");
+        section.classList.toggle("active");
+      });
+    });
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const scrollContainer = document.querySelector(".image-scroll-container");
+  const dotsContainer = document.querySelector(".carousel-dots");
+  const images = document.querySelectorAll(".image-box");
+  
+  // Crear dots según cantidad de imágenes
+  images.forEach((_, index) => {
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
+    if (index === 0) dot.classList.add("active");
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = dotsContainer.querySelectorAll(".dot");
+
+  // Escuchar scroll
+  scrollContainer.addEventListener("scroll", () => {
+    const scrollLeft = scrollContainer.scrollLeft;
+    const width = scrollContainer.offsetWidth;
+    const index = Math.round(scrollLeft / width);
+
+    dots.forEach(dot => dot.classList.remove("active"));
+    if (dots[index]) dots[index].classList.add("active");
+  });
+});
+</script>
+
+<script>
+/* --- 1) Conectar acciones al modo TEXTO (desktop XL) --- */
+document.addEventListener('DOMContentLoaded', () => {
+  // Search (texto) ya llama a toggleSearchBar() en el onClick del botón.
+
+  // Account (texto) debe comportarse como account-link original con Auth
+  const accountLinkText = document.getElementById('account-link-text');
+  if (accountLinkText) {
+    accountLinkText.addEventListener('click', (e) => {
+      e.preventDefault();
+      try {
+        // Si ya hay Firebase Auth cargado en otro script:
+        if (window.firebaseAuth && typeof window.firebaseAuth.onAuthStateChanged === 'function') {
+          window.firebaseAuth.onAuthStateChanged((user) => {
+            window.location.href = user ? 'mi-cuenta.html' : 'login.html';
+          });
+        } else {
+          // Fallback: imitar el comportamiento del link con ID account-link
+          const original = document.getElementById('account-link');
+          if (original) original.click(); else window.location.href = 'login.html';
+        }
+      } catch (err) {
+        window.location.href = 'login.html';
+      }
+    });
+  }
+
+  // Cart (texto) debe abrir el mismo panel que el ícono
+  const cartTextBtn = document.getElementById('cart-text-btn');
+  const cartIconBtn = document.getElementById('cart-btn');
+  if (cartTextBtn && cartIconBtn) {
+    cartTextBtn.addEventListener('click', () => cartIconBtn.click());
+  }
+});
+
+/* --- 2) Contador unificado: actualiza badge (ícono) y texto (Cart (n)) --- */
+(function setupCartCountSync() {
+  const badge = document.getElementById('cart-count');       // burbuja en ícono
+  const textCount = document.getElementById('cart-count-text'); // (n) en texto
+
+  function safeParse(json) {
+    try { return JSON.parse(json); } catch { return null; }
+  }
+
+  function computeQtyFromArray(arr) {
+    if (!Array.isArray(arr)) return 0;
+    return arr.reduce((sum, item) => {
+      const q = (item && (item.quantity ?? item.qty ?? item.cantidad ?? 1)) ?? 1;
+      return sum + (Number.isFinite(+q) ? +q : 1);
+    }, 0);
+  }
+
+  function readCartQty() {
+    // Intenta varias claves comunes:
+    const keys = ['carrito'];
+    for (const k of keys) {
+      const raw = localStorage.getItem(k);
+      if (!raw) continue;
+      const data = safeParse(raw);
+      if (!data) continue;
+      // si es objeto con items
+      if (data && Array.isArray(data.items)) return computeQtyFromArray(data.items);
+      // si es array
+      if (Array.isArray(data)) return computeQtyFromArray(data);
+      // si es objeto con conteo directo
+      if (typeof data.totalQty === 'number') return data.totalQty;
+      if (typeof data.count === 'number') return data.count;
+    }
+    // Como fallback, si existe window.cartItems (algunos setups lo exponen)
+    if (Array.isArray(window.cartItems)) return computeQtyFromArray(window.cartItems);
+    return 0;
+  }
+
+  function applyCount(n) {
+    if (badge) badge.textContent = String(n);
+    if (textCount) textCount.textContent = `(${n})`;
+  }
+
+  // Actualiza inmediatamente
+  applyCount(readCartQty());
+
+  // Escucha cambios por almacenamiento (otras pestañas / scripts que escriben)
+  window.addEventListener('storage', (e) => {
+    if (['cart','cartItems','carrito','sucesso_cart'].includes(e.key)) {
+      applyCount(readCartQty());
+    }
+  });
+
+  // Si tu cart.js dispara este evento, reaccionamos al instante:
+  window.addEventListener('cart:updated', () => {
+    applyCount(readCartQty());
+  });
+
+  // Fallback polling suave por si el carrito se actualiza sin eventos:
+  let last = null;
+  const tick = () => {
+    const qty = readCartQty();
+    if (qty !== last) {
+      last = qty;
+      applyCount(qty);
+    }
+  };
+  const interval = setInterval(tick, 800);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) clearInterval(interval);
+    else setInterval(tick, 800);
+  });
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+
+  function closeAll() {
+    document.querySelectorAll('.nav-item.has-dropdown').forEach(it => {
+      it.classList.remove('open');
+      const dd = it.querySelector('.dropdown');
+      if (dd) dd.hidden = true;
+      const arrow = it.querySelector('.nav-arrow');
+      if (arrow) arrow.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function setupDesktopNav() {
+    if (!mq.matches) return;
+    closeAll(); // estado inicial: todo cerrado y oculto
+
+    // SHOP
+    const shop = document.getElementById('nav-shop');
+    if (shop) {
+      const main = shop.querySelector('.nav-main');
+      const arrow = shop.querySelector('.nav-arrow');
+      const dd = shop.querySelector('.dropdown');
+
+      // Clic en texto: ir a Tees
+      main.onclick = () => { window.location.href = 'collections/t-shirts/'; };
+
+      // Clic en flecha: toggle SOLO el de Shop
+      arrow.onclick = (e) => {
+        e.stopPropagation();
+        const willOpen = !shop.classList.contains('open');
+        closeAll();
+        if (willOpen) {
+          shop.classList.add('open');
+          dd.hidden = false;
+          arrow.setAttribute('aria-expanded', 'true');
+        }
+      };
+    }
+
+    // LEGAL y SUPPORT: clic en texto o flecha -> toggle
+    [['nav-legal'], ['nav-support']].forEach(([id]) => {
+      const li = document.getElementById(id);
+      if (!li) return;
+      const main = li.querySelector('.nav-main');
+      const arrow = li.querySelector('.nav-arrow');
+      const dd = li.querySelector('.dropdown');
+
+      const toggle = (e) => {
+        e.stopPropagation();
+        const willOpen = !li.classList.contains('open');
+        closeAll();
+        if (willOpen) {
+          li.classList.add('open');
+          dd.hidden = false;
+          arrow.setAttribute('aria-expanded', 'true');
+        }
+      };
+
+      main.onclick = toggle;
+      arrow.onclick = toggle;
+    });
+
+    // Cerrar si clic fuera
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav-item.has-dropdown')) closeAll();
+    });
+  }
+
+  setupDesktopNav();
+  mq.addEventListener('change', () => { if (mq.matches) setupDesktopNav(); else closeAll(); });
+});
+</script>
+
+<script>
+/* === SUPPORT como SHOP en Desktop XL (≥1536px) ===
+   - Clic en texto "SUPPORT" => navegar a contactanos.html
+   - Clic en flechita => sólo abrir/cerrar dropdown
+   - No toca el comportamiento en laptops/móviles
+   - Usa captura + stopImmediatePropagation para imponerse a listeners previos
+*/
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+
+  function closeOthers(except) {
+    document.querySelectorAll('.nav-item.has-dropdown').forEach(li => {
+      if (li === except) return;
+      li.classList.remove('open');
+      const dd = li.querySelector('.dropdown');
+      if (dd) dd.hidden = true;
+      li.querySelector('.nav-arrow')?.setAttribute('aria-expanded','false');
+    });
+  }
+
+  function wireSupportHandlers() {
+    const support = document.getElementById('nav-support');
+    if (!support) return;
+
+    const supportMain  = support.querySelector('.nav-main');
+    const supportArrow = support.querySelector('.nav-arrow');
+    const supportDD    = support.querySelector('.dropdown');
+
+    // Limpia posibles estados
+    supportMain?.replaceWith(supportMain.cloneNode(true));
+    supportArrow?.replaceWith(supportArrow.cloneNode(true));
+
+    // Re-obtener referencias tras cloneNode
+    const main  = support.querySelector('.nav-main');
+    const arrow = support.querySelector('.nav-arrow');
+    const dd    = supportDD;
+
+    if (!main || !arrow || !dd) return;
+
+    // Desktop XL: aplicar comportamiento especial
+    if (mq.matches) {
+      // 1) Clic en texto SUPPORT => navegar
+      main.addEventListener('click', (e) => {
+        e.stopImmediatePropagation();
+        // No prevenimos el default en <button>, solo navegamos:
+        window.location.href = 'contactanos.html';
+      }, true); // captura
+
+      // 2) Clic en flecha => toggle dropdown (sin navegar)
+      arrow.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        const willOpen = !support.classList.contains('open');
+        closeOthers(support);
+
+        support.classList.toggle('open', willOpen);
+        dd.hidden = !willOpen;
+        arrow.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      }, true); // captura
+    }
+    // En tamaños <1536px no se engancha nada nuevo: todo queda como ya lo tienes
+  }
+
+  // Wire al inicio y en cambios de tamaño
+  wireSupportHandlers();
+  mq.addEventListener('change', wireSupportHandlers);
+});
+</script>
+
+<script>
+/* === BRAND como SHOP en Desktop XL (≥1536px) ===
+   - Clic en texto "BRAND" => navegar a about.html
+   - Clic en flechita => sólo abrir/cerrar su dropdown
+   - No toca el comportamiento en laptops/móviles
+   - Se cierra cualquier otro dropdown abierto
+*/
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+
+  function closeOthers(except) {
+    document.querySelectorAll('.nav-item.has-dropdown').forEach(li => {
+      if (li === except) return;
+      li.classList.remove('open');
+      const dd = li.querySelector('.dropdown');
+      if (dd) dd.hidden = true;
+      li.querySelector('.nav-arrow')?.setAttribute('aria-expanded','false');
+    });
+  }
+
+  function wireBrandHandlers() {
+    const brand = document.getElementById('nav-brand');
+    if (!brand) return;
+
+    const brandMain  = brand.querySelector('.nav-main');
+    const brandArrow = brand.querySelector('.nav-arrow');
+    const brandDD    = brand.querySelector('.dropdown');
+
+    // Reemplazar listeners previos (si existieran)
+    brandMain?.replaceWith(brandMain.cloneNode(true));
+    brandArrow?.replaceWith(brandArrow.cloneNode(true));
+
+    // Re-obtener referencias
+    const main  = brand.querySelector('.nav-main');
+    const arrow = brand.querySelector('.nav-arrow');
+    const dd    = brandDD;
+
+    if (!main || !arrow || !dd) return;
+
+    if (mq.matches) {
+      // 1) Clic en texto BRAND => navegar a about.html
+      main.addEventListener('click', (e) => {
+        e.stopImmediatePropagation();
+        window.location.href = 'about.html';
+      }, true); // captura
+
+      // 2) Clic en flecha => toggle dropdown (sin navegar)
+      arrow.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        const willOpen = !brand.classList.contains('open');
+        closeOthers(brand);
+
+        brand.classList.toggle('open', willOpen);
+        dd.hidden = !willOpen;
+        arrow.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      }, true); // captura
+    }
+    // En <1536px: no hacemos nada extra; conserva tu comportamiento móvil
+  }
+
+  // Inicial + en cambios de tamaño
+  wireBrandHandlers();
+  mq.addEventListener('change', wireBrandHandlers);
+});
+</script>
+
+
+
+  <script src="product-page.js"></script>
+<script src="cart.js" type="module"></script>
+<script src="related-products.js"></script>
+<script src="wishlist.js"></script>
+  <script src="script.js"></script>
+
+<script>
+/* ========= PRODUCT PAGE — ADD TO CART / SIZE VALIDATION ========= */
+document.addEventListener('DOMContentLoaded', () => {
+  const originalBtn = document.getElementById('add-to-cart-btn');
+  if (!originalBtn) return;
+
+  // Clone once to remove any older click handlers from product-page.js.
+  const btn = originalBtn.cloneNode(true);
+  originalBtn.parentNode.replaceChild(btn, originalBtn);
+
+  const sizeMessage = document.getElementById('size-required-message');
+  const sizeButtons = Array.from(document.querySelectorAll('.product-sizes [data-size]'));
+  const getSelectedSize = () => {
+    const el = document.querySelector('.product-sizes .active');
+    return (el?.dataset.size || '').trim().toUpperCase() || null;
+  };
+  const getNumber = (str) => parseFloat(String(str || '').replace(/[^0-9.]/g, '')) || 0;
+  const currentLang = () => localStorage.getItem('preferredLang') === 'en' ? 'en' : 'es';
+  const copies = {
+    en: { add: 'Add to cart', select: 'Select Size' },
+    es: { add: 'Agregar al carrito', select: 'Seleccione una talla' }
+  };
+
+  function setButtonCopy(mode) {
+    const key = mode === 'select' ? 'select_size' : 'add_to_cart';
+    btn.dataset.i18n = key;
+    btn.textContent = copies[currentLang()][mode === 'select' ? 'select' : 'add'];
+  }
+
+  // No animation: text switches immediately only while hovering/focusing an unselected product.
+  btn.addEventListener('mouseenter', () => {
+    if (!getSelectedSize()) setButtonCopy('select');
+  });
+  btn.addEventListener('mouseleave', () => setButtonCopy('add'));
+  btn.addEventListener('focus', () => {
+    if (!getSelectedSize()) setButtonCopy('select');
+  });
+  btn.addEventListener('blur', () => setButtonCopy('add'));
+
+  sizeButtons.forEach(sizeBtn => {
+    sizeBtn.addEventListener('click', () => {
+      if (sizeMessage) sizeMessage.hidden = true;
+      setButtonCopy('add');
+    });
+  });
+
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    const size = getSelectedSize();
+    if (!size) {
+      if (sizeMessage) sizeMessage.hidden = false;
+      setButtonCopy('select');
+      return;
+    }
+
+    if (window.__sucesso_add_lock) return;
+    window.__sucesso_add_lock = true;
+    setTimeout(() => { window.__sucesso_add_lock = false; }, 600);
+
+    localStorage.setItem('sucesso_last_size', size);
+
+    const name  = (document.getElementById('product-name')?.textContent || '').trim();
+    const price = getNumber(document.getElementById('product-price')?.textContent);
+    const image = document.getElementById('product-image-front')?.src || '';
+    const slug  = window.SucessoStorefront?.slugFromProductHref(location.href) || new URLSearchParams(location.search).get('nombre') || window.SucessoStorefront?.slugify(name) || name;
+    const product = { name, price, image, slug, size, quantity: 1 };
+
+    if (typeof window.addToCart === 'function') {
+      window.addToCart(product);
+    } else {
+      const raw = localStorage.getItem('carrito');
+      let cart = [];
+      try { cart = raw ? JSON.parse(raw) : []; } catch { cart = []; }
+      const ix = cart.findIndex(it => it.slug === slug && it.size === size);
+      if (ix >= 0) cart[ix].quantity = Number(cart[ix].quantity ?? cart[ix].qty ?? 1) + 1;
+      else cart.push({ ...product, quantity: 1 });
+      localStorage.setItem('carrito', JSON.stringify(cart));
+      window.dispatchEvent(new Event('cart:updated'));
+    }
+
+    btn.dataset.size = size;
+    setButtonCopy('add');
+    window.dispatchEvent(new CustomEvent('cart:force-open', { detail: { from: 'product-page' } }));
+  }, { capture: true });
+});
+</script>
+
+<script>
+/* === SUCESSO SIZE GUIDE: responsive table + cm/inches + localized diagram === */
+document.addEventListener('DOMContentLoaded', () => {
+  const guide = document.querySelector('.su-size-guide');
+  if (!guide) return;
+
+  const measurementsCm = {
+    chest:  { S: 49.5, M: 54.6, L: 59.7, XL: 64.8 },
+    length: { S: 69.8, M: 72.4, L: 74.9, XL: 77.5 },
+    sleeve: { S: 21.6, M: 22.9, L: 24.1, XL: 25.4 }
+  };
+
+  const copy = {
+    es: {
+      size: 'TALLA',
+      chest: 'PECHO',
+      length: 'LARGO FRONTAL',
+      sleeve: 'LARGO MANGA',
+      cm: 'CM',
+      inches: 'PULGADAS',
+      diagram: 'images/size-guide-diagram-es.png',
+      alt: 'Diagrama de medidas de camiseta'
+    },
+    en: {
+      size: 'SIZE',
+      chest: 'CHEST',
+      length: 'LENGTH',
+      sleeve: 'SLEEVE',
+      cm: 'CM',
+      inches: 'INCHES',
+      diagram: 'images/size-guide-diagram-en.png',
+      alt: 'T-shirt measurement diagram'
+    }
+  };
+
+  const unitButtons = Array.from(guide.querySelectorAll('.su-size-unit'));
+  const diagram = document.getElementById('su-size-guide-diagram');
+  let unit = 'cm';
+
+  function language() {
+    const htmlLang = (document.documentElement.lang || '').toLowerCase();
+    const stored = (localStorage.getItem('preferredLang') || '').toLowerCase();
+    return (htmlLang.startsWith('es') || (!htmlLang && stored === 'es')) ? 'es' : 'en';
+  }
+
+  function numberFor(cm) {
+    if (unit === 'cm') return cm.toFixed(1);
+    return (cm / 2.54).toFixed(1);
+  }
+
+  function renderValues() {
+    guide.querySelectorAll('[data-measure][data-size]').forEach(cell => {
+      const measure = cell.dataset.measure;
+      const size = cell.dataset.size;
+      const cm = measurementsCm?.[measure]?.[size];
+      if (typeof cm === 'number') cell.textContent = numberFor(cm);
+    });
+  }
+
+  function renderLanguage() {
+    const lang = language();
+    const t = copy[lang];
+    const sizeLabel = guide.querySelector('.su-sg-label-size');
+    const chestLabel = guide.querySelector('.su-sg-label-chest');
+    const lengthLabel = guide.querySelector('.su-sg-label-length');
+    const sleeveLabel = guide.querySelector('.su-sg-label-sleeve');
+    if (sizeLabel) sizeLabel.textContent = t.size;
+    if (chestLabel) chestLabel.textContent = t.chest;
+    if (lengthLabel) lengthLabel.textContent = t.length;
+    if (sleeveLabel) sleeveLabel.textContent = t.sleeve;
+    const cmBtn = guide.querySelector('.su-size-unit[data-unit="cm"]');
+    const inBtn = guide.querySelector('.su-size-unit[data-unit="in"]');
+    if (cmBtn) cmBtn.textContent = t.cm;
+    if (inBtn) inBtn.textContent = t.inches;
+    if (diagram) {
+      diagram.src = t.diagram;
+      diagram.alt = t.alt;
+    }
+  }
+
+  function setUnit(nextUnit) {
+    unit = nextUnit === 'in' ? 'in' : 'cm';
+    guide.dataset.unit = unit;
+    unitButtons.forEach(btn => {
+      const active = btn.dataset.unit === unit;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    renderValues();
+  }
+
+  unitButtons.forEach(btn => {
+    btn.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      setUnit(btn.dataset.unit);
+    });
+  });
+
+  // Centimetres are the default every time the page is opened.
+  renderLanguage();
+  setUnit('cm');
+
+  // Country/location controls update <html lang>; react immediately without a loader.
+  const langObserver = new MutationObserver(() => {
+    renderLanguage();
+    renderValues();
+  });
+  langObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+
+  window.addEventListener('storage', (event) => {
+    if (event.key === 'preferredLang') {
+      renderLanguage();
+      renderValues();
+    }
+  });
+});
+</script>
+
+<script src="support-nav-fix.js"></script>
+
+<script src="storefront-enhancements.js"></script>
+  <script src="mobile-menu-refresh.js"></script>
+  <script src="product-detail-enhancements.js"></script>
+</body>
+</html>
+
