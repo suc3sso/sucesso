@@ -1,0 +1,4224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<script src="checkout-return.js"></script>
+  <meta charset="UTF-8" />
+  <script>
+    (()=>{
+      const spanishCountries=new Set("AR BO CL CO CR CU DO EC SV GQ GT HN MX NI PA PY PE PR ES UY VE".split(" "));
+      const country=localStorage.getItem("sucesso-selected-country");
+      const saved=localStorage.getItem("preferredLang");
+      const l=country?(spanishCountries.has(country)?"es":"en"):(saved==="en"?"en":"es");
+      document.documentElement.lang=l;
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout - Sucesso</title>
+  <link rel="icon" href="images/sucesso fav icon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1a1a1a;
+      --gray: #e5e5e5;
+      --accent: #233f32;
+      --right-bg: #233f32;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+.loader {
+      position: fixed;
+      inset: 0;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .loader img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      animation: zoomInClean 2s ease forwards;
+    }
+
+    @keyframes zoomInClean {
+      0% { transform: scale(0.1); opacity: 0; }
+      70% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    
+    header.navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 70px;
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 1001;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .logo {
+      height: 35px;
+      margin-top: 20px;
+    }
+
+    .checkout-wrapper {
+      display: flex;
+      max-width: 100%;
+      margin-top: 70px;
+      min-height: calc(100vh - 70px);
+      height: auto;
+      align-items: stretch;
+      background: linear-gradient(to right, #ffffff 0 50%, var(--right-bg) 50% 100%);
+    }
+
+    .form-section {
+      flex: 1;
+      min-width: 0;
+      padding: 2rem 4rem 4rem;
+      overflow: visible;
+      height: auto;
+      color: #111111;
+      background: #ffffff;
+    }
+
+    .summary-section {
+      width: 50%;
+      background: var(--right-bg);
+      min-height: calc(100vh - 70px);
+      height: auto;
+      padding: 3rem 2rem 4rem;
+      position: relative;
+      color: #ffffff;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 500;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--gray);
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .cart-item img {
+  width: auto;
+  height: 150px;
+  object-fit: contain;
+  border-radius: 2px;
+  margin-right: 1rem;
+  background-color: #e5e5e5e5;
+}
+
+
+    .cart-info {
+      flex: 1;
+    }
+
+    .cart-info p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .price-section {
+      text-align: right;
+      margin-top: 1rem;
+    }
+
+    .price-section p {
+      margin: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .total-section {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    button[type="submit"] {
+  display: inline-block;
+  background-color: #233f32;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+button[type="submit"]:hover {
+  background-color: #18221e;
+  color: #ffffff;
+}
+
+
+    .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  margin-bottom: 1rem;
+}
+
+.accordion {
+  border-radius: 6px;
+  border: 1px solid #e5e5e5;
+  overflow: hidden;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* Shipping placeholder for countries whose rates are not connected yet. */
+.shipping-methods-pending {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 18px;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 12px;
+  background: #f6f6f6;
+  color: #5f6368;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.35;
+  text-align: center;
+}
+.shipping-methods-pending[hidden] { display: none !important; }
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.accordion-header input[type="radio"] {
+  accent-color: var(--accent);
+  width: 20px;
+  height: 20px;
+}
+
+.accordion-panel {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+  background: #fafafa;
+  padding: 0 1rem;
+}
+
+.accordion-panel.open {
+  max-height: 400px;
+  opacity: 1;
+  padding: 1rem;
+}
+
+.file-wrapper {
+  margin-top: 0.75rem;
+}
+
+.file-wrapper label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.file-wrapper input[type="file"] {
+  border: 1px solid var(--gray);
+  padding: 0.5rem;
+  border-radius: 4px;
+  width: 100%;
+  background: white;
+}
+
+.file-upload {
+  margin-top: 1rem;
+}
+
+.file-upload label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.upload-btn {
+  display: inline-block;
+  background-color: transparent;
+      color: #333;
+      border: 1px solid #333;
+  padding: 0.4rem 1rem; /* más pequeño */
+  border-radius: 2px;
+  font-weight: 600;
+  font-size: 0.85rem;    /* más chico también */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+background-color: #233f32;
+      color: #ffffff;
+}
+
+
+
+.file-name {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+  display: block;
+}
+
+.label-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.envio-precio {
+  font-weight: 600;
+}
+
+.pais-region-wrapper {
+  position: relative;
+}
+
+/* Label flotante perfectamente dentro del borde */
+.pais-region-wrapper label {
+  position: absolute;
+  top: 7px;
+  left: 14px;
+  background-color: white;
+  padding: 0 4px;
+  font-size: 0.75rem;
+  color: #888;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Select con apariencia nativa y padding ajustado */
+.pais-region-wrapper select {
+  background-color: white;
+  color: #1a1a1a;
+  font-weight: 400;
+  width: 100%;
+  padding: 1.75rem 0.75rem 0.75rem 0.75rem;
+  border: 1px solid var(--gray);
+  border-radius: 4px;
+  font-size: 1rem;
+  z-index: 1;
+  appearance: auto; /* Esto mantiene la flecha del navegador */
+}
+
+/* Opciones internas iguales al select de Estado */
+.pais-region-wrapper select option {
+  background-color: white;
+  color: #1a1a1a;
+  font-weight: 400;
+}
+
+.custom-upload {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.preview-container {
+  position: relative;
+  margin-top: 1rem;
+  max-width: 300px;
+}
+
+.preview-img {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 6px;
+  display: none;
+  background: #f0f0f0;
+  padding: 4px;
+}
+
+.remove-preview {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .checkout-wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .form-section {
+    padding: 1rem;
+    height: auto;
+  }
+
+  .summary-section {
+    width: 100%;
+    padding: 1rem;
+    height: auto;
+    order: -1; /* Para que el resumen aparezca arriba en móvil si lo deseas */
+  }
+
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cart-item img {
+    width: 100%;
+    height: auto;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr; /* Todos los inputs en una sola columna */
+    gap: 0.5rem;
+  }
+
+  button[type="submit"] {
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .accordion-header {
+    padding: 0.75rem;
+  }
+
+  .upload-btn {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+  }
+
+  .preview-container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .summary-section {
+    padding: 1rem;
+  }
+
+  .cart-item {
+    flex-direction: row; /* Para que imagen + info estén lado a lado */
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .cart-item img {
+    width: 80px;  /* ajusta según lo veas bien */
+    height: 80px;
+    object-fit: contain;
+    margin: 0;
+    border-radius: 4px;
+    background-color: #e5e5e5;
+  }
+
+  .cart-info {
+    flex: 1;
+  }
+
+  .price-section {
+    text-align: right;
+    font-size: 0.95rem;
+  }
+
+  .total-section {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+}
+
+.mobile-order-summary {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e5e5;
+  background: white;
+  font-weight: 600;
+  cursor: pointer;
+  position: sticky;
+  top: 70px;
+  z-index: 1000;
+}
+
+.mobile-order-summary .summary-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mobile-summary-content {
+  max-height: 0;
+  overflow: hidden;
+  background: #f9f9f9;
+  padding: 0 1rem;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+}
+
+.mobile-summary-content.open {
+  max-height: 1000px; /* valor grande para que se expanda según el contenido */
+  opacity: 1;
+  padding: 1rem;
+}
+
+
+@media (max-width: 768px) {
+  .mobile-order-summary {
+    display: flex;
+  }
+
+  .summary-section {
+    display: none;
+  }
+}
+
+/* Documento con prefijo interno V/E (zona clicable mínima) */
+.doc-wrapper {
+  position: relative;
+}
+
+.doc-wrapper select#doc-prefix {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 70%;
+  /* NUEVO: ancho controlado para que solo cubra la V/E */
+  width: 2.8em;           /* suficiente para letra + caret nativo */
+  min-width: 36px;        /* evita que se achique demasiado */
+  max-width: 48px;        /* evita que se agrande en algunos navegadores */
+  padding: 0;             /* sin padding extra */
+  text-align: center;     /* centra la V/E */
+  border: none;
+  border-right: 1px solid var(--gray);
+  background: transparent;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #233f32;
+  outline: none;
+  cursor: pointer;
+  appearance: auto;       /* mantiene la flecha nativa */
+  z-index: 2;             /* por encima del input solo en su ancho */
+}
+
+/* Deja espacio solo del ancho real del select */
+.doc-wrapper input#documento-number {
+  padding-left: 52px;     /* ajusta el espacio para que no se solape */
+}
+
+/* Ajuste en mobile para mantener el área reducida */
+@media (max-width: 768px) {
+  .doc-wrapper select#doc-prefix {
+    height: 68%;
+    width: 2.8em;
+    min-width: 34px;
+    max-width: 46px;
+  }
+  .doc-wrapper input#documento-number {
+    padding-left: 50px;
+  }
+}
+
+  /* ✅ Solo cuando el campo esté en foco (clic + escribiendo) */
+  #discount-code:focus {
+border: 2px solid #000 !important; /* grosor 2px y color negro */
+  }
+
+/* Estado inicial: deshabilitado */
+#apply-discount-btn:disabled {
+  background: #f5f5f5 !important;
+  color: #999 !important;
+  border: 1px solid #d9d9d9 !important;
+  cursor: default !important;
+  pointer-events: none !important; /* no recibe clics */
+}
+
+/* Estado habilitado */
+#apply-discount-btn.enabled {
+  background: #233f32 !important;
+  border: 1px solid #233f32 !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease;
+  pointer-events: auto !important; /* vuelve a permitir clics */
+}
+
+/* Hover cuando está habilitado */
+#apply-discount-btn.enabled:hover {
+  background: #233f32 !important;
+  color: #fff !important;
+}
+
+:root {
+  --error: #b00020;
+}
+
+/* Borde rojo para error en el campo de descuento */
+.discount-error {
+  border: 2px solid var(--error) !important;
+}
+
+/* ===== Billing toggle & panel ===== */
+.billing-toggle-row {
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+  margin:.75rem 0 0.5rem 0;
+  font-size:.95rem;
+  user-select:none;
+}
+.billing-toggle-row input[type="checkbox"]{
+  width:18px;height:18px; accent-color:#233f32; cursor:pointer;
+}
+
+#billing-section {
+  border:1px solid #e5e5e5;
+  border-radius:6px;
+  background:#fafafa;
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+  transform: translateY(-6px);
+  transition: max-height .30s ease, opacity .30s ease, transform .30s ease, padding .30s ease;
+  padding:0 1rem; /* será 1rem cuando abra */
+  margin-top:.25rem;
+}
+
+#billing-section.open {
+  max-height:650px; /* suficientemente grande para su contenido */
+  opacity:1;
+  transform: translateY(0);
+  padding:1rem;
+}
+
+#billing-section .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+@media (max-width:768px){ #billing-section .form-row{ grid-template-columns:1fr; gap:.5rem; } }
+
+/* ===== Checkout delivery fields — Shopify-style floating labels ===== */
+.form-section h2,
+.form-section .billing-toggle-row,
+.form-section .accordion-header,
+.form-section .accordion-panel {
+  color: #111111;
+}
+
+.summary-section h2,
+.summary-section .cart-info,
+.summary-section .price-section,
+.summary-section .total-section,
+.summary-section .cart-item > div {
+  color: #ffffff;
+}
+
+.summary-section #discount-msg {
+  color: #ffffff;
+}
+
+.checkout-form-note {
+  color: #111111;
+}
+
+.shipping-fields .form-group {
+  margin-bottom: 0.85rem;
+}
+
+.shipping-fields .form-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.75rem;
+}
+
+.shipping-fields .address-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.floating-field {
+  position: relative;
+  min-height: 56px;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  background: #ffffff;
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+
+.floating-field:focus-within {
+  border-color: #111111;
+  box-shadow: inset 0 0 0 1px #111111;
+}
+
+.floating-field.is-invalid {
+  border-color: #c62828 !important;
+  box-shadow: inset 0 0 0 1px #c62828 !important;
+}
+
+.floating-field input,
+.floating-field select {
+  width: 100%;
+  height: 54px;
+  margin: 0;
+  padding: 0 12px;
+  border: 0 !important;
+  border-radius: 8px;
+  outline: none !important;
+  background: transparent;
+  color: #111111;
+  font: inherit;
+  box-shadow: none !important;
+}
+
+.floating-field input::placeholder {
+  color: #666666;
+  opacity: 1;
+  transition: opacity .12s ease;
+}
+
+.floating-field > label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  color: #6a6a6a;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: top .14s ease, transform .14s ease, font-size .14s ease, opacity .12s ease;
+}
+
+.floating-field:focus-within input,
+.floating-field.has-value input,
+.floating-field.always-float input {
+  padding-top: 17px;
+}
+
+.floating-field:focus-within input::placeholder,
+.floating-field.has-value input::placeholder,
+.floating-field.always-float input::placeholder {
+  opacity: 0;
+}
+
+.floating-field:focus-within > label,
+.floating-field.has-value > label,
+.floating-field.always-float > label {
+  top: 8px;
+  transform: none;
+  font-size: 0.70rem;
+  opacity: 1;
+}
+
+.floating-field.select-field > label {
+  top: 8px;
+  transform: none;
+  font-size: 0.70rem;
+  opacity: 1;
+}
+
+.floating-field.select-field select {
+  padding: 17px 34px 0 12px;
+  appearance: auto;
+}
+
+.field-error {
+  display: none;
+  margin: 5px 2px 0;
+  color: #c62828;
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+
+.form-group.has-error > .field-error {
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .form-section {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .checkout-wrapper {
+    background: #ffffff;
+  }
+
+  .shipping-fields .form-row,
+  .shipping-fields .address-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .shipping-fields .form-group {
+    margin-bottom: 0.75rem;
+  }
+}
+
+/* País/Región billing con misma apariencia que shipping */
+.billing-pais-wrapper{
+  position:relative;
+  margin-bottom:1rem;
+}
+.billing-pais-wrapper label{
+  position:absolute; top:7px; left:14px; background:#fff; padding:0 4px;
+  font-size:.75rem; color:#888; z-index:2; pointer-events:none;
+}
+.billing-pais-wrapper select{
+  background:#fff; color:#1a1a1a; width:100%;
+  padding:1.75rem .75rem .75rem .75rem; border:1px solid #e5e5e5; border-radius:4px; font-size:1rem; appearance:auto;
+}
+
+
+/* ==========================================================
+   CHECKOUT REFINEMENT — layout and order summary inspired by
+   the supplied Shopify reference. Browser/body owns scrolling.
+   ========================================================== */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color:#111;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+/* The navbar belongs to the document flow: it scrolls away normally. */
+header.navbar {
+  position:relative;
+  top:auto;
+  left:auto;
+  height:64px;
+  z-index:20;
+}
+header.navbar .logo {
+  margin-top:0;
+}
+
+.checkout-wrapper {
+  display:grid;
+  grid-template-columns:52.4% 47.6%;
+  align-items:start;
+  margin-top:0;
+  min-height:calc(100vh - 64px);
+  background:linear-gradient(to right,#fff 0 52.4%,var(--right-bg) 52.4% 100%);
+}
+
+.form-section {
+  width:100%;
+  min-width:0;
+  display:flex;
+  justify-content:flex-end;
+  padding:38px 36px 64px 24px;
+  background:#fff;
+  color:#111;
+}
+#checkout-form {
+  width:100%;
+  max-width:456px;
+  margin:0;
+}
+.form-section h2 {
+  margin:22px 0 12px;
+  color:#111;
+  font-size:18px;
+  line-height:1.25;
+  font-weight:600;
+  letter-spacing:-.01em;
+}
+.shipping-fields > h2:first-child { margin-top:0; }
+.shipping-fields .form-group { margin-bottom:10px; }
+.shipping-fields .form-row { gap:10px; }
+.shipping-fields .address-grid {
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);
+}
+.floating-field {
+  min-height:46px;
+  border:1px solid #d9d9d9;
+  border-radius:8px;
+  transition:border-color .12s ease,box-shadow .12s ease;
+}
+.floating-field:focus-within {
+  border-color:#111;
+  box-shadow:0 0 0 1px #111;
+}
+.floating-field input,
+.floating-field select {
+  height:44px;
+  padding-left:11px;
+  padding-right:11px;
+  border-radius:8px;
+  font-size:13px;
+  line-height:1.25;
+}
+.floating-field input::placeholder { color:#626262; }
+.floating-field > label {
+  left:11px;
+  color:#626262;
+  font-size:13px;
+}
+.floating-field:focus-within input,
+.floating-field.has-value input,
+.floating-field.always-float input { padding-top:13px; }
+.floating-field:focus-within > label,
+.floating-field.has-value > label,
+.floating-field.always-float > label,
+.floating-field.select-field > label {
+  top:5px;
+  font-size:10px;
+}
+.floating-field.select-field select {
+  padding:13px 30px 0 11px;
+}
+.field-error {
+  margin:4px 1px 0;
+  font-size:12px;
+}
+.billing-toggle-row {
+  max-width:456px;
+  margin-top:8px;
+  font-size:13px;
+}
+
+/* Right column follows the page only until it reaches the viewport top,
+   then remains fixed in place while the BODY continues to scroll. */
+.summary-section {
+  position:sticky;
+  top:0;
+  align-self:start;
+  width:100%;
+  min-width:0;
+  height:100vh;
+  min-height:100vh;
+  padding:36px 0 48px 36px;
+  overflow:visible;
+  background:var(--right-bg);
+  color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+.summary-section > * {
+  width:min(390px, calc(100% - 36px));
+  max-width:390px;
+  margin-right:auto;
+}
+.summary-cart-items {
+  padding:0;
+  margin:0 0 18px;
+}
+.summary-section .cart-item {
+  display:grid;
+  grid-template-columns:64px minmax(0,1fr) auto;
+  gap:12px;
+  align-items:center;
+  width:100%;
+  margin:0 0 14px;
+  color:#fff;
+}
+.summary-section .cart-thumb {
+  position:relative;
+  width:64px;
+  height:64px;
+  flex:none;
+  border:1px solid rgba(255,255,255,.45);
+  border-radius:9px;
+  background:#f6f6f6;
+}
+.summary-section .cart-thumb img {
+  display:block;
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:5px;
+  object-fit:contain;
+  border-radius:8px;
+  background:transparent;
+}
+.summary-section .cart-qty-badge {
+  position:absolute;
+  top:-8px;
+  right:-8px;
+  min-width:22px;
+  height:22px;
+  padding:0 6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:2px solid var(--right-bg);
+  border-radius:999px;
+  background:#737373;
+  color:#fff;
+  font-size:11px;
+  line-height:1;
+  font-weight:600;
+}
+.summary-section .cart-info {
+  min-width:0;
+  color:#fff;
+}
+.summary-section .cart-info p { margin:0; }
+.summary-section .cart-product-name {
+  color:#fff;
+  font-size:13px;
+  line-height:1.35;
+  font-weight:500;
+  letter-spacing:0;
+}
+.summary-section .cart-product-variant {
+  margin-top:2px !important;
+  color:rgba(255,255,255,.78);
+  font-size:12px;
+  line-height:1.3;
+  font-weight:400;
+}
+.summary-section .cart-line-price {
+  align-self:center;
+  padding-left:10px;
+  color:#fff;
+  font-size:13px;
+  line-height:1.3;
+  font-weight:500;
+  white-space:nowrap;
+}
+
+/* Discount field: button is inside the same white control. */
+.discount-box {
+  margin:18px 0 24px;
+}
+.discount-field {
+  width:100%;
+  min-height:46px;
+  display:flex;
+  align-items:center;
+  gap:4px;
+  padding:3px;
+  border:1px solid #d7d7d7;
+  border-radius:8px;
+  background:#fff;
+  transition:border-color .12s ease,box-shadow .12s ease;
+}
+.discount-field:focus-within {
+  border-color:#111;
+  box-shadow:0 0 0 1px #111;
+}
+.discount-field.is-invalid {
+  border-color:#d72c2c;
+  box-shadow:0 0 0 1px #d72c2c;
+}
+.discount-input-wrap {
+  position:relative;
+  flex:1 1 auto;
+  min-width:0;
+  height:38px;
+}
+#discount-code {
+  width:100%;
+  height:38px;
+  margin:0;
+  padding:11px 8px 0;
+  border:0 !important;
+  border-radius:0;
+  outline:0 !important;
+  background:transparent;
+  color:#111;
+  font-family:inherit;
+  font-size:13px;
+  line-height:1.2;
+  box-shadow:none !important;
+}
+#discount-code:focus,
+#discount-code.discount-error {
+  border:0 !important;
+  outline:0 !important;
+  box-shadow:none !important;
+}
+.discount-input-wrap label {
+  position:absolute;
+  left:8px;
+  top:50%;
+  transform:translateY(-50%);
+  margin:0;
+  color:#666;
+  font-family:inherit;
+  font-size:13px;
+  line-height:1;
+  font-weight:400;
+  pointer-events:none;
+  transition:top .13s ease,transform .13s ease,font-size .13s ease;
+}
+.discount-field:focus-within .discount-input-wrap label,
+.discount-field.has-value .discount-input-wrap label {
+  top:5px;
+  transform:none;
+  font-size:10px;
+}
+#apply-discount-btn {
+  flex:0 0 auto;
+  height:38px;
+  min-width:64px;
+  margin:0;
+  padding:0 12px;
+  border:1px solid #d8d8d8;
+  border-radius:7px;
+  background:#f3f3f3;
+  color:#8a8a8a;
+  font-family:inherit;
+  font-size:12px;
+  line-height:1;
+  font-weight:600;
+  cursor:default;
+  transition:background .14s ease,color .14s ease,border-color .14s ease;
+}
+#apply-discount-btn:disabled {
+  background:#f3f3f3 !important;
+  color:#8a8a8a !important;
+  border-color:#d8d8d8 !important;
+  cursor:default !important;
+  pointer-events:none !important;
+}
+#apply-discount-btn.enabled {
+  background:#fff !important;
+  color:#262626 !important;
+  border-color:#c9c9c9 !important;
+  cursor:pointer !important;
+  pointer-events:auto !important;
+}
+#apply-discount-btn.enabled:hover {
+  background:#ececec !important;
+  color:#111 !important;
+  border-color:#bfbfbf !important;
+}
+#discount-msg {
+  min-height:0;
+  margin:6px 1px 0;
+  color:#fff;
+  font-size:12px !important;
+  line-height:1.35;
+}
+
+.summary-section .price-section {
+  margin-top:0;
+  padding-top:22px;
+  border-top:1px solid rgba(255,255,255,.24);
+  text-align:left;
+}
+.summary-section .price-section p {
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:18px;
+  margin:0 0 10px;
+  color:#fff;
+  font-size:13px;
+  line-height:1.3;
+  font-weight:400;
+}
+.summary-section .price-section p span:last-child {
+  font-weight:500;
+  white-space:nowrap;
+}
+.summary-section .total-section {
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:20px;
+  margin-top:17px;
+  padding-top:0;
+  color:#fff;
+  text-align:left;
+}
+.summary-section .total-label {
+  font-size:16px;
+  line-height:1.25;
+  font-weight:600;
+}
+.summary-section .total-number {
+  display:flex;
+  align-items:baseline;
+  gap:7px;
+  white-space:nowrap;
+}
+.summary-section .total-number small {
+  color:rgba(255,255,255,.75);
+  font-size:10px;
+  font-weight:500;
+}
+.summary-section #total-final {
+  color:#fff;
+  font-size:18px;
+  line-height:1;
+  font-weight:600;
+}
+
+@media (max-width:1100px) and (min-width:769px) {
+  .checkout-wrapper { grid-template-columns:55% 45%; background:linear-gradient(to right,#fff 0 55%,var(--right-bg) 55% 100%); }
+  .form-section { padding-left:20px; padding-right:28px; }
+  #checkout-form { max-width:440px; }
+  .summary-section { padding-left:28px; }
+  .summary-section > * { width:min(370px, calc(100% - 28px)); }
+}
+
+@media (max-width:768px) {
+  header.navbar { position:relative; height:64px; }
+  .checkout-wrapper {
+    display:block;
+    min-height:0;
+    background:#fff;
+  }
+  .form-section {
+    width:100%;
+    display:block;
+    padding:20px 16px 48px;
+  }
+  #checkout-form { max-width:none; }
+  .summary-section { display:none !important; }
+  .mobile-order-summary { top:0; }
+  .shipping-fields .form-row,
+  .shipping-fields .address-grid { grid-template-columns:1fr; gap:0; }
+}
+
+
+  
+
+/* ==========================================================
+   USER REQUEST 2026-09-11 — logo, billing parity, payments
+   ========================================================== */
+/* Logo: vertically centered, horizontally aligned to the same left edge as the form. */
+header.navbar {
+  display: grid;
+  grid-template-columns: 52.4% 47.6%;
+  justify-content: initial;
+  align-items: center;
+  padding: 0;
+}
+header.navbar > a {
+  grid-column: 1;
+  justify-self: end;
+  width: min(456px, calc(100% - 60px));
+  margin-right: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+}
+header.navbar .logo {
+  display: block;
+  height: 35px;
+  width: auto;
+  margin: 0;
+}
+
+/* Billing panel now mirrors the shipping field system exactly. */
+#billing-section {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  margin-top: 0;
+  max-height: 0;
+}
+#billing-section.open {
+  max-height: 760px;
+  padding: 0;
+  margin-top: 10px;
+  overflow: visible;
+}
+#billing-section .billing-title {
+  margin: 18px 0 12px;
+}
+#billing-section .billing-fields .form-group {
+  margin-bottom: 10px;
+}
+#billing-section .billing-fields .form-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+}
+#billing-section .billing-fields .address-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+}
+
+/* Payment block: same compact, clean visual language as the checkout inputs. */
+.payment-intro {
+  margin: -4px 0 12px;
+  color: #666;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.payment-methods {
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+.payment-method {
+  border-bottom: 1px solid #e4e4e4;
+  background: #fff;
+}
+.payment-method:last-child { border-bottom: 0; }
+.payment-method.selected { background: #fff; }
+.payment-header.accordion-header {
+  min-height: 64px;
+  padding: 12px 14px;
+  gap: 11px;
+  background: #fff;
+  color: #111;
+  cursor: pointer;
+}
+.payment-header.accordion-header:hover { background: #fafafa; }
+.payment-header input[type="radio"] {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+.payment-choice-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.payment-name {
+  color: #111;
+  font-size: 14px;
+  line-height: 1.25;
+  font-weight: 600;
+}
+.payment-caption {
+  color: #707070;
+  font-size: 11px;
+  line-height: 1.3;
+  font-weight: 400;
+}
+.payment-brand,
+.payment-card-brands {
+  margin-left: auto;
+  color: #333;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.payment-card-brands {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex: 0 0 auto;
+}
+.card-network-logo {
+  width: 34px;
+  height: 22px;
+  display: block;
+  border: 1px solid #dedede;
+  border-radius: 3px;
+  background: #fff;
+  box-sizing: border-box;
+  object-fit: contain;
+}
+.card-more {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.card-more-toggle {
+  width: 30px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: #171717;
+  color: #fff;
+  font: 600 10px/1 Arial, sans-serif;
+  cursor: default;
+}
+.card-more-popover {
+  position: absolute;
+  z-index: 40;
+  right: 0;
+  top: calc(100% + 8px);
+  display: flex;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(0,0,0,.16);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-3px);
+  transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
+}
+.card-more-popover::before {
+  content: "";
+  position: absolute;
+  right: 9px;
+  top: -5px;
+  width: 9px;
+  height: 9px;
+  background: #fff;
+  border-left: 1px solid #d8d8d8;
+  border-top: 1px solid #d8d8d8;
+  transform: rotate(45deg);
+}
+.card-more:hover .card-more-popover,
+.card-more:focus-within .card-more-popover {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.payment-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: auto;
+  line-height: 0;
+  flex: 0 0 auto;
+}
+.payment-brand-logo svg,
+.payment-brand-logo img {
+  display: block;
+  height: 18px;
+  width: auto;
+}
+.payment-brand-logo.paypal-logo svg {
+  height: 18px;
+}
+.payment-brand-logo.zelle-logo img {
+  height: 18px;
+  max-width: 72px;
+  object-fit: contain;
+  object-position: right center;
+}
+.payment-panel.accordion-panel {
+  max-height: 0;
+  padding: 0 14px;
+  opacity: 0;
+  overflow: hidden;
+  background: #fafafa;
+  color: #111;
+  transform: none;
+  transition: max-height .28s ease, opacity .2s ease, padding .28s ease;
+}
+.payment-panel.accordion-panel.open {
+  max-height: 560px;
+  padding: 15px 14px 16px;
+  opacity: 1;
+  overflow: visible;
+}
+.payment-recipient-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 16px;
+  margin-bottom: 12px;
+  padding: 12px;
+  border: 1px solid #e1e1e1;
+  border-radius: 7px;
+  background: #fff;
+}
+.payment-recipient-card.compact { grid-template-columns: 1fr; gap: 8px; }
+.payment-recipient-card div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.payment-recipient-card span {
+  color: #777;
+  font-size: 10px;
+  line-height: 1.2;
+}
+.payment-recipient-card strong {
+  color: #111;
+  font-size: 12px;
+  line-height: 1.3;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.payment-help {
+  margin: 0 0 12px;
+  color: #555;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.cash-help { margin-bottom: 0; }
+.payment-fields-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+}
+.payment-fields-grid.single-field { grid-template-columns: minmax(0, 1fr); }
+.payment-fields-grid .form-group,
+.payment-full-field { margin-bottom: 0; }
+.paypal-redirect-copy {
+  margin: 0;
+  color: #111;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.paypal-redirect-subcopy {
+  margin: 5px 0 0;
+  color: #666;
+  font-size: 11px;
+  line-height: 1.45;
+}
+.payment-full-field { margin-top: 10px; }
+.payment-floating-field {
+  min-height: 46px;
+  background: #fff;
+}
+.payment-floating-field input {
+  height: 44px;
+  font-size: 13px;
+}
+.card-provider-placeholder {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px;
+  border: 1px dashed #c8c8c8;
+  border-radius: 7px;
+  background: #fff;
+}
+.card-provider-icon {
+  width: 35px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border: 1px solid #d7d7d7;
+  border-radius: 4px;
+  color: #777;
+  background: #f5f5f5;
+  font-size: 15px;
+}
+.card-provider-placeholder strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #111;
+  font-size: 12px;
+}
+.card-provider-placeholder p {
+  margin: 0;
+  color: #666;
+  font-size: 11px;
+  line-height: 1.45;
+}
+.payment-notice {
+  margin-top: 10px;
+  padding: 9px 10px;
+  border-radius: 6px;
+  background: #f1f1f1;
+  color: #555;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.payment-notice.is-error {
+  background: #fff1f1;
+  color: #b42318;
+  outline: 1px solid #f2b8b5;
+}
+
+@media (max-width: 1100px) and (min-width: 769px) {
+  header.navbar { grid-template-columns: 55% 45%; }
+  header.navbar > a {
+    width: min(440px, calc(100% - 48px));
+    margin-right: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  header.navbar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 16px;
+  }
+  header.navbar > a {
+    width: auto;
+    height: 100%;
+    margin: 0;
+  }
+  #billing-section.open { max-height: 980px; }
+  #billing-section .billing-fields .form-row,
+  #billing-section .billing-fields .address-grid,
+  .payment-fields-grid,
+  .payment-recipient-card {
+    grid-template-columns: 1fr;
+  }
+  .payment-card-brands { display: inline-flex; gap: 3px; }
+  .card-network-logo { width: 30px; height: 20px; }
+  .card-more-toggle { width: 27px; height: 20px; }
+}
+
+
+
+/* Checkout processing overlay: same neutral spinner used by cart/account loaders. */
+.checkout-processing-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,.72);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .12s ease, visibility .12s ease;
+}
+.checkout-processing-overlay.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.checkout-processing-spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #ccc;
+  border-top-color: #333;
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: checkoutSpin .7s linear infinite;
+}
+@keyframes checkoutSpin { to { transform: rotate(360deg); } }
+
+/* Venezuela checkout: secondary total in VES and current BCV reference. */
+.checkout-ves-total-row{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:20px;
+  margin-top:11px;
+  padding-top:10px;
+  color:#fff;
+  border-top:1px solid rgba(255,255,255,.24);
+}
+.checkout-ves-total-row[hidden], .checkout-bcv-rate[hidden]{display:none!important;}
+.checkout-ves-label{
+  font-size:10px;
+  line-height:1.2;
+  font-weight:500;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.78);
+}
+.checkout-total-ves{
+  font-size:14px;
+  line-height:1.15;
+  font-weight:500;
+  white-space:nowrap;
+}
+.checkout-bcv-rate{
+  position:absolute;
+  right:28px;
+  bottom:22px;
+  width:auto!important;
+  max-width:none!important;
+  margin:0!important;
+  color:rgba(255,255,255,.78);
+  font-size:10px;
+  line-height:1.2;
+  font-weight:400;
+  white-space:nowrap;
+  text-align:right;
+}
+.payment-floating-field select{
+  width:100%;
+  height:44px;
+  padding:14px 34px 0 11px;
+  border:1px solid #d9d9d9;
+  border-radius:7px;
+  background:#fff;
+  color:#111;
+  font-family:inherit;
+  font-size:13px;
+  outline:none;
+}
+.payment-floating-field select:focus{border-color:#111;}
+.payment-floating-field.select-field > label{top:5px;font-size:10px;}
+@media(max-width:768px){
+  .checkout-bcv-rate{
+    position:static;
+    width:100%!important;
+    margin-top:14px!important;
+    text-align:right;
+  }
+  .checkout-ves-total-row{margin-top:10px;}
+}
+
+</style>
+  <script src="bcv-rate.js"></script>
+  <script src="checkout-bcv.js"></script>
+</head>
+<body>
+    <div id="loader" class="loader">
+    <img src="images/logo cherry png.png" alt="Sucesso Logo">
+  </div>
+  <div id="checkout-processing-overlay" class="checkout-processing-overlay" aria-hidden="true">
+    <div class="checkout-processing-spinner" role="status" aria-label="Loading"></div>
+  </div>
+  
+  <header class="navbar">
+    <a href="index.html" style="margin-top: 1rem !important;"><img src="images/logo sucesso png.png" alt="Sucesso Logo" class="logo" /></a>
+  </header>
+
+
+<div class="mobile-order-summary" onclick="toggleMobileSummary()">
+  <div class="summary-header">
+    <span>Resumen del Pedido</span>
+    <span id="summary-total">$0.00</span>
+    <span id="summary-toggle">+</span>
+  </div>
+</div>
+<div class="mobile-summary-content" id="mobile-summary-content">
+  <!-- Esto se llenará dinámicamente con el mismo contenido del summary-section -->
+</div>
+
+  
+  <div class="checkout-wrapper">
+    <section class="form-section">
+      <form id="checkout-form" novalidate>
+  <div class="shipping-fields">
+    <h2>Información de Contacto</h2>
+
+    <div class="form-group">
+      <div class="floating-field">
+        <input type="email" id="email" placeholder="Correo Electrónico" autocomplete="email" required readonly aria-readonly="true">
+        <label for="email">Correo Electrónico</label>
+      </div>
+      <div class="field-error" id="email-error" aria-live="polite"></div>
+    </div>
+
+    <h2>Entrega</h2>
+
+    <div class="form-group">
+      <div class="floating-field select-field always-float has-value">
+        <select id="pais" autocomplete="country-name" required>
+          <option value="Venezuela" selected>Venezuela</option>
+          <option value="United States">Estados Unidos</option>
+        </select>
+        <label for="pais">País/Región</label>
+      </div>
+      <div class="field-error" id="pais-error" aria-live="polite"></div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <div class="floating-field">
+          <input type="text" id="nombre" placeholder="Nombre" autocomplete="given-name" required>
+          <label for="nombre">Nombre</label>
+        </div>
+        <div class="field-error" id="nombre-error" aria-live="polite"></div>
+      </div>
+      <div class="form-group">
+        <div class="floating-field">
+          <input type="text" id="apellido" placeholder="Apellido" autocomplete="family-name" required>
+          <label for="apellido">Apellido</label>
+        </div>
+        <div class="field-error" id="apellido-error" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="floating-field">
+        <input type="text" id="direccion" placeholder="Dirección" autocomplete="address-line1" required>
+        <label for="direccion">Dirección</label>
+      </div>
+      <div class="field-error" id="direccion-error" aria-live="polite"></div>
+    </div>
+
+    <div class="form-group">
+      <div class="floating-field">
+        <input type="text" id="apartamento" placeholder="Apartamento, suite, etc. (opcional)" autocomplete="address-line2">
+        <label for="apartamento">Apartamento, suite, etc. (opcional)</label>
+      </div>
+      <div class="field-error" id="apartamento-error" aria-live="polite"></div>
+    </div>
+
+    <div class="form-row address-grid">
+      <div class="form-group">
+        <div class="floating-field">
+          <input type="text" id="ciudad" placeholder="Ciudad" autocomplete="address-level2" required>
+          <label for="ciudad">Ciudad</label>
+        </div>
+        <div class="field-error" id="ciudad-error" aria-live="polite"></div>
+      </div>
+
+      <div class="form-group">
+        <div class="floating-field select-field always-float has-value">
+          <select id="estado" autocomplete="address-level1" required>
+            <option value="Capital" selected>Capital</option>
+            <option value="Amazonas">Amazonas</option>
+            <option value="Anzoátegui">Anzoátegui</option>
+            <option value="Apure">Apure</option>
+            <option value="Aragua">Aragua</option>
+            <option value="Barinas">Barinas</option>
+            <option value="Bolívar">Bolívar</option>
+            <option value="Carabobo">Carabobo</option>
+            <option value="Cojedes">Cojedes</option>
+            <option value="Delta Amacuro">Delta Amacuro</option>
+            <option value="Falcón">Falcón</option>
+            <option value="Guárico">Guárico</option>
+            <option value="Lara">Lara</option>
+            <option value="Mérida">Mérida</option>
+            <option value="Miranda">Miranda</option>
+            <option value="Monagas">Monagas</option>
+            <option value="Nueva Esparta">Nueva Esparta</option>
+            <option value="Portuguesa">Portuguesa</option>
+            <option value="Sucre">Sucre</option>
+            <option value="Táchira">Táchira</option>
+            <option value="Trujillo">Trujillo</option>
+            <option value="Vargas">Vargas</option>
+            <option value="Yaracuy">Yaracuy</option>
+            <option value="Zulia">Zulia</option>
+          </select>
+          <label for="estado">Estado</label>
+        </div>
+        <div class="field-error" id="estado-error" aria-live="polite"></div>
+      </div>
+
+      <div class="form-group">
+        <div class="floating-field">
+          <input type="text" id="postal" placeholder="Código Postal" autocomplete="postal-code" required>
+          <label for="postal">Código Postal</label>
+        </div>
+        <div class="field-error" id="postal-error" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="floating-field">
+        <input type="tel" id="phone" placeholder="Teléfono" autocomplete="tel" required>
+        <label for="phone">Teléfono</label>
+      </div>
+      <div class="field-error" id="phone-error" aria-live="polite"></div>
+    </div>
+  </div>
+
+<!-- ======= Facturación: toggle + panel ======= -->
+<div class="billing-toggle-row">
+  <input type="checkbox" id="use-shipping-as-billing" checked>
+  <label for="use-shipping-as-billing">Usar dirección de envío como dirección de facturación</label>
+</div>
+
+<div id="billing-section" aria-hidden="true">
+  <h2 class="billing-title">Facturación</h2>
+  <div class="billing-fields shipping-fields">
+    <div class="form-group">
+      <div class="floating-field select-field always-float has-value">
+        <select id="billing-pais" autocomplete="country-name" required>
+          <option value="Venezuela" selected>Venezuela</option>
+          <option value="United States">Estados Unidos</option>
+        </select>
+        <label for="billing-pais">País/Región</label>
+      </div>
+      <div class="field-error" id="billing-pais-error" aria-live="polite"></div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <div class="floating-field">
+          <input type="text" id="billing-nombre" placeholder="Nombre" autocomplete="billing given-name" required>
+          <label for="billing-nombre">Nombre</label>
+        </div>
+        <div class="field-error" id="billing-nombre-error" aria-live="polite"></div>
+      </div>
+      <div class="form-group">
+        <div class="floating-field">
+          <input type="text" id="billing-apellido" placeholder="Apellido" autocomplete="billing family-name" required>
+          <label for="billing-apellido">Apellido</label>
+        </div>
+        <div class="field-error" id="billing-apellido-error" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="floating-field">
+        <input type="text" id="billing-direccion" placeholder="Dirección" autocomplete="billing address-line1" required>
+        <label for="billing-direccion">Dirección</label>
+      </div>
+      <div class="field-error" id="billing-direccion-error" aria-live="polite"></div>
+    </div>
+
+    <div class="form-group">
+      <div class="floating-field">
+        <input type="text" id="billing-apartamento" placeholder="Apartamento, suite, etc. (opcional)" autocomplete="billing address-line2">
+        <label for="billing-apartamento">Apartamento, suite, etc. (opcional)</label>
+      </div>
+      <div class="field-error" id="billing-apartamento-error" aria-live="polite"></div>
+    </div>
+
+    <div class="form-row address-grid">
+      <div class="form-group">
+        <div class="floating-field">
+          <input type="text" id="billing-ciudad" placeholder="Ciudad" autocomplete="billing address-level2" required>
+          <label for="billing-ciudad">Ciudad</label>
+        </div>
+        <div class="field-error" id="billing-ciudad-error" aria-live="polite"></div>
+      </div>
+
+      <div class="form-group">
+        <div class="floating-field select-field always-float has-value">
+          <select id="billing-estado" autocomplete="billing address-level1" required>
+            <option value="Capital" selected>Capital</option>
+            <option value="Amazonas">Amazonas</option>
+            <option value="Anzoátegui">Anzoátegui</option>
+            <option value="Apure">Apure</option>
+            <option value="Aragua">Aragua</option>
+            <option value="Barinas">Barinas</option>
+            <option value="Bolívar">Bolívar</option>
+            <option value="Carabobo">Carabobo</option>
+            <option value="Cojedes">Cojedes</option>
+            <option value="Delta Amacuro">Delta Amacuro</option>
+            <option value="Falcón">Falcón</option>
+            <option value="Guárico">Guárico</option>
+            <option value="Lara">Lara</option>
+            <option value="Mérida">Mérida</option>
+            <option value="Miranda">Miranda</option>
+            <option value="Monagas">Monagas</option>
+            <option value="Nueva Esparta">Nueva Esparta</option>
+            <option value="Portuguesa">Portuguesa</option>
+            <option value="Sucre">Sucre</option>
+            <option value="Táchira">Táchira</option>
+            <option value="Trujillo">Trujillo</option>
+            <option value="Vargas">Vargas</option>
+            <option value="Yaracuy">Yaracuy</option>
+            <option value="Zulia">Zulia</option>
+          </select>
+          <label for="billing-estado">Estado</label>
+        </div>
+        <div class="field-error" id="billing-estado-error" aria-live="polite"></div>
+      </div>
+
+      <div class="form-group">
+        <div class="floating-field">
+          <input type="text" id="billing-postal" placeholder="Código Postal" autocomplete="billing postal-code" required>
+          <label for="billing-postal">Código Postal</label>
+        </div>
+        <div class="field-error" id="billing-postal-error" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="floating-field">
+        <input type="tel" id="billing-phone" placeholder="Teléfono" autocomplete="billing tel" required>
+        <label for="billing-phone">Teléfono</label>
+      </div>
+      <div class="field-error" id="billing-phone-error" aria-live="polite"></div>
+    </div>
+  </div>
+</div>
+
+
+<h2>Métodos de Envío</h2>
+<div class="accordion" id="envio-accordion">
+  <div class="accordion-item">
+    <label class="accordion-header">
+  <input type="radio" name="metodo-envio" value="capital" data-costo="3.00" checked>
+  <div class="label-content">
+    <span>Capital</span>
+    <span class="envio-precio">$3.00</span>
+  </div>
+</label>
+    <div class="accordion-panel">
+      <p>Envío rápido dentro de la Capital. Tiempo estimado: 1-2 días hábiles.</p>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <label class="accordion-header">
+  <input type="radio" name="metodo-envio" value="resto" data-costo="0.00">
+  <div class="label-content">
+    <span>Resto de Venezuela</span>
+    <span class="envio-precio">GRATIS</span>
+  </div>
+</label>
+    <div class="accordion-panel">
+      <p>El cliente será quien asume el costo de envío una vez retire su pedido en el MRW especificado</p>
+    </div>
+  </div>
+</div>
+<div id="shipping-methods-pending" class="shipping-methods-pending" hidden aria-live="polite">
+  Enter your shipping address to view available shipping methods.
+</div>
+
+
+<h2>Métodos de Pago</h2>
+<div class="payment-intro">Selecciona cómo deseas pagar. Los datos de confirmación se guardarán junto con tu pedido.</div>
+
+<div class="payment-methods" id="payment-accordion">
+  <div class="payment-method accordion-item" data-method="pago-movil">
+    <label class="payment-header accordion-header">
+      <input type="radio" name="metodo-pago" value="pago-movil" checked>
+      <span class="payment-choice-copy">
+        <span class="payment-name">Pago Móvil</span>
+        <span class="payment-caption">Transferencia inmediata en bolívares</span>
+      </span>
+    </label>
+    <div class="payment-panel accordion-panel">
+      <div class="payment-recipient-card">
+        <div><span>Banco receptor</span><strong>0191 - Banco Nacional de Crédito (BNC)</strong></div>
+        <div><span>Teléfono</span><strong>0424-1333923</strong></div>
+        <div><span>Cédula</span><strong>V-32904616</strong></div>
+        <div><span>Beneficiario</span><strong>Lian Beraja</strong></div>
+      </div>
+      <p class="payment-help">Realiza el pago y luego indica el banco emisor y la referencia de la operación para asociarla con tu pedido.</p>
+      <div class="payment-fields-grid">
+        <div class="form-group">
+          <div class="floating-field payment-floating-field select-field always-float">
+            <select id="pago-movil-banco-emisor" data-payment-required="pago-movil" aria-label="Banco emisor">
+              <option value="" selected disabled>--</option>
+              <option value="0156">100% Banco</option>
+              <option value="0171">Activo</option>
+              <option value="0166">Agricola de Venezuela</option>
+              <option value="0172">Bancamiga</option>
+              <option value="0114">BanCaribe</option>
+              <option value="0102">Banco de Venezuela</option>
+              <option value="0168">BanCrecer</option>
+              <option value="0134">Banesco</option>
+              <option value="0174">Banplus</option>
+              <option value="0151">BFC</option>
+              <option value="0175">Bicentenario</option>
+              <option value="0116">BOD</option>
+              <option value="0128">Caroni</option>
+              <option value="0163">Del Tesoro</option>
+              <option value="0157">Delsur</option>
+              <option value="0115">Exterior</option>
+              <option value="0177">Fuerza Armada Nacional</option>
+              <option value="0105">Mercantil</option>
+              <option value="0169">Mi Banco</option>
+              <option value="0191">Nacional de Credito</option>
+              <option value="0138">Plaza</option>
+              <option value="0108">Provincial</option>
+              <option value="0149">Pueblo Soberano</option>
+              <option value="0137">Sofitasa</option>
+              <option value="0104">Venezolano de Credito</option>
+            </select>
+            <label for="pago-movil-banco-emisor">Banco emisor</label>
+          </div>
+          <div class="field-error" id="pago-movil-banco-emisor-error" aria-live="polite"></div>
+        </div>
+        <div class="form-group">
+          <div class="floating-field payment-floating-field">
+            <input type="text" id="pago-movil-referencia" placeholder="Número de referencia" inputmode="numeric" autocomplete="off" data-payment-required="pago-movil">
+            <label for="pago-movil-referencia">Número de referencia</label>
+          </div>
+          <div class="field-error" id="pago-movil-referencia-error" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="payment-method accordion-item" data-method="tarjeta-americana">
+    <label class="payment-header accordion-header">
+      <input type="radio" name="metodo-pago" value="tarjeta-americana">
+      <span class="payment-choice-copy">
+        <span class="payment-name">Tarjeta americana</span>
+        <span class="payment-caption">Visa, Mastercard, American Express y Discover</span>
+      </span>
+      <span class="payment-card-brands" aria-label="Redes previstas: Visa, Mastercard, American Express y Discover">
+        <svg class="card-network-logo" xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 38 24" width="38" height="24" fill="none" aria-labelledby="pi-visa"><title id="pi-visa">Visa</title><rect x=".5" y=".5" width="37" height="23" rx="2.5" stroke="#000" stroke-opacity=".07" fill="none"/><path d="M35 0H3C1.3 0 0 1.3 0 3V21C0 22.7 1.4 24 3 24H35C36.7 24 38 22.7 38 21V3C38 1.3 36.6 0 35 0Z" fill="#142FBD" style="fill:#142FBD;fill:color(display-p3 0.0784 0.1843 0.7412);fill-opacity:1;"/><path d="M35 1C36.1 1 37 1.9 37 3V21C37 22.1 36.1 23 35 23H3C1.9 23 1 22.1 1 21V3C1 1.9 1.9 1 3 1H35Z" fill="#1532CB" style="fill:#1532CB;fill:color(display-p3 0.0824 0.1961 0.7961);fill-opacity:1;"/><path d="M29.5944 10.2167H29.2778C28.8556 11.2722 28.5389 11.8 28.2222 13.3833H30.2278C29.9111 11.8 29.9111 11.0611 29.5944 10.2167V10.2167ZM32.6556 16.4444H30.8611C30.7556 16.4444 30.7556 16.4444 30.65 16.3389L30.4389 15.3889L30.3333 15.1778H27.8C27.6944 15.1778 27.5889 15.1778 27.5889 15.3889L27.2722 16.3389C27.2722 16.4444 27.1667 16.4444 27.1667 16.4444H24.95L25.1611 15.9167L28.2222 8.73889C28.2222 8.21111 28.5389 8 29.0667 8H30.65C30.7556 8 30.8611 8 30.8611 8.21111L32.3389 15.0722C32.4444 15.4944 32.55 15.8111 32.55 16.2333C32.6556 16.3389 32.6556 16.3389 32.6556 16.4444V16.4444ZM18.5111 16.1278L18.9333 14.2278C19.0389 14.2278 19.1444 14.3333 19.1444 14.3333C19.8833 14.65 20.6222 14.8611 21.3611 14.7556C21.5722 14.7556 21.8889 14.65 22.1 14.5444C22.6278 14.3333 22.6278 13.8056 22.2056 13.3833C21.9944 13.1722 21.6778 13.0667 21.3611 12.8556C20.9389 12.6444 20.5167 12.4333 20.2 12.1167C18.9333 11.0611 19.3556 9.58333 20.0944 8.84444C20.7278 8.42222 21.0444 8 21.8889 8C23.1556 8 24.5278 8 25.1611 8.21111H25.2667C25.1611 8.84444 25.0556 9.37222 24.8444 10.0056C24.3167 9.79444 23.7889 9.58333 23.2611 9.58333C22.9444 9.58333 22.6278 9.58333 22.3111 9.68889C22.1 9.68889 21.9944 9.79444 21.8889 9.9C21.6778 10.1111 21.6778 10.4278 21.8889 10.6389L22.4167 11.0611C22.8389 11.2722 23.2611 11.4833 23.5778 11.6944C24.1056 12.0111 24.6333 12.5389 24.7389 13.1722C24.95 14.1222 24.6333 14.9667 23.7889 15.6C23.2611 16.0222 23.05 16.2333 22.3111 16.2333C20.8333 16.2333 19.6722 16.3389 18.7222 16.0222C18.6167 16.2333 18.6167 16.2333 18.5111 16.1278V16.1278ZM14.8167 16.4444C14.9222 15.7056 14.9222 15.7056 15.0278 15.3889C15.5556 13.0667 16.0833 10.6389 16.5056 8.31667C16.6111 8.10556 16.6111 8 16.8222 8H18.7222C18.5111 9.26667 18.3 10.2167 17.9833 11.3778C17.6667 12.9611 17.35 14.5444 16.9278 16.1278C16.9278 16.3389 16.8222 16.3389 16.6111 16.3389L14.8167 16.4444ZM5 8.21111C5 8.10556 5.21111 8 5.31667 8H8.90556C9.43333 8 9.85556 8.31667 9.96111 8.84444L10.9111 13.4889C10.9111 13.5944 10.9111 13.5944 11.0167 13.7C11.0167 13.5944 11.1222 13.5944 11.1222 13.5944L13.3389 8.21111C13.2333 8.10556 13.3389 8 13.4444 8H15.6611C15.6611 8.10556 15.6611 8.10556 15.5556 8.21111L12.2833 15.9167C12.1778 16.1278 12.1778 16.2333 12.0722 16.3389C11.9667 16.4444 11.7556 16.3389 11.5444 16.3389H9.96111C9.85556 16.3389 9.75 16.3389 9.75 16.1278L8.06111 9.58333C7.85 9.37222 7.53333 9.05556 7.11111 8.95C6.47778 8.63333 5.31667 8.42222 5.10556 8.42222L5 8.21111Z" fill="white" style="fill:white;fill-opacity:1;"/></svg>
+        <svg class="card-network-logo" xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 38 24" width="38" height="24" fill="none" aria-labelledby="pi-master"><title id="pi-master">Mastercard</title><rect x=".5" y=".5" width="37" height="23" rx="2.5" stroke="#000" stroke-opacity=".07" fill="none"/><path d="M35 0H3C1.3 0 0 1.3 0 3V21C0 22.7 1.4 24 3 24H35C36.7 24 38 22.7 38 21V3C38 1.3 36.6 0 35 0Z" fill="#1C1C1C" style="fill:#1C1C1C;fill:color(display-p3 0.1098 0.1098 0.1098);fill-opacity:1;"/><path d="M35 1C36.1 1 37 1.9 37 3V21C37 22.1 36.1 23 35 23H3C1.9 23 1 22.1 1 21V3C1 1.9 1.9 1 3 1H35Z" fill="#232323" style="fill:#232323;fill:color(display-p3 0.1373 0.1373 0.1373);fill-opacity:1;"/><path d="M14.6364 19.2727C18.8538 19.2727 22.2727 15.8538 22.2727 11.6364C22.2727 7.41892 18.8538 4 14.6364 4C10.4189 4 7 7.41892 7 11.6364C7 15.8538 10.4189 19.2727 14.6364 19.2727Z" fill="#EB001B" style="fill:#EB001B;fill:color(display-p3 0.9216 0.0000 0.1059);fill-opacity:1;"/><path d="M23.3637 19.2727C27.5811 19.2727 31 15.8538 31 11.6364C31 7.41892 27.5811 4 23.3637 4C19.1462 4 15.7273 7.41892 15.7273 11.6364C15.7273 15.8538 19.1462 19.2727 23.3637 19.2727Z" fill="#F79E1B" style="fill:#F79E1B;fill:color(display-p3 0.9686 0.6196 0.1059);fill-opacity:1;"/><path d="M22.2727 11.6362C22.2727 9.01797 20.9637 6.72706 19 5.41797C17.0364 6.83615 15.7273 9.12706 15.7273 11.6362C15.7273 14.1452 17.0364 16.5452 19 17.8543C20.9637 16.5452 22.2727 14.2543 22.2727 11.6362Z" fill="#FF5F00" style="fill:#FF5F00;fill:color(display-p3 1.0000 0.3725 0.0000);fill-opacity:1;"/></svg>
+        <svg class="card-network-logo" xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 38 24" width="38" height="24" fill="none" aria-labelledby="pi-american_express"><title id="pi-american_express">American Express</title><rect x=".5" y=".5" width="37" height="23" rx="2.5" stroke="#000" stroke-opacity=".07" fill="none"/><path d="M35 0H3C1.3 0 0 1.3 0 3V21C0 22.7 1.4 24 3 24H35C36.7 24 38 22.7 38 21V3C38 1.3 36.6 0 35 0Z" fill="#0071CE" style="fill:#0071CE;fill:color(display-p3 0.0000 0.4431 0.8078);fill-opacity:1;"/><path d="M3 0.5H35C36.3348 0.5 37.5 1.58692 37.5 3V21C37.5 22.4239 36.4239 23.5 35 23.5H3C1.66524 23.5 0.5 22.4131 0.5 21V3C0.5 1.57614 1.57614 0.5 3 0.5Z" stroke="black" stroke-opacity="0.07" style="stroke:black;stroke-opacity:0.07;"/><path d="M25.8662 6.33203V3H31L31.8662 5.5332L32.7334 3H37V14.2002H36.7998L34.8672 16.2656L36.7998 18.3594H37V21.2666H33.5996L31.9336 19.3994L30.2002 21.2666H19.4668V12.666H16L20.2666 3H24.4004L25.8662 6.33203ZM20.5996 20.2656H27V18.5322H22.666V17.3994H26.8662V15.666H22.666V14.5322H27V12.7988H20.5996V20.2656ZM30.5332 16.5322L27 20.2656H29.5996L31.8662 17.8662L34.0664 20.2656H36.7324L33.1992 16.4658L36.7324 12.7988H34.1328L31.8662 15.1992L29.7324 12.7988H27L30.5332 16.5322ZM17.666 11.7324H19.9326L20.5332 10.1992H23.999L24.666 11.7324H26.999L23.666 4.19922H20.999L17.666 11.7324ZM33.5996 4.19922L31.9326 8.86621L30.1992 4.19922H27V11.666H29.0664V6.39941L31 11.666H32.7998L34.7324 6.39941V11.666H36.7324V4.13281L33.5996 4.19922ZM23.2656 8.46582H21.2656L22.2656 5.99902L23.2656 8.46582Z" fill="white" style="fill:white;fill-opacity:1;"/></svg>
+        <span class="card-more">
+          <button class="card-more-toggle" type="button" aria-label="Mostrar 1 red adicional">+1</button>
+          <span class="card-more-popover" role="tooltip">
+            <svg class="card-network-logo" viewBox="0 0 38 24" width="38" height="24" role="img" aria-labelledby="pi-discover" fill="none" xmlns="http://www.w3.org/2000/svg"><title id="pi-discover">Discover</title><path fill="#000" opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"/><path d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32z" fill="#fff"/><path d="M3.57 7.16H2v5.5h1.57c.83 0 1.43-.2 1.96-.63.63-.52 1-1.3 1-2.11-.01-1.63-1.22-2.76-2.96-2.76zm1.26 4.14c-.34.3-.77.44-1.47.44h-.29V8.1h.29c.69 0 1.11.12 1.47.44.37.33.59.84.59 1.37 0 .53-.22 1.06-.59 1.39zm2.19-4.14h1.07v5.5H7.02v-5.5zm3.69 2.11c-.64-.24-.83-.4-.83-.69 0-.35.34-.61.8-.61.32 0 .59.13.86.45l.56-.73c-.46-.4-1.01-.61-1.62-.61-.97 0-1.72.68-1.72 1.58 0 .76.35 1.15 1.35 1.51.42.15.63.25.74.31.21.14.32.34.32.57 0 .45-.35.78-.83.78-.51 0-.92-.26-1.17-.73l-.69.67c.49.73 1.09 1.05 1.9 1.05 1.11 0 1.9-.74 1.9-1.81.02-.89-.35-1.29-1.57-1.74zm1.92.65c0 1.62 1.27 2.87 2.9 2.87.46 0 .86-.09 1.34-.32v-1.26c-.43.43-.81.6-1.29.6-1.08 0-1.85-.78-1.85-1.9 0-1.06.79-1.89 1.8-1.89.51 0 .9.18 1.34.62V7.38c-.47-.24-.86-.34-1.32-.34-1.61 0-2.92 1.28-2.92 2.88zm12.76.94l-1.47-3.7h-1.17l2.33 5.64h.58l2.37-5.64h-1.16l-1.48 3.7zm3.13 1.8h3.04v-.93h-1.97v-1.48h1.9v-.93h-1.9V8.1h1.97v-.94h-3.04v5.5zm7.29-3.87c0-1.03-.71-1.62-1.95-1.62h-1.59v5.5h1.07v-2.21h.14l1.48 2.21h1.32l-1.73-2.32c.81-.17 1.26-.72 1.26-1.56zm-2.16.91h-.31V8.03h.33c.67 0 1.03.28 1.03.82 0 .55-.36.85-1.05.85z" fill="#231F20"/><path d="M20.16 12.86a2.931 2.931 0 100-5.862 2.931 2.931 0 000 5.862z" fill="url(#pi-paint0_linear)"/><path opacity=".65" d="M20.16 12.86a2.931 2.931 0 100-5.862 2.931 2.931 0 000 5.862z" fill="url(#pi-paint1_linear)"/><path d="M36.57 7.506c0-.1-.07-.15-.18-.15h-.16v.48h.12v-.19l.14.19h.14l-.16-.2c.06-.01.1-.06.1-.13zm-.2.07h-.02v-.13h.02c.06 0 .09.02.09.06 0 .05-.03.07-.09.07z" fill="#231F20"/><path d="M36.41 7.176c-.23 0-.42.19-.42.42 0 .23.19.42.42.42.23 0 .42-.19.42-.42 0-.23-.19-.42-.42-.42zm0 .77c-.18 0-.34-.15-.34-.35 0-.19.15-.35.34-.35.18 0 .33.16.33.35 0 .19-.15.35-.33.35z" fill="#231F20"/><path d="M37 12.984S27.09 19.873 8.976 23h26.023a2 2 0 002-1.984l.024-3.02L37 12.985z" fill="#F48120"/><defs><linearGradient id="pi-paint0_linear" x1="21.657" y1="12.275" x2="19.632" y2="9.104" gradientUnits="userSpaceOnUse"><stop stop-color="#F89F20"/><stop offset=".25" stop-color="#F79A20"/><stop offset=".533" stop-color="#F68D20"/><stop offset=".62" stop-color="#F58720"/><stop offset=".723" stop-color="#F48120"/><stop offset="1" stop-color="#F37521"/></linearGradient><linearGradient id="pi-paint1_linear" x1="21.338" y1="12.232" x2="18.378" y2="6.446" gradientUnits="userSpaceOnUse"><stop stop-color="#F58720"/><stop offset=".359" stop-color="#E16F27"/><stop offset=".703" stop-color="#D4602C"/><stop offset=".982" stop-color="#D05B2E"/></linearGradient></defs></svg>
+          </span>
+        </span>
+      </span>
+    </label>
+    <div class="payment-panel accordion-panel">
+      <div id="card-payment-element" class="card-provider-placeholder" role="status" aria-live="polite">
+        <div class="card-provider-icon" aria-hidden="true">▰</div>
+        <div>
+          <strong>Pago seguro con tarjeta</strong>
+          <p>Este espacio está preparado para montar el formulario tokenizado de la pasarela de pago. Por seguridad, Sucesso no debe guardar números completos de tarjeta ni códigos CVV.</p>
+        </div>
+      </div>
+      <div class="payment-notice" id="card-not-connected-message">La pasarela de tarjetas todavía no está conectada. Al integrarla, el formulario seguro aparecerá aquí sin cambiar el diseño del checkout.</div>
+    </div>
+  </div>
+
+  <div class="payment-method accordion-item" data-method="paypal">
+    <label class="payment-header accordion-header">
+      <input type="radio" name="metodo-pago" value="paypal">
+      <span class="payment-choice-copy">
+        <span class="payment-name">PayPal</span>
+        <span class="payment-caption">Pago en USD</span>
+      </span>
+      <span class="payment-brand-logo paypal-logo" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 38 9"><path fill="#253B80" d="M4.54.022c.973 0 1.706.269 2.12.777.376.463.5 1.124.37 1.966-.288 1.923-1.393 2.894-3.308 2.894h-.92a.41.41 0 0 0-.4.358l-.317 2.106a.41.41 0 0 1-.398.358H.299a.25.25 0 0 1-.24-.293L1.235.379a.41.41 0 0 1 .4-.357zm-1.282 1.69c-.119 0-.22.09-.24.213L2.71 3.966h.44c.77 0 1.567 0 1.726-1.093.058-.383.011-.661-.141-.848-.256-.314-.752-.314-1.277-.314zm6.539.989c.67 0 1.343.153 1.645.612l.096.147.063-.407a.25.25 0 0 1 .24-.215h1.39c.15 0 .262.14.239.293l-.752 4.992a.41.41 0 0 1-.4.358h-1.253c-.149 0-.263-.14-.24-.294l.063-.406c-.01.013-.697.835-1.927.835-.722 0-1.329-.218-1.753-.742-.462-.57-.651-1.386-.518-2.24C6.946 3.922 8.259 2.7 9.797 2.7Zm.33 1.546c-.793 0-1.435.578-1.56 1.403-.066.406.012.77.217 1.026.208.257.531.392.935.392.805 0 1.437-.559 1.571-1.392.06-.403-.023-.77-.235-1.031s-.534-.398-.929-.398Zm10.516-1.408h-1.399a.4.4 0 0 0-.334.186l-1.93 2.977-.817-2.861a.41.41 0 0 0-.388-.302H14.4c-.167 0-.283.171-.23.336l1.541 4.737-1.448 2.142c-.114.169 0 .4.197.4h1.397a.4.4 0 0 0 .332-.18l4.653-7.036c.111-.169-.003-.399-.199-.399"/><path fill="#179BD7" d="M25.275.022c.973 0 1.706.269 2.118.777.376.463.502 1.124.371 1.966-.289 1.923-1.393 2.894-3.308 2.894h-.92a.41.41 0 0 0-.399.358l-.334 2.214a.29.29 0 0 1-.279.25h-1.491c-.148 0-.263-.14-.24-.293L21.97.379a.41.41 0 0 1 .398-.357zm-1.283 1.69c-.12 0-.22.09-.24.213l-.308 2.041h.439c.77 0 1.568 0 1.726-1.093.058-.383.012-.661-.14-.848-.256-.314-.752-.314-1.277-.314zm6.54.989c.671 0 1.343.153 1.644.612l.098.147.061-.407a.246.246 0 0 1 .24-.215h1.39c.15 0 .263.14.24.293l-.753 4.992a.41.41 0 0 1-.398.358H31.8c-.149 0-.262-.14-.24-.294l.062-.406a2.62 2.62 0 0 1-1.927.835c-.721 0-1.328-.218-1.752-.742-.463-.57-.65-1.386-.518-2.24.256-1.712 1.57-2.933 3.107-2.933m.33 1.546c-.793 0-1.435.578-1.561 1.403-.065.406.013.77.219 1.026.207.257.531.392.934.392.805 0 1.437-.559 1.57-1.392.062-.403-.022-.77-.235-1.031-.211-.26-.532-.398-.928-.398ZM35.606.236l-1.193 7.952c-.023.154.09.293.239.293h1.2a.41.41 0 0 0 .398-.357L37.427.315c.023-.154-.09-.293-.239-.293h-1.343a.25.25 0 0 0-.24.214Z"/></svg></span>
+    </label>
+    <div class="payment-panel accordion-panel">
+      <p class="paypal-redirect-copy">Serás redirigido a PayPal para completar tu compra.</p>
+      <p class="paypal-redirect-subcopy">El pago se realizará de forma segura en PayPal y, al finalizar, podrás volver a Sucesso.</p>
+      <div class="payment-notice" id="paypal-not-connected-message" hidden aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div class="payment-method accordion-item" data-method="zelle">
+    <label class="payment-header accordion-header">
+      <input type="radio" name="metodo-pago" value="zelle">
+      <span class="payment-choice-copy">
+        <span class="payment-name">Zelle</span>
+        <span class="payment-caption">Transferencia en USD</span>
+      </span>
+      <span class="payment-brand-logo zelle-logo" aria-hidden="true"><img src="data:image/png;base64,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CjsAAAAAAAAIpLADAAAAAACAQAo7AAAAAAAACKSwAwAAAAAAgEAKOwAAAAAAAAiksAMAAAAAAIBACjsAAAAAAAAIpLADAAAAAACAQAo7AAAAAAAACKSwAwAAAAAAgEAKOwAAAAAAAAiksAMAAAAAAIBACjsAAAAAAAAIpLADAAAAAACAQAo7AAAAAAAACKSwAwAAAAAAgEAKOwAAAAAAAAiksAMAAAAAAIBACjsAAAAAAAAIpLADAAAAAACAQAo7AAAAAAAACKSwAwAAAAAAgEAKOwAAAAAAAAiksAMAAAAAAIBACjsAAAAAAAAIpLADAAAAAACAQAo7AAAAAAAACKSwAwAAAAAAgEAKOwAAAAAAAAiksAMAAAAAAIBACjsAAAAAAAAIpLADAAAAAACAQAo7AAAAAAAACKSwAwAAAAAAgEAKOwAAAAAAAAiksAMAAAAAAIBACjsAAAAAAAAIpLADAAAAAACAQAo7AAAAAAAACKSwAwAAAAAAgEAKOwAAAAAAAAiksAMAAAAAAIBACjsAAAAAAAAIpLADAAAAAACAQAo7AAAAAAAACKSwAwAAAAAAgEAKOwAAAAAAAAiksAMAAAAAAIBACjsAAAAAAAAIpLADAAAAAACAQAo7AAAAAAAACKSwAwAAAAAAgEAKOwAAAAAAAAiksAMAAAAAAIBACjsAAAAAAAAIpLADAAAAAACAQAo7AAAAAAAACKSwAwAAAAAAgEAKOwAAAAAAAAiksAMAAAAAAIBACjsAAAAAAAAIpLADAAAAAACAQAo7AAAAAAAACKSwAwAAAAAAgEAKOwAAAAAAAAiksAMAAAAAAIBACjsAAAAAAAAIpLADAAAAAACAQAo7AAAAAAAACKSwAwAAAAAAgEAKOwAAAAAAAAiksAMAAAAAAIBACjsAAAAAAAAIpLADAAAAAACAQAo7AAAAAAAACKSwAwAAAAAAgEAKOwAAAAAAAAiksAMAAAAAAIBACjsAAAAAAAAIpLADAAAAAACAQAo7AAAAAAAACKSwAwAAAAAAgED/AxVxNy77xddPAAAAAElFTkSuQmCC" alt=""></span>
+    </label>
+    <div class="payment-panel accordion-panel">
+      <div class="payment-recipient-card compact">
+        <div><span>Enviar a</span><strong>zelle@sucesso.com</strong></div>
+        <div><span>Beneficiario</span><strong>SUCESSO C.A.</strong></div>
+      </div>
+      <p class="payment-help">Ingresa los datos de la transferencia para poder identificar el pago cuando se realice la conciliación.</p>
+      <div class="payment-fields-grid">
+        <div class="form-group">
+          <div class="floating-field payment-floating-field">
+            <input type="text" id="zelle-sender" placeholder="Nombre del remitente" autocomplete="name" data-payment-required="zelle">
+            <label for="zelle-sender">Nombre del remitente</label>
+          </div>
+          <div class="field-error" id="zelle-sender-error" aria-live="polite"></div>
+        </div>
+        <div class="form-group">
+          <div class="floating-field payment-floating-field">
+            <input type="text" id="zelle-confirmation" placeholder="Número de confirmación" autocomplete="off" data-payment-required="zelle">
+            <label for="zelle-confirmation">Número de confirmación</label>
+          </div>
+          <div class="field-error" id="zelle-confirmation-error" aria-live="polite"></div>
+        </div>
+      </div>
+      <div class="form-group payment-full-field">
+        <div class="floating-field payment-floating-field">
+          <input type="text" id="zelle-contact" placeholder="Correo o teléfono usado en Zelle" autocomplete="off" data-payment-required="zelle">
+          <label for="zelle-contact">Correo o teléfono usado en Zelle</label>
+        </div>
+        <div class="field-error" id="zelle-contact-error" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="payment-method accordion-item" data-method="efectivo">
+    <label class="payment-header accordion-header">
+      <input type="radio" name="metodo-pago" value="efectivo">
+      <span class="payment-choice-copy">
+        <span class="payment-name">Pago en Efectivo</span>
+        <span class="payment-caption">Pago contra entrega</span>
+      </span>
+    </label>
+    <div class="payment-panel accordion-panel">
+      <p class="payment-help cash-help">El pago se realizará en efectivo al momento de la entrega. No necesitas completar datos adicionales.</p>
+    </div>
+  </div>
+</div>
+
+  <button type="submit">Pagar ahora</button>
+</form>
+
+    </section>
+
+    <section class="summary-section" aria-label="Resumen del pedido">
+      <div id="cart-items" class="summary-cart-items"></div>
+
+      <!-- DESCUENTO / GIFT CARD — campo integrado estilo Shopify -->
+      <div class="discount-box">
+        <div class="discount-field">
+          <div class="discount-input-wrap">
+            <input id="discount-code" type="text" placeholder=" " autocomplete="off" aria-label="Código de descuento o tarjeta de regalo">
+            <label for="discount-code">Código de descuento o tarjeta de regalo</label>
+          </div>
+          <button id="apply-discount-btn" type="button" disabled>Aplicar</button>
+        </div>
+        <div id="discount-msg" aria-live="polite"></div>
+      </div>
+
+      <div class="price-section">
+        <p><span>Subtotal</span><span id="subtotal-value">$0.00</span></p>
+        <p id="discount-row" hidden><span>Descuento</span><span id="discount-value">-$0.00</span></p>
+        <p><span>Envío</span><span id="envio-cost">$0.00</span></p>
+      </div>
+      <div class="total-section">
+        <span class="total-label">Total</span>
+        <span class="total-number"><small>USD</small><span id="total-final">$0.00</span></span>
+      </div>
+      <div class="checkout-ves-total-row" hidden>
+        <span class="checkout-ves-label">Monto</span>
+        <span class="checkout-total-ves">— VES</span>
+      </div>
+      <div class="checkout-bcv-rate" hidden>1 USD = — VES</div>
+    </section>
+  </div>
+
+
+<script>
+/* ===== Checkout ES / EN según la ubicación guardada ===== */
+(() => {
+  const spanishCountries = new Set('AR BO CL CO CR CU DO EC SV GQ GT HN MX NI PA PY PE PR ES UY VE'.split(' '));
+  const language = () => {
+    const country = localStorage.getItem('sucesso-selected-country');
+    if (country) return spanishCountries.has(country) ? 'es' : 'en';
+    return localStorage.getItem('preferredLang') === 'en' ? 'en' : 'es';
+  };
+  const ES_TO_EN = new Map(Object.entries({
+    'Checkout - Sucesso': 'Checkout - Sucesso',
+    'Resumen del Pedido': 'Order summary',
+    'Resumen del pedido': 'Order summary',
+    'Información de Contacto': 'Contact information',
+    'Correo Electrónico': 'Email',
+    'Entrega': 'Delivery',
+    'País/Región': 'Country/Region',
+    'Nombre': 'First name',
+    'Apellido': 'Last name',
+    'Dirección': 'Address',
+    'Apartamento, suite, etc. (opcional)': 'Apartment, suite, etc. (optional)',
+    'Ciudad': 'City',
+    'Estado': 'State',
+    'Código Postal': 'ZIP code',
+    'Teléfono': 'Phone',
+    'Usar dirección de envío como dirección de facturación': 'Use shipping address as billing address',
+    'Facturación': 'Billing',
+    'Métodos de Envío': 'Shipping methods',
+    'Envío rápido dentro de la Capital. Tiempo estimado: 1-2 días hábiles.': 'Fast delivery within the Capital District. Estimated time: 1-2 business days.',
+    'Resto de Venezuela': 'Rest of Venezuela',
+    'Estados Unidos': 'United States',
+    'GRATIS': 'Free',
+    'El cliente será quien asume el costo de envío una vez retire su pedido en el MRW especificado': 'The customer assumes the shipping cost when picking up the order at the specified MRW location.',
+    'Métodos de Pago': 'Payment methods',
+    'Selecciona cómo deseas pagar. Los datos de confirmación se guardarán junto con tu pedido.': 'Select how you would like to pay. Confirmation details will be saved with your order.',
+    'Pago Móvil': 'Mobile Payment',
+    'Transferencia inmediata en bolívares': 'Instant transfer in bolívares',
+    'Banco': 'Bank',
+    'Banco receptor': 'Receiving bank',
+    'Banco emisor': 'Issuing bank',
+    'Cédula': 'ID number',
+    'Beneficiario': 'Beneficiary',
+    'Realiza el pago y luego ingresa la referencia de la operación para asociarla con tu pedido.': 'Make the payment, then enter the transaction reference number to link it to your order.',
+    'Realiza el pago y luego indica el banco emisor y la referencia de la operación para asociarla con tu pedido.': 'Make the payment, then select the issuing bank and enter the transaction reference number to link it to your order.',
+    'Número de referencia': 'Reference number',
+    'Tarjeta americana': 'Credit card',
+    'Pago seguro con tarjeta': 'Secure card payment',
+    'Este espacio está preparado para montar el formulario tokenizado de la pasarela de pago. Por seguridad, Sucesso no debe guardar números completos de tarjeta ni códigos CVV.': 'This space is ready for the payment provider’s tokenized card form. For security, Sucesso must not store full card numbers or CVV codes.',
+    'La pasarela de tarjetas todavía no está conectada. Al integrarla, el formulario seguro aparecerá aquí sin cambiar el diseño del checkout.': 'The card payment gateway is not connected yet. Once integrated, the secure form will appear here without changing the checkout design.',
+    'Pago en USD': 'Payment in USD',
+    'Serás redirigido a PayPal para completar tu compra.': 'You will be redirected to PayPal to complete your purchase.',
+    'El pago se realizará de forma segura en PayPal y, al finalizar, podrás volver a Sucesso.': 'Payment will be completed securely on PayPal, and you can return to Sucesso when finished.',
+    'Transferencia en USD': 'Transfer in USD',
+    'Enviar a': 'Send to',
+    'Ingresa los datos de la transferencia para poder identificar el pago cuando se realice la conciliación.': 'Enter the transfer details so the payment can be identified during reconciliation.',
+    'Nombre del remitente': 'Sender name',
+    'Número de confirmación': 'Confirmation number',
+    'Correo o teléfono usado en Zelle': 'Email or phone used with Zelle',
+    'Pago en Efectivo': 'Cash Payment',
+    'Pago contra entrega': 'Cash on delivery',
+    'El pago se realizará en efectivo al momento de la entrega. No necesitas completar datos adicionales.': 'Payment will be made in cash upon delivery. No additional information is required.',
+    'Pagar ahora': 'Pay now',
+    'Código de descuento o tarjeta de regalo': 'Discount code or gift card',
+    'Aplicar': 'Apply',
+    'Subtotal': 'Subtotal',
+    'Descuento': 'Discount',
+    'Envío': 'Shipping',
+    'Total': 'Total',
+    'Monto': 'Amount',
+    'Única': 'One size',
+    'Ingresa un código.': 'Enter a code.',
+    'Código inválido o vencido.': 'Invalid or expired code.',
+    'El código está vencido.': 'This code has expired.',
+    'Ingresa un correo electrónico.': 'Enter an email address.',
+    'Ingresa un correo electrónico válido.': 'Enter a valid email address.',
+    'Selecciona un país o región.': 'Select a country or region.',
+    'Ingresa un nombre.': 'Enter a first name.',
+    'Ingresa un apellido.': 'Enter a last name.',
+    'Ingresa una dirección.': 'Enter an address.',
+    'Ingresa una ciudad.': 'Enter a city.',
+    'Selecciona un estado.': 'Select a state.',
+    'Ingresa un código postal.': 'Enter a ZIP code.',
+    'Ingresa un número de teléfono.': 'Enter a phone number.',
+    'Completa este campo.': 'Complete this field.',
+    'Ingresa un valor válido.': 'Enter a valid value.',
+    'PayPal todavía no está conectado. Cuando configures la cuenta y el endpoint seguro, Finalizar compra te redirigirá automáticamente a PayPal.': 'PayPal is not connected yet. Once the account and secure endpoint are configured, completing your purchase will redirect you automatically to PayPal.',
+    'Tu carrito está vacío.': 'Your cart is empty.',
+    'Debes iniciar sesión para confirmar tu compra.': 'You must sign in to confirm your purchase.',
+    'Redirigiendo a PayPal...': 'Redirecting to PayPal...',
+    'No se pudo iniciar PayPal en este momento. Intenta nuevamente cuando la conexión esté disponible.': 'PayPal could not be started right now. Please try again when the connection is available.',
+    'Procesando...': 'Processing...',
+    'Hubo un error al registrar tu compra. Intenta nuevamente.': 'There was an error placing your order. Please try again.',
+    'Confirmar Compra': 'Complete purchase',
+    'Redes previstas: Visa, Mastercard, American Express y Discover': 'Supported networks: Visa, Mastercard, American Express and Discover',
+    'Mostrar 1 red adicional': 'Show 1 additional network'
+  }));
+  const EN_TO_ES = new Map([...ES_TO_EN].map(([es,en]) => [en,es]));
+
+  function translateString(raw, lang = language()) {
+    if (typeof raw !== 'string' || !raw) return raw;
+    const leading = raw.match(/^\s*/)?.[0] || '';
+    const trailing = raw.match(/\s*$/)?.[0] || '';
+    const core = raw.slice(leading.length, raw.length - trailing.length);
+    if (!core) return raw;
+    const exact = lang === 'en' ? ES_TO_EN.get(core) : EN_TO_ES.get(core);
+    if (exact !== undefined) return leading + exact + trailing;
+
+    if (lang === 'en') {
+      let m;
+      if ((m = core.match(/^Cantidad\s+(\d+)$/i))) return leading + `Quantity ${m[1]}` + trailing;
+      if ((m = core.match(/^Mínimo de compra:\s*(.+)$/i))) return leading + `Minimum purchase: ${m[1]}` + trailing;
+      if ((m = core.match(/^Código aplicado:\s*(.+)$/i))) return leading + `Code applied: ${m[1]}` + trailing;
+    } else {
+      let m;
+      if ((m = core.match(/^Quantity\s+(\d+)$/i))) return leading + `Cantidad ${m[1]}` + trailing;
+      if ((m = core.match(/^Minimum purchase:\s*(.+)$/i))) return leading + `Mínimo de compra: ${m[1]}` + trailing;
+      if ((m = core.match(/^Code applied:\s*(.+)$/i))) return leading + `Código aplicado: ${m[1]}` + trailing;
+    }
+    return raw;
+  }
+
+  function translateElement(el, lang = language()) {
+    if (!el || el.nodeType !== 1 || /^(SCRIPT|STYLE|TEMPLATE|NOSCRIPT)$/i.test(el.tagName)) return;
+    ['placeholder','aria-label','title'].forEach(attr => {
+      if (el.hasAttribute(attr)) {
+        const value = el.getAttribute(attr);
+        const translated = translateString(value, lang);
+        if (translated !== value) el.setAttribute(attr, translated);
+      }
+    });
+    el.childNodes.forEach(node => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const translated = translateString(node.nodeValue, lang);
+        if (translated !== node.nodeValue) node.nodeValue = translated;
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        translateElement(node, lang);
+      }
+    });
+  }
+
+  function applyCheckoutLanguage(lang = language()) {
+    document.documentElement.lang = lang;
+    document.title = lang === 'en' ? 'Checkout - Sucesso' : 'Finalizar compra - Sucesso';
+    if (document.body) translateElement(document.body, lang);
+  }
+  window.__applyCheckoutLanguage = applyCheckoutLanguage;
+  window.__checkoutTranslate = translateString;
+
+  // Traduce también avisos nativos del checkout, sin alterar su lógica.
+  const nativeAlert = window.alert.bind(window);
+  window.alert = message => nativeAlert(translateString(String(message), language()));
+
+  document.addEventListener('DOMContentLoaded', () => {
+    applyCheckoutLanguage();
+    const observer = new MutationObserver(records => {
+      const lang = language();
+      records.forEach(record => {
+        if (record.type === 'characterData') {
+          const translated = translateString(record.target.nodeValue, lang);
+          if (translated !== record.target.nodeValue) record.target.nodeValue = translated;
+        } else if (record.type === 'attributes') {
+          translateElement(record.target, lang);
+        } else {
+          record.addedNodes.forEach(node => {
+            if (node.nodeType === Node.TEXT_NODE) {
+              const translated = translateString(node.nodeValue, lang);
+              if (translated !== node.nodeValue) node.nodeValue = translated;
+            } else if (node.nodeType === Node.ELEMENT_NODE) translateElement(node, lang);
+          });
+        }
+      });
+    });
+    observer.observe(document.body, {subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:['placeholder','aria-label','title']});
+  });
+
+  // Si la preferencia cambia desde otra pestaña, el checkout abierto se actualiza también.
+  window.addEventListener('storage', e => {
+    if (e.key === 'preferredLang' || e.key === 'sucesso-selected-country') applyCheckoutLanguage(language());
+  });
+})();
+</script>
+
+<script>
+/* ===== Checkout country/state/payment behavior (Venezuela / United States) ===== */
+(() => {
+  const VE_STATES = [
+    'Capital','Amazonas','Anzoátegui','Apure','Aragua','Barinas','Bolívar','Carabobo','Cojedes','Delta Amacuro',
+    'Falcón','Guárico','Lara','Mérida','Miranda','Monagas','Nueva Esparta','Portuguesa','Sucre','Táchira','Trujillo',
+    'Vargas','Yaracuy','Zulia'
+  ];
+  const US_STATES = [
+    'Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia',
+    'Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts',
+    'Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey',
+    'New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island',
+    'South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia',
+    'Wisconsin','Wyoming'
+  ];
+
+  let cherryTimer = null;
+  function replayCheckoutCherryLoader() {
+    const loader = document.getElementById('loader');
+    if (!loader) return;
+    const img = loader.querySelector('img');
+    loader.style.display = 'flex';
+    loader.style.opacity = '1';
+    loader.style.visibility = 'visible';
+    if (img) {
+      img.style.animation = 'none';
+      void img.offsetWidth;
+      img.style.animation = 'zoomInClean 2s ease forwards';
+    }
+    clearTimeout(cherryTimer);
+    cherryTimer = setTimeout(() => {
+      loader.style.opacity = '0';
+      loader.style.visibility = 'hidden';
+      setTimeout(() => { loader.style.display = 'none'; }, 400);
+    }, 2500);
+  }
+  window.__sucessoReplaySiteLoader = window.__sucessoReplaySiteLoader || replayCheckoutCherryLoader;
+
+  function populateStates(select, country, preferred) {
+    if (!select) return;
+    const list = country === 'United States' ? US_STATES : VE_STATES;
+    const keep = list.includes(preferred) ? preferred : (country === 'United States' ? 'Florida' : 'Capital');
+    select.replaceChildren(...list.map(name => {
+      const option = document.createElement('option');
+      option.value = name;
+      option.textContent = name;
+      return option;
+    }));
+    select.value = keep;
+    select.closest('.floating-field')?.classList.add('has-value');
+  }
+
+  function setCountryOptions(select, selectedCountry) {
+    if (!select) return;
+    const current = selectedCountry || select.value || 'Venezuela';
+    select.replaceChildren();
+    const ve = document.createElement('option');
+    ve.value = 'Venezuela';
+    ve.textContent = 'Venezuela';
+    const us = document.createElement('option');
+    us.value = 'United States';
+    us.textContent = 'Estados Unidos';
+    select.append(ve, us);
+    select.value = current === 'United States' ? 'United States' : 'Venezuela';
+  }
+
+  function setPaymentCountry(country) {
+    const mobile = document.querySelector('.payment-method[data-method="pago-movil"]');
+    const mobileRadio = mobile?.querySelector('input[name="metodo-pago"]');
+    const root = document.getElementById('payment-accordion');
+    if (!mobile || !mobileRadio || !root) return;
+
+    const isUS = country === 'United States';
+    mobile.hidden = isUS;
+    mobile.style.display = isUS ? 'none' : '';
+    mobileRadio.disabled = isUS;
+
+    if (isUS && mobileRadio.checked) {
+      const fallback = root.querySelector('input[name="metodo-pago"]:not([disabled])');
+      if (fallback) {
+        fallback.checked = true;
+        fallback.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    } else if (!isUS && !root.querySelector('input[name="metodo-pago"]:checked')) {
+      mobileRadio.disabled = false;
+      mobileRadio.checked = true;
+      mobileRadio.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+
+
+  function setShippingMethodsCountry(country) {
+    const accordion = document.getElementById('envio-accordion');
+    const pending = document.getElementById('shipping-methods-pending');
+    const radios = Array.from(document.querySelectorAll('#envio-accordion input[name="metodo-envio"]'));
+    if (!accordion || !pending) return;
+
+    const isUS = country === 'United States';
+    accordion.hidden = isUS;
+    accordion.style.display = isUS ? 'none' : '';
+    pending.hidden = !isUS;
+    pending.style.display = isUS ? 'flex' : 'none';
+
+    if (isUS) {
+      radios.forEach(radio => {
+        radio.checked = false;
+        radio.disabled = true;
+      });
+      document.querySelectorAll('#envio-accordion .accordion-panel').forEach(panel => panel.classList.remove('open'));
+      // No rate is assumed until the future shipping-control center provides one.
+      if (window.__checkoutState) window.__checkoutState.shipping = 0;
+      window.__renderTotalsWithDiscount?.();
+      return;
+    }
+
+    radios.forEach(radio => { radio.disabled = false; });
+    const state = document.getElementById('estado')?.value || 'Capital';
+    const preferred = document.querySelector(`#envio-accordion input[name="metodo-envio"][value="${state === 'Capital' ? 'capital' : 'resto'}"]`);
+    if (preferred) {
+      preferred.checked = true;
+      preferred.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+
+  function syncShippingCountry(country, { replayLoader = false, persist = true } = {}) {
+    const shippingCountry = document.getElementById('pais');
+    const shippingState = document.getElementById('estado');
+    const billingCountry = document.getElementById('billing-pais');
+    const billingState = document.getElementById('billing-estado');
+    const useShipping = document.getElementById('use-shipping-as-billing')?.checked !== false;
+
+    if (replayLoader) replayCheckoutCherryLoader();
+    if (shippingCountry) shippingCountry.value = country;
+    populateStates(shippingState, country, shippingState?.value);
+    shippingState?.dispatchEvent(new Event('change', { bubbles: true }));
+    setPaymentCountry(country);
+    setShippingMethodsCountry(country);
+
+    if (persist) {
+      const code = country === 'United States' ? 'US' : 'VE';
+      const lang = code === 'US' ? 'en' : 'es';
+      localStorage.setItem('sucesso-selected-country', code);
+      localStorage.setItem('preferredLang', lang);
+      document.documentElement.lang = lang;
+    }
+
+    if (useShipping && billingCountry) {
+      billingCountry.value = country;
+      populateStates(billingState, country, shippingState?.value);
+      window.__billingHelpers?.syncNow?.();
+    }
+
+    window.__applyCheckoutLanguage?.(country === 'United States' ? 'en' : 'es');
+    window.dispatchEvent(new CustomEvent('sucesso:checkout-country-change', { detail: { country } }));
+    // Dynamic option text is created after the generic translator ran.
+    if (shippingCountry) {
+      shippingCountry.options[1].textContent = country === 'United States' ? 'United States' : 'Estados Unidos';
+    }
+    if (billingCountry) {
+      billingCountry.options[1].textContent = country === 'United States' ? 'United States' : 'Estados Unidos';
+    }
+  }
+
+  function syncBillingCountry(country) {
+    const state = document.getElementById('billing-estado');
+    populateStates(state, country, state?.value);
+  }
+
+  function initCountryControls() {
+    const shippingCountry = document.getElementById('pais');
+    const billingCountry = document.getElementById('billing-pais');
+    if (!shippingCountry || !billingCountry) return;
+
+    const savedCode = localStorage.getItem('sucesso-selected-country');
+    const initialCountry = savedCode === 'US' ? 'United States' : 'Venezuela';
+    setCountryOptions(shippingCountry, initialCountry);
+    setCountryOptions(billingCountry, initialCountry);
+    populateStates(document.getElementById('estado'), initialCountry, document.getElementById('estado')?.value);
+    populateStates(document.getElementById('billing-estado'), initialCountry, document.getElementById('billing-estado')?.value);
+    document.getElementById('estado')?.dispatchEvent(new Event('change', { bubbles: true }));
+    setPaymentCountry(initialCountry);
+    setShippingMethodsCountry(initialCountry);
+    window.__applyCheckoutLanguage?.(initialCountry === 'United States' ? 'en' : 'es');
+    window.dispatchEvent(new CustomEvent('sucesso:checkout-country-change', { detail: { country: initialCountry } }));
+
+    shippingCountry.addEventListener('change', () => {
+      syncShippingCountry(shippingCountry.value, { replayLoader: true, persist: true });
+      shippingCountry.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    billingCountry.addEventListener('change', () => syncBillingCountry(billingCountry.value));
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initCountryControls, { once: true });
+  else initCountryControls();
+})();
+</script>
+
+<script>
+window.addEventListener("load", () => {
+  const loader = document.getElementById("loader");
+  setTimeout(() => {
+    loader.style.opacity = "0";
+    loader.style.visibility = "hidden";
+    setTimeout(() => {
+      loader.style.display = "none";
+    }, 400); // Tiempo igual al transition del CSS
+  }, 2500);
+});
+</script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- Documento: permitir solo dígitos en el número ---
+  const docNumberInput = document.getElementById("documento-number");
+  if (docNumberInput) {
+    docNumberInput.addEventListener("input", () => {
+      docNumberInput.value = docNumberInput.value.replace(/\D+/g, "");
+    });
+  }
+
+      const cartContainer = document.getElementById('cart-items');
+      const subtotalValue = document.getElementById('subtotal-value');
+      const totalFinal = document.getElementById('total-final');
+
+      const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      let subtotal = 0;
+
+      if (carrito.length === 0) {
+        cartContainer.innerHTML = '<p>No hay productos en el carrito.</p>';
+        return;
+      }
+
+      cartContainer.innerHTML = '';
+
+      carrito.forEach(producto => {
+        const nombre = producto.nombre || producto.name || 'Producto';
+        const cantidad = producto.cantidad || producto.quantity || 1;
+        const precioRaw = producto.precio || producto.price || "$0.00";
+        const precio = typeof precioRaw === 'string' ? window.__parseCheckoutMoney(precioRaw) : precioRaw;
+        const imagen = producto.image || producto.imagen_frontal || 'images/default.jpg';
+
+        const escapeHTML = (value) => String(value ?? '').replace(/[&<>"']/g, (ch) => ({
+          '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+        })[ch]);
+        const talla = producto.size || producto.talla || 'Única';
+
+        const item = document.createElement('div');
+        item.className = 'cart-item';
+        item.innerHTML = `
+          <div class="cart-thumb">
+            <img src="${escapeHTML(imagen)}" alt="${escapeHTML(nombre)}">
+            <span class="cart-qty-badge" aria-label="Cantidad ${cantidad}">${cantidad}</span>
+          </div>
+          <div class="cart-info">
+            <p class="cart-product-name">${escapeHTML(nombre)}</p>
+            <p class="cart-product-variant">${escapeHTML(talla)}</p>
+          </div>
+          <div class="cart-line-price">${window.__formatCheckoutUSD(precio * cantidad)}</div>
+        `;
+
+        cartContainer.appendChild(item);
+        subtotal += precio * cantidad;
+      });
+
+      subtotalValue.textContent = window.__formatCheckoutUSD(subtotal);
+      totalFinal.textContent = window.__formatCheckoutUSD(subtotal);
+    });
+  </script>
+
+<script>
+/* Normal spinner overlay used only after a valid discount is accepted. */
+window.__runCheckoutProcessingLoader = function(ms = 4000) {
+  const overlay = document.getElementById('checkout-processing-overlay');
+  if (!overlay) return new Promise(resolve => setTimeout(resolve, ms));
+  overlay.classList.add('is-active');
+  overlay.setAttribute('aria-hidden', 'false');
+  return new Promise(resolve => {
+    setTimeout(() => {
+      overlay.classList.remove('is-active');
+      overlay.setAttribute('aria-hidden', 'true');
+      resolve();
+    }, ms);
+  });
+};
+</script>
+
+<script>
+/* ============ CUPONES CONFIGURABLES ============
+
+Edita/añade tus códigos aquí. Dos tipos:
+- type: "percent" (valor en %)  | p.ej. 10 = 10%
+- type: "fixed"   (valor en USD) | p.ej. 5  = $5.00
+
+Opcionales:
+- minSubtotal: mínimo de compra para aplicar
+- expires: "YYYY-MM-DD" (UTC)   -> fecha límite inclusive
+*/
+const COUPONS = {
+  "SUCESSO10": { type: "percent", value: 10,  minSubtotal: 0,  expires: "2030-12-31" },
+  "LIAN":      { type: "fixed",   value: 50,   minSubtotal: 15, expires: "2030-12-31" },
+  "SUCE550":   { type: "fixed",   value: 200,  minSubtotal: 0,  expires: "2030-12-31" },
+  // agrega los tuyos aquí...
+};
+
+(function initDiscountSystem(){
+  // Estado centralizado
+  const desktopSummary  = document.querySelector(".summary-section");
+  const mobileSummary   = document.getElementById("mobile-summary-content");
+
+  // Intenta leer el subtotal ya renderizado por tu código
+  const parseMoney = s => window.__parseCheckoutMoney(s);
+  const fmt = n => window.__formatCheckoutUSD(n);
+
+  // Guardamos valores maestros en window para reuso sin tocar tus scripts
+  window.__checkoutState = window.__checkoutState || {
+    subtotal: parseMoney(document.getElementById("subtotal-value")?.textContent || 0),
+    shipping: parseMoney(document.querySelector('input[name="metodo-envio"]:checked')?.getAttribute("data-costo") || 0),
+    discount: 0,
+    code: null
+  };
+
+  // Helpers para seleccionar en desktop/móvil sin chocar IDs clonados
+  const $d = sel => desktopSummary?.querySelector(sel);
+  const $m = sel => mobileSummary?.querySelector(sel);
+
+  function renderTotals(){
+    const st  = window.__checkoutState;
+    // corrige si por alguna razón cambió el subtotal ya pintado por tus scripts
+    st.subtotal = parseMoney($d("#subtotal-value")?.textContent || st.subtotal);
+
+    const maxDiscount = Math.min(st.discount, st.subtotal); // jamás más que el subtotal
+    const total = st.subtotal - maxDiscount + st.shipping;
+
+    // Desktop
+    if ($d("#discount-value")) $d("#discount-value").textContent = window.__formatCheckoutUSD(-maxDiscount);
+    if ($d("#discount-row"))   $d("#discount-row").hidden = maxDiscount <= 0.005;
+    if ($d("#envio-cost"))     $d("#envio-cost").textContent     = fmt(st.shipping);
+    if ($d("#total-final"))    $d("#total-final").textContent    = fmt(total);
+
+    // Mobile (los mismos IDs existen dentro del contenedor clonado)
+    if ($m("#discount-value")) $m("#discount-value").textContent = window.__formatCheckoutUSD(-maxDiscount);
+    if ($m("#discount-row"))   $m("#discount-row").hidden = maxDiscount <= 0.005;
+    if ($m("#envio-cost"))     $m("#envio-cost").textContent     = fmt(st.shipping);
+    if ($m("#total-final"))    $m("#total-final").textContent    = fmt(total);
+
+    const headerTotal = document.getElementById("summary-total");
+    if (headerTotal) headerTotal.textContent = fmt(total);
+  }
+
+  function readShipping(){
+    const checked = document.querySelector('input[name="metodo-envio"]:checked');
+    window.__checkoutState.shipping = parseMoney(checked?.getAttribute("data-costo") || 0);
+  }
+
+  function validateAndComputeDiscount(code){
+    if (!code) return {ok:false, msg:"Ingresa un código."};
+    const c = COUPONS[code.trim().toUpperCase()];
+    if (!c) return {ok:false, msg:"Código inválido o vencido."};
+
+    // vencimiento
+    if (c.expires) {
+      const today = new Date(); today.setHours(0,0,0,0);
+      const exp = new Date(c.expires+"T00:00:00Z");
+      if (today.getTime() > exp.getTime()) return {ok:false, msg:"El código está vencido."};
+    }
+
+    // mínimo
+    const st = window.__checkoutState;
+    if (c.minSubtotal && st.subtotal < c.minSubtotal) {
+      return {ok:false, msg:`Mínimo de compra: ${fmt(c.minSubtotal)}.`};
+    }
+
+    // valor
+    let discount = 0;
+    if (c.type === "percent") discount = st.subtotal * (c.value/100);
+    else if (c.type === "fixed") discount = c.value;
+    discount = Math.max(0, Math.min(discount, st.subtotal)); // cap
+
+    return {ok:true, discount, meta:c};
+  }
+
+  function attachBox(scope){
+    if (!scope) return;
+    const codeInput = scope.querySelector("#discount-code");
+    const btn       = scope.querySelector("#apply-discount-btn");
+    const msgEl     = scope.querySelector("#discount-msg");
+    if (!codeInput || !btn) return;
+
+    const discountField = codeInput.closest(".discount-field");
+
+    // 🔴/✅ Helper para controlar el borde rojo de error
+    const setErrorBorder = (on) => {
+      codeInput.classList.toggle("discount-error", !!on);
+      discountField?.classList.toggle("is-invalid", !!on);
+    };
+
+    const syncDiscountUI = () => {
+      const hasValue = codeInput.value.trim().length > 0;
+      discountField?.classList.toggle("has-value", hasValue);
+      if (btn.dataset.locked === "1") {
+        codeInput.value = "";
+        discountField?.classList.remove("has-value");
+        btn.disabled = true;
+        btn.classList.remove("enabled");
+        return;
+      }
+      btn.disabled = !hasValue;
+      btn.classList.toggle("enabled", hasValue);
+      if (hasValue) setErrorBorder(false);
+    };
+
+    codeInput.addEventListener("input", syncDiscountUI);
+    syncDiscountUI();
+
+    const apply = () => {
+      if (btn.dataset.processing === "1" || btn.dataset.locked === "1") return;
+      const code = codeInput.value.trim();
+      const res = validateAndComputeDiscount(code);
+
+      msgEl && (msgEl.style.color = res.ok ? "#ffffff" : "#ffb4b4");
+
+      if (!res.ok){
+        setErrorBorder(true);
+        window.__checkoutState.discount = 0;
+        window.__checkoutState.code = null;
+        if (msgEl) msgEl.textContent = res.msg;
+        renderTotals();
+        return;
+      }
+
+      // Código correcto: espera 4 segundos con el spinner normal antes de mostrar el cambio.
+      setErrorBorder(false);
+      btn.disabled = true;
+      btn.dataset.processing = "1";
+      window.__runCheckoutProcessingLoader(4000).then(() => {
+        window.__checkoutState.discount = res.discount;
+        window.__checkoutState.code = code.toUpperCase();
+        if (msgEl) msgEl.textContent = `Código aplicado: ${window.__checkoutState.code} (-${fmt(res.discount)})`;
+        renderTotals();
+        codeInput.value = "";
+        btn.dataset.locked = "1";
+        delete btn.dataset.processing;
+        syncDiscountUI();
+      });
+    };
+
+    btn.addEventListener("click", apply);
+    codeInput.addEventListener("keydown", (e)=>{ if (e.key === "Enter") { e.preventDefault(); apply(); }});
+  }
+
+  // Envío cambia: recalculamos después de tus listeners
+  document.querySelectorAll('input[name="metodo-envio"]').forEach(r=>{
+    r.addEventListener("change", ()=>{ readShipping(); renderTotals(); });
+  });
+
+  // Estado inicial
+  readShipping();
+  renderTotals();
+
+  // Conectar cajas (desktop y móvil)
+  attachBox(desktopSummary);
+  attachBox(mobileSummary);
+
+  // Exponer para que otros scripts puedan forzar un repaint si cambian algo
+  window.__renderTotalsWithDiscount = renderTotals;
+
+  // Permite re-vincular la caja de descuento en el contenedor móvil tras el clonado
+  window.__rebindDiscountBox = () => {
+    const mobile = document.getElementById("mobile-summary-content");
+    if (mobile) {
+      if (mobile.querySelector("#discount-code") && mobile.querySelector("#apply-discount-btn")) {
+        (function(scope){
+          const codeInput = scope.querySelector("#discount-code");
+          const btn = scope.querySelector("#apply-discount-btn");
+          const msgEl = scope.querySelector("#discount-msg");
+          if (!codeInput || !btn) return;
+
+          const discountField = codeInput.closest(".discount-field");
+          const setErrorBorder = (on) => {
+            codeInput.classList.toggle("discount-error", !!on);
+            discountField?.classList.toggle("is-invalid", !!on);
+          };
+          const syncDiscountUI = () => {
+            const hasValue = codeInput.value.trim().length > 0;
+            discountField?.classList.toggle("has-value", hasValue);
+            if (btn.dataset.locked === "1") {
+              codeInput.value = "";
+              discountField?.classList.remove("has-value");
+              btn.disabled = true;
+              btn.classList.remove("enabled");
+              return;
+            }
+            btn.disabled = !hasValue;
+            btn.classList.toggle("enabled", hasValue);
+            if (hasValue) setErrorBorder(false);
+          };
+
+          codeInput.addEventListener("input", syncDiscountUI);
+          syncDiscountUI();
+
+          const apply = () => {
+            if (btn.dataset.processing === "1" || btn.dataset.locked === "1") return;
+            const code = codeInput.value.trim();
+            const res = (typeof validateAndComputeDiscount === "function")
+              ? validateAndComputeDiscount(code)
+              : (window.validateAndComputeDiscount && window.validateAndComputeDiscount(code));
+            if (!res) return;
+
+            msgEl && (msgEl.style.color = res.ok ? "#ffffff" : "#ffb4b4");
+
+            if (!res.ok){
+              setErrorBorder(true);
+              window.__checkoutState.discount = 0;
+              window.__checkoutState.code = null;
+              if (msgEl) msgEl.textContent = res.msg;
+              window.__renderTotalsWithDiscount?.();
+              return;
+            }
+
+            setErrorBorder(false);
+            btn.disabled = true;
+            btn.dataset.processing = "1";
+            window.__runCheckoutProcessingLoader(4000).then(() => {
+              window.__checkoutState.discount = res.discount;
+              window.__checkoutState.code = code.toUpperCase();
+              if (msgEl) msgEl.textContent = `Código aplicado: ${code.toUpperCase()} (-${fmt(res.discount)})`;
+              window.__renderTotalsWithDiscount?.();
+              codeInput.value = "";
+              btn.dataset.locked = "1";
+              delete btn.dataset.processing;
+              syncDiscountUI();
+            });
+          };
+
+          btn.onclick = apply;
+          codeInput.onkeydown = (e)=>{ if (e.key === "Enter") { e.preventDefault(); apply(); }};
+        })(mobile);
+      }
+    }
+  };
+})();
+</script>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const envioRadios = document.querySelectorAll('input[name="metodo-envio"]');
+
+    function toggleEnvioPanels() {
+      document.querySelectorAll('#envio-accordion .accordion-panel').forEach(panel => {
+        panel.classList.remove('open');
+      });
+
+      const selected = document.querySelector('#envio-accordion input[name="metodo-envio"]:checked');
+      if (selected) {
+        const panel = selected.closest('.accordion-item').querySelector('.accordion-panel');
+        panel.classList.add('open');
+      }
+    }
+
+    envioRadios.forEach(radio => {
+      radio.addEventListener('change', toggleEnvioPanels);
+    });
+
+    toggleEnvioPanels(); // Ejecutar al cargar
+  });
+</script>
+
+
+<!-- Los antiguos comprobantes por archivo fueron sustituidos por referencias de pago estructuradas. -->
+
+<script>
+  document.getElementById('estado').addEventListener('change', () => {
+    if (document.getElementById('pais')?.value === 'United States') return;
+    const estado = document.getElementById('estado').value;
+    if (estado === 'Capital') {
+      document.querySelector('input[name="metodo-envio"][value="capital"]').checked = true;
+    } else {
+      document.querySelector('input[name="metodo-envio"][value="resto"]').checked = true;
+    }
+
+    // Forzar reapertura de panel correcto
+    const evento = new Event('change');
+    document.querySelector('input[name="metodo-envio"]:checked').dispatchEvent(evento);
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const envioRadios = document.querySelectorAll('input[name="metodo-envio"]');
+    const subtotalElement = document.getElementById("subtotal-value");
+    const envioCostElement = document.getElementById("envio-cost");
+    const totalFinalElement = document.getElementById("total-final");
+
+    let subtotal = 0;
+
+// Obtener subtotal inicial desde HTML
+if (subtotalElement) {
+  subtotal = window.__parseCheckoutMoney(subtotalElement.textContent);
+}
+
+function actualizarTotal() {
+  const envioSeleccionado = document.querySelector('input[name="metodo-envio"]:checked');
+  const costoEnvio = parseFloat(envioSeleccionado?.getAttribute('data-costo')) || 0;
+
+  envioCostElement.textContent = window.__formatCheckoutUSD(costoEnvio);
+  totalFinalElement.textContent = window.__formatCheckoutUSD(subtotal + costoEnvio);
+
+  // ⬇️ Forzar que el total respete el descuento aplicado
+  window.__renderTotalsWithDiscount && window.__renderTotalsWithDiscount();
+}
+
+envioRadios.forEach(radio => {
+  radio.addEventListener('change', actualizarTotal);
+});
+
+actualizarTotal(); // Ejecutar al cargar
+
+// ⬇️ También tras el primer cálculo, por si ya había cupón aplicado
+window.__renderTotalsWithDiscount && window.__renderTotalsWithDiscount();
+
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const subtotalEl = document.getElementById("subtotal-value");
+  const envioCostEl = document.getElementById("envio-cost");
+  const totalFinalEl = document.getElementById("total-final");
+  const summaryTotalEl = document.getElementById("summary-total");
+  
+  let subtotal = window.__parseCheckoutMoney(subtotalEl.textContent);
+
+  function actualizarResumen() {
+    const envioSeleccionado = document.querySelector('input[name="metodo-envio"]:checked');
+    const costoEnvio = parseFloat(envioSeleccionado?.getAttribute("data-costo")) || 0;
+
+    // Actualizar valores en desktop
+    envioCostEl.textContent = window.__formatCheckoutUSD(costoEnvio);
+    totalFinalEl.textContent = window.__formatCheckoutUSD(subtotal + costoEnvio);
+
+    // Actualizar valores en mobile summary
+    const mobileSummary = document.getElementById("mobile-summary-content");
+    if (mobileSummary) {
+      const envioSpan = mobileSummary.querySelector("#envio-cost");
+      const totalSpan = mobileSummary.querySelector("#total-final");
+      if (envioSpan) envioSpan.textContent = window.__formatCheckoutUSD(costoEnvio);
+      if (totalSpan) totalSpan.textContent = window.__formatCheckoutUSD(subtotal + costoEnvio);
+    }
+
+    // Actualizar el resumen header móvil
+    summaryTotalEl.textContent = window.__formatCheckoutUSD(subtotal + costoEnvio);
+  }
+
+  // Escuchar cambios de método de envío
+  document.querySelectorAll('input[name="metodo-envio"]').forEach(radio => {
+    radio.addEventListener("change", actualizarResumen);
+  });
+
+  // Escuchar cambio de estado
+  document.getElementById("estado").addEventListener("change", () => {
+    if (document.getElementById("pais")?.value === "United States") {
+      actualizarResumen();
+      return;
+    }
+    const estado = document.getElementById("estado").value;
+    if (estado === "Capital") {
+      document.querySelector('input[name="metodo-envio"][value="capital"]').checked = true;
+    } else {
+      document.querySelector('input[name="metodo-envio"][value="resto"]').checked = true;
+    }
+    actualizarResumen();
+  });
+
+  // Inicializar
+  actualizarResumen();
+});
+</script>
+
+<script>
+/* ====== Billing toggle logic ====== */
+(function billingToggleInit(){
+  const chk   = document.getElementById('use-shipping-as-billing');
+  const panel = document.getElementById('billing-section');
+  if (!chk || !panel) return;
+
+  const S = {
+    pais:        document.getElementById('pais'),
+    nombre:      document.getElementById('nombre'),
+    apellido:    document.getElementById('apellido'),
+    direccion:   document.getElementById('direccion'),
+    apartamento: document.getElementById('apartamento'),
+    ciudad:      document.getElementById('ciudad'),
+    estado:      document.getElementById('estado'),
+    postal:      document.getElementById('postal'),
+    phone:       document.getElementById('phone')
+  };
+
+  const B = {
+    pais:        document.getElementById('billing-pais'),
+    nombre:      document.getElementById('billing-nombre'),
+    apellido:    document.getElementById('billing-apellido'),
+    direccion:   document.getElementById('billing-direccion'),
+    apartamento: document.getElementById('billing-apartamento'),
+    ciudad:      document.getElementById('billing-ciudad'),
+    estado:      document.getElementById('billing-estado'),
+    postal:      document.getElementById('billing-postal'),
+    phone:       document.getElementById('billing-phone')
+  };
+
+  const billingElements = Object.values(B).filter(Boolean);
+
+  function syncFloatingState(el){
+    const wrapper = el?.closest('.floating-field');
+    if (!wrapper) return;
+    wrapper.classList.toggle('has-value', el.tagName === 'SELECT' || String(el.value || '').trim().length > 0);
+  }
+
+  function setDisabledBilling(disabled){
+    billingElements.forEach(el => { el.disabled = disabled; });
+  }
+
+  function copyShippingToBilling(){
+    Object.keys(B).forEach(key => {
+      if (B[key] && S[key]) B[key].value = S[key].value || (key === 'pais' ? 'Venezuela' : key === 'estado' ? 'Capital' : '');
+      syncFloatingState(B[key]);
+    });
+  }
+
+  function clearBilling(){
+    ['nombre','apellido','direccion','apartamento','ciudad','postal','phone'].forEach(key => {
+      if (B[key]) B[key].value = '';
+      syncFloatingState(B[key]);
+    });
+    const country = S.pais?.value || 'Venezuela';
+    if (B.pais) B.pais.value = country;
+    if (B.estado) {
+      const preferred = country === 'United States' ? 'Florida' : 'Capital';
+      if ([...B.estado.options].some(o => o.value === preferred)) B.estado.value = preferred;
+    }
+    syncFloatingState(B.estado);
+    syncFloatingState(B.pais);
+  }
+
+  Object.values(S).filter(Boolean).forEach(el => {
+    el.addEventListener('input',  () => { if (chk.checked) copyShippingToBilling(); });
+    el.addEventListener('change', () => { if (chk.checked) copyShippingToBilling(); });
+  });
+
+  function refreshPanel(){
+    if (chk.checked){
+      copyShippingToBilling();
+      setDisabledBilling(true);
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden','true');
+    } else {
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden','false');
+      setDisabledBilling(false);
+      clearBilling();
+      setTimeout(() => document.getElementById('billing-nombre')?.focus({preventScroll:true}), 310);
+    }
+  }
+
+  refreshPanel();
+  chk.addEventListener('change', refreshPanel);
+
+  window.__billingHelpers = {
+    useShipping: () => chk.checked,
+    getBilling:  () => ({
+      pais:        B.pais?.value || S.pais?.value || 'Venezuela',
+      nombre:      B.nombre?.value || '',
+      apellido:    B.apellido?.value || '',
+      direccion:   [B.direccion?.value || '', B.apartamento?.value || ''].filter(Boolean).join(', '),
+      direccion_linea1: B.direccion?.value || '',
+      apartamento: B.apartamento?.value || '',
+      ciudad:      B.ciudad?.value || '',
+      municipio:   '',
+      estado:      B.estado?.value || 'Capital',
+      postal:      B.postal?.value || '',
+      telefono:    B.phone?.value || ''
+    }),
+    syncNow: copyShippingToBilling
+  };
+})();
+</script>
+  
+
+<script>
+/* ===== Validación y labels flotantes del checkout ===== */
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("checkout-form");
+  if (!form) return;
+
+  const fields = [
+    { id: "email",     empty: "Ingresa un correo electrónico.", invalid: "Ingresa un correo electrónico válido." },
+    { id: "pais",      empty: "Selecciona un país o región." },
+    { id: "nombre",    empty: "Ingresa un nombre." },
+    { id: "apellido",  empty: "Ingresa un apellido." },
+    { id: "direccion", empty: "Ingresa una dirección." },
+    { id: "ciudad",    empty: "Ingresa una ciudad." },
+    { id: "estado",    empty: "Selecciona un estado." },
+    { id: "postal",    empty: "Ingresa un código postal." },
+    { id: "phone",     empty: "Ingresa un número de teléfono." },
+    { id: "billing-pais",      empty: "Selecciona un país o región." },
+    { id: "billing-nombre",    empty: "Ingresa un nombre." },
+    { id: "billing-apellido",  empty: "Ingresa un apellido." },
+    { id: "billing-direccion", empty: "Ingresa una dirección." },
+    { id: "billing-ciudad",    empty: "Ingresa una ciudad." },
+    { id: "billing-estado",    empty: "Selecciona un estado." },
+    { id: "billing-postal",    empty: "Ingresa un código postal." },
+    { id: "billing-phone",     empty: "Ingresa un número de teléfono." }
+  ];
+
+  const optionalFloating = ["apartamento", "billing-apartamento"];
+
+  function syncFloating(el) {
+    const wrapper = el.closest(".floating-field");
+    if (!wrapper) return;
+    const hasValue = String(el.value || "").trim().length > 0;
+    wrapper.classList.toggle("has-value", hasValue || el.tagName === "SELECT");
+  }
+
+  function setError(el, message) {
+    const group = el.closest(".form-group");
+    const wrapper = el.closest(".floating-field");
+    const error = group?.querySelector(".field-error");
+    if (message) {
+      wrapper?.classList.add("is-invalid");
+      group?.classList.add("has-error");
+      el.setAttribute("aria-invalid", "true");
+      if (error) error.textContent = message;
+    } else {
+      wrapper?.classList.remove("is-invalid");
+      group?.classList.remove("has-error");
+      el.removeAttribute("aria-invalid");
+      if (error) error.textContent = "";
+    }
+  }
+
+  function validateField(config) {
+    const el = document.getElementById(config.id);
+    if (!el || el.disabled) return true;
+    const value = String(el.value || "").trim();
+
+    if (el.required && !value) {
+      setError(el, config.empty || "Completa este campo.");
+      return false;
+    }
+
+    if (config.id === "email" && value) {
+      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      if (!ok) {
+        setError(el, config.invalid || "Ingresa un valor válido.");
+        return false;
+      }
+    }
+
+    setError(el, "");
+    return true;
+  }
+
+  function bindField(config) {
+    const el = document.getElementById(config.id);
+    if (!el) return;
+    syncFloating(el);
+
+    el.addEventListener("input", () => {
+      syncFloating(el);
+      const hasValue = String(el.value || "").trim().length > 0;
+      if (hasValue) el.dataset.everFilled = "1";
+
+      // Mientras el usuario escribe por primera vez no mostramos error prematuramente.
+      // Si ya salió del campo, o escribió algo y luego lo borró, validamos al instante.
+      if (el.dataset.touched === "1" || (el.dataset.everFilled === "1" && !hasValue)) {
+        validateField(config);
+      }
+    });
+
+    el.addEventListener("change", () => {
+      syncFloating(el);
+      if (el.dataset.touched === "1") validateField(config);
+    });
+
+    el.addEventListener("blur", () => {
+      el.dataset.touched = "1";
+      syncFloating(el);
+      validateField(config);
+    });
+  }
+
+  fields.forEach(bindField);
+  optionalFloating.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    syncFloating(el);
+    el.addEventListener("input", () => syncFloating(el));
+    el.addEventListener("blur", () => syncFloating(el));
+  });
+
+  window.__validateCheckoutFields = ({ focusFirst = true } = {}) => {
+    let firstInvalid = null;
+    let valid = true;
+
+    fields.forEach(config => {
+      const el = document.getElementById(config.id);
+      if (!el || el.disabled) return;
+      el.dataset.touched = "1";
+      const ok = validateField(config);
+      if (!ok && !firstInvalid) firstInvalid = el;
+      valid = ok && valid;
+    });
+
+    if (!valid && focusFirst && firstInvalid) {
+      firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+      setTimeout(() => firstInvalid.focus({ preventScroll: true }), 250);
+    }
+
+    return valid;
+  };
+});
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore,
+  addDoc,
+  collection,
+  serverTimestamp,
+  setDoc,
+  updateDoc,          // 👈 FALTABA
+  doc,
+  getDoc,
+  Timestamp,          // 👈 NUEVO
+  arrayUnion          // 👈 para historial en Admin
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+
+
+/* ================== Firebase ================== */
+const firebaseConfig = {
+  apiKey: "AIzaSyD3u2GKMSAKC_1Cd88KA-rxTOf_Jnt3fuM",
+  authDomain: "sucesso-74f7c.firebaseapp.com",
+  projectId: "sucesso-74f7c",
+  storageBucket: "sucesso-74f7c.appspot.com",
+  messagingSenderId: "878844661636",
+  appId: "1:878844661636:web:6382f86f18201aecfdd7d1"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+let currentUser = null;
+
+function setCheckoutFloatingValue(input, value) {
+  if (!input) return;
+  input.value = value || '';
+  const wrapper = input.closest('.floating-field');
+  if (wrapper) wrapper.classList.toggle('has-value', String(input.value || '').trim().length > 0);
+}
+
+function lockCheckoutField(input, locked) {
+  if (!input) return;
+  input.readOnly = Boolean(locked);
+  input.setAttribute('aria-readonly', locked ? 'true' : 'false');
+  if (locked) input.dataset.accountLocked = 'true';
+  else delete input.dataset.accountLocked;
+}
+
+onAuthStateChanged(auth, async (user) => {
+  currentUser = user ? user : null;
+  if (!user) {
+    sessionStorage.setItem('sucesso-checkout-return', 'checkout.html');
+    window.location.replace('login.html?next=checkout');
+    return;
+  }
+
+  sessionStorage.removeItem('sucesso-checkout-return');
+  localStorage.removeItem('redirigirACheckout');
+
+  /* El correo del checkout siempre corresponde a la cuenta autenticada. */
+  const emailInput = document.getElementById('email');
+  setCheckoutFloatingValue(emailInput, user.email || '');
+  lockCheckoutField(emailInput, true);
+
+  /* Si el usuario guardó una dirección en Mi Cuenta, la usamos como dirección
+     de envío fija. Si no existe, el campo queda editable como hasta ahora. */
+  const addressInput = document.getElementById('direccion');
+  try {
+    const userSnap = await getDoc(doc(db, 'usuarios', user.uid));
+    const savedAddress = userSnap.exists() ? String(userSnap.data()?.direccion || '').trim() : '';
+
+    if (savedAddress) {
+      setCheckoutFloatingValue(addressInput, savedAddress);
+      lockCheckoutField(addressInput, true);
+    } else {
+      lockCheckoutField(addressInput, false);
+    }
+  } catch (err) {
+    console.warn('No se pudo cargar la dirección guardada del usuario:', err);
+    lockCheckoutField(addressInput, false);
+  }
+
+  /* Mantiene sincronizada la facturación cuando está activada la opción
+     "usar dirección de envío como dirección de facturación". Si se desmarca,
+     el bloque de facturación sigue completamente editable e independiente. */
+  window.__billingHelpers?.syncNow?.();
+});
+
+/* ============== Dominio base dinámico ============== */
+/* Usa el mismo origen real de la página (funciona con https://sucessobrand.com o https://www.sucessobrand.com) */
+const BASE_ORIGIN = (typeof window !== "undefined" && window.location && window.location.origin)
+  ? window.location.origin
+  : "https://sucessobrand.com";
+
+/* ========= Helpers de URL/imagen para emails ========= */
+function absolutizeUrl(url) {
+  if (!url) return "";
+  if (/^(https?:|data:|gs:)/i.test(url)) return url; // ya absoluta o data (no la usaremos en email)
+  const raw = url.startsWith("/") ? `${BASE_ORIGIN}${url}` : `${BASE_ORIGIN}/${url}`;
+  try {
+    const u = new URL(raw);
+    u.pathname = u.pathname
+      .split("/")
+      .map(seg => seg ? encodeURIComponent(decodeURIComponent(seg)) : seg)
+      .join("/");
+    return u.toString();
+  } catch {
+    return raw.replace(/ /g, "%20");
+  }
+}
+
+/* Devuelve la mejor URL de imagen pública posible para EMAILS */
+function pickImageFromProduct(p) {
+  if (!p) return "";
+
+  // 1) Claves más comunes en tu flujo y variantes posibles
+  const candidates = [
+    p.image, p.imagen, p.imagen_frontal, p.thumbnail, p.imageUrl, p.img, p.foto, p.photo, p.cover,
+    // estructuras anidadas típicas
+    p.images?.front, p.images?.main, p.images?.[0], p.gallery?.[0], p.pictures?.[0],
+    // por si viene en variantes
+    p.variantImage, p.selectedImage
+  ].filter(Boolean);
+
+  // 2) Si no viene nada, intenta deducir por slug/título en carpeta IMAGES (no rompe si no existe)
+  if (!candidates.length) {
+    const name = p.name || p.nombre || "";
+    const slug = (p.slug || (name && name.toLowerCase().trim()
+      .replace(/\s+/g, "-").replace(/[^a-z0-9\-]/g, ""))) || "placeholder";
+    candidates.push(`IMAGES/${slug}.png`, `IMAGES/${slug}.jpg`, `images/${slug}.png`, `images/${slug}.jpg`);
+  }
+
+  // 3) Normaliza y toma la primera que sea válida para clientes de correo
+  for (const c of candidates) {
+    if (!c) continue;
+
+    // Evitar esquemas que los clientes bloquean
+    if (/^(blob:|data:)/i.test(String(c))) continue;
+
+    // Mantener URLs públicas de Firebase Storage
+    if (/^https?:\/\/firebasestorage\.googleapis\.com\//i.test(String(c))) return c;
+
+    // Para rutas locales, fuerza absoluta https
+    const abs = absolutizeUrl(String(c));
+    if (/^https:\/\//i.test(abs)) return abs;
+  }
+
+  // 4) Fallback seguro (favicon de tu sitio)
+  return `${BASE_ORIGIN}/images/sucesso%20fav%20icon.png`;
+}
+
+function normalizeImageUrl(url) {
+  // Conservada por compatibilidad con llamadas existentes
+  return pickImageFromProduct({ image: url });
+}
+
+function toSlug(str) {
+  return String(str || "")
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9\-]/g, "");
+}
+
+/* ============ RENDER DE ITEMS PARA EMAIL (con imágenes OK) ============ */
+function renderItemsEmailHTML(items, { currency = "USD", locale = "es-VE" } = {}) {
+  const fmt = new Intl.NumberFormat(locale, { style: "currency", currency });
+  const esc = (s) => String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const n = (v) => Number(v || 0);
+
+  let html = `
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+  <tbody>
+`;
+
+  items.forEach((it) => {
+    const title = it.nombre || it.title || it.name || "Producto";
+    const size  = it.talla  || it.size  || "Única";
+    const qty   = n(it.cantidad ?? it.quantity ?? 1) || 1;
+    const unit  = n(it.precio   ?? it.price    ?? 0);
+
+    const slug       = it.slug || it.handle || toSlug(title);
+    const productUrl = absolutizeUrl(it.productUrl || `product-page.html?slug=${encodeURIComponent(slug)}`);
+
+    // Forzar URL absoluta https para email
+    const imgUrl = pickImageFromProduct(it);
+
+    html += `
+  <tr>
+    <td style="padding:0 0 16px 0;">
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+        <tr>
+          <!-- Imagen -->
+          <td style="width:96px;vertical-align:top;padding:8px 12px 8px 0;">
+            <a href="${productUrl}" target="_blank" style="text-decoration:none;display:inline-block;">
+              <img src="${imgUrl}" alt="${esc(title)}" width="96" height="96"
+                   style="display:block;width:96px;height:96px;object-fit:contain;border:1px solid #eee;background:#f8f8f8;">
+            </a>
+          </td>
+
+          <!-- Texto -->
+          <td style="vertical-align:top;padding:8px 0;">
+            <a href="${productUrl}" target="_blank" style="text-decoration:none;color:#111;">
+              <p style="margin:0 0 6px 0;font-weight:600;line-height:1.35;">${esc(title)}</p>
+            </a>
+            <p style="margin:0 0 6px 0;color:#666;">TALLA: ${esc(size)}</p>
+            <p style="margin:0 0 6px 0;color:#111;">${fmt.format(unit)}</p>
+            <p style="margin:0;color:#111;">QTY - ${esc(qty)}</p>
+          </td>
+        </tr>
+      </table>
+      <hr style="border:none;border-top:1px solid #e6e6e6;margin:12px 0 0 0;">
+    </td>
+  </tr>
+`;
+  });
+
+  html += `
+  </tbody>
+</table>
+`;
+  return html;
+}
+
+// === Generador de número de pedido de 6 dígitos aleatorios (con intento de unicidad) ===
+async function generateSixDigitOrderNumber(db) {
+  const pick = () => String(Math.floor(100000 + Math.random() * 900000)); // 100000–999999
+
+  // Intentamos hasta 8 veces evitar colisión de ID en la colección "compras"
+  for (let i = 0; i < 8; i++) {
+    const candidate = pick();
+    try {
+      const ref = doc(db, "compras", candidate);
+      const snap = await getDoc(ref);
+      if (!snap.exists()) return candidate;  // libre, úsalo
+    } catch (e) {
+      // Si por reglas no podemos leer, devolvemos el candidato y manejamos colisión en el set/add
+      return candidate;
+    }
+  }
+  // Como fallback final, devolvemos uno cualquiera
+  return pick();
+}
+
+
+// === CÓDIGO NUEVO: generador de tracking único y creador de doc ===
+async function generateUniqueTrackingCode(db, maxAttempts=10){
+  const random6 = () => Math.floor(Math.random()*1000000).toString().padStart(6,'0');
+  for (let i=0;i<maxAttempts;i++){
+    const code = random6();
+    const ref = doc(db, 'tracking', code);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) return code;
+  }
+  throw new Error("No se pudo generar un código único tras varios intentos.");
+}
+
+// Usa el MISMO código que ve el cliente (orderNumber) como trackingCode
+async function attachTrackingToPurchase(db, compraId, trackingCode, extra = {}){
+  const user = auth.currentUser;
+  if (!user) throw new Error("No hay usuario autenticado.");
+
+  // Si por alguna razón ya existiera un doc de tracking con ese ID, abortamos para no pisar otro pedido.
+  const tRef  = doc(db,'tracking', trackingCode);
+  const tSnap = await getDoc(tRef);
+  if (tSnap.exists()) {
+    throw new Error(`El código ${trackingCode} ya existe en tracking. (Colisión rara)`);
+  }
+
+  await setDoc(tRef, {
+    uid: user.uid,                 // cumple tus reglas
+    orderId: compraId,             // referencia cruzada
+    status: 'en_proceso',
+    lastUpdate: serverTimestamp(), // OK fuera de arrays
+    history: [
+      { status: 'en_proceso', at: Timestamp.now() } // NO uses serverTimestamp() dentro de arrays
+    ],
+    ...extra
+  });
+
+  // Guarda el mismo código en la compra
+  await updateDoc(doc(db,'compras', compraId), { trackingCode });
+
+  return trackingCode;
+}
+
+
+
+
+/* ================================================ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById("checkout-form");
+
+  // Abrir/cerrar exclusivamente los paneles de métodos de pago.
+  const paymentRoot = document.getElementById('payment-accordion');
+  const metodoPagoRadios = paymentRoot ? paymentRoot.querySelectorAll('input[name="metodo-pago"]') : [];
+
+  function syncPaymentFloating(el) {
+    const wrapper = el?.closest('.floating-field');
+    if (!wrapper) return;
+    wrapper.classList.toggle('has-value', String(el.value || '').trim().length > 0);
+  }
+
+  function clearPaymentError(el) {
+    if (!el) return;
+    el.closest('.floating-field')?.classList.remove('is-invalid');
+    el.closest('.form-group')?.classList.remove('has-error');
+    el.removeAttribute('aria-invalid');
+    const err = document.getElementById(`${el.id}-error`);
+    if (err) err.textContent = '';
+  }
+
+  function setPaymentError(el, message) {
+    if (!el) return;
+    el.closest('.floating-field')?.classList.add('is-invalid');
+    el.closest('.form-group')?.classList.add('has-error');
+    el.setAttribute('aria-invalid', 'true');
+    const err = document.getElementById(`${el.id}-error`);
+    if (err) err.textContent = message;
+  }
+
+  paymentRoot?.querySelectorAll('.payment-floating-field input, .payment-floating-field select').forEach(el => {
+    syncPaymentFloating(el);
+    const evt = el.tagName === 'SELECT' ? 'change' : 'input';
+    el.addEventListener(evt, () => { syncPaymentFloating(el); if (String(el.value || '').trim()) clearPaymentError(el); });
+    el.addEventListener('blur', () => syncPaymentFloating(el));
+  });
+
+  function togglePagoPanels() {
+    if (!paymentRoot) return;
+    paymentRoot.querySelectorAll('.payment-panel').forEach(p => p.classList.remove('open'));
+    paymentRoot.querySelectorAll('.payment-method').forEach(item => item.classList.remove('selected'));
+    const selected = paymentRoot.querySelector('input[name="metodo-pago"]:checked');
+    if (!selected) return;
+    const item = selected.closest('.payment-method');
+    item?.classList.add('selected');
+    item?.querySelector('.payment-panel')?.classList.add('open');
+  }
+  metodoPagoRadios.forEach(r => r.addEventListener('change', togglePagoPanels));
+  togglePagoPanels();
+
+  function validateSelectedPayment(method) {
+    if (!paymentRoot) return true;
+    if (method === 'tarjeta-americana') {
+      const msg = document.getElementById('card-not-connected-message');
+      msg?.classList.add('is-error');
+      msg?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return false;
+    }
+
+    let firstInvalid = null;
+    paymentRoot.querySelectorAll(`[data-payment-required="${method}"]`).forEach(el => {
+      const value = String(el.value || '').trim();
+      if (!value) {
+        setPaymentError(el, 'Completa este campo.');
+        if (!firstInvalid) firstInvalid = el;
+      } else if (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        setPaymentError(el, 'Ingresa un correo electrónico válido.');
+        if (!firstInvalid) firstInvalid = el;
+      } else {
+        clearPaymentError(el);
+      }
+    });
+    if (firstInvalid) {
+      firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => firstInvalid.focus({ preventScroll: true }), 250);
+      return false;
+    }
+    return true;
+  }
+
+  window.__paymentDetails = {
+    validate: validateSelectedPayment,
+    collect: (method) => {
+      if (method === 'pago-movil') {
+        const bank = document.getElementById('pago-movil-banco-emisor');
+        return {
+          banco_emisor_codigo: bank?.value || '',
+          banco_emisor: bank?.selectedOptions?.[0]?.textContent?.trim() || '',
+          referencia: document.getElementById('pago-movil-referencia')?.value.trim() || ''
+        };
+      }
+      if (method === 'paypal') return {
+        flujo: 'redireccion_paypal'
+      };
+      if (method === 'zelle') return {
+        remitente: document.getElementById('zelle-sender')?.value.trim() || '',
+        confirmacion: document.getElementById('zelle-confirmation')?.value.trim() || '',
+        contacto: document.getElementById('zelle-contact')?.value.trim() || ''
+      };
+      return {};
+    }
+  };
+
+  // PayPal: integración preparada para un endpoint seguro del servidor.
+  // Cuando exista la cuenta/pasarela, define window.SUCESSO_PAYPAL_CREATE_ORDER_ENDPOINT
+  // antes de este script. Ese endpoint debe crear la orden con PayPal y devolver
+  // { approvalUrl: "https://www.paypal.com/checkoutnow?..." }.
+  const PAYPAL_CREATE_ORDER_ENDPOINT = String(window.SUCESSO_PAYPAL_CREATE_ORDER_ENDPOINT || '').trim();
+
+  async function startPayPalCheckout(payload) {
+    const notice = document.getElementById('paypal-not-connected-message');
+    if (!PAYPAL_CREATE_ORDER_ENDPOINT) {
+      if (notice) {
+        notice.hidden = false;
+        notice.classList.add('is-error');
+        notice.textContent = 'PayPal todavía no está conectado. Cuando configures la cuenta y el endpoint seguro, Finalizar compra te redirigirá automáticamente a PayPal.';
+        notice.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return false;
+    }
+
+    if (notice) {
+      notice.hidden = true;
+      notice.classList.remove('is-error');
+      notice.textContent = '';
+    }
+
+    const response = await fetch(PAYPAL_CREATE_ORDER_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify(payload)
+    });
+    if (!response.ok) throw new Error(`PayPal create-order HTTP ${response.status}`);
+
+    const data = await response.json();
+    const approvalUrl = String(
+      data?.approvalUrl || data?.approveUrl ||
+      data?.links?.find?.(link => String(link?.rel || '').toLowerCase() === 'approve')?.href || ''
+    ).trim();
+
+    const paypalUrl = /^https:\/\/(?:www\.|www\.sandbox\.)?paypal\.com\//i.test(approvalUrl);
+    if (!approvalUrl || !paypalUrl) throw new Error('El servidor de PayPal no devolvió una URL de aprobación válida.');
+
+    window.location.assign(approvalUrl);
+    return true;
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Validación visual tipo Shopify para los campos principales
+    let valid = window.__validateCheckoutFields
+      ? window.__validateCheckoutFields({ focusFirst: true })
+      : form.checkValidity();
+
+    // Mantener la validación de cualquier otro campo requerido que pueda mostrarse
+    // (por ejemplo, facturación alternativa), sin interferir con los campos principales.
+    form.querySelectorAll("[required]").forEach(el => {
+      if (el.disabled) return;
+      const value = String(el.value || "").trim();
+      if (!value) valid = false;
+    });
+    if (!valid) return;
+
+    // Estados Unidos todavía no tiene tarifas de envío conectadas al centro de control.
+    // No se asume envío gratis ni se permite confirmar una orden sin una tarifa real.
+    if (document.getElementById('pais')?.value === 'United States' &&
+        !document.querySelector('input[name="metodo-envio"]:checked')) {
+      alert('Shipping methods for this address are not available yet.');
+      return;
+    }
+
+    // Validar únicamente los datos del método de pago seleccionado.
+    const metodoPago = document.querySelector('input[name="metodo-pago"]:checked')?.value;
+    if (!metodoPago) return;
+    if (window.__paymentDetails && !window.__paymentDetails.validate(metodoPago)) return;
+
+    // Carrito y sesión
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    if (!carrito.length) return alert("Tu carrito está vacío.");
+    const user = auth.currentUser;
+    if (!user) { alert("Debes iniciar sesión para confirmar tu compra."); sessionStorage.setItem("sucesso-checkout-return", "checkout.html"); window.location.href = "login.html?next=checkout"; return; }
+
+    // Totales
+    const envio       = document.querySelector('input[name="metodo-envio"]:checked');
+    const envioCosto  = parseFloat(envio?.getAttribute("data-costo")) || 0;
+    const descuento   = (window.__checkoutState?.discount || 0);
+    const cupon       = (window.__checkoutState?.code || null);
+
+    const toNum = (v) => (typeof v === "number" ? v : window.__parseCheckoutMoney(v));
+    const toInt = (v) => (typeof v === "number" ? v : parseInt(v ?? 1, 10) || 1);
+
+    const subtotal = carrito.reduce((acc, p) => acc + toNum(p.price ?? p.precio) * toInt(p.quantity ?? p.cantidad), 0);
+    const total    = Math.max(0, subtotal - descuento) + envioCosto;
+
+    // SHIPPING y BILLING
+    const direccionLinea1 = document.getElementById("direccion").value.trim();
+    const apartamento = document.getElementById("apartamento").value.trim();
+    const shipping = {
+      pais:       document.getElementById("pais").value || "Venezuela",
+      nombre:     document.getElementById("nombre").value.trim(),
+      apellido:   document.getElementById("apellido").value.trim(),
+      direccion:  [direccionLinea1, apartamento].filter(Boolean).join(", "),
+      direccion_linea1: direccionLinea1,
+      apartamento,
+      ciudad:     document.getElementById("ciudad").value.trim(),
+      municipio:  "",
+      estado:     document.getElementById("estado").value,
+      postal:     document.getElementById("postal").value.trim(),
+      telefono:   document.getElementById("phone").value.trim()
+    };
+
+    const useShipAsBill = (window.__billingHelpers?.useShipping?.() === true);
+    const billing = useShipAsBill
+      ? { ...shipping }
+      : (window.__billingHelpers?.getBilling?.() || { ...shipping });
+
+    // No se recopilan documentos de identidad en el bloque de facturación.
+    const docFull = "";
+    const paymentDetails = window.__paymentDetails?.collect?.(metodoPago) || {};
+    if (metodoPago === 'pago-movil') {
+      // Usa el teléfono principal cuando facturación = envío; si el cliente usa
+      // facturación distinta, toma el teléfono de ese segundo bloque.
+      paymentDetails.telefono_pagador = useShipAsBill ? shipping.telefono : (billing.telefono || shipping.telefono);
+      paymentDetails.origen_telefono = useShipAsBill ? 'envio' : 'facturacion';
+    }
+
+    // Normalizar items para guardar y para email (imagen absoluta + URL producto)
+    const normalizados = carrito.map(p => {
+      const nombre = p.name || p.nombre || "Producto";
+      const slug   = p.slug || p.handle || (nombre ? nombre.toLowerCase().trim().replace(/\s+/g,"-").replace(/[^a-z0-9\-]/g,"") : "");
+      const productUrl = p.productUrl || (slug ? `${BASE_ORIGIN}/product-page.html?slug=${encodeURIComponent(slug)}` : `${BASE_ORIGIN}/`);
+
+      // **AQUÍ** garantizamos imagen válida para EMAIL
+      const image  = pickImageFromProduct(p);
+
+      return {
+        nombre,
+        cantidad: toInt(p.quantity ?? p.cantidad),
+        precio:   toNum(p.price ?? p.precio), // unitario
+        talla:    p.size || p.talla || "Única",
+        color:    p.color || p.colorName || "",
+        slug,
+        productUrl,
+        image
+      };
+    });
+
+    const bcvData = shipping.pais === 'Venezuela' ? await window.SucessoBCV?.getRate?.() : null;
+    const bcvRate = Number(bcvData?.rate) || null;
+    if (metodoPago === 'pago-movil' && bcvRate) {
+      paymentDetails.monto_ves = Number((total * bcvRate).toFixed(2));
+      paymentDetails.tasa_bcv = bcvRate;
+    }
+
+    const datosCompra = {
+      uid: user.uid,
+      email:    document.getElementById("email").value,
+      telefono: document.getElementById("phone").value,
+      documento: docFull,
+
+      // SHIPPING
+      nombre:    shipping.nombre,
+      apellido:  shipping.apellido,
+      direccion: shipping.direccion,
+      ciudad:    shipping.ciudad,
+      municipio: shipping.municipio,
+      estado:    shipping.estado,
+      postal:    shipping.postal,
+      pais:      shipping.pais,
+
+      // BILLING
+      billing_nombre:    billing.nombre,
+      billing_apellido:  billing.apellido,
+      billing_direccion: billing.direccion,
+      billing_ciudad:    billing.ciudad,
+      billing_municipio: billing.municipio,
+      billing_estado:    billing.estado,
+      billing_postal:      billing.postal,
+      billing_pais:        billing.pais,
+      billing_apartamento: billing.apartamento || "",
+      billing_telefono:    billing.telefono || "",
+
+      metodo_envio: envio?.value || "N/A",
+      metodo_pago:  metodoPago || "N/A",
+      estado_pago:  metodoPago === "efectivo" ? "pendiente_contra_entrega" : "pendiente_verificacion",
+      pago_detalles: paymentDetails,
+      items: normalizados,
+      subtotal,
+      envio: envioCosto,
+      descuento,
+      codigo_descuento: cupon,
+      total,
+      bcv_rate: bcvRate,
+      bcv_rate_date: bcvData?.effectiveDate || bcvData?.updatedAt || null,
+      total_ves: bcvRate ? Number((total * bcvRate).toFixed(2)) : null,
+      fecha: serverTimestamp()
+    };
+
+    // PayPal se procesa fuera de Sucesso: no se solicita correo ni ID de transacción
+    // manualmente. El endpoint seguro (cuando se configure) crea la orden de PayPal
+    // y devuelve la URL oficial de aprobación para redirigir al cliente.
+    if (metodoPago === 'paypal') {
+      const submitBtn = document.querySelector('#checkout-form button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Redirigiendo a PayPal...'; }
+      try {
+        const paypalPayload = {
+          currency: 'USD',
+          amount: Number(total.toFixed(2)),
+          customer: {
+            uid: user.uid,
+            email: datosCompra.email,
+            phone: datosCompra.telefono,
+            name: `${shipping.nombre} ${shipping.apellido}`.trim()
+          },
+          shipping,
+          billing,
+          shippingMethod: datosCompra.metodo_envio,
+          items: normalizados,
+          subtotal: Number(subtotal.toFixed(2)),
+          shippingCost: Number(envioCosto.toFixed(2)),
+          discount: Number(descuento.toFixed(2)),
+          discountCode: cupon,
+          returnUrl: `${BASE_ORIGIN}/thank-you.html?payment=paypal`,
+          cancelUrl: `${BASE_ORIGIN}/checkout.html?payment=paypal-cancelled`
+        };
+        const redirected = await startPayPalCheckout(paypalPayload);
+        if (redirected) return;
+      } catch (err) {
+        console.error('No se pudo iniciar PayPal:', err);
+        const notice = document.getElementById('paypal-not-connected-message');
+        if (notice) {
+          notice.hidden = false;
+          notice.classList.add('is-error');
+          notice.textContent = 'No se pudo iniciar PayPal en este momento. Intenta nuevamente cuando la conexión esté disponible.';
+          notice.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Pagar ahora'; }
+      return;
+    }
+
+    // UI bloquear submit
+    const submitBtn = document.querySelector('#checkout-form button[type="submit"]');
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Procesando...'; }
+
+    // Helper envío EmailJS silencioso
+    async function safeSend(service, template, vars, label) {
+      try {
+        if (!window.emailjs) throw new Error("EmailJS no cargado");
+        await emailjs.send(service, template, vars);
+        return true;
+      } catch (e) {
+        console.error(`Fallo envío ${label}:`, e);
+        return false;
+      }
+    }
+    const toMoney = (n) => Number(n || 0).toFixed(2);
+
+    try {
+// 1) Generar número de pedido de 6 dígitos
+const orderNumber = await generateSixDigitOrderNumber(db);
+
+// Usaremos preferentemente el ID del doc = orderNumber para que sea fácil de encontrar.
+// Si las reglas no permiten setDoc con ID arbitrario, caemos a addDoc (ID interno distinto).
+let orderId = orderNumber;
+try {
+  await setDoc(doc(db, "compras", orderNumber), { ...datosCompra, orderNumber }, { merge: false });
+} catch (e) {
+  console.warn("Fallo setDoc(compras, orderNumber). Uso addDoc fallback:", e);
+  const ref = await addDoc(collection(db, "compras"), { ...datosCompra, orderNumber });
+  orderId = ref.id; // ID interno (no visible al cliente)
+}
+
+// === Crear tracking con el MISMO número que ve el cliente ===
+const trackingCode = await attachTrackingToPurchase(
+  db,
+  orderId,
+  orderNumber, // <--- EL MISMO NÚMERO
+  {
+    customerEmail: datosCompra.email,
+    customerName: `${datosCompra.nombre} ${datosCompra.apellido}`.trim()
+  }
+);
+
+// Guarda para Thank You o para mostrar en UI
+try { localStorage.setItem("last_tracking_code", trackingCode); } catch(e) {}
+
+
+// Guarda el número para mostrarlo en thank-you (si esa página lo lee de localStorage)
+try { localStorage.setItem("last_order_number", orderNumber); } catch(e) {}
+
+
+
+
+      // 2) Construir items_html “bonito” para email (con imágenes absolutas y codificadas)
+      const items_html = renderItemsEmailHTML(datosCompra.items, { currency: "USD", locale: "es-VE" });
+      const nowStr = new Date().toLocaleString();
+
+      // 3) Emails
+      await safeSend(
+        "service_8yvqy7r",
+        "template_id2awis",  // ADMIN
+        {
+          to_email: datosCompra.email,
+          email:    datosCompra.email,
+          customer_name:       `${datosCompra.nombre} ${datosCompra.apellido}`.trim(),
+          customer_first_name: datosCompra.nombre,
+          phone:               datosCompra.telefono,
+
+          order_id: orderNumber,
+          tracking_code: trackingCode,
+          tracking_link: `${BASE_ORIGIN}/tracking.html?code=${trackingCode}`,
+          order_date: nowStr,
+          fecha: nowStr,
+
+          subtotal:  toMoney(datosCompra.subtotal),
+          shipping:  toMoney(datosCompra.envio),
+          envio:     toMoney(datosCompra.envio),
+          tax:       "0.00",
+          discount:  toMoney(datosCompra.descuento),
+          descuento: toMoney(datosCompra.descuento),
+          total:     toMoney(datosCompra.total),
+
+          payment_method: (datosCompra.metodo_pago || 'N/A').toUpperCase(),
+          metodo_pago:    (datosCompra.metodo_pago || 'N/A').toUpperCase(),
+          metodo_envio:   (datosCompra.metodo_envio || 'N/A').toUpperCase(),
+
+          shipping_name:     `${datosCompra.nombre} ${datosCompra.apellido}`.trim(),
+          shipping_address1: datosCompra.direccion,
+          shipping_address2: '',
+          shipping_city:     datosCompra.ciudad,
+          shipping_state:    datosCompra.estado,
+          shipping_postal:   datosCompra.postal,
+          shipping_country:  datosCompra.pais,
+
+          billing_name:     `${datosCompra.billing_nombre} ${datosCompra.billing_apellido}`.trim(),
+          billing_address1: datosCompra.billing_direccion,
+          billing_address2: '',
+          billing_city:     datosCompra.billing_ciudad,
+          billing_state:    datosCompra.billing_estado,
+          billing_postal:   datosCompra.billing_postal,
+          billing_country:  datosCompra.billing_pais,
+
+          order_status_url: `${BASE_ORIGIN}/tracking.html?code=${trackingCode}`,
+          faq_url:          `${BASE_ORIGIN}/faq`,
+          terms_url:        `${BASE_ORIGIN}/terminos`,
+          site_url:         `${BASE_ORIGIN}/`,
+          support_email:    "help.sucsso@gmail.com",
+
+          items_html
+        },
+        "ADMIN"
+      );
+
+      await safeSend(
+        "service_8yvqy7r",
+        "template_y1gnb4l",  // CLIENTE
+        {
+          to_email: datosCompra.email,
+          email:    datosCompra.email,
+          customer_name:       `${datosCompra.nombre} ${datosCompra.apellido}`.trim(),
+          customer_first_name: datosCompra.nombre,
+          phone:               datosCompra.telefono,
+
+          order_id: orderNumber,
+          tracking_code: trackingCode,
+          tracking_link: `${BASE_ORIGIN}/tracking.html?code=${trackingCode}`,
+          order_date: nowStr,
+          fecha: nowStr,
+
+          subtotal:  toMoney(datosCompra.subtotal),
+          shipping:  toMoney(datosCompra.envio),
+          envio:     toMoney(datosCompra.envio),
+          tax:       "0.00",
+          discount:  toMoney(datosCompra.descuento),
+          descuento: toMoney(datosCompra.descuento),
+          total:     toMoney(datosCompra.total),
+
+          payment_method: (datosCompra.metodo_pago || 'N/A').toUpperCase(),
+          metodo_pago:    (datosCompra.metodo_pago || 'N/A').toUpperCase(),
+          metodo_envio:   (datosCompra.metodo_envio || 'N/A').toUpperCase(),
+
+          shipping_name:     `${datosCompra.nombre} ${datosCompra.apellido}`.trim(),
+          shipping_address1: datosCompra.direccion,
+          shipping_address2: '',
+          shipping_city:     datosCompra.ciudad,
+          shipping_state:    datosCompra.estado,
+          shipping_postal:   datosCompra.postal,
+          shipping_country:  datosCompra.pais,
+
+          billing_name:     `${datosCompra.billing_nombre} ${datosCompra.billing_apellido}`.trim(),
+          billing_address1: datosCompra.billing_direccion,
+          billing_address2: '',
+          billing_city:     datosCompra.billing_ciudad,
+          billing_state:    datosCompra.billing_estado,
+          billing_postal:   datosCompra.billing_postal,
+          billing_country:  datosCompra.billing_pais,
+
+          order_status_url: `${BASE_ORIGIN}/tracking.html?code=${trackingCode}`,
+          faq_url:          `${BASE_ORIGIN}/faq`,
+          terms_url:        `${BASE_ORIGIN}/terminos`,
+          site_url:         `${BASE_ORIGIN}/`,
+          support_email:    "help.sucsso@gmail.com",
+
+          items_html
+        },
+        "CLIENTE"
+      );
+
+      // 4) Limpiar carrito y redirigir
+      try { localStorage.removeItem("carrito"); } catch(e){}
+      window.location.href = "thank-you.html";
+      setTimeout(() => {
+        if (!/thank-you\.html/i.test(window.location.href)) {
+          window.location.assign("thank-you.html");
+        }
+      }, 800);
+
+    } catch (err) {
+      console.error("Error registrando compra:", err);
+      alert("Hubo un error al registrar tu compra. Intenta nuevamente.");
+      const submitBtn = document.querySelector('#checkout-form button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Confirmar Compra'; }
+    }
+  });
+});
+</script>
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  // Inicializa EmailJS apenas el DOM está listo (no esperar onload)
+  document.addEventListener('DOMContentLoaded', function () {
+    try {
+      if (window.emailjs && !emailjs.__inited) {
+        emailjs.init("ZBp0ewAzqXPihpO94"); // tu PUBLIC KEY
+        emailjs.__inited = true;
+      }
+    } catch(e) {
+      console.error("No se pudo inicializar EmailJS:", e);
+    }
+  });
+</script>
+
+
+<script>
+function toggleMobileSummary() {
+  const content = document.getElementById("mobile-summary-content");
+  const toggleIcon = document.getElementById("summary-toggle");
+
+  if (content.classList.contains("open")) {
+    content.classList.remove("open");
+    toggleIcon.textContent = "+";
+  } else {
+    content.classList.add("open");
+    toggleIcon.textContent = "−";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Copiar el contenido de la summary-section al resumen móvil
+  const summaryHTML = document.querySelector(".summary-section").innerHTML;
+  document.getElementById("mobile-summary-content").innerHTML = summaryHTML;
+// Re-vincular listeners del cupón en el contenedor móvil
+window.__rebindDiscountBox && window.__rebindDiscountBox();
+
+
+  // Actualizar el total
+  const total = document.getElementById("total-final").textContent;
+  document.getElementById("summary-total").textContent = total;
+});
+</script>
+
+  
+
+<script src="storefront-enhancements.js"></script>
+</body>
+</html>

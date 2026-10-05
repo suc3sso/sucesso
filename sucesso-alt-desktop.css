@@ -1,0 +1,247 @@
+/* =========================================================
+   SUCESSO — ALT DESKTOP/LAPTOP NAV + TYPOGRAPHY
+   Scope: desktop/laptop only (>= 1024px).
+   Mobile remains untouched.
+   ========================================================= */
+
+@media (min-width: 1024px) {
+  /* --- Desktop nav visible on laptops too; hamburger hidden --- */
+  header.navbar .nav-desktop {
+    display: block !important;
+    flex: 0 1 auto !important;
+  }
+
+  header.navbar .menu-toggle {
+    display: none !important;
+  }
+
+  header.navbar .nav-desktop > ul {
+    display: flex !important;
+    align-items: center !important;
+    list-style: none !important;
+    gap: clamp(24px, 2.1vw, 42px) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  header.navbar .nav-desktop .nav-item {
+    display: flex !important;
+    align-items: center !important;
+    position: relative !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* No arrows and no dropdowns in this alternate desktop/laptop navbar. */
+  header.navbar .nav-desktop .nav-arrow,
+  header.navbar .nav-desktop .dropdown,
+  header.navbar .nav-desktop .nav-item.open > .dropdown,
+  header.navbar .nav-desktop .nav-item.su-hover-open > .dropdown {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Nude Project-like clean sans typography. */
+  header.navbar .nav-desktop .nav-main {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    background: transparent !important;
+    border: 0 !important;
+    color: inherit !important;
+    cursor: pointer !important;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-size: 0 !important; /* visual label comes from ::before; DOM stays intact for mobile */
+    font-weight: 400 !important;
+    letter-spacing: -0.035em !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+    text-decoration: none !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
+  }
+
+  header.navbar .nav-desktop .nav-main::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  header.navbar .nav-desktop .nav-main::before {
+    display: inline-block !important;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.035em !important;
+    line-height: 1 !important;
+    text-transform: none !important;
+    transition: font-weight 0s !important;
+  }
+
+  header.navbar #nav-shop .nav-main::before { content: "Shop" !important; }
+  header.navbar #nav-collections .nav-main::before { content: "Collections" !important; }
+  header.navbar #nav-support .nav-main::before { content: "Contacto" !important; }
+  header.navbar #nav-brand .nav-main::before { content: "Sobre Nosotros" !important; }
+
+  header.navbar .nav-desktop .nav-main:hover::before,
+  header.navbar .nav-desktop .nav-main:focus-visible::before {
+    font-weight: 700 !important;
+  }
+
+  /* Keep the same typography on the text controls at the right on large desktop. */
+  header.navbar .navbar-right .nav-text,
+  header.navbar .navbar-right .language-toggle {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.025em !important;
+    text-transform: none !important;
+  }
+
+  header.navbar .navbar-right .nav-text:hover,
+  header.navbar .navbar-right .nav-text:focus-visible,
+  header.navbar .navbar-right .language-toggle:hover,
+  header.navbar .navbar-right .language-toggle:focus-visible {
+    font-weight: 700 !important;
+  }
+
+  /* Product names shown in Home / T-Shirts / Collections. */
+  .related-product-name,
+  body.tees-page .collection-item h3,
+  #new-in .collection-item h3,
+  .collection-item .product-name,
+  .product-card .product-name {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.025em !important;
+  }
+
+  /* Product accordion labels and the + / - controls. */
+  .info-button,
+  .info-button .text,
+  .info-button .toggle-icon,
+  .info-button .toggle-icon::before {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.02em !important;
+  }
+}
+
+/* Slightly tighter spacing on laptop widths so the nav never crowds the logo/right icons. */
+@media (min-width: 1024px) and (max-width: 1535px) {
+  header.navbar .nav-desktop > ul {
+    gap: clamp(16px, 1.65vw, 26px) !important;
+  }
+
+  header.navbar .nav-desktop .nav-main::before {
+    font-size: 13.5px !important;
+  }
+}
+
+/* =========================================================
+   SUCESSO — NAVBAR REFINEMENT 2026-10-04
+   Requested scope:
+   - Language-aware labels on desktop/laptop (>=1024px)
+   - Desktop XL (>=1536px) spacing/right-side sizing only
+   - Laptop spacing/layout remains unchanged
+   - Mobile remains completely untouched
+   ========================================================= */
+
+/* Navbar labels follow the active page language. */
+@media (min-width: 1024px) {
+  html[lang^="en"] header.navbar #nav-shop .nav-main::before {
+    content: "Shop" !important;
+  }
+  html[lang^="en"] header.navbar #nav-collections .nav-main::before {
+    content: "Collections" !important;
+  }
+  html[lang^="es"] header.navbar #nav-shop .nav-main::before {
+    content: "Tienda" !important;
+  }
+  html[lang^="es"] header.navbar #nav-collections .nav-main::before {
+    content: "Colecciones" !important;
+  }
+  html[lang^="en"] header.navbar #nav-support .nav-main::before {
+    content: "Contact" !important;
+  }
+  html[lang^="en"] header.navbar #nav-brand .nav-main::before {
+    content: "About Us" !important;
+  }
+  html[lang^="es"] header.navbar #nav-support .nav-main::before {
+    content: "Contacto" !important;
+  }
+  html[lang^="es"] header.navbar #nav-brand .nav-main::before {
+    content: "Sobre Nosotros" !important;
+  }
+
+  /* Left-side navbar buttons: requested green on both laptop and desktop. */
+  header.navbar .nav-desktop .nav-main,
+  header.navbar .nav-desktop .nav-main::before,
+  header.navbar .nav-desktop .nav-main:hover::before,
+  header.navbar .nav-desktop .nav-main:focus-visible::before {
+    color: #233f32 !important;
+  }
+}
+
+/* Computer / Desktop XL only.
+   Reference image has a 20px CSS gap between neighboring labels.
+   Do not apply these spacing/sizing rules to laptop. */
+@media (min-width: 1536px) {
+  /* LEFT: slightly wider, even horizontal separation; button size unchanged. */
+  header.navbar .nav-desktop > ul {
+    gap: 28px !important;
+  }
+
+  header.navbar #nav-shop,
+  header.navbar #nav-collections,
+  header.navbar #nav-support,
+  header.navbar #nav-brand,
+  header.navbar .nav-desktop > ul > li {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* RIGHT: same typography as the left navbar; regular normally, bold only on hover. */
+  header.navbar .navbar-right .nav-text {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.035em !important;
+    line-height: 1 !important;
+    color: #233f32 !important;
+    text-transform: none !important;
+    text-decoration: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Same slightly wider horizontal separation on Buscar / Cuenta / Carrito. */
+  header.navbar .navbar-right {
+    gap: 28px !important;
+  }
+
+  /* Remove every inherited/animated underline from the right-side buttons. */
+  header.navbar .navbar-right .nav-text::before,
+  header.navbar .navbar-right .nav-text::after,
+  header.navbar .navbar-right .nav-text:hover::before,
+  header.navbar .navbar-right .nav-text:hover::after,
+  header.navbar .navbar-right .nav-text:focus-visible::before,
+  header.navbar .navbar-right .nav-text:focus-visible::after {
+    content: none !important;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    border: 0 !important;
+    text-decoration: none !important;
+  }
+
+  header.navbar .navbar-right .nav-text:hover,
+  header.navbar .navbar-right .nav-text:focus,
+  header.navbar .navbar-right .nav-text:focus-visible {
+    color: #233f32 !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+  }
+}

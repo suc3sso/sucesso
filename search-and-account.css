@@ -1,0 +1,57 @@
+/* Search extends the original bar/card design; navbar and footer retain their rules. */
+:root{--su-nav-height:70px;--su-search-height:42px}
+#searchBar.su-search-bar{position:fixed!important;inset:var(--su-nav-height) 0 auto 0!important;width:100%!important;height:var(--su-search-height)!important;box-sizing:border-box!important;display:flex!important;align-items:center!important;background:#fff!important;border-bottom:1px solid #e5e5e5!important;padding:0 64px 0 60px!important;z-index:1003!important;transform:none!important;opacity:0!important;visibility:hidden!important;transition:opacity .2s ease,visibility .2s ease!important}
+#searchBar.su-search-bar.active,#searchBar.su-search-bar.su-persistent{opacity:1!important;visibility:visible!important}
+#searchBar.su-search-bar input{display:block!important;box-sizing:border-box!important;flex:1!important;min-width:0!important;max-width:none!important;width:100%!important;height:100%!important;padding:0!important;margin:0!important;font-size:15px!important;line-height:normal!important;border:0!important;border-radius:0!important;background:transparent!important;color:#000!important;outline:none!important}
+#searchBar.su-search-bar .search-icon{position:absolute!important;left:30px!important;top:50%!important;transform:translateY(-50%)!important;width:18px!important;height:18px!important;margin:0!important}
+#searchBar.su-search-bar .close-search{box-sizing:border-box!important;position:absolute!important;right:16px!important;top:50%!important;transform:translateY(-50%)!important;width:32px!important;max-width:32px!important;height:32px!important;min-height:0!important;margin:0!important;padding:7px!important;border:0!important;border-radius:0!important;display:flex!important;align-items:center!important;justify-content:center!important;background:transparent!important;color:#000!important}
+#searchBar.su-search-bar .close-search svg{width:18px!important;height:18px!important}
+#overlay.su-search-overlay{position:fixed!important;inset:calc(var(--su-nav-height) + var(--su-search-height)) 0 0!important;background:rgba(0,0,0,.5)!important;z-index:1000!important;cursor:pointer}
+#searchResults.su-predictive-results{position:fixed!important;top:calc(var(--su-nav-height) + var(--su-search-height))!important;left:0!important;right:0!important;width:100%!important;box-sizing:border-box!important;background:#fff!important;z-index:1002!important;max-height:calc(100dvh - var(--su-nav-height) - var(--su-search-height))!important;overflow:auto!important;touch-action:pan-y!important;padding:0!important;gap:0!important}
+.su-preview-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3vw;padding:0 3.2vw;align-items:start}
+.su-preview-row .search-result-item{width:100%;max-width:none!important;min-width:0;padding:0 0 12px!important;margin:0;box-sizing:border-box;background:#fff;color:#000;text-decoration:none}
+.su-preview-row .product-image-wrapper{width:100%;padding-top:0!important;aspect-ratio:2/3;max-height:54dvh;margin-bottom:12px;position:relative;background:#fff;overflow:hidden}
+.su-preview-row .product-image-wrapper img{position:absolute;inset:0;object-fit:cover;width:100%;height:100%;transition:opacity .3s}
+.su-preview-row .product-image-wrapper .back{opacity:0}.su-preview-row a:hover .back,.su-preview-row a:focus-visible .back{opacity:1}.su-preview-row a:hover .front,.su-preview-row a:focus-visible .front{opacity:0}
+.su-preview-row .result-info{display:flex;flex-direction:column;gap:5px;padding:0 4px;text-align:left}
+.su-preview-row .result-info .name{font-family:"Helvetica Neue",Arial,sans-serif!important;font-size:11px!important;font-weight:700!important;line-height:1.25!important;letter-spacing:.2px!important;text-transform:uppercase;overflow-wrap:anywhere}
+.su-preview-row .result-info .price{font-family:"Helvetica Neue",Arial,sans-serif!important;font-size:12px!important;font-weight:400!important;line-height:1.2!important;color:#333!important}
+.su-more-wrap{display:flex;justify-content:center;align-items:center;padding:18px 20px 26px}
+.su-more-results{display:inline-block!important;width:auto!important;padding:12px 25px!important;border:1px solid #233f32!important;border-radius:0!important;background:transparent!important;color:#233f32!important;font-family:inherit;font-size:12px!important;font-weight:400!important;letter-spacing:1px;text-align:center;text-decoration:none!important;cursor:pointer;transition:background-color .25s,color .25s,border-color .25s}
+.su-more-results:hover,.su-more-results:focus-visible{background:#233f32!important;color:#fff!important;border-color:transparent!important}
+.su-search-message{grid-column:1/-1;text-align:center;font-size:14px;padding:35px 20px;color:#333;line-height:1.6}
+body.su-search-page main#su-search-page-main{box-sizing:border-box;width:100%!important;max-width:none!important;margin:0!important;padding:calc(var(--su-nav-height) + var(--su-search-height) + 30px) 0 0!important;min-height:75vh;transform:none!important}
+.su-search-count{text-align:center!important;margin:5px 20px 0!important;font:14px/1.5 'Poppins',Arial,sans-serif!important;color:#333}
+body.su-search-page #su-all-results{grid-template-columns:repeat(4,minmax(0,1fr))!important;margin-top:30px!important;gap:50px 12px!important}
+body.su-search-page #su-all-results .collection-item{min-width:0;max-width:none!important;width:100%}
+body.su-search-page #su-all-results .image-hover{aspect-ratio:2/3;width:100%;position:relative;display:block;background:#fff;overflow:hidden}
+body.su-search-page #su-all-results .image-hover img{position:absolute;inset:0;width:100%!important;height:100%!important;object-fit:cover!important;margin:0!important}
+body.su-search-page #su-all-results .img-back{opacity:0;transition:opacity .3s}body.su-search-page #su-all-results .image-hover:hover .img-back,body.su-search-page #su-all-results .image-hover:focus-visible .img-back{opacity:1}
+/* Shift only the existing login/register blocks downward, leaving their internals alone. */
+body.su-auth-page main.su-auth-main{margin-top:clamp(175px,23vh,240px)!important}
+body.su-auth-page header.navbar button{width:auto}
+body.su-auth-page header.navbar #cart-text-btn,body.su-auth-page header.navbar #cart-count-text{color:#000!important}
+body.su-auth-page header.navbar .nav-main,body.su-auth-page header.navbar .nav-arrow,body.su-auth-page header.navbar .nav-text,body.su-auth-page header.navbar .menu-toggle{background:transparent;border:0;border-radius:0;color:#000}
+body.su-auth-page header.navbar .menu-toggle{padding:0}
+body.su-auth-page header.navbar .search-toggle{width:24px;padding:0;background:none;color:#000}
+body.su-auth-page header.navbar .nav-arrow{padding:0!important;width:12px!important;display:inline-flex;align-items:center;justify-content:center}
+/* Recovery matches the 400px rectangular fields of Login. */
+body.su-auth-page main.su-recovery-main{box-sizing:border-box;width:min(464px,100%);max-width:464px;padding:0 32px;margin-left:auto;margin-right:auto;margin-bottom:2rem;transform:none!important;text-align:center}
+.su-recovery-main h2{font-size:24px;line-height:1.3;font-weight:600;margin:0 0 32px}
+.su-recovery-main label{display:block;margin-bottom:16px;font-size:16px;font-weight:400;text-align:center}
+.su-recovery-main input[type=email]{box-sizing:border-box;width:100%!important;max-width:none!important;height:41px;border:1px solid #ccc;border-radius:1px;padding:12px;margin:0 0 16px;font:13px Arial,sans-serif;background:#fff;color:#333}
+.su-recovery-main button[type=submit]{box-sizing:border-box;width:100%!important;height:auto;min-height:44px;margin:16px 0 0;padding:.9rem;border:0;border-radius:1px;background:#233f32;color:#fff;font-size:14px;font-weight:600;cursor:pointer}
+.su-recovery-main button:disabled{opacity:.6;cursor:wait}
+.su-recovery-main .success,.su-recovery-main .error{display:block;font-size:14px;line-height:1.5;margin:16px 0 0}.su-recovery-main .success:empty,.su-recovery-main .error:empty{display:none}.su-recovery-main .success{color:#233f32}.su-recovery-main .error{color:#a12f2f}.su-recovery-main .create-account{margin-top:30px;font-size:14px}.su-recovery-main .create-account a{color:#233f32;text-decoration:underline}
+/* About: one continuous manifesto over the brand's own image. */
+main.su-about-manifesto{position:relative;isolation:isolate;box-sizing:border-box;width:100%!important;max-width:none!important;margin:var(--su-nav-height) 0 0!important;padding:70px 6vw 85px!important;overflow:hidden;min-height:calc(100svh - var(--su-nav-height));transform:none!important;background:#18271e}
+.su-about-background{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.38)}
+.su-about-copy{max-width:1600px;margin:0 auto;color:white;text-align:center}
+.su-about-copy h1{font:600 clamp(12px,1.1vw,16px)/1.4 'Poppins',Arial,sans-serif;letter-spacing:.16em;margin:0 0 44px;color:#fff}
+.su-about-copy p{font-family:Arial,Helvetica,sans-serif;font-size:clamp(27px,3.2vw,57px);font-weight:700;line-height:1.13;letter-spacing:-.04em;margin:0 0 46px;color:#fff;text-wrap:pretty}
+.su-about-copy p:last-child{margin-bottom:0}
+@media(max-width:1023px){body.su-search-page #su-all-results{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:32px 20px!important}.su-preview-row{gap:16px;padding:0 20px}.su-preview-row .product-image-wrapper{max-height:40dvh}}
+@media(max-width:600px){#searchBar.su-search-bar{padding-left:46px!important;padding-right:48px!important}#searchBar.su-search-bar .search-icon{left:16px!important}#searchBar.su-search-bar .close-search{right:8px!important}.su-preview-row{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:calc(50% - 8px);overflow-x:auto;overscroll-behavior-x:contain;padding:0 16px;gap:16px}.su-preview-row .product-image-wrapper{max-height:37dvh}.su-more-wrap{padding:15px 16px 20px}.su-more-results{font-size:11px!important;padding:12px 20px!important}body.su-auth-page main.su-auth-main{margin-top:180px!important}main.su-about-manifesto{padding:50px 6vw 60px!important}.su-about-copy h1{margin-bottom:30px}.su-about-copy p{margin-bottom:32px}body.su-search-page #su-all-results{padding:20px 0!important;gap:30px 6px!important}.su-search-count{font-size:13px!important}}
+@media(prefers-reduced-motion:reduce){#searchBar.su-search-bar,.su-more-results,.su-preview-row img{transition:none!important}}
+body.su-auth-page .cart-header .close-cart{width:auto;padding:0;background:transparent;color:#333}
+@media(min-width:601px){body.su-auth-page main.su-recovery-main{padding-top:100px}}

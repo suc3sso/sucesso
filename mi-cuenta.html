@@ -1,0 +1,3249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script src="bcv-rate.js"></script>
+<script src="country-settings.js" defer></script>
+<script src="checkout-return.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account - Sucesso</title>
+  <link rel="icon" href="images/sucesso fav icon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="sucesso-footer.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      background-color: #fff;
+      color: #1a1a1a;
+    }
+.loader {
+      position: fixed;
+      inset: 0;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .loader img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      animation: zoomInClean 2s ease forwards;
+    }
+
+    @keyframes zoomInClean {
+      0% { transform: scale(0.1); opacity: 0; }
+      70% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .account-icon, .cart-icon {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+  
+.cart-icon:hover,
+.search-toggle:hover,
+.account-icon:hover {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+
+    .collection-item .tallas {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      font-size: 0.85rem;
+      text-align: center;
+      color: #233f32;
+      margin-top: 6px;
+      pointer-events: none;
+    }
+
+    .collection-item:hover .tallas {
+      opacity: 1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Syne', sans-serif; background-color: #fff; }
+    header.navbar {
+      position: fixed; top: 0; width: 100%; height: 70px; background-color: white;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 20px; z-index: 1001; border-bottom: 1px solid #e5e5e5;
+    }
+    .navbar-left, .navbar-right {
+      display: flex; align-items: center; gap: 30px;
+    }
+    .navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+    .logo { height: 35px; }
+    .nav-link {
+      text-decoration: none; color: #000; font-weight: 600; font-size: 14px;
+      transition: opacity 0.3s ease;
+    }
+    .nav-link:hover { opacity: 1; }
+    .nav-icon, .search-toggle {
+      background: none; border: none; font-size: 18px; cursor: pointer;
+      color: #000; transition: opacity 0.3s ease;
+    }
+    .nav-icon:hover, .search-toggle:hover { opacity: 0.5; }
+    .overlay {
+      position: fixed; top: 70px; left: 0; width: 100%; height: calc(100% - 70px);
+      background-color: rgba(0, 0, 0, 0.3); z-index: 1000; display: none;
+    }
+    .search-bar {
+      position: fixed; top: 70px; left: 0; width: 100%; height: 42px;
+      background-color: white; display: flex; align-items: center; gap: 10px;
+      padding: 0 20px; border-bottom: 1px solid #e5e5e5;
+      transform: translateY(-100%); opacity: 0; pointer-events: none;
+      transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+      z-index: 1002; will-change: transform, opacity;
+    }
+    .search-bar.active {
+      transform: translateY(0); opacity: 1; pointer-events: auto;
+    }
+    .search-bar.hiding { z-index: 999; }
+    .search-bar input {
+      width: 100%; padding: 8px 0 8px 60px; font-size: 15px;
+      border: none; outline: none; background-color: transparent; color: #000;
+    }
+    .search-icon {
+      margin-right: 0; color: #000; flex-shrink: 0; position: absolute; left: 30px;
+    }
+    .close-search {
+      margin-left: 16px; background: none; border: none; cursor: pointer;
+      color: #000; padding: 4px; display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.3s ease;
+    }
+    .close-search:hover { opacity: 0.5; }
+.search-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: #000;
+  transition: opacity 0.3s ease;
+  margin-top: 2px; /* 👈 Ajustá este valor si querés más o menos bajado */
+}
+
+.search-toggle svg {
+  display: block;
+  stroke: #000;
+}
+
+
+    .search-results {
+  position: fixed;
+  top: 112px;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1001;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  padding: 0;
+  box-sizing: border-box;
+  max-height: calc(100vh - 112px);
+  overflow-y: auto;
+  gap: 1px; /* visualmente simula 0.3px ajustando ancho abajo */
+}
+
+
+.search-result-item {
+  width: 100%;
+  max-width: 375px; /* Más grande, similar a Nude Project */
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-decoration: none;
+  color: #000;
+  padding: 0 10px 32px;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease;
+}
+
+.product-image-wrapper {
+  width: 100%;
+  padding-top: 125%; /* Proporción 4:5 sin usar aspect-ratio */
+  position: relative;
+  background-color: #f8f8f8;
+  margin-bottom: 12px;
+}
+
+.product-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* MUY IMPORTANTE para que no se corte */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.4s ease;
+}
+
+
+.product-image-wrapper .back {
+  opacity: 0;
+}
+
+.search-result-item:hover .back {
+  opacity: 1;
+}
+
+.search-result-item:hover .front {
+  opacity: 0;
+}
+
+.result-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding-left: 4px;
+  width: 100%;
+}
+
+.result-info .name {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.result-info .price {
+  font-size: 17px;
+  font-weight: 400;
+  color: #000;
+  text-align: left;
+}
+ 
+         .nav-desktop ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-desktop ul li {
+            margin: 0 15px;
+        }
+        
+        .nav-desktop ul li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-desktop ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #000; /* Color de subrayado */
+            transition: width 0.3s ease;
+        }
+        
+        .nav-desktop ul li a:hover:after {
+            width: 100%;
+        }
+
+/* Visibilidad por breakpoint:
+   - Desktop XL (≥1536px): mostrar texto, ocultar íconos
+   - Laptop/Móvil (<1536px): mostrar íconos, ocultar texto
+*/
+.show-desktop-xl { display: none; }
+.hide-desktop-xl { display: flex; }
+
+@media (min-width: 1536px) {
+  .show-desktop-xl { display: flex !important; }
+  .hide-desktop-xl { display: none !important; }
+
+  .nav-text {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    font-size: 12px;
+    position: relative; /* necesario para el pseudo-elemento */
+    padding: 0;
+    margin: 0 8px; /* espaciado entre los nav-text */
+    color: #000;
+    transition: color 0.3s ease;
+  }
+
+  /* línea animada como en el language-toggle */
+  .nav-text::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: #000;
+    transition: width 0.3s ease;
+  }
+
+  .nav-text:hover::after {
+    width: 100%;
+  }
+}
+
+/* 🔧 Ajustes solo para pantallas grandes */
+@media (min-width: 1536px) {
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;     /* ✅ evita que salte a otra fila */
+    gap: 16px;             /* ✅ mismo espaciado que los nav-left */
+  }
+
+  .navbar-right .language-toggle {
+    margin: 0;             /* quita margen extra */
+    transform: none;       /* elimina el pequeño desajuste vertical */
+    padding: 0;
+  }
+
+  .language-toggle {
+margin-top: 1.5px !important;
+margin-right: 0.4rem !important;
+  }
+}
+
+/* 🔽 Disminuir tamaño de nav-left y nav-right SOLO en pantallas grandes */
+@media (min-width: 1536px) {
+  .nav-desktop ul li a,   /* enlaces de nav-left */
+  .navbar-right .nav-text, 
+  .navbar-right .language-toggle {
+    font-size: 11px;      /* antes 12px → más pequeño */
+    letter-spacing: 1px;  /* ajusta el espaciado de letras */
+  }
+}
+
+
+
+    .account-icon, .cart-icon {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+
+    .menu-toggle {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .container {
+  max-width: 1000px;
+  margin: 6rem auto 2rem; /* 🔥 Separamos más del top */
+  padding: 2rem;
+  display: flex;
+  gap: 3rem;
+}
+
+
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+    margin: 4rem auto 2rem; /* 🔥 Separamos más del top */
+    }
+
+    .sidebar-menu li {
+  margin-bottom: 2.15rem; /* separación vertical uniforme, apenas más amplia */
+}
+
+
+    .sidebar-menu a {
+      color: #1a1a1a;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      position: relative;
+    }
+
+/* 🔹 Activo en TODAS las resoluciones */
+.sidebar-menu a.active {
+  font-weight: 700;
+}
+
+.sidebar-menu a.active::after {
+  width: 100%;
+}
+
+
+    .sidebar-menu a::after {
+      content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #000; /* Color de subrayado */
+            transition: width 0.3s ease;
+    }
+
+    .sidebar-menu a:hover::after {
+      width: 100%;
+    }
+
+    .account-content {
+      flex: 1;
+    }
+
+    .input-box {
+      background: #f0f0f0;
+      padding: 0.75rem;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+    .toggle-password {
+      cursor: pointer;
+      margin-left: 0.5rem;
+      font-size: 1rem;
+    }
+    .btn-logout {
+      margin-top: 2rem;
+      padding: 0.75rem 2rem;
+      background-color: transparent;
+      color: #333;
+      border: 1px solid #333;
+      font-weight: 600;
+      border-radius: 2px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-logout:hover {
+      background-color: #233f32;
+      color: #ffffff;
+    }
+    .hidden { display: none; }
+
+
+.cart-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: flex-end;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .cart-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .cart-panel {
+    background-color: #fff;
+    width: 400px;
+    max-width: 100%;
+    max-height: 100vh;
+    padding: 1.5rem;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+  
+  .cart-overlay.active .cart-panel {
+    transform: translateX(0);
+  }
+  
+  .cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 1rem;
+  }
+  
+  .cart-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #233f32;
+    margin: 0;
+  }
+  
+  .close-cart {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #000;
+    cursor: pointer;
+  }
+  
+  .cart-items {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin: 1rem 0;
+    padding-right: 0.5rem;
+  }
+  
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .cart-footer {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 1rem;
+    background: #fff;
+    position: sticky;
+    bottom: 0;
+    margin-top: auto;
+  }
+  
+  .cart-total {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .language-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 30px;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  width: 460px; /* antes era 300px */
+  font-family: 'Poppins', sans-serif;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  border-radius: 4px;
+}
+
+
+  .language-popup.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .language-popup button.close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+.language-toggle {
+  text-decoration: none;
+  color: #000;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-right: 8px;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background: none;
+  line-height: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative; /* 🔑 para que el ::after se posicione bien */
+  user-select: none;
+  transition: color 0.3s ease;
+  transform: translateY(1px); /* Ajustá a 1px o 3px si querés más fino */
+}
+
+.language-toggle::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #000;
+  transition: width 0.3s ease;
+}
+
+.language-toggle:hover::after {
+  width: 100%;
+}
+
+.cart-item img {
+  width: 145px;          /* Aumenta el tamaño de la imagen */
+  height: auto;
+  object-fit: contain;
+  margin-right: 1.2rem;  /* Espacio entre imagen y texto */
+  flex-shrink: 0;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;   /* Centra verticalmente imagen y contenido */
+  gap: 1rem;             /* Espacio entre imagen y detalles */
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+
+.cart-item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cart-item-details h4 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.cart-item-details p {
+  font-size: 0.85rem;
+  color: #333;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.cart-item-price {
+  font-weight: bold;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  width: fit-content;
+  padding: 2px 4px;
+  height: 36px;
+  font-size: 16px;
+}
+
+.quantity-selector button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #555;
+  padding: 0 10px;
+}
+
+.quantity-selector input {
+  border: none;
+  text-align: center;
+  width: 24px;
+  font-size: 16px;
+  outline: none;
+  pointer-events: none;
+  background: transparent;
+  color: #000;
+}
+
+.cart-item {
+  position: relative;
+}
+
+.cart-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cart-item.loading .cart-loading-overlay {
+  opacity: 1;
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #333;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Loader de cambio de sección en Mi Cuenta: mismo spinner y opacidad del carrito */
+.account-switch-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 999998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,.72);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .2s ease, visibility .2s ease;
+}
+
+.account-switch-loader.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.cart-item-price {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.btn-profile-action {
+  margin-top: 0.75rem;
+  padding: 0.75rem 2rem;
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #333;
+  font-weight: 600;
+  border-radius: 2px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-profile-action:hover {
+  background-color: #233f32;
+  color: #ffffff;
+}
+#btn-editar-direccion {
+  font-size: 0.8rem;
+  padding: 0.4rem 1rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .sidebar-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .sidebar-menu li {
+    margin-bottom: 0;
+  }
+
+  .sidebar-menu a {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+  }
+
+  .account-content {
+    padding: 1rem;
+  }
+
+  .input-box {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  #logout-btn,
+  .btn-profile-action {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  header.navbar {
+    padding: 0 10px;
+    height: 60px;
+  }
+
+  .logo {
+    height: 30px;
+  }
+
+  .nav-desktop {
+    display: none !important;
+  }
+
+  .navbar-right {
+    gap: 10px;
+  }
+
+  .cart-panel {
+    width: 100%;
+  }
+
+  .language-popup {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-menu {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #e0e0e0;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  .sidebar-menu li {
+    flex: 1;
+    text-align: center;
+  }
+
+  .sidebar-menu a {
+    display: inline-block;
+    padding: 12px 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #1a1a1a;
+    position: relative;
+    background: none;
+    border: none;
+    transition: font-weight 0.3s ease;
+  }
+
+  .sidebar-menu a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #1a1a1a;
+    transition: width 0.3s ease, left 0.3s ease;
+    transform: translateX(-50%);
+  }
+
+  .sidebar-menu a.active {
+    font-weight: 700;
+  }
+
+  .sidebar-menu a.active::after {
+    width: 100%;
+    left: 50%;
+  }
+}
+
+/* === NAV con flechita — Desktop XL solamente === */
+@media (min-width: 1536px) {
+  .nav-desktop ul { display:flex; list-style:none; }
+  .nav-desktop ul li { margin: 0 15px; }
+
+  .nav-item { display:flex; align-items:center; gap:6px; position:relative; }
+
+  .nav-main, .nav-arrow {
+    background:none; border:none; padding:0; margin:0; cursor:pointer;
+    color:#000; font-size:12px; text-transform:uppercase; letter-spacing:1.5px;
+    font-weight:700; line-height:1;
+  }
+
+  /* Subrayado ANIMADO solo para los main (izquierda) */
+  .nav-main { position:relative; }
+  .nav-main::after {
+    content:''; position:absolute; left:0; bottom:-2px; height:1px; width:0; background:#000;
+    transition: width 0.3s ease;
+  }
+  .nav-main:hover::after { width:100%; }
+
+  .nav-arrow { display:flex; align-items:center; }
+  .nav-arrow svg { display:block; transition:none; }        /* sin animación */
+  .nav-item.open .nav-arrow svg { transform: rotate(90deg); } /* ▶ a ▼ */
+
+  /* Dropdown: OCULTO por defecto, sin fondo ni borde, sin animaciones */
+  .dropdown {
+    position:absolute; top:22px; left:0;
+    display:none !important;        /* nunca visible si no está "open" */
+    background: transparent !important;  /* SIN fondo */
+    border: none !important;              /* SIN borde */
+    padding: 0;                           /* SIN padding de caja */
+    white-space:nowrap; z-index:1200;
+  }
+  .nav-item.open .dropdown {
+    display:flex !important;
+  }
+
+  /* Ítems del dropdown: sin animación de subrayado */
+  .dropdown .dropdown-item {
+    text-decoration:none; color:#000; font-size:12px; font-weight:700;
+    text-transform:uppercase; letter-spacing:1.5px; display:inline-block; margin-right:18px;
+    position: static; /* sin pseudo línea */
+  }
+  .dropdown .dropdown-item:last-child { margin-right:0; }
+  .dropdown .dropdown-item:hover { text-decoration: underline; } /* subrayado instantáneo */
+
+  /* Legal en fila horizontal (como la captura) */
+  .dropdown.row { display:flex; gap:24px; }
+
+  /* Oculta el nav antiguo si existía */
+  .nav-desktop ul li a.nav-link { display:none !important; }
+}
+/* ✅ Dropdown: sin subrayado al abrir; subrayado SOLO al hover, sin animación */
+@media (min-width: 1536px) {
+  /* Estado base: NADA subrayado ni transiciones heredadas */
+  .nav-desktop .nav-item .dropdown .dropdown-item {
+    text-decoration: none !important;
+    position: static;
+    transition: none !important;         /* sin transiciones de color, etc. */
+  }
+
+  /* Hover/focus: subrayado inmediato (sin animación) */
+  .nav-desktop .nav-item .dropdown .dropdown-item:hover,
+  .nav-desktop .nav-item .dropdown .dropdown-item:focus-visible {
+    text-decoration: underline !important;
+    /* opcional: si querés más fino y prolijo
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    */
+  }
+
+  /* Mata cualquier línea animada heredada (el ::after) en dropdowns */
+  .nav-desktop .nav-item .dropdown .dropdown-item::after,
+  .nav-desktop .nav-item .dropdown .dropdown-item:hover::after {
+    content: none !important;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    transition: none !important;
+  }
+}
+/* ================================
+   NAV DESKTOP XL – tamaños alineados a nav-right
+   ================================ */
+@media (min-width: 1536px) {
+  /* 1) Mismo tamaño tipográfico que nav-right */
+  .nav-desktop .nav-item .nav-main,
+  .nav-desktop .nav-item .nav-arrow,
+  .nav-desktop .dropdown .dropdown-item,
+  .navbar-right .nav-text,
+  .navbar-right .language-toggle {
+    font-size: 11px !important;     /* igual que nav-right */
+    letter-spacing: 1px !important;  /* igual que nav-right */
+    line-height: 1 !important;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  /* 2) Compactar separación para que no se vean “grandes” */
+  .nav-desktop ul li {
+    margin: 0 10px !important;       /* antes 15px */
+  }
+  .nav-desktop .nav-item {
+    gap: 4px !important;             /* antes 6px */
+  }
+
+  /* 3) Reducir la flechita (icono) y su hit area */
+  .nav-desktop .nav-item .nav-arrow svg {
+    width: 7px !important;           /* antes 8px */
+    height: 11px !important;         /* antes 12px */
+  }
+  .nav-desktop .nav-item .nav-arrow {
+    padding: 0 !important;           /* sin padding extra */
+  }
+
+  /* 4) Subrayado fino y sin “overhang” en .nav-main */
+  .nav-desktop .nav-item .nav-main::after {
+    height: 1px !important;
+    bottom: -2px !important;
+  }
+
+  /* 5) Dropdown: tipografía y espacios iguales a nav-right */
+
+  .nav-desktop .dropdown .dropdown-item {
+    margin-right: 14px !important;   /* antes 18px */
+    text-decoration: none !important;
+  }
+  .nav-desktop .dropdown .dropdown-item:hover {
+    text-decoration: underline !important;
+  }
+
+  /* 6) Alinear altura y compacidad de la barra entera */
+  .navbar-left, .navbar-right {
+    gap: 16px !important;            /* ya usas 16px en right; igualamos */
+  }
+
+  /* 7) Asegurar que nav-left y nav-right comparten font-size global */
+  .nav-desktop ul li a,
+  .navbar-right .nav-text,
+  .navbar-right .language-toggle {
+    font-size: 11px !important;
+    letter-spacing: 1px !important;
+  }
+}
+/* 🔹 Aumentar espacio entre SHOP, LEGAL y SUPPORT en desktop XL */
+@media (min-width: 1536px) {
+  #nav-shop,
+  #nav-legal,
+  #nav-support {
+    margin: 0 18px !important; /* antes 15px → ahora el doble */
+  }
+}
+/* ⬇️ Bajar los dropdowns solo en Desktop XL */
+@media (min-width: 1536px) {
+  .nav-desktop .dropdown {
+    top: 70px !important; /* antes 20–22px; ajusta este valor a tu gusto */
+  }
+}
+
+/* 🎯 Estilos de los items del dropdown en Desktop XL */
+@media (min-width: 1536px) {
+  .nav-desktop .nav-item .dropdown .dropdown-item {
+    color: #555 !important;        /* Estado base */
+    font-weight: 600 !important;    /* Semibold para contraste sutil */
+  }
+
+  .nav-desktop .nav-item .dropdown .dropdown-item:hover,
+  .nav-desktop .nav-item .dropdown .dropdown-item:focus-visible {
+    color: #000 !important;         /* Hover */
+    text-decoration: underline !important; /* Ya lo tenías, lo reafirmo */
+  }
+}
+
+/* 🔹 Aumentar espacio entre SHOP, LEGAL, SUPPORT y BRAND en desktop XL */
+@media (min-width: 1536px) {
+  #nav-shop,
+  #nav-legal,
+  #nav-support,
+  #nav-brand {
+    margin: 0 18px !important;
+  }
+}
+/* === NAV: un poco más pequeño (sin tocar el logo) — Desktop XL === */
+@media (min-width: 1536px) {
+  /* Texto de botones izquierda (main + flecha), items del dropdown y derecha */
+  .nav-desktop .nav-item .nav-main,
+  .nav-desktop .nav-item .nav-arrow,
+  .nav-desktop .dropdown .dropdown-item,
+  .navbar-right .nav-text,
+  .navbar-right .language-toggle {
+    font-size: 10.3px !important;      /* antes 11–12px */
+    letter-spacing: 0.9px !important; /* antes ~1–1.5px */
+    line-height: 1 !important;
+  }
+
+  /* Flechita un poco más chica */
+  .nav-desktop .nav-item .nav-arrow svg {
+    width: 7px !important;   /* antes 7–8px */
+    height: 10px !important; /* antes 11–12px */
+  }
+
+  /* Compacidad lateral (sin apretar demasiado) */
+  .nav-desktop ul li {
+    margin: 0 9px !important;       /* antes 10–15px */
+  }
+  .nav-desktop .nav-item {
+    gap: 3px !important;            /* antes 4–6px */
+  }
+  .nav-desktop .dropdown .dropdown-item {
+    margin-right: 13px !important;  /* antes 14–18px */
+  }
+
+  /* Espaciado entre grupos principales alineado al nuevo tamaño */
+  #nav-shop,
+  #nav-legal,
+  #nav-support,
+  #nav-brand {
+    margin: 0 17px !important;      /* antes 18px */
+  }
+
+  /* Ligeramente más compacto a la derecha */
+  .navbar-right {
+    gap: 14px !important;           /* antes 16px */
+  }
+
+  /* Subrayado: mantené la línea fina y posición */
+  .nav-desktop .nav-item .nav-main::after {
+    height: 1px !important;
+    bottom: -2px !important;
+  }
+}
+
+/* ===== Purchases (Compras) ===== */
+.orders-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 12px;
+}
+@media (min-width: 640px){
+  .orders-grid{ grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 1024px){
+  .orders-grid{ grid-template-columns: 1fr; } /* una por fila para lectura */
+}
+
+.order-card{
+  border: none;
+  border-radius: 1px;
+  padding: 16px;
+  background: transparent;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.order-thumb{
+  width: 200px;
+  height: 230px;
+  border: 1px solid #f9f9f9;
+  border-radius: 1px;
+  background: #f9f9f9;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.order-thumb img{
+  width: 100%; height: 100%; object-fit: contain; display: block;
+}
+/* ── Separador entre compras ─────────────────────────── */
+.order-card{
+  position: relative;
+  padding: 18px 0;         /* un poco de aire arriba/abajo */
+}
+
+/* Aplica un borde superior a toda card que tenga otra antes */
+.order-card + .order-card{
+  border-top: 1px solid #eee; /* semi clara */
+  margin-top: 18px;        /* espacio sobre la línea */
+}
+
+/* Opcional: en móviles, que la línea sea un toque más suave */
+@media (max-width:768px){
+  .order-card + .order-card{
+    border-top-color: #eee;
+  }
+}
+
+.order-body{
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 12px;
+}
+
+.order-date{
+  font-size: 12px;
+  color: #666;
+  grid-column: 1 / -1;
+}
+
+.order-title{
+  font-size: 15px;
+  font-weight: 600;
+  margin: 2px 0 0 0;
+}
+
+.order-meta{
+  font-size: 13px;
+  color: #333;
+}
+.order-line{
+  font-size: 13px;
+  color: #111;
+}
+
+.order-total{
+  grid-column: 1 / -1;
+  text-align: right;
+  font-weight: 700;
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+.order-skeleton{
+  border: 1px solid #eee;
+  border-radius: 1px;
+  padding: 16px;
+  background: #fff;
+  color:#666; font-size:14px;
+}
+
+/* Grid de la card: contenido a la izq. y resumen a la derecha */
+.order-body{
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 260px; /* derecha fija como en email */
+  gap: 8px 16px;
+}
+
+/* Resumen derecho como en el correo */
+.order-summary{
+  grid-column: 2;
+  grid-row: 2 / -1;           /* queda a la altura de la imagen/título */
+  align-self: end;            /* alinea con la base de la imagen */
+  justify-self: end;
+  width: 260px;               /* mismo ancho para que quede prolijo */
+  text-align: right;
+  font-size: 13px;
+  color: #111;
+}
+
+.summary-row{
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 6px 0;
+}
+.summary-row strong{ font-weight: 600; }
+.summary-row.total{
+  border-top: 1px solid #eaeaea;
+  padding-top: 8px;
+  margin-top: 8px;
+  font-weight: 700;
+}
+
+/* En mobile, que el resumen vaya abajo a todo el ancho */
+@media (max-width:768px){
+  .order-body{ grid-template-columns: 1fr; }
+  .order-summary{
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: stretch;
+    width: 100%;
+    text-align: left;
+  }
+  .summary-row{ font-size: 14px; }
+}
+
+/* ====== Stüssy-like Orders ====== */
+.orders-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:0;
+  margin-top:24px;
+}
+
+/* fila/orden */
+.order-row{
+  border-top:1px solid #eaeaea;
+  padding:18px 0;
+}
+
+/* barra meta superior */
+.order-meta-bar{
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  gap:12px 20px;
+  align-items:center;
+  margin-bottom:14px;
+  font-size:12px;
+  color:#555;
+}
+.order-meta-bar .order-date{
+  font-size:12px;
+  color:#222;
+  font-weight:600;
+  letter-spacing:.2px;
+}
+.order-pill{
+  border:1px solid #e5e5e5;
+  padding:4px 8px;
+  font-size:11px;
+  border-radius:999px;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  color:#222;
+}
+
+/* cuerpo: thumbs izquierda, resumen derecha */
+.order-body{
+  display:grid;
+  grid-template-columns:1fr 240px;
+  gap:12px 24px;
+  align-items:start;
+}
+
+/* thumbs estilo stüssy: rectos, grises, scroll si overflow */
+.order-thumbs{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding-bottom:6px;
+}
+.order-thumb-item{
+  flex:0 0 auto;
+  width:120px;
+  aspect-ratio:4/5;
+  background:#f6f6f6;
+  border:1px solid #f6f6f6;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.order-thumb-item img{width:100%;height:100%;object-fit:contain;display:block;}
+.thumb-qty-badge{
+  position:absolute;right:6px;bottom:6px;
+  background:#000;color:#fff;font-size:11px;line-height:1;
+  padding:3px 6px;border-radius:999px;
+}
+
+/* resumen derecho con totales alineados */
+.order-summary{
+  justify-self:end;
+  width:240px;
+  font-size:13px;
+  color:#111;
+}
+.summary-row{
+  display:flex;justify-content:space-between;gap:16px;margin:6px 0;
+}
+.summary-row.total{
+  border-top:1px solid #eaeaea;
+  margin-top:10px;padding-top:10px;
+  font-weight:700;
+}
+
+/* pie con acciones finas (opcional) */
+.order-actions{
+  margin-top:10px;font-size:12px;
+}
+.order-link{
+  text-decoration:none;color:#111;border-bottom:1px solid #111;padding-bottom:1px;
+}
+.order-link:hover{opacity:.7}
+
+/* mobile */
+@media (max-width:768px){
+  .order-body{grid-template-columns:1fr}
+  .order-summary{width:100%;justify-self:stretch}
+}
+
+/* limpia estilos antiguos que molestaban el nuevo layout */
+.order-card,.order-thumb,.order-total{all:unset}
+
+/* ===== Encabezados de mes y día en Historial ===== */
+.orders-month {
+  margin: 26px 0 8px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  color: #111;
+  text-transform: uppercase;
+}
+
+.orders-day {
+  margin: 14px 0 4px;
+  font-size: 12px;
+  color: #444;
+  font-weight: 600;
+  letter-spacing: .2px;
+  display: inline-block;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 2px;
+}
+
+/* ===== Lista de ítems dentro de cada compra ===== */
+.order-item-lines{
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: #111;
+}
+.order-item-line .name{ font-weight: 600; }
+.order-item-line .muted{ color:#666; }
+.order-item-line .sep{ margin: 0 6px; color:#bbb; }
+
+/* --- Compras: grid robusto y responsive --- */
+.order-body{
+  display:grid;
+  grid-template-columns: minmax(0,1fr) 240px; /* evita desbordes */
+  gap:12px 24px;
+  align-items:start;
+}
+.order-summary{
+  justify-self:end;
+  width:240px;
+  font-size:13px;
+  color:#111;
+  text-align:left;        /* mejor lectura en móvil */
+}
+.order-summary .summary-row{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  margin:6px 0;
+}
+.order-summary .summary-row span:last-child{
+  min-width: 90px;
+  text-align: right;
+}
+
+/* ✅ En móvil: una sola columna y resumen abajo a ancho completo */
+@media (max-width:768px){
+  .order-body{
+    grid-template-columns: 1fr !important;    /* pisa cualquier inline */
+    gap:12px !important;
+  }
+  .order-summary{
+    justify-self:stretch !important;
+    width:100% !important;
+    text-align:left !important;
+    margin-top:4px !important;
+  }
+  .order-summary .summary-row{ font-size:14px !important; }
+}
+
+/* Evita recortes horizontales en toda la página */
+html, body { overflow-x: hidden; }
+.container { max-width: 1000px; width: 100%; }
+
+
+/* 🚫 Bloqueo TOTAL de scroll cuando la búsqueda está abierta */
+html.scroll-lock,
+body.scroll-lock {
+  overscroll-behavior: none !important;
+  overflow: hidden !important;
+  height: 100% !important;
+}
+
+body.scroll-lock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+  touch-action: none !important;
+}
+
+/* Evitar scroll interno en los resultados mientras la barra está abierta */
+body.scroll-lock .search-results {
+  overflow: hidden !important;
+}
+
+/* 🎯 Fijar el menú de la izquierda en mi-cuenta.html (desktop) */
+@media (min-width: 1024px) {
+  /* el contenedor solo para referencia de cálculos */
+  .container{ position: relative; }
+
+  /* UL fijo, siempre visible */
+  .sidebar-menu{
+    position: fixed !important;
+    top: 126px;                /* alinea visualmente el menú con el contenido y lo separa del navbar */
+    left: calc(50% - 500px + 2rem); /* centro - (1000/2) + padding del .container (2rem) */
+    width: 220px;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none;
+    z-index: 1002;
+    background: transparent;
+  }
+
+  /* que el contenido ya no “pise” al menú fijo */
+  .account-content{
+    margin-left: calc(220px + 3rem) !important; /* ancho menú + gap */
+  }
+}
+
+/* En tablets/móvil mantén tu barra horizontal como ya la tienes */
+@media (max-width: 1023px){
+  .sidebar-menu{ position: static !important; width: auto; }
+  .account-content{ margin-left: 0 !important; }
+}
+/* 📱 Barra de secciones fija en móvil (debajo de la navbar) */
+@media (max-width: 1023px){
+  .sidebar-menu{
+    position: fixed !important;
+    top: 60px;                 /* altura de tu navbar móvil */
+    left: 0; right: 0;
+    z-index: 1001;             /* por debajo de la search-bar (1002) */
+    display: flex !important;
+    gap: 0 !important;
+    justify-content: space-around;
+    padding: 0 8px !important;
+    margin: 0 !important;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    overflow-x: auto;          /* si no entran, que scrollee horizontal */
+    -webkit-overflow-scrolling: touch;
+  }
+  .sidebar-menu li{
+    flex: 0 0 auto !important; /* evita que se encojan demasiado */
+    margin: 0 !important;
+  }
+  .sidebar-menu a{
+    display: inline-block !important;
+    padding: 12px 12px !important;
+    font-size: 0.95rem !important;
+    font-weight: 500;
+    background: none !important;
+    border: none !important;
+    color: #1a1a1a !important;
+    position: relative;
+    white-space: nowrap;       /* que no se partan en 2 líneas */
+  }
+  /* subrayado de activo */
+  .sidebar-menu a::after{
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background: #1a1a1a;
+    transform: translateX(-50%);
+    transition: width .2s ease;
+  }
+  .sidebar-menu a.active::after{ width: 100%; }
+
+  /* da espacio al contenido para que no quede tapado por la barra fija */
+  .account-content{
+    padding-top: 58px !important; /* ≈ alto de la barra (48) + aire */
+  }
+}
+
+/* =========================================================
+   MY ACCOUNT — desktop alignment + polished purchase history
+   Keep the same structure, but use the available horizontal space better.
+   ========================================================= */
+@media (min-width: 1024px){
+  .container{
+    max-width:none !important;
+    width:calc(100% - 112px) !important;
+    margin:6rem 56px 2rem !important;
+    padding:2rem 0 !important;
+    gap:0 !important;
+  }
+  .sidebar-menu{
+    left:56px !important;
+    width:210px !important;
+  }
+  .account-content{
+    margin-left:266px !important;
+    width:calc(100% - 266px) !important;
+    max-width:none !important;
+    padding-right:0 !important;
+  }
+  #perfil{max-width:720px;}
+  #compras{max-width:1120px;}
+  .wishlist-account-section{
+    width:min(1120px,100%) !important;
+    max-width:1120px !important;
+  }
+}
+
+/* Purchases: calm editorial rows, aligned product blocks and totals. */
+#compras > h2{margin-bottom:20px;}
+#historial-compras.orders-grid{
+  width:100%;
+  margin-top:0;
+}
+.orders-month{
+  margin:30px 0 10px;
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:.06em;
+  color:#233f32;
+}
+.orders-day{
+  margin:10px 0 0;
+  padding-bottom:5px;
+  border-bottom:0;
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.04em;
+  color:#777;
+}
+.order-row{
+  border-top:1px solid #e7e7e7;
+  padding:18px 0 24px;
+}
+.order-meta-bar{
+  grid-template-columns:minmax(0,1fr) auto auto;
+  gap:10px 12px;
+  margin-bottom:18px;
+}
+.order-meta-bar .order-date{
+  color:#233f32;
+  font-weight:500;
+}
+.order-pill{
+  border-color:#dedede;
+  background:#fff;
+  color:#555;
+  font-size:10px;
+  padding:4px 8px;
+}
+.order-body{
+  grid-template-columns:minmax(0,1fr) 220px !important;
+  gap:24px 36px !important;
+  align-items:start;
+}
+.order-thumbs{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(118px,142px));
+  gap:18px 14px;
+  overflow:visible;
+  padding:0;
+}
+.order-product{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.order-thumb-item{
+  width:100%;
+  aspect-ratio:4/5;
+  border:0;
+  background:#f5f5f5;
+}
+.order-product-copy{
+  min-width:0;
+  font-family:'Poppins',sans-serif;
+  font-size:11px;
+  line-height:1.35;
+  color:#222;
+}
+.order-product-name{
+  font-weight:500;
+  text-transform:none;
+  letter-spacing:0;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+.order-product-size{
+  margin-top:2px;
+  color:#666;
+  font-weight:400;
+}
+.order-summary{
+  width:220px !important;
+  justify-self:end !important;
+  padding-top:2px;
+  color:#233f32;
+  font-size:12px;
+}
+.order-summary .summary-row{
+  margin:0 0 9px;
+  gap:18px;
+}
+.order-summary .summary-row span:last-child{
+  min-width:76px;
+}
+.order-summary .summary-row.total{
+  border-top:1px solid #dedede;
+  margin-top:12px;
+  padding-top:12px;
+  font-weight:600;
+}
+.order-actions{margin-top:16px;}
+.order-link{color:#233f32;border-bottom-color:#233f32;}
+
+@media (max-width:1023px){
+  .container{
+    width:100% !important;
+    max-width:none !important;
+    margin:5.4rem 0 2rem !important;
+    padding:1.25rem 20px 2rem !important;
+  }
+  .account-content{width:100% !important;}
+}
+@media (max-width:768px){
+  .order-body{grid-template-columns:1fr !important;gap:22px !important;}
+  .order-thumbs{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 10px;}
+  .order-summary{width:100% !important;justify-self:stretch !important;}
+  .order-meta-bar{grid-template-columns:1fr auto;gap:8px;}
+  .order-meta-bar .order-pill:last-child{grid-column:2;}
+}
+@media (max-width:480px){
+  .container{padding-left:14px !important;padding-right:14px !important;}
+  .order-thumbs{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .order-meta-bar{grid-template-columns:1fr;}
+  .order-meta-bar .order-pill:last-child{grid-column:auto;}
+  .order-pill{justify-self:start;}
+}
+
+
+  </style>
+<link rel="stylesheet" href="requested-changes.css">
+<link rel="stylesheet" href="wishlist.css">
+
+<link rel="stylesheet" href="search-system.css">
+<script src="search-text.js" defer></script>
+<script src="search-engine.js" defer></script>
+<script src="search-interface.js" defer></script>
+<script src="search-catalog.js" defer></script>
+  <link rel="stylesheet" href="mobile-menu-refresh.css">
+<style id="su-navbar-uploaded-svg-icons-20261001">
+/* Exact uploaded responsive navbar icons: laptop + mobile only. */
+@media (max-width: 1535px) {
+  header.navbar .search-toggle .su-nav-search-svg {
+    width: 22px !important;
+    height: 22px !important;
+    display: block !important;
+    flex: 0 0 auto !important;
+  }
+  header.navbar .account-button .su-nav-account-svg {
+    width: 22px !important;
+    height: 22px !important;
+    display: block !important;
+    flex: 0 0 auto !important;
+    filter: none !important;
+  }
+  header.navbar .su-nav-cart-svg {
+    width: 22px !important;
+    height: 22px !important;
+    display: block !important;
+    flex: 0 0 auto !important;
+    filter: none !important;
+  }
+  header.navbar .search-toggle .su-nav-search-svg *,
+  header.navbar .account-button .su-nav-account-svg *,
+  header.navbar .su-nav-cart-svg * {
+    stroke: #233f32 !important;
+  }
+  header.navbar #cart-count {
+    position: absolute !important;
+    top: -2px !important;
+    right: -15px !important;
+    min-width: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #233f32 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+    pointer-events: none !important;
+  }
+  header.navbar #cart-count::before { content: "("; }
+  header.navbar #cart-count::after  { content: ")"; }
+}
+</style>
+
+<style id="su-navbar-mobile-icon-size-20261001">
+/* Mobile-only icon sizing: preserve laptop 22x22, reduce on phones. */
+
+@media (max-width: 767px) {
+  header.navbar .search-toggle .su-nav-search-svg,
+  header.navbar .account-button .su-nav-account-svg,
+  header.navbar .su-nav-cart-svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  header.navbar #cart-count {
+    top: -1px !important;
+    right: -13px !important;
+    font-size: 10px !important;
+  }
+}
+</style>
+
+  <link rel="stylesheet" href="sucesso-alt-desktop.css">
+  <script src="sucesso-alt-desktop.js" defer></script>
+</head>
+<body>
+  <div id="loader" class="loader">
+    <img src="images/logo cherry png.png" alt="Sucesso Logo">
+  </div>
+
+  <div id="account-switch-loader" class="account-switch-loader" aria-hidden="true">
+    <div class="spinner" role="status" aria-label="Loading"></div>
+  </div>
+
+<header class="navbar">
+<button class="menu-toggle" aria-label="Menú">
+  <svg class="menu-icon" viewBox="0 0 32 32" width="28" height="28" stroke-linecap="round">
+    <g class="lines" stroke="currentColor" stroke-width="2" fill="none">
+      <line class="top" x1="6" y1="10" x2="26" y2="10" />
+      <line class="middle" x1="6" y1="16" x2="26" y2="16" />
+      <line class="bottom" x1="6" y1="22" x2="26" y2="22" />
+    </g>
+  </svg>
+</button>
+
+
+
+<div class="nav-desktop">
+  <ul>
+        <!-- SHOP -->
+    <li class="nav-item has-dropdown" id="nav-shop" data-nav-role="shop">
+      <button class="nav-main" data-i18n="nav_shop" aria-label="Shop">SHOP</button>
+      <button class="nav-arrow" aria-label="Abrir Shop" aria-expanded="false">
+        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2L6 6L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="dropdown sucesso-hover-dropdown" data-dd="shop" hidden>
+        <a href="collections/t-shirts/" class="dropdown-item" data-i18n="nav_tees">T-SHIRTS</a>
+      </div>
+    </li>
+
+    <!-- COLLECTIONS -->
+    <li class="nav-item has-dropdown" id="nav-collections" data-nav-role="collections">
+      <button class="nav-main" data-i18n="nav_collections" aria-label="Collections">COLLECTIONS</button>
+      <button class="nav-arrow" aria-label="Abrir Collections" aria-expanded="false">
+        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2L6 6L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="dropdown sucesso-hover-dropdown collection-dropdown" data-dd="collections" hidden>
+        <a href="collections/dice-drp/" class="collection-hover-card" aria-label="DICE DRP">
+          <img src="images/collection-dice-drp-cover.png" alt="DICE DRP">
+          <span class="collection-hover-name">DICE DRP</span>
+        </a>
+      </div>
+    </li>
+
+    <!-- SUPPORT -->
+    <li class="nav-item has-dropdown" id="nav-support">
+      <button class="nav-main" data-i18n="support" aria-label="Support">SUPPORT</button>
+      <button class="nav-arrow" aria-label="Abrir Support" aria-expanded="false">
+        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2L6 6L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="dropdown" data-dd="support" hidden>
+        <a href="contactanos.html" class="dropdown-item" data-i18n="contact_us">Contact Us</a>
+      </div>
+    </li>
+
+<!-- BRAND -->
+<li class="nav-item has-dropdown" id="nav-brand">
+  <button class="nav-main" data-i18n="brand" aria-label="Brand">BRAND</button>
+  <button class="nav-arrow" aria-label="Abrir Brand" aria-expanded="false">
+    <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 2L6 6L2 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div class="dropdown" data-dd="brand" hidden>
+    <a href="about.html" class="dropdown-item" data-i18n="nav_about">ABOUT</a>
+  </div>
+</li>
+
+  </ul>
+</div>
+
+
+  
+  <div class="navbar-center">
+    <a href="index.html"><img src="images/logo sucesso png.png" alt="Nude Logo" class="logo" style="width: 130px; height: auto;"/></a>
+  </div>
+
+<div class="navbar-right">
+  <!-- Botón de idioma (sigue igual) -->
+  <div class="language-toggle" id="languageToggle">EN | ES</div>
+
+<!-- SEARCH -->
+<!-- Versión TEXTO para desktop XL -->
+<button class="nav-text show-desktop-xl" onclick="toggleSearchBar()" aria-label="Open search" id="search-text-btn" data-i18n="nav_search">
+  Search
+</button>
+<!-- Versión ÍCONO para laptop/móvil -->
+<button class="search-toggle hide-desktop-xl" onclick="toggleSearchBar()" aria-label="Abrir búsqueda">
+  <img src="images/nav-search.svg" alt="" class="su-nav-search-svg" aria-hidden="true">
+</button>
+
+<!-- ACCOUNT -->
+<!-- Versión TEXTO para desktop XL -->
+<a id="account-link-text" href="login.html" style="text-decoration: none !important;" class="nav-text show-desktop-xl" data-i18n="nav_account">
+  Account
+</a>
+<!-- Versión ÍCONO para laptop/móvil -->
+<a id="account-link" href="login.html" class="account-button hide-desktop-xl">
+  <img src="images/nav-account.svg" alt="Cuenta" class="account-icon su-nav-account-svg">
+</a>
+
+<!-- CART -->
+<!-- Versión TEXTO para desktop XL -->
+<button id="cart-text-btn" class="nav-text show-desktop-xl" type="button">
+  <span data-i18n="nav_cart">Cart</span> 
+  <span id="cart-count-text" style="margin-left: 0.2rem !important;">(0)</span>
+</button>
+
+<!-- Versión ÍCONO para laptop/móvil -->
+<div class="hide-desktop-xl" style="position: relative; display: flex; align-items: center; margin-left: 0px;">
+  <img src="images/nav-cart.svg" alt="Carrito" class="cart-icon su-nav-cart-svg" id="cart-btn" style="width:22px;height:22px;pointer-events:auto;cursor:pointer;">
+  <span id="cart-count">0</span>
+</div>
+
+
+</header>
+
+  <div class="search-bar" id="searchBar">
+    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input type="text" placeholder="Buscar...">
+    <button class="close-search" onclick="toggleSearchBar()" aria-label="Cerrar búsqueda">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="search-results" id="searchResults"></div>
+  <div class="overlay" id="overlay" onclick="toggleSearchBar()"></div>
+
+  
+
+
+</header>
+
+<div class="container">
+  <ul class="sidebar-menu">
+    <li><a href="#" onclick="mostrarSeccion('perfil')" data-i18n="sidebar_profile">Profile</a></li>
+    <li><a href="#" onclick="mostrarSeccion('compras')" data-i18n="sidebar_purchases">Purchases</a></li>
+    <li><a href="#" onclick="mostrarSeccion('wishlist')" data-i18n="sidebar_wishlist">Wish List</a></li>
+  </ul>
+
+  <div class="account-content">
+    <div id="perfil" class="seccion">
+      <h2 data-i18n="profile_title">Profile</h2>
+      <div class="input-box" id="user-info" data-i18n="profile_loading">Charging info...</div>
+
+      <div class="input-box">
+        <div style="margin-top: 1rem;">
+          <label style="font-weight: 500; margin-bottom: 0.3rem; display: block;" data-i18n="profile_access_method">Acceso</label>
+          <span style="color: #1a1a1a; font-size: 1rem;" data-i18n="profile_passwordless">Código de un solo uso por correo electrónico</span>
+        </div>
+      </div>
+
+      <div class="input-box" id="direccion-box">
+  <label for="direccion" style="font-weight: 500;" data-i18n="profile_address_label">Shipping Address</label>
+  <input type="text" id="direccion" data-i18n-placeholder="profile_address_placeholder" placeholder="Agrega tu dirección" style="width: 100%; border: none; background: transparent;" disabled>
+  
+  <button id="btn-editar-direccion" class="btn-profile-action" data-i18n="profile_edit">Edit</button>
+  <button id="btn-guardar-direccion" class="btn-profile-action hidden" data-i18n="profile_save">Save</button>
+</div>
+
+
+      <button id="logout-btn" class="btn-logout" data-i18n="logout">Log Out</button>
+    </div>
+
+    <div id="compras" class="seccion hidden">
+      <h2 data-i18n="purchases_title">Purchases</h2>
+<div id="historial-compras" class="orders-grid">
+  <div class="order-skeleton" data-i18n="purchases_loading">Charging purchases...</div>
+</div>
+    </div>
+
+
+    <div id="wishlist" class="seccion hidden wishlist-account-section">
+      <h2 data-i18n="wishlist_title">Wish List</h2>
+      <p id="wishlist-empty" class="wishlist-empty" data-i18n="wishlist_empty">Your wish list is empty.</p>
+      <div id="wishlist-grid" class="wishlist-grid" aria-live="polite"></div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- 🛒 Carrito lateral -->
+  <div id="cart-overlay" class="cart-overlay hidden">
+    <div class="cart-panel">
+      <div class="cart-header">
+<h2 data-i18n="your_cart">Your Cart</h2>
+        <button class="close-cart">&times;</button>
+      </div>
+      <div class="cart-items"></div>
+      <div class="cart-footer">
+<p class="cart-total"><span data-i18n="total">Total:</span> $0.00</p>
+<button class="checkout-btn" data-i18n="checkout">Checkout</button>
+<button id="clear-cart-btn" style="display:none;" data-i18n="empty_cart">Empty Cart</button>
+      </div>
+    </div>
+  </div>
+
+<div id="language-popup" class="language-popup">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <strong style="font-size: 12px; letter-spacing: 1px;">LANGUAGE SETTINGS</strong>
+    <button class="close-btn" onclick="closeLanguagePopup()">&times;</button>
+  </div>
+  <label for="language-select" style="font-size: 10px; display: block; margin-bottom: 8px;">SELECT LANGUAGE:</label>
+  <select id="language-select" style="width: 100%; padding: 10px; font-size: 12px; border: 1px solid #ccc;">
+    <option value="en">English</option>
+    <option value="es">Español</option>
+  </select>
+  <button onclick="saveLanguage()" style="width: 100%; margin-top: 20px; padding: 10px; background: #233f32; color: white; font-size: 12px; border: none; cursor: pointer; text-transform: uppercase;">Save</button>
+</div>
+
+<div id="language-popup" class="language-popup">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <strong style="font-size: 12px; letter-spacing: 1px;">LANGUAGE SETTINGS</strong>
+    <button class="close-btn" onclick="closeLanguagePopup()">&times;</button>
+  </div>
+  <label for="language-select" style="font-size: 10px; display: block; margin-bottom: 8px;">SELECT LANGUAGE:</label>
+  <select id="language-select" style="width: 100%; padding: 10px; font-size: 12px; border: 1px solid #ccc;">
+    <option value="en">English</option>
+    <option value="es">Español</option>
+  </select>
+  <button onclick="saveLanguage()" style="width: 100%; margin-top: 20px; padding: 10px; background: #233f32; color: white; font-size: 12px; border: none; cursor: pointer; text-transform: uppercase;">Save</button>
+</div>
+
+<script>
+  const popup = document.getElementById("language-popup");
+  const trigger = document.getElementById("openLanguagePopup");
+  const select = document.getElementById("language-select");
+
+  trigger.addEventListener("click", (e) => {
+    e.preventDefault();
+    const savedLang = localStorage.getItem("preferredLang");
+    const currentLang = savedLang || document.documentElement.lang || "en";
+    select.value = currentLang; // Mostrar idioma actual
+    popup.classList.add("show");
+  });
+
+  function closeLanguagePopup() {
+    popup.classList.remove("show");
+  }
+
+function saveLanguage() {
+  const lang = select.value;
+  localStorage.setItem("preferredLang", lang); // Guardar idioma
+  setLanguage(lang);
+  closeLanguagePopup();
+
+  // 👇 Esto forzará que el carrito se re-renderice con las etiquetas traducidas
+  if (typeof updateCart === "function") {
+    updateCart();
+  }
+}
+
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(res => res.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        document.documentElement.lang = lang;
+      })
+      .catch(err => console.error("Error cargando idioma:", err));
+  }
+
+  // Al cargar la página, aplicar idioma guardado
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("preferredLang") || "en";
+    select.value = savedLang;
+    setLanguage(savedLang);
+  });
+</script>
+
+
+  <script>
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("loader");
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 2500);
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("abrir") === "carrito") {
+        const cartBtn = document.getElementById("cart-btn");
+        if (cartBtn) {
+          setTimeout(() => cartBtn.click(), 300); // espera a que todo cargue
+        }
+      }
+    });
+  </script>
+
+  <script src="script.js"></script>
+  <script src="cart.js"></script>
+  <script src="styles.css"></script>
+
+<script>
+  const langSwitcher = document.getElementById("languageSwitcher");
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(response => response.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        localStorage.setItem("preferredLang", lang);
+      })
+      .catch(error => console.error("Error cargando idioma:", error));
+  }
+
+  langSwitcher.addEventListener("change", (e) => {
+    setLanguage(e.target.value);
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("preferredLang") || "en";
+    langSwitcher.value = savedLang;
+    setLanguage(savedLang);
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const langToggleHeader = document.getElementById("languageToggle");
+  const langToggleSidebar = document.getElementById("languageToggleSidebar");
+  const popup = document.getElementById("language-popup");
+  const languageSelect = document.getElementById("language-select");
+  const sidebar = document.querySelector(".sidebar");
+  const overlay = document.getElementById("overlay");
+
+  const currentLang = localStorage.getItem("preferredLang") || "en";
+  languageSelect.value = currentLang;
+
+  function updateToggleText(lang) {
+    const text = lang === "es" ? "ES | EN" : "EN | ES";
+    if (langToggleHeader) langToggleHeader.textContent = text;
+    if (langToggleSidebar) langToggleSidebar.textContent = text;
+  }
+
+  function openLanguagePopup() {
+    popup.classList.add("show");
+    languageSelect.value = localStorage.getItem("preferredLang") || "en";
+  }
+
+  if (langToggleHeader) {
+    langToggleHeader.addEventListener("click", () => {
+      openLanguagePopup();
+    });
+  }
+
+  if (langToggleSidebar) {
+  langToggleSidebar.addEventListener("click", () => {
+    openLanguagePopup(); // ✅ Mantener el sidebar abierto
+  });
+}
+
+
+
+  window.saveLanguage = function () {
+    const selectedLang = languageSelect.value;
+    localStorage.setItem("preferredLang", selectedLang);
+    setLanguage(selectedLang);
+    updateToggleText(selectedLang);
+    popup.classList.remove("show");
+    if (typeof updateCart === "function") updateCart();
+  };
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(res => res.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        document.documentElement.lang = lang;
+      })
+      .catch(err => console.error("Error cargando idioma:", err));
+  }
+
+  updateToggleText(currentLang);
+  setLanguage(currentLang);
+});
+</script>
+
+
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <a href="index.html" data-i18n="nav_new_in">NEW IN</a>
+  <a href="collections/t-shirts/" data-i18n="nav_tees">T-SHIRTS</a>
+  <a href="about.html" data-i18n="nav_about">ABOUT</a>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-auth-lang">
+      <a id="sidebar-account-link" href="login.html" class="sidebar-link">
+        <img src="images/icon account.png" alt="Login" class="sidebar-icon" />
+        <span id="sidebar-account-text" data-i18n="sidebar_account">Account</span>
+      </a>
+      <div class="lang-btn" id="languageToggleSidebar">EN | ES</div>
+    </div>
+  </div>
+</aside>
+
+  <!-- SCRIPT -->
+<script>
+  const toggleBtn = document.querySelector('.menu-toggle');
+  const sidebar = document.querySelector('.sidebar');
+  const closeBtn = document.querySelector('.close-sidebar');
+
+toggleBtn.addEventListener('click', () => {
+  const icon = toggleBtn.querySelector('.menu-icon');
+  sidebar.classList.toggle('active');
+  icon.classList.toggle('open');
+});
+
+closeBtn.addEventListener('click', () => {
+  const icon = toggleBtn.querySelector('.menu-icon');
+  sidebar.classList.remove('active');
+  icon.classList.remove('open');
+});
+
+
+</script>
+
+<script>
+function updateLanguageToggleVisibility() {
+  const navDesktop = document.querySelector('.nav-desktop');
+  const languageToggle = document.getElementById('languageToggle');
+
+  if (!navDesktop || !languageToggle) return;
+
+  const navVisible = window.getComputedStyle(navDesktop).display !== 'none';
+
+  // Mostrar solo si los nav links están visibles (pantalla grande)
+  languageToggle.style.display = navVisible ? 'flex' : 'none';
+}
+
+// Ejecutar al cargar
+document.addEventListener("DOMContentLoaded", updateLanguageToggleVisibility);
+
+// Ejecutar al redimensionar
+window.addEventListener("resize", updateLanguageToggleVisibility);
+</script>
+
+
+<script>
+const menuToggle = document.querySelector('.menu-toggle');
+const menuIcon = document.querySelector('.menu-icon');
+
+menuToggle.addEventListener('click', () => {
+  menuIcon.classList.toggle('open');
+});
+</script>
+
+<script type="module">
+  import { getApps, initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getFirestore,
+    collection,
+    getDocs,
+    query,
+    where,
+    doc,
+    getDoc,
+    setDoc
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  /* =============================
+     Firebase
+  ==============================*/
+  const firebaseConfig = {
+    apiKey: "AIzaSyD3u2GKMSAKC_1Cd88KA-rxTOf_Jnt3fuM",
+    authDomain: "sucesso-74f7c.firebaseapp.com",
+    projectId: "sucesso-74f7c",
+    storageBucket: "sucesso-74f7c.appspot.com",
+    messagingSenderId: "878844661636",
+    appId: "1:878844661636:web:6382f86f18201aecfdd7d1"
+  };
+
+  const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  /* =============================
+     DOM refs
+  ==============================*/
+  const userInfo = document.getElementById("user-info");
+  const logoutBtn = document.getElementById("logout-btn");
+  const historialEl = document.getElementById("historial-compras");
+
+  const direccionInput = document.getElementById("direccion");
+  const btnEditarDireccion = document.getElementById("btn-editar-direccion");
+  const btnGuardarDireccion = document.getElementById("btn-guardar-direccion");
+
+  const accountLink = document.getElementById("account-link");
+  const sidebarAccountLink = document.getElementById("sidebar-account-link");
+  const sidebarAccountText = document.getElementById("sidebar-account-text");
+
+  /* =============================
+     Estado
+  ==============================*/
+  let currentUser = null;
+  let allProducts = [];
+  let productIndex = new Map(); // nombre/título → producto (opcional)
+
+  /* =============================
+     i18n helpers
+  ==============================*/
+  const uiLang = () => localStorage.getItem("preferredLang") || "en";
+  const t = (es, en) => (uiLang() === "es" ? es : en);
+
+  /* =============================
+     Botón "Seguimiento Admin"
+  ==============================*/
+  const ADMIN_EMAILS = new Set([
+    "lberaja20@gmail.com",
+    "help.sucsso@gmail.com"
+  ]);
+
+  function addAdminTrackingLink() {
+    const ul = document.querySelector(".sidebar-menu");
+    if (!ul || ul.querySelector("#admin-tracking-link")) return;
+
+    const notifLi = [...ul.querySelectorAll("a")].find(a =>
+      (a.getAttribute("onclick") || "").includes("wishlist")
+    )?.parentElement;
+
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.id = "admin-tracking-link";
+    a.href = "admin-tracking.html";
+    a.textContent = t("Seguimiento Admin", "Admin Tracking");
+    li.appendChild(a);
+
+    if (notifLi) notifLi.insertAdjacentElement("afterend", li);
+    else ul.appendChild(li);
+  }
+
+  function removeAdminTrackingLink() {
+    const el = document.querySelector("#admin-tracking-link");
+    if (el?.parentElement) el.parentElement.remove();
+  }
+
+  const toggleAdminTracking = (show) => (show ? addAdminTrackingLink() : removeAdminTrackingLink());
+  toggleAdminTracking(false); // oculto por defecto
+
+  /* =============================
+     Catálogo (opcional, no bloquea compras)
+  ==============================*/
+  async function loadProductsSafe() {
+    try {
+      const qs = await getDocs(collection(db, "productos"));
+      allProducts = [];
+      qs.forEach(d => {
+        const data = d.data() || {};
+        allProducts.push({
+          titulo: window.SucessoStorefront?.displayProductName?.(data.titulo) || data.titulo || "",
+          nombre: data.nombre ?? "",
+          precio: Number(data.precio ?? 0),
+          imagen_frontal: String(data.imagen_frontal || "").replace(/\\/g, "/"),
+          imagen_trasera: String(data.imagen_trasera || "").replace(/\\/g, "/"),
+          keywords: Array.isArray(data.keywords) ? data.keywords : []
+        });
+      });
+      productIndex = new Map();
+      for (const p of allProducts) {
+        if (p?.nombre) productIndex.set(p.nombre.toLowerCase(), p);
+        if (p?.titulo) productIndex.set(p.titulo.toLowerCase(), p);
+      }
+    } catch (e) {
+      // No interrumpir la carga de compras
+      console.warn("Catálogo no disponible (seguimos sin él):", e);
+      allProducts = [];
+      productIndex = new Map();
+    }
+  }
+
+  const findProductData = (nameOrTitle) => {
+    if (!nameOrTitle) return null;
+    return productIndex.get(String(nameOrTitle).toLowerCase()) || null;
+  };
+
+  /* =============================
+     Helpers de compras
+  ==============================*/
+  const money = (n) => `$${Number(n || 0).toFixed(2)}`;
+
+  const getItemQty = (i) => Number(i?.cantidad ?? i?.qty ?? i?.quantity ?? 1);
+
+  const getItemName = (i) => {
+    const raw = i?.nombre || i?.titulo || i?.title || "";
+    if (raw) return String(raw);
+    const p = findProductData(i?.sku || i?.handle || i?.id || i?.productId || "");
+    return p?.titulo || p?.nombre || t("Producto", "Product");
+  };
+
+  const getItemSizes = (i) => {
+    const bucket = [];
+    const pushVal = (v) => {
+      if (v == null) return;
+      const s = String(v).trim();
+      if (s) bucket.push(s.toUpperCase());
+    };
+    pushVal(i?.talla);
+    pushVal(i?.tallaSeleccionada);
+    pushVal(i?.size);
+    (Array.isArray(i?.tallas) ? i.tallas : []).forEach(pushVal);
+    (Array.isArray(i?.sizes) ? i.sizes : []).forEach(pushVal);
+    if (i?.opciones) {
+      pushVal(i.opciones.talla ?? i.opciones.size ?? i.opciones.variant);
+      if (Array.isArray(i.opciones)) i.opciones.forEach(pushVal);
+    }
+    if (i?.variantes) {
+      pushVal(i.variantes.talla ?? i.variantes.size);
+      if (Array.isArray(i.variantes)) i.variantes.forEach(pushVal);
+    }
+    if (i?.attributes) {
+      pushVal(i.attributes.talla ?? i.attributes.size);
+    }
+    const uniq = [...new Set(bucket.filter(Boolean))];
+    return uniq.join(", ");
+  };
+
+  const dateFromAny = (tsLike) => {
+    if (!tsLike) return null;
+    if (typeof tsLike?.toDate === "function") return tsLike.toDate();
+    if (typeof tsLike === "object" && "seconds" in tsLike) return new Date(tsLike.seconds * 1000);
+    const d = new Date(tsLike);
+    return isNaN(d) ? null : d;
+  };
+
+  const formatOnlyDate = (tsLike) => {
+    const lang = uiLang();
+    let d = dateFromAny(tsLike);
+    if (!d) return t("Fecha desconocida", "Unknown date");
+    const optsES = { day: "2-digit", month: "2-digit", year: "numeric" };
+    const optsEN = { year: "numeric", month: "short", day: "2-digit" };
+    return d.toLocaleDateString(lang === "es" ? "es-ES" : "en-GB", lang === "es" ? optsES : optsEN);
+  };
+
+  const monthKey   = (d) => d ? `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}` : "unknown";
+  const dayKey     = (d) => d ? `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}` : "unknown";
+  const monthLabel = (d) => d.toLocaleDateString(uiLang()==='es'?'es-ES':'en-GB', {year:'numeric', month:'long'});
+  const dayLabel   = (d) => d.toLocaleDateString(uiLang()==='es'?'es-ES':'en-GB', {day:'2-digit', month:'short'});
+
+  /* =============================
+     Render de compras (sin sombras de variables)
+  ==============================*/
+  let lastOrdersSnapshot = null;
+  const purchasesShowVES = () => String(localStorage.getItem('sucesso-selected-country') || '').toUpperCase() === 'VE';
+  const orderVESAmount = (data, total) => {
+    // Historical purchases must keep the VES amount that was valid when the order was placed.
+    // Never recalculate an old order with today's BCV rate.
+    const storedTotalVES = Number(data?.total_ves);
+    if (Number.isFinite(storedTotalVES) && storedTotalVES >= 0) return storedTotalVES;
+
+    const storedPurchaseRate = Number(data?.bcv_rate);
+    if (Number.isFinite(storedPurchaseRate) && storedPurchaseRate > 0) {
+      return Number(total || 0) * storedPurchaseRate;
+    }
+
+    // Legacy orders created before BCV snapshots were stored have no trustworthy
+    // historical conversion available, so do not substitute the current rate.
+    return NaN;
+  };
+
+  function renderOrders(snapshot) {
+    lastOrdersSnapshot = snapshot;
+    if (!historialEl) return;
+    historialEl.innerHTML = "";
+
+    if (snapshot.empty) {
+      const empty = document.createElement("div");
+      empty.className = "order-skeleton";
+      empty.textContent = t("Todavía no has realizado ningún pedido.", "You have no orders yet.");
+      historialEl.appendChild(empty);
+      return;
+    }
+
+    // Normalizamos y ordenamos por fecha DESC en cliente (evita índices compuestos)
+    const orders = [];
+    snapshot.forEach(docSnap => {
+      const data = docSnap.data() || {};
+      const d = dateFromAny(data.fecha) || dateFromAny(data.createdAt) || dateFromAny(data.created_at) || new Date(0);
+      orders.push({ id: docSnap.id, data, date: d });
+    });
+    orders.sort((a, b) => b.date.getTime() - a.date.getTime());
+
+    let lastMonth = "", lastDay = "";
+
+    for (const ord of orders) {
+      const data = ord.data;
+      const d = ord.date;
+
+      // Encabezados Mes/Día
+      const mKey = monthKey(d);
+      if (mKey !== lastMonth) {
+        lastMonth = mKey;
+        const h = document.createElement("div");
+        h.className = "orders-month";
+        h.textContent = monthLabel(d);
+        historialEl.appendChild(h);
+        lastDay = "";
+      }
+      const dKey = dayKey(d);
+      if (dKey !== lastDay) {
+        lastDay = dKey;
+        const dd = document.createElement("div");
+        dd.className = "orders-day";
+        dd.textContent = dayLabel(d);
+        historialEl.appendChild(dd);
+      }
+
+      // Ítems y totales
+      const items = Array.isArray(data.items) ? data.items : [];
+
+      const computedTotal = items.reduce((acc, i) => {
+        const p = findProductData(i?.nombre || i?.titulo);
+        const price = typeof i?.precio === "number" ? i.precio : (p?.precio ?? 0);
+        const qty = getItemQty(i);
+        return acc + price * qty;
+      }, 0);
+
+      const subtotal   = typeof data.subtotal  === "number" ? data.subtotal  : computedTotal;
+      const envio      = typeof data.envio     === "number" ? data.envio     : (data.shipping ?? 0);
+      const impuestos  = typeof data.impuestos === "number" ? data.impuestos : (data.taxes ?? 0);
+      const grandTotal = (typeof data.total === "number") ? data.total : (subtotal + envio + impuestos);
+
+      // Thumbs
+      const thumbsHTML = items.map(i => {
+        const name   = getItemName(i);
+        const qty    = getItemQty(i);
+        const sizes  = getItemSizes(i);
+        const p      = findProductData(i?.nombre || i?.titulo || name);
+        const img    = i?.imagen || p?.imagen_frontal || p?.imagen_trasera || "images/placeholder.png";
+        const alt    = String(name).replace(/"/g, "&quot;");
+        const sizeLabel = sizes ? (uiLang()==='es' ? `Talla: ${sizes}` : `Size: ${sizes}`) : (uiLang()==='es' ? "Talla: —" : "Size: —");
+        return `
+          <div class="order-product">
+            <div class="order-thumb-item">
+              <img src="${img}" alt="${alt}">
+              ${qty>1 ? `<span class="thumb-qty-badge">x${qty}</span>` : ``}
+            </div>
+            <div class="order-product-copy">
+              <div class="order-product-name">${name}</div>
+              <div class="order-product-size">${sizeLabel}</div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      const shortId = ord.id ? `#${String(ord.id).slice(-6).toUpperCase()}` : "";
+      const itemsCountText = `${items.length} ${uiLang() === 'es' ? 'artículos' : 'items'}`;
+
+      const row = document.createElement("div");
+      row.className = "order-row";
+      row.innerHTML = `
+        <div class="order-meta-bar">
+          <div class="order-date">${formatOnlyDate(d)}</div>
+          <div class="order-pill">${itemsCountText}</div>
+          <div class="order-pill">${shortId || (uiLang()==='es' ? 'Orden' : 'Order')}</div>
+        </div>
+
+        <div class="order-body">
+          <div>
+            <div class="order-thumbs">${thumbsHTML || ""}</div>
+            <div class="order-actions" style="margin-top:10px; font-size:12px;">
+              ${data.recibo_url ? `<a class="order-link" href="${data.recibo_url}" target="_blank" rel="noopener">${t("Ver recibo", "View receipt")}</a>` : ""}
+              ${data.seguimiento_url ? ` &nbsp; <a class="order-link" href="${data.seguimiento_url}" target="_blank" rel="noopener">${t("Seguimiento", "Track")}</a>` : ""}
+            </div>
+          </div>
+
+          <div class="order-summary">
+            <div class="summary-row"><span>${t("Subtotal", "Subtotal")}</span><span>${money(subtotal)}</span></div>
+            <div class="summary-row"><span>${t("Envío", "Shipping")}</span><span>${money(envio)}</span></div>
+            <div class="summary-row"><span>${t("Impuestos", "Taxes")}</span><span>${money(impuestos)}</span></div>
+            <div class="summary-row total"><span>${t("Total", "Total")}</span><span>${money(grandTotal)}</span></div>
+            ${purchasesShowVES() ? `<div class="summary-row order-ves-row"><span>${t("Monto VES", "VES amount")}</span><span>${Number.isFinite(orderVESAmount(data, grandTotal)) ? window.SucessoBCV.formatVES(orderVESAmount(data, grandTotal)) : "— VES"}</span></div>` : ``}
+          </div>
+        </div>
+      `;
+      historialEl.appendChild(row);
+    }
+  }
+
+  window.addEventListener('sucesso:bcv-rate', () => { if (lastOrdersSnapshot) renderOrders(lastOrdersSnapshot); });
+  window.addEventListener('sucesso:country-change', () => { if (lastOrdersSnapshot) renderOrders(lastOrdersSnapshot); });
+
+  /* =============================
+     Sidebar secciones (activo)
+  ==============================*/
+  let activeAccountSection = "perfil";
+  let accountSwitchTimer = null;
+
+  function applyAccountSection(id) {
+    document.querySelectorAll(".seccion").forEach(el => el.classList.add("hidden"));
+    const target = document.getElementById(id);
+    if (target) target.classList.remove("hidden");
+
+    const links = document.querySelectorAll(".sidebar-menu a");
+    links.forEach(a => {
+      const calls = a.getAttribute("onclick") || "";
+      const isThis = calls.includes(`'${id}'`) || calls.includes(`("${id}")`);
+      a.classList.toggle("active", isThis);
+    });
+    activeAccountSection = id;
+  }
+
+  window.mostrarSeccion = (id) => {
+    if (!id || !document.getElementById(id)) return;
+
+    /* Si ya estamos en esa sección, no mostramos una carga artificial. */
+    if (id === activeAccountSection) {
+      applyAccountSection(id);
+      return;
+    }
+
+    const switchLoader = document.getElementById("account-switch-loader");
+    if (accountSwitchTimer) clearTimeout(accountSwitchTimer);
+
+    switchLoader?.classList.add("active");
+    switchLoader?.setAttribute("aria-hidden", "false");
+
+    accountSwitchTimer = setTimeout(() => {
+      applyAccountSection(id);
+      switchLoader?.classList.remove("active");
+      switchLoader?.setAttribute("aria-hidden", "true");
+      accountSwitchTimer = null;
+    }, 500);
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const links = document.querySelectorAll(".sidebar-menu a");
+    const perfilLink = Array.from(links).find(link => link.getAttribute("onclick")?.includes("perfil"));
+    if (perfilLink) perfilLink.classList.add("active");
+    links.forEach(link => link.addEventListener("click", (e) => e.preventDefault()));
+  });
+
+  /* =============================
+     Auth + Carga de Compras + Botón Admin
+  ==============================*/
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      toggleAdminTracking(false);
+      if (userInfo) window.location.href = "login.html";
+      return;
+    }
+
+    currentUser = user;
+    userInfo.textContent = `Correo: ${user.email}`;
+
+    // Admin link
+    const email = (user.email || "").toLowerCase().trim();
+    toggleAdminTracking(ADMIN_EMAILS.has(email));
+
+    if (accountLink) accountLink.href = "mi-cuenta.html";
+    if (sidebarAccountLink) sidebarAccountLink.href = "mi-cuenta.html";
+
+    // Texto sidebar cuenta según idioma (no crítico)
+    if (sidebarAccountText) {
+      const lang = uiLang();
+      fetch("assets/lang/lang.json").then(r=>r.json()).then(data=>{
+        sidebarAccountText.textContent = data[lang]?.sidebar_account || (lang==="es"?"Mi Cuenta":"My Account");
+      }).catch(()=>{
+        sidebarAccountText.textContent = (lang==="es"?"Mi Cuenta":"My Account");
+      });
+    }
+
+    // Dirección guardada (no bloquea nada si falla)
+    try {
+      const userDoc = await getDoc(doc(db, "usuarios", user.uid));
+      const direccion = userDoc.exists() ? (userDoc.data().direccion || "") : "";
+      direccionInput.value = direccion;
+    } catch (e) {
+      console.warn("No se pudo obtener la dirección:", e);
+    }
+
+    // 1) Intentar cargar catálogo SIN bloquear
+    await loadProductsSafe();
+
+    // 2) Cargar compras SIEMPRE (con o sin catálogo)
+    try {
+      const qRef = query(collection(db, "compras"), where("uid", "==", user.uid));
+      const snapshot = await getDocs(qRef);
+      renderOrders(snapshot);
+    } catch (err) {
+      console.error("Error consultando compras:", err);
+      if (historialEl) {
+        historialEl.innerHTML = `<div class="order-skeleton">${t("Error al cargar tus compras. Intenta nuevamente.", "Error loading your orders. Please try again.")}</div>`;
+      }
+    }
+  });
+
+  /* =============================
+     Editar/Guardar Dirección
+  ==============================*/
+  btnEditarDireccion?.addEventListener("click", () => {
+    direccionInput.disabled = false;
+    btnEditarDireccion.classList.add("hidden");
+    btnGuardarDireccion.classList.remove("hidden");
+  });
+
+  btnGuardarDireccion?.addEventListener("click", async () => {
+    const nuevaDireccion = direccionInput.value.trim();
+    if (!nuevaDireccion || !currentUser) return;
+    try {
+      await setDoc(doc(db, "usuarios", currentUser.uid), { direccion: nuevaDireccion }, { merge: true });
+      direccionInput.disabled = true;
+      btnGuardarDireccion.classList.add("hidden");
+      btnEditarDireccion.classList.remove("hidden");
+      alert(t("Dirección guardada correctamente.", "Address saved successfully."));
+    } catch (error) {
+      console.error("Error al guardar la dirección:", error);
+      alert(t("Error al guardar. Intenta nuevamente.", "Error saving. Please try again."));
+    }
+  });
+
+  /* =============================
+     Logout
+  ==============================*/
+  logoutBtn?.addEventListener("click", () => {
+    signOut(auth).then(() => {
+      window.location.href = "index.html";
+    });
+  });
+</script>
+
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const links = document.querySelectorAll('.sidebar-menu a');
+
+  // 👉 Marcar perfil como activo al cargar
+  const perfilLink = Array.from(links).find(link => link.getAttribute('onclick').includes('perfil'));
+  if (perfilLink) perfilLink.classList.add('active');
+
+  links.forEach(link => {
+    link.addEventListener('click', (e) => {
+      // Quitar activo de todos
+      links.forEach(l => l.classList.remove('active'));
+
+      // Agregar activo solo al clickeado
+      link.classList.add('active');
+    });
+  });
+});
+</script>
+
+<script>
+  // ===== Bloqueo / Desbloqueo de scroll =====
+  let __lockScrollY = 0;
+
+  const __wheelBlock = (e) => e.preventDefault();
+  const __touchBlock = (e) => e.preventDefault();
+  const __keyBlock = (e) => {
+    // No bloquear la escritura en inputs/textarea
+    const ae = document.activeElement;
+    const isTyping = ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' || ae.isContentEditable);
+    if (isTyping) return;
+
+    // Bloquear teclas de desplazamiento
+    const k = e.code || e.key;
+    const scrollKeys = ['Space', 'PageUp', 'PageDown', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
+    if (scrollKeys.includes(k)) e.preventDefault();
+  };
+
+  function lockScroll() {
+    if (document.body.classList.contains('scroll-lock')) return;
+    __lockScrollY = window.scrollY || window.pageYOffset || 0;
+    document.body.style.top = `-${__lockScrollY}px`;
+    document.documentElement.classList.add('scroll-lock');
+    document.body.classList.add('scroll-lock');
+
+    // Bloquear gestos/rueda/teclas
+    window.addEventListener('wheel', __wheelBlock, { passive: false });
+    window.addEventListener('touchmove', __touchBlock, { passive: false });
+    window.addEventListener('keydown', __keyBlock, { passive: false });
+  }
+
+  function unlockScroll() {
+    if (!document.body.classList.contains('scroll-lock')) return;
+    document.documentElement.classList.remove('scroll-lock');
+    document.body.classList.remove('scroll-lock');
+
+    window.removeEventListener('wheel', __wheelBlock, { passive: false });
+    window.removeEventListener('touchmove', __touchBlock, { passive: false });
+    window.removeEventListener('keydown', __keyBlock, { passive: false });
+
+    const y = __lockScrollY || 0;
+    document.body.style.top = '';
+    window.scrollTo(0, y);
+  }
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.querySelector('.search-bar input');
+  const resultsContainer = document.getElementById('searchResults');
+  const searchBar = document.getElementById('searchBar');
+  const overlay = document.getElementById('overlay');
+  let allProducts = []; // (tu código ya lo carga con loadProducts())
+  let searchTimeout;
+
+  function hideResults() {
+    resultsContainer.innerHTML = "";
+    resultsContainer.style.display = "none";
+  }
+
+  // 👉 Si el usuario hace clic en un resultado, soltamos el lock para navegar
+  resultsContainer.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (a) {
+      unlockScroll();
+    }
+  });
+
+  input.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    const query = input.value.toLowerCase().trim();
+
+    searchTimeout = setTimeout(() => {
+      if (query === "") {
+        hideResults();
+      } else {
+        const filtered = allProducts.filter(product =>
+          product.titulo.toLowerCase().includes(query) ||
+          product.nombre.toLowerCase().includes(query) ||
+          (product.keywords || []).some(k => String(k).toLowerCase().includes(query))
+        );
+
+        renderResults(filtered); // (ya la tienes definida)
+      }
+    }, 1000);
+  });
+
+  // 🔒🔓 Aquí forzamos el bloqueo/desbloqueo de scroll
+  window.toggleSearchBar = function () {
+    const isActive = searchBar.classList.contains('active');
+    if (isActive) {
+      // Cerrar búsqueda
+      searchBar.classList.add('hiding');
+      searchBar.classList.remove('active');
+      overlay.style.display = 'none';
+      hideResults();
+      input.value = "";
+      unlockScroll(); // 🔓 permite scroll otra vez
+      setTimeout(() => {
+        searchBar.classList.remove('hiding');
+      }, 200);
+    } else {
+      // Abrir búsqueda
+      searchBar.classList.add('active');
+      overlay.style.display = 'block';
+      input.focus();
+      lockScroll(); // 🔒 bloquea scroll en toda la página
+    }
+  };
+});
+</script>
+
+
+<script>
+/* --- 1) Conectar acciones al modo TEXTO (desktop XL) --- */
+document.addEventListener('DOMContentLoaded', () => {
+  // Search (texto) ya llama a toggleSearchBar() en el onClick del botón.
+
+  // Account (texto) debe comportarse como account-link original con Auth
+  const accountLinkText = document.getElementById('account-link-text');
+  if (accountLinkText) {
+    accountLinkText.addEventListener('click', (e) => {
+      e.preventDefault();
+      try {
+        // Si ya hay Firebase Auth cargado en otro script:
+        if (window.firebaseAuth && typeof window.firebaseAuth.onAuthStateChanged === 'function') {
+          window.firebaseAuth.onAuthStateChanged((user) => {
+            window.location.href = user ? 'mi-cuenta.html' : 'login.html';
+          });
+        } else {
+          // Fallback: imitar el comportamiento del link con ID account-link
+          const original = document.getElementById('account-link');
+          if (original) original.click(); else window.location.href = 'login.html';
+        }
+      } catch (err) {
+        window.location.href = 'login.html';
+      }
+    });
+  }
+
+  // Cart (texto) debe abrir el mismo panel que el ícono
+  const cartTextBtn = document.getElementById('cart-text-btn');
+  const cartIconBtn = document.getElementById('cart-btn');
+  if (cartTextBtn && cartIconBtn) {
+    cartTextBtn.addEventListener('click', () => cartIconBtn.click());
+  }
+});
+
+/* --- 2) Contador unificado: actualiza badge (ícono) y texto (Cart (n)) --- */
+(function setupCartCountSync() {
+  const badge = document.getElementById('cart-count');       // burbuja en ícono
+  const textCount = document.getElementById('cart-count-text'); // (n) en texto
+
+  function safeParse(json) {
+    try { return JSON.parse(json); } catch { return null; }
+  }
+
+  function computeQtyFromArray(arr) {
+    if (!Array.isArray(arr)) return 0;
+    return arr.reduce((sum, item) => {
+      const q = (item && (item.quantity ?? item.qty ?? item.cantidad ?? 1)) ?? 1;
+      return sum + (Number.isFinite(+q) ? +q : 1);
+    }, 0);
+  }
+
+  function readCartQty() {
+    // Intenta varias claves comunes:
+    const keys = ['carrito'];
+    for (const k of keys) {
+      const raw = localStorage.getItem(k);
+      if (!raw) continue;
+      const data = safeParse(raw);
+      if (!data) continue;
+      // si es objeto con items
+      if (data && Array.isArray(data.items)) return computeQtyFromArray(data.items);
+      // si es array
+      if (Array.isArray(data)) return computeQtyFromArray(data);
+      // si es objeto con conteo directo
+      if (typeof data.totalQty === 'number') return data.totalQty;
+      if (typeof data.count === 'number') return data.count;
+    }
+    // Como fallback, si existe window.cartItems (algunos setups lo exponen)
+    if (Array.isArray(window.cartItems)) return computeQtyFromArray(window.cartItems);
+    return 0;
+  }
+
+  function applyCount(n) {
+    if (badge) badge.textContent = String(n);
+    if (textCount) textCount.textContent = `(${n})`;
+  }
+
+  // Actualiza inmediatamente
+  applyCount(readCartQty());
+
+  // Escucha cambios por almacenamiento (otras pestañas / scripts que escriben)
+  window.addEventListener('storage', (e) => {
+    if (['cart','cartItems','carrito','sucesso_cart'].includes(e.key)) {
+      applyCount(readCartQty());
+    }
+  });
+
+  // Si tu cart.js dispara este evento, reaccionamos al instante:
+  window.addEventListener('cart:updated', () => {
+    applyCount(readCartQty());
+  });
+
+  // Fallback polling suave por si el carrito se actualiza sin eventos:
+  let last = null;
+  const tick = () => {
+    const qty = readCartQty();
+    if (qty !== last) {
+      last = qty;
+      applyCount(qty);
+    }
+  };
+  const interval = setInterval(tick, 800);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) clearInterval(interval);
+    else setInterval(tick, 800);
+  });
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+
+  function closeAll() {
+    document.querySelectorAll('.nav-item.has-dropdown').forEach(it => {
+      it.classList.remove('open');
+      const dd = it.querySelector('.dropdown');
+      if (dd) dd.hidden = true;
+      const arrow = it.querySelector('.nav-arrow');
+      if (arrow) arrow.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function setupDesktopNav() {
+    if (!mq.matches) return;
+    closeAll(); // estado inicial: todo cerrado y oculto
+
+    // SHOP
+    const shop = document.getElementById('nav-shop');
+    if (shop) {
+      const main = shop.querySelector('.nav-main');
+      const arrow = shop.querySelector('.nav-arrow');
+      const dd = shop.querySelector('.dropdown');
+
+      // Clic en texto: ir a Tees
+      main.onclick = () => { window.location.href = 'collections/t-shirts/'; };
+
+      // Clic en flecha: toggle SOLO el de Shop
+      arrow.onclick = (e) => {
+        e.stopPropagation();
+        const willOpen = !shop.classList.contains('open');
+        closeAll();
+        if (willOpen) {
+          shop.classList.add('open');
+          dd.hidden = false;
+          arrow.setAttribute('aria-expanded', 'true');
+        }
+      };
+    }
+
+    // LEGAL y SUPPORT: clic en texto o flecha -> toggle
+    [['nav-legal'], ['nav-support']].forEach(([id]) => {
+      const li = document.getElementById(id);
+      if (!li) return;
+      const main = li.querySelector('.nav-main');
+      const arrow = li.querySelector('.nav-arrow');
+      const dd = li.querySelector('.dropdown');
+
+      const toggle = (e) => {
+        e.stopPropagation();
+        const willOpen = !li.classList.contains('open');
+        closeAll();
+        if (willOpen) {
+          li.classList.add('open');
+          dd.hidden = false;
+          arrow.setAttribute('aria-expanded', 'true');
+        }
+      };
+
+      main.onclick = toggle;
+      arrow.onclick = toggle;
+    });
+
+    // Cerrar si clic fuera
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav-item.has-dropdown')) closeAll();
+    });
+  }
+
+  setupDesktopNav();
+  mq.addEventListener('change', () => { if (mq.matches) setupDesktopNav(); else closeAll(); });
+});
+</script>
+
+<script>
+/* === SUPPORT como SHOP en Desktop XL (≥1536px) ===
+   - Clic en texto "SUPPORT" => navegar a contactanos.html
+   - Clic en flechita => sólo abrir/cerrar dropdown
+   - No toca el comportamiento en laptops/móviles
+   - Usa captura + stopImmediatePropagation para imponerse a listeners previos
+*/
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+
+  function closeOthers(except) {
+    document.querySelectorAll('.nav-item.has-dropdown').forEach(li => {
+      if (li === except) return;
+      li.classList.remove('open');
+      const dd = li.querySelector('.dropdown');
+      if (dd) dd.hidden = true;
+      li.querySelector('.nav-arrow')?.setAttribute('aria-expanded','false');
+    });
+  }
+
+  function wireSupportHandlers() {
+    const support = document.getElementById('nav-support');
+    if (!support) return;
+
+    const supportMain  = support.querySelector('.nav-main');
+    const supportArrow = support.querySelector('.nav-arrow');
+    const supportDD    = support.querySelector('.dropdown');
+
+    // Limpia posibles estados
+    supportMain?.replaceWith(supportMain.cloneNode(true));
+    supportArrow?.replaceWith(supportArrow.cloneNode(true));
+
+    // Re-obtener referencias tras cloneNode
+    const main  = support.querySelector('.nav-main');
+    const arrow = support.querySelector('.nav-arrow');
+    const dd    = supportDD;
+
+    if (!main || !arrow || !dd) return;
+
+    // Desktop XL: aplicar comportamiento especial
+    if (mq.matches) {
+      // 1) Clic en texto SUPPORT => navegar
+      main.addEventListener('click', (e) => {
+        e.stopImmediatePropagation();
+        // No prevenimos el default en <button>, solo navegamos:
+        window.location.href = 'contactanos.html';
+      }, true); // captura
+
+      // 2) Clic en flecha => toggle dropdown (sin navegar)
+      arrow.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        const willOpen = !support.classList.contains('open');
+        closeOthers(support);
+
+        support.classList.toggle('open', willOpen);
+        dd.hidden = !willOpen;
+        arrow.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      }, true); // captura
+    }
+    // En tamaños <1536px no se engancha nada nuevo: todo queda como ya lo tienes
+  }
+
+  // Wire al inicio y en cambios de tamaño
+  wireSupportHandlers();
+  mq.addEventListener('change', wireSupportHandlers);
+});
+</script>
+
+<script>
+/* === BRAND como SHOP en Desktop XL (≥1536px) ===
+   - Clic en texto "BRAND" => navegar a about.html
+   - Clic en flechita => sólo abrir/cerrar su dropdown
+   - No toca el comportamiento en laptops/móviles
+   - Se cierra cualquier otro dropdown abierto
+*/
+document.addEventListener('DOMContentLoaded', () => {
+  const mq = window.matchMedia('(min-width: 1536px)');
+
+  function closeOthers(except) {
+    document.querySelectorAll('.nav-item.has-dropdown').forEach(li => {
+      if (li === except) return;
+      li.classList.remove('open');
+      const dd = li.querySelector('.dropdown');
+      if (dd) dd.hidden = true;
+      li.querySelector('.nav-arrow')?.setAttribute('aria-expanded','false');
+    });
+  }
+
+  function wireBrandHandlers() {
+    const brand = document.getElementById('nav-brand');
+    if (!brand) return;
+
+    const brandMain  = brand.querySelector('.nav-main');
+    const brandArrow = brand.querySelector('.nav-arrow');
+    const brandDD    = brand.querySelector('.dropdown');
+
+    // Reemplazar listeners previos (si existieran)
+    brandMain?.replaceWith(brandMain.cloneNode(true));
+    brandArrow?.replaceWith(brandArrow.cloneNode(true));
+
+    // Re-obtener referencias
+    const main  = brand.querySelector('.nav-main');
+    const arrow = brand.querySelector('.nav-arrow');
+    const dd    = brandDD;
+
+    if (!main || !arrow || !dd) return;
+
+    if (mq.matches) {
+      // 1) Clic en texto BRAND => navegar a about.html
+      main.addEventListener('click', (e) => {
+        e.stopImmediatePropagation();
+        window.location.href = 'about.html';
+      }, true); // captura
+
+      // 2) Clic en flecha => toggle dropdown (sin navegar)
+      arrow.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        const willOpen = !brand.classList.contains('open');
+        closeOthers(brand);
+
+        brand.classList.toggle('open', willOpen);
+        dd.hidden = !willOpen;
+        arrow.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      }, true); // captura
+    }
+    // En <1536px: no hacemos nada extra; conserva tu comportamiento móvil
+  }
+
+  // Inicial + en cambios de tamaño
+  wireBrandHandlers();
+  mq.addEventListener('change', wireBrandHandlers);
+});
+</script>
+
+
+
+<script src="wishlist.js"></script>
+<script src="product-page.js"></script>
+<script src="cart.js"></script>
+<script src="script.js"></script>
+
+<script src="support-nav-fix.js"></script>
+
+<script src="storefront-enhancements.js"></script>
+  <script src="mobile-menu-refresh.js"></script>
+</body>
+</html>

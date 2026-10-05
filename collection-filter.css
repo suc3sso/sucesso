@@ -1,0 +1,299 @@
+/* Sucesso collection filter drawer — T-Shirts + Dice Drp only. */
+:root{
+  --su-filter-green:#233f32;
+  --su-filter-border:rgba(35,63,50,.22);
+}
+
+/* Trigger lives inside the already-fixed collection title strip. */
+.su-filter-trigger{
+  margin-left:auto;
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:var(--su-filter-green);
+  font:400 12px/1 Arial,Helvetica,sans-serif;
+  letter-spacing:0;
+  text-transform:none;
+  white-space:nowrap;
+  cursor:pointer;
+  appearance:none;
+  -webkit-appearance:none;
+}
+.su-filter-trigger:focus-visible{outline:1px solid var(--su-filter-green);outline-offset:4px;}
+.su-filter-trigger svg{width:14px;height:14px;display:block;stroke:currentColor;fill:none;stroke-width:1.25;}
+.su-filter-count{
+  margin-left:1px;
+  font:400 8px/1 Arial,Helvetica,sans-serif;
+  vertical-align:super;
+  position:relative;
+  top:-.28em;
+}
+
+/* Ensure both fixed title strips can host the right-aligned trigger without changing their height. */
+body.tshirts-fixed-page .tshirts-page-heading,
+body.collection-page .dice-drp-page-heading{
+  gap:16px !important;
+}
+body.tshirts-fixed-page .tshirts-page-heading .su-filter-trigger,
+body.collection-page .dice-drp-page-heading .su-filter-trigger{
+  margin-left:auto !important;
+}
+
+/* Overlay / drawer follows the same slide-in logic as the site's cart. */
+.su-filter-overlay{
+  position:fixed;
+  inset:0;
+  z-index:14000;
+  display:flex;
+  justify-content:flex-end;
+  background:rgba(0,0,0,.40);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .3s ease,visibility .3s ease;
+}
+.su-filter-overlay.is-open{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+.su-filter-panel{
+  width:min(440px,100vw);
+  height:100dvh;
+  max-height:100vh;
+  background:#fff;
+  color:var(--su-filter-green);
+  box-shadow:-2px 0 5px rgba(0,0,0,.18);
+  transform:translateX(100%);
+  transition:transform .3s ease-in-out;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  font-family:Arial,Helvetica,sans-serif;
+}
+.su-filter-overlay.is-open .su-filter-panel{transform:translateX(0);}
+
+.su-filter-header{
+  flex:0 0 auto;
+  min-height:72px;
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid rgba(35,63,50,.10);
+}
+.su-filter-heading{
+  margin:0;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--su-filter-green);
+  font-size:16px;
+  line-height:1;
+  font-weight:600;
+}
+.su-filter-heading svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.25;}
+.su-filter-close{
+  position:relative;
+  width:30px;
+  height:30px;
+  margin:0 -4px 0 0;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:var(--su-filter-green);
+  cursor:pointer;
+}
+.su-filter-close::before,
+.su-filter-close::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:15px;
+  height:1px;
+  background:currentColor;
+  transform-origin:center;
+}
+.su-filter-close::before{transform:translate(-50%,-50%) rotate(45deg);}
+.su-filter-close::after{transform:translate(-50%,-50%) rotate(-45deg);}
+.su-filter-close:focus-visible{outline:1px solid var(--su-filter-green);outline-offset:2px;}
+
+.su-filter-scroll{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  padding:25px 16px 28px;
+}
+.su-filter-group{border:0;margin:0;padding:0;}
+.su-filter-group + .su-filter-group{margin-top:26px;}
+.su-filter-group-toggle{
+  width:100%;
+  min-height:28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:var(--su-filter-green);
+  font:600 14px/1.2 Arial,Helvetica,sans-serif;
+  text-align:left;
+  cursor:pointer;
+}
+.su-filter-sign{
+  display:inline-flex;
+  width:20px;
+  justify-content:center;
+  align-items:center;
+  color:var(--su-filter-green);
+  font:400 19px/1 Arial,Helvetica,sans-serif;
+}
+.su-filter-options{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  max-height:0;
+  overflow:hidden;
+  padding-top:0;
+  pointer-events:none;
+  transition:max-height .4s ease,padding-top .4s ease;
+}
+.su-filter-options.is-open{
+  max-height:120px;
+  padding-top:12px;
+  pointer-events:auto;
+}
+.su-filter-chip{
+  min-height:28px;
+  padding:5px 12px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  border:1px solid var(--su-filter-border);
+  border-radius:999px;
+  background:#fff;
+  color:var(--su-filter-green);
+  font:400 12px/1.15 Arial,Helvetica,sans-serif;
+  white-space:nowrap;
+  cursor:pointer;
+  transition:background .15s ease,color .15s ease,border-color .15s ease;
+}
+.su-filter-chip:hover{border-color:rgba(35,63,50,.55);}
+.su-filter-chip.is-selected{
+  background:#eef3f0;
+  border-color:var(--su-filter-green);
+  color:var(--su-filter-green);
+}
+.su-filter-chip:focus-visible{outline:1px solid var(--su-filter-green);outline-offset:2px;}
+.su-filter-color-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#fff;
+  border:1px solid rgba(35,63,50,.65);
+  flex:0 0 auto;
+}
+.su-filter-chip.is-selected .su-filter-color-dot{border-color:var(--su-filter-green);}
+
+.su-filter-footer{
+  flex:0 0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  min-height:54px;
+  border-top:1px solid rgba(35,63,50,.16);
+  background:#fff;
+}
+.su-filter-footer[hidden]{display:none !important;}
+.su-filter-footer button{
+  min-height:54px;
+  border:0;
+  border-radius:0;
+  font:400 12px/1 Arial,Helvetica,sans-serif;
+  cursor:pointer;
+}
+.su-filter-clear{
+  background:#fff;
+  color:var(--su-filter-green);
+  border-right:1px solid rgba(35,63,50,.14) !important;
+}
+.su-filter-apply{
+  background:var(--su-filter-green);
+  color:#fff;
+}
+.su-filter-clear:focus-visible,
+.su-filter-apply:focus-visible{outline:1px solid var(--su-filter-green);outline-offset:-3px;}
+
+/* Filtered cards are removed from the grid without disturbing the surviving layout. */
+.tees-product-card.su-filter-hidden{display:none !important;}
+
+@media (max-width:600px){
+  .su-filter-trigger{font-size:12px;gap:6px;}
+  .su-filter-panel{width:100vw;max-width:100vw;}
+  .su-filter-header{min-height:64px;padding:0 14px;}
+  .su-filter-scroll{padding:22px 14px 24px;}
+  .su-filter-group + .su-filter-group{margin-top:23px;}
+}
+
+/* =========================================================
+   COLLECTION STRIP TITLES — 2026-10-05
+   Requested: navbar typography only, existing sizes preserved.
+   ========================================================= */
+body.tshirts-fixed-page .tshirts-page-heading .tshirts-route-link,
+body.collection-page .dice-drp-page-heading .collection-route-title{
+  color:#233f32 !important;
+  font-family:"Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-weight:400 !important;
+  letter-spacing:-0.035em !important;
+  text-transform:none !important;
+  text-decoration:none !important;
+}
+
+/* T-Shirts/Camisetas is now a static collection heading, not a link/button. */
+body.tshirts-fixed-page .tshirts-page-heading .tshirts-route-link{
+  cursor:default !important;
+  pointer-events:none !important;
+  /* Match Dice Drp title size exactly on every viewport. */
+  font-size:24px !important;
+  line-height:1.12 !important;
+}
+@media (max-width:1023px){
+  body.tshirts-fixed-page .tshirts-page-heading .tshirts-route-link{font-size:22px !important;}
+}
+@media (max-width:600px){
+  body.tshirts-fixed-page .tshirts-page-heading .tshirts-route-link{font-size:21px !important;}
+}
+body.tshirts-fixed-page .tshirts-page-heading .tshirts-route-link:hover,
+body.tshirts-fixed-page .tshirts-page-heading .tshirts-route-link:focus,
+body.tshirts-fixed-page .tshirts-page-heading .tshirts-route-link:focus-visible{
+  color:#233f32 !important;
+  font-weight:400 !important;
+  text-decoration:none !important;
+  outline:none !important;
+}
+
+/* Small live product count, matching the Dice Drp treatment without changing either title size. */
+body.tshirts-fixed-page .tshirts-page-heading .tshirts-route-link sup,
+body.collection-page .dice-drp-page-heading .collection-route-title sup{
+  display:inline-block !important;
+  margin-left:2px !important;
+  position:relative !important;
+  top:-.9em !important;
+  color:#233f32 !important;
+  font-family:"Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-weight:400 !important;
+  letter-spacing:0 !important;
+  line-height:1 !important;
+  text-transform:none !important;
+}
+body.tshirts-fixed-page .tshirts-page-heading .tshirts-route-link sup{
+  font-size:7px !important;
+}

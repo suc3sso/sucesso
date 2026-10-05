@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="bcv-rate.js"></script>
+<script src="country-settings.js" defer></script>
+<script src="checkout-return.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 Not Found - Sucesso</title>
+  <link rel="icon" href="images/sucesso fav icon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+
+ html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* 🔺 Solo Laptops: aumenta la altura vertical del fondo gris de las imágenes */
+@media (min-width: 1024px) and (max-width: 1535px) {
+  body.tees-page .collection-item .image-hover {
+    /* antes tenías padding: 10px; */
+    padding-block: 22px;   /* ↑ más alto solo vertical (top/bottom) */
+    padding-inline: 10px;  /* mantiene el padding lateral original */
+  }
+}
+
+
+.loader {
+      position: fixed;
+      inset: 0;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .loader img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      animation: zoomInClean 2s ease forwards;
+    }
+
+    @keyframes zoomInClean {
+      0% { transform: scale(0.1); opacity: 0; }
+      70% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .account-icon, .cart-icon {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+  
+.cart-icon:hover,
+.search-toggle:hover,
+.account-icon:hover {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+
+    .collection-item .tallas {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      font-size: 0.85rem;
+      text-align: center;
+      color: #233f32;
+      margin-top: 6px;
+      pointer-events: none;
+    }
+
+    .collection-item:hover .tallas {
+      opacity: 1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Syne', sans-serif; background-color: #fff; }
+    header.navbar {
+      position: fixed; top: 0; width: 100%; height: 70px; background-color: white;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 20px; z-index: 1001; border-bottom: 1px solid #e5e5e5;
+    }
+    .navbar-left, .navbar-right {
+      display: flex; align-items: center; gap: 30px;
+    }
+    .navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+    .logo { height: 35px; }
+    .nav-link {
+      text-decoration: none; color: #000; font-weight: 600; font-size: 14px;
+      transition: opacity 0.3s ease;
+    }
+    .nav-link:hover { opacity: 1; }
+    .nav-icon, .search-toggle {
+      background: none; border: none; font-size: 18px; cursor: pointer;
+      color: #000; transition: opacity 0.3s ease;
+    }
+    .nav-icon:hover, .search-toggle:hover { opacity: 0.5; }
+    .overlay {
+      position: fixed; top: 70px; left: 0; width: 100%; height: calc(100% - 70px);
+      background-color: rgba(0, 0, 0, 0.3); z-index: 1000; display: none;
+    }
+    .search-bar {
+      position: fixed; top: 70px; left: 0; width: 100%; height: 42px;
+      background-color: white; display: flex; align-items: center; gap: 10px;
+      padding: 0 20px; border-bottom: 1px solid #e5e5e5;
+      transform: translateY(-100%); opacity: 0; pointer-events: none;
+      transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+      z-index: 1002; will-change: transform, opacity;
+    }
+    .search-bar.active {
+      transform: translateY(0); opacity: 1; pointer-events: auto;
+    }
+    .search-bar.hiding { z-index: 999; }
+    .search-bar input {
+      width: 100%; padding: 8px 0 8px 60px; font-size: 15px;
+      border: none; outline: none; background-color: transparent; color: #000;
+    }
+    .search-icon {
+      margin-right: 0; color: #000; flex-shrink: 0; position: absolute; left: 30px;
+    }
+    .close-search {
+      margin-left: 16px; background: none; border: none; cursor: pointer;
+      color: #000; padding: 4px; display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.3s ease;
+    }
+    .close-search:hover { opacity: 0.5; }
+.search-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: #000;
+  transition: opacity 0.3s ease;
+  margin-top: 2px; /* 👈 Ajustá este valor si querés más o menos bajado */
+}
+
+.search-toggle svg {
+  display: block;
+  stroke: #000;
+}
+
+
+    .search-results {
+  position: fixed;
+  top: 112px;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1001;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  padding: 0;
+  box-sizing: border-box;
+  max-height: calc(100vh - 112px);
+  overflow-y: auto;
+  gap: 1px; /* visualmente simula 0.3px ajustando ancho abajo */
+}
+
+
+.search-result-item {
+  width: 100%;
+  max-width: 375px; /* Más grande, similar a Nude Project */
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-decoration: none;
+  color: #000;
+  padding: 0 10px 32px;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease;
+}
+
+.product-image-wrapper {
+  width: 100%;
+  padding-top: 125%; /* Proporción 4:5 sin usar aspect-ratio */
+  position: relative;
+  background-color: #f8f8f8;
+  margin-bottom: 12px;
+}
+
+.product-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* MUY IMPORTANTE para que no se corte */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.4s ease;
+}
+
+
+.product-image-wrapper .back {
+  opacity: 0;
+}
+
+.search-result-item:hover .back {
+  opacity: 1;
+}
+
+.search-result-item:hover .front {
+  opacity: 0;
+}
+
+.result-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding-left: 4px;
+  width: 100%;
+}
+
+.result-info .name {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.result-info .price {
+  font-size: 17px;
+  font-weight: 400;
+  color: #000;
+  text-align: left;
+}
+ 
+         .nav-desktop ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-desktop ul li {
+            margin: 0 15px;
+        }
+        
+        .nav-desktop ul li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-desktop ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #000; /* Color de subrayado */
+            transition: width 0.3s ease;
+        }
+        
+        .nav-desktop ul li a:hover:after {
+            width: 100%;
+        }
+
+.language-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 30px;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  width: 460px; /* antes era 300px */
+  font-family: 'Poppins', sans-serif;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  border-radius: 4px;
+}
+
+
+  .language-popup.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .language-popup button.close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+.language-toggle {
+  text-decoration: none;
+  color: #000;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-right: 8px;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background: none;
+  line-height: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative; /* 🔑 para que el ::after se posicione bien */
+  user-select: none;
+  transition: color 0.3s ease;
+  transform: translateY(1px); /* Ajustá a 1px o 3px si querés más fino */
+}
+
+.language-toggle::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #000;
+  transition: width 0.3s ease;
+}
+
+.language-toggle:hover::after {
+  width: 100%;
+}
+
+.cart-item img {
+  width: 145px;          /* Aumenta el tamaño de la imagen */
+  height: auto;
+  object-fit: contain;
+  margin-right: 1.2rem;  /* Espacio entre imagen y texto */
+  flex-shrink: 0;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;   /* Centra verticalmente imagen y contenido */
+  gap: 1rem;             /* Espacio entre imagen y detalles */
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+
+.cart-item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cart-item-details h4 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.cart-item-details p {
+  font-size: 0.85rem;
+  color: #333;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.cart-item-price {
+  font-weight: bold;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  width: fit-content;
+  padding: 2px 4px;
+  height: 36px;
+  font-size: 16px;
+}
+
+.quantity-selector button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #555;
+  padding: 0 10px;
+}
+
+.quantity-selector input {
+  border: none;
+  text-align: center;
+  width: 24px;
+  font-size: 16px;
+  outline: none;
+  pointer-events: none;
+  background: transparent;
+  color: #000;
+}
+
+.cart-item {
+  position: relative;
+}
+
+.cart-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cart-item.loading .cart-loading-overlay {
+  opacity: 1;
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #333;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cart-item-price {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+    /* ========= 404 HERO ========= */
+    main { padding-top: 110px; }
+    .error-wrap {
+      max-width: 1200px; margin: 0 auto; padding: 0 16px 40px; 
+    }
+    .error-headline {
+      font-weight: 700; font-size: 18px; letter-spacing: .5px; color:#000; margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .error-sub {
+      font-size: 12px; color:#233f32; opacity:.8; margin-bottom: 18px;
+    }
+
+    /* Imagen/gráfico grande bajo el texto (opcional como en el ejemplo) */
+    .error-image {
+      width:100%; max-width:1200px; margin: 0 auto; display:block; object-fit:cover;
+      filter: grayscale(100%);
+      color:#233f32;
+    }
+
+    /* ========= SEARCH GRID PLACEHOLDER (mantener compatibilidad si se abre búsqueda) ========= */
+    .search-results { position:fixed; top:112px; left:0; width:100%; background:#fff; z-index:1001; display:none; }
+
+/* ====== STRIPE 3 BOTONES (como la imagen) ====== */
+.hero-menu {
+  max-width: 1250px;
+  margin: 10px auto 18px;   /* pegadito al texto y encima de la imagen */
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;                /* separación como en la referencia */
+}
+
+.hero-menu a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #233F32;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  height: 54px;             /* altura de “barra” como la captura */
+  border: 1px solid #233F32;   /* bordes rectos, sin radius */
+  transition: 200ms all ease;
+}
+
+.hero-menu a:hover {
+  background: transparent;
+  color: #233f32;
+  border: 1px solid #233F32;   /* bordes rectos, sin radius */
+}
+
+/* Desktop: 3 columnas iguales */
+@media (min-width: 768px) {
+  .hero-menu { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Mostrar por defecto en desktop */
+.language-toggle {
+  display: flex;
+}
+
+/* Ocultar en pantallas móviles */
+@media (max-width: 768px) {
+  .navbar-right .language-toggle {
+    display: none !important;
+  }
+}
+
+
+  </style>
+<link rel="stylesheet" href="requested-changes.css">
+
+<link rel="stylesheet" href="search-system.css">
+<script src="search-text.js" defer></script>
+<script src="search-engine.js" defer></script>
+<script src="search-interface.js" defer></script>
+<script src="search-catalog.js" defer></script>
+  <link rel="stylesheet" href="sucesso-footer.css">
+  <link rel="stylesheet" href="mobile-menu-refresh.css">
+<style id="su-navbar-uploaded-svg-icons-20261001">
+@media (max-width: 1535px) {
+  header.navbar .search-toggle .su-nav-search-svg { width: 22px !important; height: 22px !important; display:block!important; flex:0 0 auto!important; }
+  header.navbar .account-button .su-nav-account-svg { width: 22px !important; height: 22px !important; display:block!important; flex:0 0 auto!important; filter:none!important; }
+  header.navbar .su-nav-cart-svg { width: 22px !important; height: 22px !important; display:block!important; flex:0 0 auto!important; filter:none!important; }
+  header.navbar .search-toggle .su-nav-search-svg *, header.navbar .account-button .su-nav-account-svg *, header.navbar .su-nav-cart-svg * { stroke:#233f32!important; }
+  header.navbar #cart-count { position:absolute!important; top:-2px!important; right:-15px!important; min-width:0!important; width:auto!important; height:auto!important; margin:0!important; padding:0!important; border:0!important; border-radius:0!important; background:transparent!important; color:#233f32!important; font-family:Arial,Helvetica,sans-serif!important; font-size:11px!important; line-height:1!important; font-weight:400!important; letter-spacing:0!important; white-space:nowrap!important; pointer-events:none!important; }
+  header.navbar #cart-count::before { content:"("; }
+  header.navbar #cart-count::after { content:")"; }
+}
+</style>
+
+<style id="su-navbar-mobile-icon-size-20261001">
+/* Mobile-only icon sizing: preserve laptop 22x22, reduce on phones. */
+
+@media (max-width: 767px) {
+  header.navbar .search-toggle .su-nav-search-svg,
+  header.navbar .account-button .su-nav-account-svg,
+  header.navbar .su-nav-cart-svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  header.navbar #cart-count {
+    top: -1px !important;
+    right: -13px !important;
+    font-size: 10px !important;
+  }
+}
+</style>
+
+
+<style id="sucesso-404-redesign-20261001">
+  /* New 404: minimal streetwear layout, isolated to this page only. */
+  body{background:#fff;color:#233f32}
+  .su-404-main{padding-top:70px!important;min-height:100svh;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(360px,.65fr);background:#fff}
+  .su-404-visual{min-height:calc(100svh - 70px);overflow:hidden;background:#233f32}
+  .su-404-visual img{display:block;width:100%;height:100%;min-height:calc(100svh - 70px);object-fit:cover;object-position:center;filter:none!important;margin:0!important}
+  .su-404-copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(48px,7vw,110px);border-left:1px solid #d9dfdc;background:#fff}
+  .su-404-code{font-size:clamp(88px,9vw,150px);line-height:.78;letter-spacing:-.08em;font-weight:600;color:#233f32;margin:0 0 38px}
+  .su-404-copy h1{font-size:clamp(25px,2.4vw,38px)!important;line-height:1.03;letter-spacing:-.045em;font-weight:500;color:#233f32!important;margin:0 0 16px;text-transform:none}
+  .su-404-text{max-width:410px;font-size:12px;line-height:1.65;color:#52645b;margin:0 0 38px}
+  .su-404-links{display:flex;flex-direction:column;align-items:flex-start;gap:13px;margin:0;padding:0;max-width:320px}
+  .su-404-links a{font-size:12px;line-height:1.2;letter-spacing:.04em;text-transform:uppercase;color:#233f32;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;background:none!important;border:0!important;height:auto!important;padding:0!important;font-weight:500;transition:none!important}
+  .su-404-links a:hover,.su-404-links a:focus{color:#233f32!important;opacity:1!important;text-decoration:none}
+  @media(max-width:900px){
+    .su-404-main{grid-template-columns:1fr;padding-top:70px!important}
+    .su-404-visual{min-height:52svh;height:52svh}
+    .su-404-visual img{min-height:0;height:100%;object-position:center}
+    .su-404-copy{border-left:0;border-top:1px solid #d9dfdc;padding:42px 22px 52px;min-height:390px}
+    .su-404-code{font-size:86px;margin-bottom:30px}
+    .su-404-copy h1{font-size:28px!important}
+    .su-404-text{font-size:12px;margin-bottom:30px;max-width:500px}
+  }
+  @media(max-width:560px){
+    .su-404-main{padding-top:70px!important}
+    .su-404-visual{height:44svh;min-height:44svh}
+    .su-404-copy{padding:34px 18px 44px;min-height:360px}
+    .su-404-code{font-size:72px;margin-bottom:25px}
+    .su-404-copy h1{font-size:24px!important}
+  }
+</style>
+
+</head>
+
+<body>
+  <div id="loader" class="loader"><img src="images/logo cherry png.png" alt="Sucesso Logo"></div>
+  <!-- ===== NAVBAR (copiado de tees.html) ===== -->
+  <header class="navbar">
+    <button class="menu-toggle" id="menu-toggle">
+      <svg class="menu-icon" width="24" height="24" viewBox="0 0 24 24">
+        <line class="top" x1="3" y1="6" x2="21" y2="6" />
+        <line class="middle" x1="3" y1="12" x2="21" y2="12" />
+        <line class="bottom" x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+
+
+
+    <div class="navbar-center">
+      <a href="index.html"><img src="images/logo sucesso png.png" alt="Sucesso Logo" class="logo" style="width:130px;height:auto;"></a>
+    </div>
+
+    <div class="navbar-right">
+      <div class="language-toggle" id="languageToggle">EN | ES</div>
+
+      <button class="search-toggle" onclick="toggleSearchBar()" aria-label="Open search">
+  <img src="images/nav-search.svg" alt="" class="su-nav-search-svg" aria-hidden="true">
+</button>
+
+      <a id="account-link" href="login.html" class="account-button">
+  <img src="images/nav-account.svg" alt="Cuenta" class="account-icon su-nav-account-svg">
+</a>
+      <div style="position: relative; display: flex; align-items: center; margin-left: 0px;">
+        <img src="images/nav-cart.svg" alt="Carrito" class="cart-icon su-nav-cart-svg" id="cart-btn" style="width:22px;height:22px;pointer-events:auto;cursor:pointer;">
+        <span id="cart-count">0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== SEARCH BAR (igual) ===== -->
+  <div class="search-bar" id="searchBar">
+    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input type="text" placeholder="Buscar...">
+    <button class="close-search" onclick="toggleSearchBar()" aria-label="Close search">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+  </div>
+  <div class="search-results" id="searchResults"></div>
+  <div class="overlay" id="overlay" onclick="toggleSearchBar()"></div>
+
+  <!-- ===== 404 CONTENT ===== -->
+  <main class="su-404-main">
+    <section class="su-404-visual" aria-label="Sucesso 404 visual">
+      <img src="images/pesca background 404.png" alt="Sucesso campaign image">
+    </section>
+    <section class="su-404-copy" aria-labelledby="error-title">
+      <p class="su-404-code" aria-hidden="true">404</p>
+      <h1 id="error-title" data-i18n="404_title">404 PAGE NOT FOUND</h1>
+      <p class="su-404-text" data-i18n="404_desc">The page you requested does not exist. Click below to continue shopping.</p>
+      <nav class="su-404-links" aria-label="404 quick links">
+        <a href="index.html" data-i18n="nav_new_in">New In</a>
+        <a href="collections/t-shirts/" data-i18n="nav_tees">T-Shirts</a>
+        <a href="collections/dice-drp/" data-i18n="nav_collections">Collections</a>
+      </nav>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER (idéntico al de tees.html) ===== -->
+  
+<!-- Sucesso continuous footer marquee -->
+
+
+
+  
+
+  <!-- ===== POPUP DE IDIOMA (igual) ===== -->
+  <footer class="sucesso-site-footer" aria-label="Footer">
+  <div class="sucesso-footer-inner">
+    <div class="sucesso-footer-legal">
+      <h2 class="sucesso-footer-heading" data-i18n="footer_policies_conditions">POLÍTICAS Y CONDICIONES</h2>
+      <ul class="sucesso-footer-links">
+        <li><a href="politica-de-privacidad.html" data-i18n="footer_privacy_policy">POLÍTICA DE PRIVACIDAD</a></li>
+        <li><a href="cookies.html" data-i18n="footer_cookies">COOKIES</a></li>
+        <li><a href="terms-and-conditions.html" data-i18n="footer_terms">TÉRMINOS Y CONDICIONES</a></li>
+        <li><a href="tracking.html" data-i18n="footer_order_tracking">SEGUIMIENTO DE PEDIDO</a></li>
+      </ul>
+      <div class="sucesso-footer-social">
+        <a class="sucesso-footer-instagram" href="https://www.instagram.com/sucessobrand" target="_blank" rel="noopener noreferrer" aria-label="Instagram @sucessobrand">
+          <img src="images/instagram-icon.svg" alt="Instagram">
+        </a>
+      </div>
+    </div>
+
+    <a class="sucesso-footer-brandmark" href="index.html" aria-label="Sucesso home">
+      <img src="images/logo cherry png.png" alt="Sucesso">
+    </a>
+
+    <div class="sucesso-footer-payments" aria-label="Métodos de pago admitidos">
+      <img class="sucesso-footer-payment-logo" src="images/payment-amex.svg" alt="American Express">
+      <img class="sucesso-footer-payment-logo" src="images/payment-discover.svg" alt="Discover">
+      <img class="sucesso-footer-payment-logo" src="images/payment-mastercard.svg" alt="Mastercard">
+      <img class="sucesso-footer-payment-logo" src="images/payment-visa.svg" alt="Visa">
+      <span class="sucesso-footer-payment-tile"><img src="images/payment-paypal.svg" alt="PayPal"></span>
+      <span class="sucesso-footer-payment-tile zelle"><img src="images/payment-zelle.png" alt="Zelle"></span>
+    </div>
+
+    <p class="sucesso-footer-copy">© SUCESSO</p>
+  </div>
+</footer>
+
+<div id="language-popup" class="language-popup">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <strong style="font-size:12px;letter-spacing:1px;">LANGUAGE SETTINGS</strong>
+      <button class="close-btn" onclick="closeLanguagePopup()">&times;</button>
+    </div>
+    <label for="language-select" style="font-size:10px;display:block;margin-bottom:8px;">SELECT LANGUAGE:</label>
+    <select id="language-select" style="width:100%;padding:10px;font-size:12px;border:1px solid #ccc;">
+      <option value="en">English</option>
+      <option value="es">Español</option>
+    </select>
+    <button onclick="saveLanguage()" style="width:100%;margin-top:20px;padding:10px;background:#233f32;color:#fff;font-size:12px;border:none;cursor:pointer;text-transform:uppercase;">Save</button>
+  </div>
+
+  <!-- ===== SIDEBAR (igual) ===== -->
+  <aside class="sidebar">
+
+
+    <div class="sidebar-footer">
+      <div class="sidebar-auth-lang">
+        <a id="sidebar-account-link" href="login.html" class="sidebar-link">
+          <img src="images/icon account.png" alt="Login" class="sidebar-icon" />
+          <span id="sidebar-account-text" data-i18n="sidebar_account">Account</span>
+        </a>
+        <div class="lang-btn" id="languageToggleSidebar">EN | ES</div>
+      </div>
+    </div>
+  </aside>
+
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD3u2GKMSAKC_1Cd88KA-rxTOf_Jnt3fuM",
+    authDomain: "sucesso-74f7c.firebaseapp.com",
+    projectId: "sucesso-74f7c",
+    storageBucket: "sucesso-74f7c.appspot.com",
+    messagingSenderId: "878844661636",
+    appId: "1:878844661636:web:6382f86f18201aecfdd7d1"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  const accountLink = document.getElementById("account-link");
+  if (accountLink) {
+    accountLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          window.location.href = "mi-cuenta.html";
+        } else {
+          window.location.href = "login.html";
+        }
+      });
+    });
+  }
+
+  // 🔄 Actualizar botón del sidebar según el estado de sesión
+  const sidebarLink = document.getElementById("sidebar-account-link");
+  const sidebarText = document.getElementById("sidebar-account-text");
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    sidebarText.setAttribute("data-i18n", "sidebar_account");
+    sidebarLink.href = "mi-cuenta.html";
+  } else {
+    sidebarText.setAttribute("data-i18n", "sidebar_login");
+    sidebarLink.href = "login.html";
+  }
+
+  // Si ya se cargó el idioma, actualiza el texto mostrado
+  const currentLang = localStorage.getItem("preferredLang") || "en";
+  fetch("assets/lang/lang.json")
+    .then(res => res.json())
+    .then(data => {
+      const key = sidebarText.getAttribute("data-i18n");
+      if (data[currentLang] && data[currentLang][key]) {
+        sidebarText.textContent = data[currentLang][key];
+      }
+    });
+});
+
+
+  // 🔍 Búsqueda
+  const input = document.querySelector('.search-bar input');
+  const resultsContainer = document.getElementById('searchResults');
+  let allProducts = [];
+
+  async function loadProducts() {
+    try {
+      const querySnapshot = await getDocs(collection(db, "productos"));
+      allProducts = [];
+      querySnapshot.forEach(doc => {
+        const data = doc.data();
+        if (data.titulo && data.precio !== undefined && data.imagen_frontal && data.imagen_trasera) {
+          allProducts.push({
+            titulo: window.SucessoStorefront?.displayProductName?.(data.titulo) || data.titulo,
+            nombre: data.nombre,
+            precio: Number(data.precio),
+            imagen_frontal: data.imagen_frontal.replace(/\\/g, '/'),
+            imagen_trasera: data.imagen_trasera.replace(/\\/g, '/'),
+            keywords: Array.isArray(data.keywords) ? data.keywords : []
+          });
+        }
+      });
+      console.log("Productos cargados:", allProducts);
+    } catch (error) {
+      console.error("Error al cargar productos:", error);
+    }
+  }
+
+  function renderResults(filtered) {
+    resultsContainer.innerHTML = '';
+    if (filtered.length === 0) {
+      resultsContainer.innerHTML = `<div style="padding: 20px; font-size: 14px;">No se encontraron resultados</div>`;
+    } else {
+      filtered.forEach(product => {
+        const item = document.createElement('a');
+        item.className = 'search-result-item';
+        item.href = `product-page.html?nombre=${product.nombre}`;
+        item.innerHTML = `
+          <div class="product-image-wrapper">
+            <img src="${product.imagen_frontal}" class="front" alt="${product.titulo}">
+            <img src="${product.imagen_trasera}" class="back" alt="${product.titulo}">
+          </div>
+          <div class="result-info">
+            <span class="name">${product.titulo}</span>
+            <span class="price">$${product.precio.toFixed(2)}</span>
+          </div>
+        `;
+        resultsContainer.appendChild(item);
+      });
+    }
+    resultsContainer.style.display = 'grid';
+  }
+
+  let searchTimeout;
+
+  if (input) {
+    input.addEventListener('input', function () {
+      clearTimeout(searchTimeout);
+      const query = input.value.toLowerCase().trim();
+
+      searchTimeout = setTimeout(() => {
+        if (query.length === 0) {
+          resultsContainer.style.display = 'none';
+          return;
+        }
+
+        const filtered = allProducts.filter(product =>
+          product.titulo.toLowerCase().includes(query) ||
+          product.nombre.toLowerCase().includes(query) ||
+          product.keywords.some(k => k.toLowerCase().includes(query))
+        );
+
+        renderResults(filtered);
+      }, 1000);
+    });
+  }
+
+  window.toggleSearchBar = function () {
+    const searchBar = document.getElementById('searchBar');
+    const overlay = document.getElementById('overlay');
+    const results = document.getElementById('searchResults');
+    const isActive = searchBar.classList.contains('active');
+
+    if (isActive) {
+      searchBar.classList.add('hiding');
+      searchBar.classList.remove('active');
+      overlay.style.display = 'none';
+      results.style.display = 'none';
+      setTimeout(() => {
+        searchBar.classList.remove('hiding');
+      }, 200);
+    } else {
+      searchBar.classList.add('active');
+      overlay.style.display = 'block';
+      input.focus();
+    }
+  };
+
+  loadProducts();
+</script>
+  
+  <!-- 🛒 Carrito lateral -->
+  <div id="cart-overlay" class="cart-overlay hidden">
+    <div class="cart-panel">
+      <div class="cart-header">
+<h2 data-i18n="your_cart">Your Cart</h2>
+        <button class="close-cart">&times;</button>
+      </div>
+      <div class="cart-items"></div>
+      <div class="cart-footer">
+<p class="cart-total"><span data-i18n="total">Total:</span> $0.00</p>
+<button class="checkout-btn" data-i18n="checkout">Checkout</button>
+<button id="clear-cart-btn" style="display:none;" data-i18n="empty_cart">Empty Cart</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const langToggleHeader = document.getElementById("languageToggle");
+  const langToggleSidebar = document.getElementById("languageToggleSidebar");
+  const popup = document.getElementById("language-popup");
+  const languageSelect = document.getElementById("language-select");
+  const sidebar = document.querySelector(".sidebar");
+  const overlay = document.getElementById("overlay");
+
+  const currentLang = localStorage.getItem("preferredLang") || "en";
+  languageSelect.value = currentLang;
+
+  function updateToggleText(lang) {
+    const text = lang === "es" ? "ES | EN" : "EN | ES";
+    if (langToggleHeader) langToggleHeader.textContent = text;
+    if (langToggleSidebar) langToggleSidebar.textContent = text;
+  }
+
+  function openLanguagePopup() {
+    popup.classList.add("show");
+    languageSelect.value = localStorage.getItem("preferredLang") || "en";
+  }
+
+  if (langToggleHeader) {
+    langToggleHeader.addEventListener("click", () => {
+      openLanguagePopup();
+    });
+  }
+
+  if (langToggleSidebar) {
+  langToggleSidebar.addEventListener("click", () => {
+    openLanguagePopup(); // ✅ Mantener el sidebar abierto
+  });
+}
+
+
+
+  window.saveLanguage = function () {
+    const selectedLang = languageSelect.value;
+    localStorage.setItem("preferredLang", selectedLang);
+    setLanguage(selectedLang);
+    updateToggleText(selectedLang);
+    popup.classList.remove("show");
+    if (typeof updateCart === "function") updateCart();
+  };
+
+  function setLanguage(lang) {
+    fetch("assets/lang/lang.json")
+      .then(res => res.json())
+      .then(data => {
+        const elements = document.querySelectorAll("[data-i18n]");
+        elements.forEach(el => {
+          const key = el.getAttribute("data-i18n");
+          if (data[lang] && data[lang][key]) {
+            el.textContent = data[lang][key];
+          }
+        });
+        document.documentElement.lang = lang;
+      })
+      .catch(err => console.error("Error cargando idioma:", err));
+  }
+
+  updateToggleText(currentLang);
+  setLanguage(currentLang);
+});
+</script>
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggles = document.querySelectorAll(".info-toggle");
+    toggles.forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        const section = toggle.closest(".info-section");
+        section.classList.toggle("active");
+      });
+    });
+  });
+</script>
+
+  <script>
+    function toggleSearchBar() {
+      const searchBar = document.getElementById('searchBar');
+      const overlay = document.getElementById('overlay');
+      const results = document.getElementById('searchResults');
+      const input = document.querySelector('.search-bar input');
+      const isActive = searchBar.classList.contains('active');
+      if (isActive) {
+        searchBar.classList.remove('active');
+        overlay.style.display = 'none';
+        results.style.display = 'none';
+      } else {
+        searchBar.classList.add('active');
+        overlay.style.display = 'block';
+        input && input.focus();
+      }
+    }
+
+    // Toggle sidebar
+    const toggleBtn = document.getElementById('menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+        const icon = toggleBtn.querySelector('.menu-icon');
+        icon && icon.classList.toggle('open');
+      });
+    }
+
+    // Idioma (reutiliza tu lang.json)
+    const popup = document.getElementById("language-popup");
+    const languageSelect = document.getElementById("language-select");
+    const langToggleHeader = document.getElementById("languageToggle");
+    const langToggleSidebar = document.getElementById("languageToggleSidebar");
+
+    function openLanguagePopup() {
+      popup.classList.add("show");
+      languageSelect.value = localStorage.getItem("preferredLang") || "en";
+    }
+    function closeLanguagePopup() { popup.classList.remove("show"); }
+
+    if (langToggleHeader) langToggleHeader.addEventListener("click", openLanguagePopup);
+    if (langToggleSidebar) langToggleSidebar.addEventListener("click", openLanguagePopup);
+
+    function setLanguage(lang) {
+      fetch("assets/lang/lang.json")
+        .then(res => res.json())
+        .then(data => {
+          document.querySelectorAll("[data-i18n]").forEach(el => {
+            const key = el.getAttribute("data-i18n");
+            if (data[lang] && data[lang][key]) el.textContent = data[lang][key];
+          });
+          document.documentElement.lang = lang;
+        })
+        .catch(() => {});
+    }
+    function updateToggleText(lang) {
+      const text = lang === "es" ? "ES | EN" : "EN | ES";
+      if (langToggleHeader) langToggleHeader.textContent = text;
+      if (langToggleSidebar) langToggleSidebar.textContent = text;
+    }
+    function saveLanguage() {
+      const lang = languageSelect.value;
+      localStorage.setItem("preferredLang", lang);
+      setLanguage(lang);
+      updateToggleText(lang);
+      closeLanguagePopup();
+    }
+    window.saveLanguage = saveLanguage;
+    window.closeLanguagePopup = closeLanguagePopup;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedLang = localStorage.getItem("preferredLang") || "en";
+      setLanguage(savedLang);
+      updateToggleText(savedLang);
+    });
+
+    // Mostrar/ocultar “EN | ES” solo en desktop si así lo usas:
+    function updateLanguageToggleVisibility() {
+      const navDesktop = document.querySelector('.nav-desktop');
+      const languageToggle = document.getElementById('languageToggle');
+      if (!navDesktop || !languageToggle) return;
+      const navVisible = window.getComputedStyle(navDesktop).display !== 'none';
+      languageToggle.style.display = navVisible ? 'flex' : 'none';
+    }
+    document.addEventListener("DOMContentLoaded", updateLanguageToggleVisibility);
+    window.addEventListener("resize", updateLanguageToggleVisibility);
+  </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("abrir") === "carrito") {
+        const cartBtn = document.getElementById("cart-btn");
+        if (cartBtn) {
+          setTimeout(() => cartBtn.click(), 300); // espera a que todo cargue
+        }
+      }
+    });
+  </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.querySelector('.search-bar input');
+  const resultsContainer = document.getElementById('searchResults');
+  const searchBar = document.getElementById('searchBar');
+  const overlay = document.getElementById('overlay');
+  let allProducts = []; // Esto lo tienes cargado ya con loadProducts()
+  let searchTimeout;
+
+  function hideResults() {
+    resultsContainer.innerHTML = "";
+    resultsContainer.style.display = "none";
+  }
+
+  input.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    const query = input.value.toLowerCase().trim();
+
+    searchTimeout = setTimeout(() => {
+      if (query === "") {
+        hideResults();
+      } else {
+        const filtered = allProducts.filter(product =>
+          product.titulo.toLowerCase().includes(query) ||
+          product.nombre.toLowerCase().includes(query) ||
+          product.keywords.some(k => k.toLowerCase().includes(query))
+        );
+
+        renderResults(filtered); // Ya la tienes definida
+      }
+    }, 1000); // ✅ Mismo delay para mostrar u ocultar
+  });
+
+  window.toggleSearchBar = function () {
+    const isActive = searchBar.classList.contains('active');
+    if (isActive) {
+      searchBar.classList.add('hiding');
+      searchBar.classList.remove('active');
+      overlay.style.display = 'none';
+      hideResults();
+      input.value = "";
+      setTimeout(() => {
+        searchBar.classList.remove('hiding');
+      }, 200);
+    } else {
+      searchBar.classList.add('active');
+      overlay.style.display = 'block';
+      input.focus();
+    }
+  };
+});
+</script>
+
+  <!-- Si usas estos archivos globales, mantenlos -->
+  <script src="script.js"></script>
+  <script src="cart.js"></script>
+
+<script src="storefront-enhancements.js"></script>
+  <script src="mobile-menu-refresh.js"></script>
+
+<script id="sucesso-404-loader-script">
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    setTimeout(() => { if (loader) loader.style.display = "none"; }, 2500);
+  });
+</script>
+
+</body>
+</html>

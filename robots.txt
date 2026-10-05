@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.sucessobrand.com/sitemap.xml
+Disallow: /images/
