@@ -1,0 +1,69 @@
+/* =========================================================
+   TEES / COLLECTIONS — same product cards as Related Products
+   Scoped to tees.html only.
+   ========================================================= */
+body.tees-page:not(.su-search-page) .collections,
+body.tees-page:not(.su-search-page) .collections-wrapper{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding-left:0!important;
+  padding-right:0!important;
+  box-sizing:border-box!important;
+}
+
+body.tees-page:not(.su-search-page) .collection-grid.tees-related-grid{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:1px!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  align-items:start!important;
+  justify-items:stretch!important;
+  box-sizing:border-box!important;
+}
+
+body.tees-page:not(.su-search-page) .tees-product-card{
+  min-width:0!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  text-align:left!important;
+  background:#fff!important;
+  box-sizing:border-box!important;
+}
+
+/* Native Nude-style mockup canvas: 2:3, shared across storefront grids. */
+body.tees-page:not(.su-search-page) .tees-product-card .related-product-media{
+  width:100%!important;
+  aspect-ratio:2 / 3!important;
+  margin:0!important;
+  background:#fff!important;
+}
+
+body.tees-page:not(.su-search-page) .tees-product-card .related-product-info{
+  padding:10px 10px 22px!important;
+}
+
+/* Keep the size drawer identical to the related-products implementation. */
+body.tees-page:not(.su-search-page) .tees-product-card .tees-size-bar{
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+}
+
+@media (max-width:1023px){
+  body.tees-page:not(.su-search-page) .collection-grid.tees-related-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:1px!important;
+  }
+}
+
+@media (max-width:600px){
+  body.tees-page:not(.su-search-page) .tees-product-card .related-product-info{
+    padding:8px 7px 18px!important;
+  }
+}

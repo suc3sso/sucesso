@@ -1,0 +1,19 @@
+/* FAQ only: keeps the exact legal-page main wrapper and site furniture. */
+main.sucesso-legal-type .su-faq-title{font-family:Arial,Helvetica,sans-serif!important;font-size:14px!important;font-weight:700!important;line-height:1.2!important;color:#233f32!important;letter-spacing:-.4px!important;margin:0 0 18px!important;text-transform:uppercase}
+main.sucesso-legal-type .su-faq-intro{font-family:Arial,Helvetica,sans-serif!important;font-size:12px!important;line-height:1.6!important;margin:0 0 46px!important;letter-spacing:-.2px!important}
+main.sucesso-legal-type .su-faq-group{border:0;margin:0 0 40px;padding:0}
+main.sucesso-legal-type .su-faq-group-title{font-family:Arial,Helvetica,sans-serif!important;font-weight:700!important;font-size:14px!important;line-height:1.3!important;margin:0 0 16px!important;letter-spacing:-.3px!important;text-transform:uppercase!important}
+main.sucesso-legal-type .su-faq-item{border-top:1px solid #d2dbd6;margin:0;padding:0}
+main.sucesso-legal-type .su-faq-item:last-of-type{border-bottom:1px solid #d2dbd6}
+main.sucesso-legal-type .su-faq-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;color:#233f32;font-family:Arial,Helvetica,sans-serif!important;font-size:12px!important;line-height:1.35!important;font-weight:600!important}
+main.sucesso-legal-type .su-faq-item summary::-webkit-details-marker{display:none}
+main.sucesso-legal-type .su-faq-item summary:focus-visible{outline:2px solid #233f32;outline-offset:4px}
+main.sucesso-legal-type .su-faq-plus{position:relative;flex:none;width:14px;height:14px}
+main.sucesso-legal-type .su-faq-plus::before,main.sucesso-legal-type .su-faq-plus::after{content:'';position:absolute;background:#233f32;left:0;top:6px;width:14px;height:1px}
+main.sucesso-legal-type .su-faq-plus::after{transform:rotate(90deg);transition:transform .18s}
+main.sucesso-legal-type .su-faq-item[open] .su-faq-plus::after{transform:rotate(0)}
+main.sucesso-legal-type .su-faq-answer{padding:0 30px 20px 0}
+main.sucesso-legal-type .su-faq-answer p{font-family:Arial,Helvetica,sans-serif!important;font-size:12px!important;line-height:1.65!important;letter-spacing:-.2px!important;margin:0!important;color:#233f32!important}
+main.sucesso-legal-type .su-faq-last{margin:25px 0 0!important;line-height:2!important;font-size:12px!important}
+main.sucesso-legal-type .su-faq-last a{color:#233f32;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:700px){main.sucesso-legal-type .su-faq-group{margin-bottom:32px}main.sucesso-legal-type .su-faq-item summary{padding:16px 0}main.sucesso-legal-type .su-faq-answer{padding-right:8px}}

@@ -1,0 +1,258 @@
+/* SUCESSO — laptop/mobile navigation refresh.
+   Scoped to the existing responsive sidebar so desktop XL remains untouched. */
+
+/* Two-line trigger -> fast X, without moving the existing menu button. */
+.menu-toggle .menu-icon.su-menu-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  position: relative;
+}
+
+.menu-toggle .su-burger-line {
+  position: absolute;
+  left: 3px;
+  width: 18px;
+  height: 1px;
+  background: #000;
+  transform-origin: 50% 50%;
+  transition: top 90ms ease, transform 90ms ease;
+  will-change: top, transform;
+}
+
+.menu-toggle .su-burger-line:first-child { top: 8px; }
+.menu-toggle .su-burger-line:last-child  { top: 14px; }
+
+.menu-toggle .menu-icon.su-menu-icon.open .su-burger-line:first-child {
+  top: 11px;
+  transform: rotate(45deg);
+}
+
+.menu-toggle .menu-icon.su-menu-icon.open .su-burger-line:last-child {
+  top: 11px;
+  transform: rotate(-45deg);
+}
+
+/* Keep the current drawer itself, but make its content cleaner and accordion-based. */
+.sidebar.su-mobile-menu-ready {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar.su-mobile-menu-ready .su-mobile-menu-shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.su-mobile-menu-ready .su-mobile-menu-main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.su-mobile-menu-ready .su-mobile-menu-section {
+  width: 100%;
+}
+
+.sidebar.su-mobile-menu-ready .su-mobile-nav-trigger,
+.sidebar.su-mobile-menu-ready .su-mobile-direct,
+.sidebar.su-mobile-menu-ready .su-mobile-sub-link,
+.sidebar.su-mobile-menu-ready .su-mobile-account {
+  font-family: Arial, Helvetica, sans-serif !important;
+  color: #233f32 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  box-sizing: border-box;
+}
+
+/* SHOP / COLLECTIONS — same hierarchy as the Man/Woman rows in the reference. */
+.sidebar.su-mobile-menu-ready .su-mobile-nav-trigger {
+  width: 100%;
+  min-height: 34px;
+  padding: 3px 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 18px;
+  line-height: 1.25;
+  font-weight: 600;
+  outline-offset: 3px;
+}
+
+/* No hover decoration on the expandable headings. */
+.sidebar.su-mobile-menu-ready .su-mobile-nav-trigger:hover,
+.sidebar.su-mobile-menu-ready .su-mobile-nav-trigger:focus {
+  text-decoration: none;
+}
+
+.sidebar.su-mobile-menu-ready .su-mobile-chevron {
+  width: 11px;
+  height: 11px;
+  flex: 0 0 auto;
+  transition: transform 180ms ease;
+}
+
+.sidebar.su-mobile-menu-ready .su-mobile-menu-section.is-open .su-mobile-chevron {
+  transform: rotate(180deg);
+}
+
+/* Animated dropdown opening, close to the reference menu. */
+.sidebar.su-mobile-menu-ready .su-mobile-submenu {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin: 0;
+  transition: grid-template-rows 220ms cubic-bezier(.4,0,.2,1),
+              opacity 150ms ease,
+              margin 220ms cubic-bezier(.4,0,.2,1);
+}
+
+.sidebar.su-mobile-menu-ready .su-mobile-menu-section.is-open .su-mobile-submenu {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin: 3px 0 12px;
+}
+
+.sidebar.su-mobile-menu-ready .su-mobile-submenu-inner {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.sidebar.su-mobile-menu-ready a.su-mobile-sub-link,
+.sidebar.su-mobile-menu-ready a.su-mobile-direct,
+.sidebar.su-mobile-menu-ready a.su-mobile-account {
+  position: relative !important;
+  display: inline-flex !important;
+  align-self: flex-start !important;
+  width: auto !important;
+  padding: 3px 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  text-decoration: none !important;
+  transition: none !important;
+}
+
+.sidebar.su-mobile-menu-ready a.su-mobile-sub-link {
+  font-size: 15px !important;
+  line-height: 1.35 !important;
+  font-weight: 400 !important;
+  margin: 4px 0 !important;
+}
+
+.sidebar.su-mobile-menu-ready a.su-mobile-direct {
+  font-size: 18px !important;
+  line-height: 1.25 !important;
+  font-weight: 600 !important;
+  margin-top: 8px !important;
+}
+
+/* Kill the site's inherited animated pseudo-underline inside this refreshed menu. */
+.sidebar.su-mobile-menu-ready a.su-mobile-sub-link::after,
+.sidebar.su-mobile-menu-ready a.su-mobile-direct::after,
+.sidebar.su-mobile-menu-ready a.su-mobile-account::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Requested instant underline: no animation. */
+.sidebar.su-mobile-menu-ready a.su-mobile-sub-link:hover,
+.sidebar.su-mobile-menu-ready a.su-mobile-sub-link:focus-visible,
+.sidebar.su-mobile-menu-ready a.su-mobile-direct:hover,
+.sidebar.su-mobile-menu-ready a.su-mobile-direct:focus-visible,
+.sidebar.su-mobile-menu-ready a.su-mobile-account:hover,
+.sidebar.su-mobile-menu-ready a.su-mobile-account:focus-visible {
+  text-decoration: underline !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 2px !important;
+}
+
+.sidebar.su-mobile-menu-ready .sidebar-footer {
+  margin-top: auto !important;
+  padding: 20px 0 50px !important;
+}
+
+.sidebar.su-mobile-menu-ready .sidebar-auth-lang {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.sidebar.su-mobile-menu-ready a.su-mobile-account {
+  font-size: 18px !important;
+  line-height: 1.25 !important;
+  font-weight: 600 !important;
+}
+
+/* Keep the existing language control and its behavior, only align it visually. */
+.sidebar.su-mobile-menu-ready #languageToggleSidebar {
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  margin: 0 !important;
+}
+
+
+/* Instagram, below Account, uses the same Instagram asset as the storefront footer.
+   Keep its box aligned with other menu text, but slightly smaller than the footer icon. */
+.sidebar.su-mobile-menu-ready a.su-mobile-instagram {
+  display: inline-flex !important;
+  align-self: flex-start !important;
+  width: 19px !important;
+  height: 19px !important;
+  padding: 0 !important;
+  margin: 4px 0 2px !important;
+  line-height: 1 !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  background: transparent !important;
+  border: 0 !important;
+  text-decoration: none !important;
+  transition: none !important;
+}
+.sidebar.su-mobile-menu-ready a.su-mobile-instagram::after {
+  content: none !important;
+  display: none !important;
+}
+.sidebar.su-mobile-menu-ready a.su-mobile-instagram img {
+  display: block !important;
+  width: 19px !important;
+  height: 19px !important;
+  object-fit: contain !important;
+  max-width: none !important;
+}
+.sidebar.su-mobile-menu-ready a.su-mobile-instagram:focus-visible {
+  outline: 1px solid #233f32;
+  outline-offset: 4px;
+}
+
+@media (max-width: 768px) {
+  .sidebar.su-mobile-menu-ready .su-mobile-nav-trigger,
+  .sidebar.su-mobile-menu-ready a.su-mobile-direct,
+  .sidebar.su-mobile-menu-ready a.su-mobile-account {
+    font-size: 17px !important;
+  }
+
+  .sidebar.su-mobile-menu-ready a.su-mobile-sub-link {
+    font-size: 14px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-toggle .su-burger-line,
+  .sidebar.su-mobile-menu-ready .su-mobile-chevron,
+  .sidebar.su-mobile-menu-ready .su-mobile-submenu {
+    transition: none !important;
+  }
+}
